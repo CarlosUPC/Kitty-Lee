@@ -39,18 +39,18 @@ void j1Map::Draw()
 		if (item_layer->data->name.GetString()[0] == 'b')
 			velocity = 0.2f;
 		else velocity = 1.0f;
-		for (item = data.tilesets.start; item; item = item->next) {
-			for (uint i = 0; i < item_layer->data->height; i++) {
-				for (uint j = 0; j < item_layer->data->width; j++) {
-					id = item_layer->data->tiles[item_layer->data->Get(j, i)];
-					if (id != 0)
+		if (item_layer->data->visible)
+			for (item = data.tilesets.start; item; item = item->next) {
+				for (uint i = 0; i < item_layer->data->height; i++) {
+
+					for (uint j = 0; j < item_layer->data->width; j++) {
+						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
+						if (id != 0)
 							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), velocity);
+					}
 				}
 			}
-		}
 	}
-	
-
 }
 
 
@@ -367,6 +367,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name.create(node.attribute("name").as_string());
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
+	layer->visible = node.attribute("visible").as_bool(true);
 	
 	layer->tiles = new uint[layer->width*layer->height];
 

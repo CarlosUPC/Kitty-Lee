@@ -12,6 +12,7 @@ struct MapLayer {
 	uint width = 0;
 	uint height = 0;
 	uint* tiles = nullptr;
+	bool visible = true;
 
 	~MapLayer() { delete[] tiles; tiles = nullptr; }
 

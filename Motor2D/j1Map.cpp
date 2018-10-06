@@ -34,13 +34,17 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	uint id = 0;
-	for (item = data.tilesets.start; item; item = item->next) {
-		for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
+	float velocity = 1.0f;
+	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
+		if (item_layer->data->name.GetString()[0] == 'b')
+			velocity = 0.2f;
+		else velocity = 1.0f;
+		for (item = data.tilesets.start; item; item = item->next) {
 			for (uint i = 0; i < item_layer->data->height; i++) {
-				for (uint j = 0; j < item_layer->data->width;j++) {
+				for (uint j = 0; j < item_layer->data->width; j++) {
 					id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 					if (id != 0)
-						App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id));
+							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), velocity);
 				}
 			}
 		}

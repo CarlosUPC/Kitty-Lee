@@ -6,7 +6,7 @@
 
 
 j1Player::j1Player() {
-	//name.create("renderer");
+	name.create("player");
 
 }
 
@@ -32,7 +32,8 @@ bool j1Player::Awake(pugi::xml_node&)
 // Called before the first frame
 bool j1Player::Start()
 {
-	
+	//This method returns player object's position
+	position = App->map->GetInitialPosition();
 	return true;
 }
 

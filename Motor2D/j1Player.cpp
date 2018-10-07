@@ -32,7 +32,7 @@ bool j1Player::Awake(pugi::xml_node&)
 // Called before the first frame
 bool j1Player::Start()
 {
-	position = App->map->GetInitialPosition();
+	
 	return true;
 }
 

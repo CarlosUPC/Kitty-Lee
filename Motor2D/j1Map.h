@@ -97,7 +97,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 	
 	iPoint GetInitialPosition() const;
-	//iPoint GetInitialPlayerPos() const;
+	
 
 private:
 
@@ -117,7 +117,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	iPoint				initial_player_pos;
+	
 };
 
 #endif // __j1MAP_H__

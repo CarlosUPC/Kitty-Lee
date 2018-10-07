@@ -10,7 +10,7 @@
   </animation>
  </tile>
  <tile id="16">
-  <animation name="walking right">
+  <animation name="walking_right">
    <frame tileid="16" duration="100"/>
    <frame tileid="17" duration="100"/>
    <frame tileid="18" duration="100"/>

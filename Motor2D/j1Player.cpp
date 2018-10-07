@@ -31,40 +31,10 @@ bool j1Player::Awake(pugi::xml_node& node)
 	LOG("Loading Player Module");
 	
 	LoadPlayer(node.child("file").text().as_string());
-	//idle.PushBack({16,15,32,32});
-	
-	/*pugi::xml_document anim_document;
-	pugi::xml_parse_result result = anim_document.load_file("Animations.xml");
-	
 
-	pugi::xml_node frames;
-	pugi::xml_node anim;
+	PushBack();
+	animation.speed = 0.025f;
 
-	for (anim = anim_document.child("animations").child("animation"); anim; anim = anim.next_sibling("animation"))
-	{
-		Animation playerAnim;
-		playerAnim.name = anim.attribute("name").as_string();
-
-		for (frames = anim.first_child(); frames; frames = frames.next_sibling("frame")) {
-			
-			SDL_Rect animCoords{ 
-				frames.attribute("x").as_int(), 
-				frames.attribute("y").as_int(), 
-				frames.attribute("h").as_int(), 
-				frames.attribute("h").as_int() 
-			};
-			
-			playerAnim.PushBack({ animCoords.x, animCoords.y, animCoords.w, animCoords.h });
-			player_anims.add(&playerAnim);
-		
-		}
-
-		if (result == NULL) {
-			LOG("Could not load player animations xml file %s. pugi error: %s", "animations.xml", result.description());
-			ret = false;
-		}
-	}
-*/
 	return true;
 }
 
@@ -97,8 +67,8 @@ bool j1Player::Update(float dt)
 
 // Called each loop iteration
 bool j1Player::PostUpdate()
-
 {
+<<<<<<< HEAD
 
 
 	
@@ -108,6 +78,10 @@ bool j1Player::PostUpdate()
 	SDL_Rect r = { 16,15,32,32 };
 	App->render->Blit(player.tileset.texture, position.x, position.y, &r);
 
+=======
+	App->render->Blit(player.tileset.texture, position.x, position.y, &animation.GetCurrentFrame());
+
+>>>>>>> 0131b7610a2e4f935de47cf632ab723543e97e8b
 	return true;
 }
 
@@ -190,6 +164,12 @@ bool j1Player::LoadPlayer(const char* file) {
 	}
 
 	return ret;
+}
+
+void j1Player::PushBack() {
+	for (int i = 0; i < player.animations[0].num_frames; ++i) {
+		animation.PushBack(player.animations[0].frames[i]);
+	}
 }
 
 bool j1Player::Load(pugi::xml_node&)

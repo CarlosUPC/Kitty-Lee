@@ -53,9 +53,6 @@ class j1Player : public j1Module
 
 public:
 
-	
-	
-
 	j1Player();
 
 	~j1Player();
@@ -94,9 +91,11 @@ private:
 	iPoint		position;
 
 	pugi::xml_document	player_file;
-	
+
 	Animation animation;
-	//p2List<Animation*> player_anims;
+
+	void PushBack();
+	
 	Animation* current_animation = nullptr;
 
 	//Animation jump;

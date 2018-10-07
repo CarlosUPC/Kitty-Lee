@@ -3,7 +3,10 @@
 
 #include "PugiXml/src/pugixml.hpp"
 
+//Look this bullshit, if we take away SDL include, this header goes so fucking crazy, I was 2 hours thinking about what happened and i had to add it forcefully
+//Maybe it will become a problem, we need to take caution of that. salu2
 #include "SDL/include/SDL.h"
+
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"

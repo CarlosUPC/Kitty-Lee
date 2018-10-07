@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
- <image source="Player.png" width="1024" height="1024"/>
+<tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
+ <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">
-  <objectgroup draworder="index">
-   <object id="1" x="9.375" y="9.125" width="13" height="20.375"/>
-  </objectgroup>
   <animation>
    <frame tileid="0" duration="200"/>
    <frame tileid="1" duration="100"/>

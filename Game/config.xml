@@ -38,4 +38,8 @@
     
   </player>
 
+  <player>
+    <file>player.tsx</file>
+  </player>
+
 </config>

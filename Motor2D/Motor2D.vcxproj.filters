@@ -122,4 +122,12 @@
       <Filter>XML</Filter>
     </Xml>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game\maps\Test.tmx">
+      <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\Game\player.tsx">
+      <Filter>XML</Filter>
+    </None>
+  </ItemGroup>
 </Project>

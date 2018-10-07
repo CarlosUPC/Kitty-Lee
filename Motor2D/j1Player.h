@@ -8,18 +8,53 @@
 
 struct SDL_Texture;
 
+struct TileSetPlayer {
+	SDL_Rect GetTileRect(int id) const;
+
+	p2SString name;
+	uint tilewidth = 0;
+	uint tileheight = 0;
+	uint spacing = 0;
+	uint margin = 0;
+	uint tilecount = 0;
+	uint columns = 0;
+	p2SString imagePath;
+	SDL_Texture* texture = nullptr;
+	uint width = 0;
+	uint height = 0;
+};
+
+struct Anim {
+	uint id = 0;
+	uint num_frames = 0;
+	SDL_Rect* frames = nullptr;
+
+	uint FrameCount(pugi::xml_node&);
+};
+
+enum PlayerState {
+	IDLE,
+	JUMP,
+	FALL,
+	LAND,
+	RUN
+};
+
+struct PlayerInfo {
+	TileSetPlayer tileset; //will only use one for the player
+	Anim* animations = nullptr;
+	PlayerState state = IDLE;
+
+	uint num_animations = 0;
+};
+
 class j1Player : public j1Module
 {	
 
 public:
 
-	enum PlayerState {
-		IDLE,
-		JUMP,
-		FALL,
-		LAND,
-		RUN
-	};
+	
+	
 
 	j1Player();
 
@@ -49,15 +84,16 @@ public:
 
 	bool Save(pugi::xml_node&) const;
 
+	bool LoadPlayer(const char*);
+
 private:
 
-	PlayerState state = IDLE;
+	PlayerInfo player;
 
 	float		scale = 1.0f;
 	iPoint		position;
 
 	pugi::xml_document	player_file;
-	SDL_Texture* texture = nullptr;
 	
 	Animation animation;
 	//p2List<Animation*> player_anims;

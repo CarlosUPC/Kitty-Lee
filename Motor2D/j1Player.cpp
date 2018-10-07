@@ -68,7 +68,7 @@ bool j1Player::Update(float dt)
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {
-<<<<<<< HEAD
+
 
 
 	
@@ -78,10 +78,10 @@ bool j1Player::PostUpdate()
 	SDL_Rect r = { 16,15,32,32 };
 	App->render->Blit(player.tileset.texture, position.x, position.y, &r);
 
-=======
+
 	App->render->Blit(player.tileset.texture, position.x, position.y, &animation.GetCurrentFrame());
 
->>>>>>> 0131b7610a2e4f935de47cf632ab723543e97e8b
+
 	return true;
 }
 

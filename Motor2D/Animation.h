@@ -9,12 +9,10 @@ class Animation
 public:
 	bool loop = true;
 	float speed = 1.0f;
-<<<<<<< HEAD
-	p2DynArray<FrameList> frames;
 	const char* name;
-=======
+
 	SDL_Rect frames[MAX_FRAMES];
->>>>>>> 0131b7610a2e4f935de47cf632ab723543e97e8b
+
 
 private:
 	int last_frame = 0;

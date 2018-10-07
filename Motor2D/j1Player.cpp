@@ -29,7 +29,8 @@ bool j1Player::Awake(pugi::xml_node& node)
 	LOG("Loading Player Module");
 	
 	LoadPlayer(node.child("file").text().as_string());
-	//idle.PushBack({16,15,32,32});
+	PushBack();
+	animation.speed = 0.025f;
 
 	return true;
 }
@@ -61,8 +62,7 @@ bool j1Player::Update(float dt)
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {
-	SDL_Rect r = { 16,15,32,32 };
-	App->render->Blit(player.tileset.texture, position.x, position.y, &r);
+	App->render->Blit(player.tileset.texture, position.x, position.y, &animation.GetCurrentFrame());
 	return true;
 }
 
@@ -145,6 +145,12 @@ bool j1Player::LoadPlayer(const char* file) {
 	}
 
 	return ret;
+}
+
+void j1Player::PushBack() {
+	for (int i = 0; i < player.animations[0].num_frames; ++i) {
+		animation.PushBack(player.animations[0].frames[i]);
+	}
 }
 
 bool j1Player::Load(pugi::xml_node&)

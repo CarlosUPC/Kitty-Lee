@@ -2,51 +2,44 @@
 #define __ANIMATION_H__
 
 #include "SDL/include/SDL_rect.h"
-#include "p2Point.h"
-#include "p2DynArray.h"
-
-struct FrameList {
-	SDL_Rect rect;
-	iPoint pivot;
-};
+#define MAX_FRAMES 300
 
 class Animation
 {
 public:
 	bool loop = true;
 	float speed = 1.0f;
-	p2DynArray<FrameList> frames;
+	SDL_Rect frames[MAX_FRAMES];
 
 private:
-	float current_frame = 0.0f;
 	int last_frame = 0;
+	float current_frame = 0;
+	int frame = -1;
 	int loops = 0;
+
 
 public:
 
-	Animation()
-	{}
-
-	Animation(const Animation& anim) : loop(anim.loop), speed(anim.speed), last_frame(anim.last_frame), frames(anim.frames)
+	void PushBack(const SDL_Rect& rect)
 	{
-		//SDL_memcpy(&frames, anim.frames, sizeof(frames));
+		frames[last_frame++] = rect;
 	}
 
-	void PushBack(const SDL_Rect& rect, const iPoint& pivot = { 0, 0 })
-	{
-		frames[last_frame++] = { rect,pivot };
-	}
-
-	FrameList& GetCurrentFrame()
+	SDL_Rect& GetCurrentFrame(int frame=-1)
 	{
 		current_frame += speed;
 		if (current_frame >= last_frame)
 		{
+			if(frame==-1)
 			current_frame = (loop) ? 0.0f : last_frame - 1;
+			else {
+				current_frame = frame;
+			}
 			loops++;
 		}
 
 		return frames[(int)current_frame];
+
 	}
 
 	bool Finished() const
@@ -54,27 +47,18 @@ public:
 		return loops > 0;
 	}
 
-	void Reset()
-	{
-		current_frame = 0.0f;
-		loops = 0;
-		
+	void reset() {
+		current_frame = 0;
 	}
 
-	int getFrameIndex() const
-	{
-		return (int)current_frame;
+	bool isInFrame(int f) {
+		return (current_frame >= f && current_frame < f + 1);
 	}
 
-	bool isDone() {
-		if (current_frame == last_frame - 1) return true;
-		else return false;
+	bool isBetween(int f1, int f2) {
+		return (current_frame >= f1 && current_frame < f2);
 	}
 
-	int GetCurrentLoop() const
-	{
-		return loops;
-	}
 };
 
 #endif

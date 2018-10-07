@@ -93,8 +93,10 @@ private:
 	iPoint		position;
 
 	pugi::xml_document	player_file;
-	
+
 	Animation animation;
+
+	void PushBack();
 	
 	//Animation* current_animation = nullptr;
 

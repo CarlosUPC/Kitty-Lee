@@ -4368,10 +4368,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup name="Player">
-  <object id="1" x="468.333" y="112" width="16" height="15.6667"/>
-  <object id="4" x="466.167" y="102.167" width="20.6667" height="7.33333">
-   <text pixelsize="7" wrap="1" color="#ff0000">Player</text>
-  </object>
+ <objectgroup name="Capa de Objetos">
+  <object id="1" name="Player" x="468.333" y="112" width="16" height="15.6667"/>
  </objectgroup>
 </map>

@@ -4,7 +4,8 @@
 #include "j1Module.h"	
 #include "p2Point.h"
 
-class j1Player : public j1Module{	
+class j1Player : public j1Module
+{	
 
 public:
 

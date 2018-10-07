@@ -2,11 +2,22 @@
 #define __j1MAP_H__
 
 #include "PugiXml/src/pugixml.hpp"
+
+#include "SDL/include/SDL.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
 
+
 // ----------------------------------------------------
+
+struct MapObject {
+	p2SString name;
+	iPoint initialPosition;
+	
+};
+
+
 struct MapLayer {
 	p2SString name;
 	uint width = 0;
@@ -57,6 +68,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<MapObject*>	entities;
 };
 
 // ----------------------------------------------------
@@ -83,6 +95,9 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+	
+	iPoint GetInitialPosition() const;
+	//iPoint GetInitialPlayerPos() const;
 
 private:
 
@@ -90,17 +105,19 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool OrderLayers();
+	bool LoadObject(pugi::xml_node& node, MapObject* layer);
+	//bool OrderLayers();
 
 public:
 
 	MapData data;
-
+	
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	iPoint				initial_player_pos;
 };
 
 #endif // __j1MAP_H__

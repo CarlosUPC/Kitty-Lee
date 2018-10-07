@@ -1,9 +1,12 @@
+#include "j1App.h"
 #include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "j1Map.h"
 
 
 j1Player::j1Player() {
+	//name.create("renderer");
 
 }
 
@@ -22,12 +25,14 @@ void j1Player::Init()
 bool j1Player::Awake(pugi::xml_node&)
 {
 	LOG("Loading Player Module");
+	
 	return true;
 }
 
 // Called before the first frame
 bool j1Player::Start()
 {
+	position = App->map->GetInitialPosition();
 	return true;
 }
 

@@ -200,9 +200,10 @@ bool j1Map::Load(const char* file_name)
 
 	//Load Object data ------------------------------------------------
 	pugi::xml_node objectGroup;
+	pugi::xml_node object;
 	for (objectGroup = map_file.child("map").child("objectgroup"); objectGroup && ret; objectGroup = objectGroup.next_sibling("objectgroup"))
 	{
-		for (pugi::xml_node object :objectGroup.children()) {
+		for (object = objectGroup.first_child(); object;object = object.next_sibling("object")) {
 
 			MapObject* obj = new MapObject();
 
@@ -238,6 +239,16 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
+		}
+
+		p2List_item<MapObject*>* item_object = data.entities.start;
+		while (item_object != NULL) {
+			MapObject* o = item_object->data;
+			LOG("Object ------");
+			LOG("name: %s", o->name.GetString());
+			LOG("Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
+			LOG("width: %i  height: %i", o->width, o->height);
+			item_object = item_object->next;
 		}
 
 	}
@@ -415,6 +426,8 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
 			obj->name = node_object.attribute("name").as_string();
 			obj->initialPosition.x = node_object.attribute("x").as_int();
 			obj->initialPosition.y = node_object.attribute("y").as_int();	
+			obj->width = node_object.attribute("width").as_uint();
+			obj->height = node_object.attribute("height").as_uint();
 		}
 
 
@@ -428,9 +441,9 @@ iPoint j1Map::GetInitialPosition() const {
 
 	while (ente != NULL)
 	{
-	
+
 		if (ente->data->name == "Player")
-		initialPos = ente->data->initialPosition;
+			initialPos = ente->data->initialPosition;
 		
 	
 		ente = ente->next;

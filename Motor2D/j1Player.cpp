@@ -28,7 +28,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Player Module");
 	
-	animation.PushBack({16,15,32,32});
+	idle.PushBack({16,15,32,32});
 
 	return true;
 }
@@ -41,7 +41,6 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-	LOG("Player position %i,%i", position.x, position.y);
 
 	return true;
 }
@@ -62,13 +61,14 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	SDL_Rect r = { 16,15,32,32 };
-	App->render->Blit(texture, 0, 0, &r);
+	App->render->Blit(texture, position.x, position.y, &r);
 	return true;
 }
 
 // Called before quitting
 bool j1Player::CleanUp()
 {
+	App->tex->UnLoad(texture);
 	return true;
 }
 

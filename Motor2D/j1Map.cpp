@@ -406,15 +406,16 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
-		//Take initial position of player
-		// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 
-		// i commented the condition to run the code in right way at the moment because we have only one object xD
+	//Take initial position of player
+	// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 
+	// i commented the condition to run the code in right way at the moment because we have only one object xD
 
-	//if (node_object.attribute("name").as_string() == "Player") {
+	//Solved if-condition problem in this way, but i would like to improve the code
+	if (node_object.attribute("name").as_string()[0] == 'P') {
 			obj->name = node_object.attribute("name").as_string();
 			obj->initialPosition.x = node_object.attribute("x").as_int();
 			obj->initialPosition.y = node_object.attribute("y").as_int();	
-		//}
+		}
 
 
 	return ret;

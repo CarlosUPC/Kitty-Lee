@@ -69,6 +69,13 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
+	for (int i = 0; i < player.num_animations; ++i) {
+		delete[] player.animations[i].frames;
+		player.animations[i].frames = nullptr;
+	}
+	delete[] player.animations;
+	player.animations = nullptr;
+
 	App->tex->UnLoad(player.tileset.texture);
 	return true;
 }

@@ -33,5 +33,9 @@
   <scene>
     <map>Test.tmx</map>
   </scene>
+  
+  <player>
+    
+  </player>
 
 </config>

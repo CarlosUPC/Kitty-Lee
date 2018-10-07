@@ -4,6 +4,7 @@
 #include "j1Module.h"	
 #include "p2Point.h"
 #include "Animation.h"
+#include "p2List.h"
 
 struct SDL_Texture;
 
@@ -59,8 +60,8 @@ private:
 	SDL_Texture* texture = nullptr;
 	
 	Animation animation;
-	
-	//Animation* current_animation = nullptr;
+	//p2List<Animation*> player_anims;
+	Animation* current_animation = nullptr;
 
 	//Animation jump;
 	//Animation fall;

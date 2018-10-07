@@ -15,7 +15,8 @@ class Animation
 public:
 	bool loop = true;
 	float speed = 1.0f;
-	p2DynArray<FrameList> frames;
+	//p2DynArray<FrameList> frames;
+	const char* name;
 
 private:
 	float current_frame = 0.0f;
@@ -34,6 +35,7 @@ public:
 
 	void PushBack(const SDL_Rect& rect, const iPoint& pivot = { 0, 0 })
 	{
+		
 		frames[last_frame++] = { rect,pivot };
 	}
 

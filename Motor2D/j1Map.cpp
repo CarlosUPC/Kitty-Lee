@@ -196,6 +196,23 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(lay);
 	}
 
+	
+
+	//Load Object data ------------------------------------------------
+	pugi::xml_node objectGroup;
+	for (objectGroup = map_file.child("map").child("objectgroup"); objectGroup && ret; objectGroup = objectGroup.next_sibling("objectgroup"))
+	{
+		for (pugi::xml_node object :objectGroup.children()) {
+
+			MapObject* obj = new MapObject();
+
+			if (ret == true && object != NULL)
+				ret = LoadObject(object, obj);
+
+			data.entities.add(obj);
+		}
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -222,6 +239,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
 		}
+
 	}
 
 	map_loaded = ret;
@@ -382,3 +400,43 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	return ret;
 }
+
+bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
+
+	bool ret = true;
+	if (node_object.empty())	ret = false;
+
+	//Take initial position of player
+	// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 
+	// i commented the condition to run the code in right way at the moment because we have only one object xD
+
+	//Solved if-condition problem in this way, but i would like to improve the code
+	if (node_object.attribute("name").as_string()[0] == 'P') {
+			obj->name = node_object.attribute("name").as_string();
+			obj->initialPosition.x = node_object.attribute("x").as_int();
+			obj->initialPosition.y = node_object.attribute("y").as_int();	
+		}
+
+
+	return ret;
+}
+
+iPoint j1Map::GetInitialPosition() const {
+
+	iPoint initialPos;
+	p2List_item<MapObject*>* ente = data.entities.start;
+
+	while (ente != NULL)
+	{
+	
+		if (ente->data->name == "Player")
+		initialPos = ente->data->initialPosition;
+		
+	
+		ente = ente->next;
+	}
+
+	return initialPos;
+
+}
+

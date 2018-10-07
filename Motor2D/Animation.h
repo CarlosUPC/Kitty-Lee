@@ -7,7 +7,7 @@
 
 struct FrameList {
 	SDL_Rect rect;
-	//iPoint pivot;
+	iPoint pivot;
 };
 
 class Animation
@@ -32,9 +32,9 @@ public:
 		//SDL_memcpy(&frames, anim.frames, sizeof(frames));
 	}
 
-	void PushBack(const SDL_Rect& rect)
+	void PushBack(const SDL_Rect& rect, const iPoint& pivot = { 0, 0 })
 	{
-		frames[last_frame++] = { rect };
+		frames[last_frame++] = { rect,pivot };
 	}
 
 	FrameList& GetCurrentFrame()

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Config file for the game -->
+ <animations>
+   
+  <jump frames="0" duration="0">
+    <frame number="0" x="0" y ="0" w="0" h ="0"/>
+    <frame number="1" x="0" y ="0" w="0" h ="0"/>
+    <frame number="2" x="0" y ="0" w="0" h ="0"/>
+    <frame number="3" x="0" y ="0" w="0" h ="0"/>
+    <frame number="4" x="0" y ="0" w="0" h ="0"/>
+    <frame number="5" x="0" y ="0" w="0" h ="0"/>
+    <frame number="6" x="0" y ="0" w="0" h ="0"/>
+  </jump>
+  <fall frames="0" duration="0">
+    <frame number="0" x="0" y ="0" w="0" h ="0"/>
+    <frame number="1" x="0" y ="0" w="0" h ="0"/>
+    <frame number="2" x="0" y ="0" w="0" h ="0"/>
+    <frame number="3" x="0" y ="0" w="0" h ="0"/>
+    <frame number="4" x="0" y ="0" w="0" h ="0"/>
+    <frame number="5" x="0" y ="0" w="0" h ="0"/>
+    <frame number="6" x="0" y ="0" w="0" h ="0"/>
+  </fall>
+  <land frames="0" duration="0">
+    <frame number="0" x="0" y ="0" w="0" h ="0"/>
+    <frame number="1" x="0" y ="0" w="0" h ="0"/>
+    <frame number="2" x="0" y ="0" w="0" h ="0"/>
+    <frame number="3" x="0" y ="0" w="0" h ="0"/>
+    <frame number="4" x="0" y ="0" w="0" h ="0"/>
+    <frame number="5" x="0" y ="0" w="0" h ="0"/>
+    <frame number="6" x="0" y ="0" w="0" h ="0"/>
+  </land>
+  <walk frames="0" duration="0">
+    <frame number="0" x="0" y ="0" w="0" h ="0"/>
+    <frame number="1" x="0" y ="0" w="0" h ="0"/>
+    <frame number="2" x="0" y ="0" w="0" h ="0"/>
+    <frame number="3" x="0" y ="0" w="0" h ="0"/>
+    <frame number="4" x="0" y ="0" w="0" h ="0"/>
+    <frame number="5" x="0" y ="0" w="0" h ="0"/>
+    <frame number="6" x="0" y ="0" w="0" h ="0"/>
+  </walk>
+</animations> 

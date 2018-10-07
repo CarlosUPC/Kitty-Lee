@@ -1,9 +1,11 @@
+#include "j1App.h"
 #include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Map.h"
 
 
 j1Player::j1Player() {
@@ -27,13 +29,20 @@ bool j1Player::Awake(pugi::xml_node& node)
 	LOG("Loading Player Module");
 	
 	animation.PushBack({16,15,32,32});
+
 	return true;
 }
 
 // Called before the first frame
 bool j1Player::Start()
 {
+
 	texture = App->tex->Load("textures/Player.png");
+
+	//This method returns player object's position
+	position = App->map->GetInitialPosition();
+	LOG("Player position %i,%i", position.x, position.y);
+
 	return true;
 }
 

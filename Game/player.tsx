@@ -2,7 +2,7 @@
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">
-  <animation>
+  <animation name="idle">
    <frame tileid="0" duration="200"/>
    <frame tileid="1" duration="100"/>
    <frame tileid="2" duration="100"/>
@@ -10,7 +10,7 @@
   </animation>
  </tile>
  <tile id="16">
-  <animation>
+  <animation name="walking right">
    <frame tileid="16" duration="100"/>
    <frame tileid="17" duration="100"/>
    <frame tileid="18" duration="100"/>

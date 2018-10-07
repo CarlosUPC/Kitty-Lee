@@ -28,7 +28,7 @@ struct Anim {
 	uint id = 0;
 	uint num_frames = 0;
 	SDL_Rect* frames = nullptr;
-
+	const pugi::char_t*  name;
 	uint FrameCount(pugi::xml_node&);
 };
 
@@ -97,13 +97,20 @@ private:
 	pugi::xml_document	player_file;
 
 	Animation animation;
-	Animation* PushBack(int);
+	void PushBack(int);
 
 	void CheckState(fPoint);
 	void Actions();
 
 	Animation* current_animation = nullptr;
 	PlayerState state = IDLE;
+
+	Animation* idle = nullptr;
+	Animation* walking_right = nullptr;
+	Animation* walking_left = nullptr;
+	Animation* jumping = nullptr;
+	Animation* falling = nullptr;
+
 	
 	
 	

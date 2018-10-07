@@ -10,7 +10,7 @@ public:
 	bool loop = true;
 	float speed = 1.0f;
 	const char* name;
-
+	p2SString name_aux;
 	SDL_Rect frames[MAX_FRAMES];
 
 

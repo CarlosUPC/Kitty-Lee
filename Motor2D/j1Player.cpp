@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "p2List.h"
+#include <cstring>
 
 
 j1Player::j1Player() {
@@ -34,6 +35,9 @@ bool j1Player::Awake(pugi::xml_node& node)
 
 	PlayerState state = IDLE;
 	
+	PushBack(IDLE);
+	PushBack(WALKING_RIGHT);
+	PushBack(WALKING_LEFT);
 
 	return true;
 }
@@ -50,15 +54,16 @@ bool j1Player::Start()
 	
 	speed = { 0,0 };
 
-	CheckState(speed);
-	Actions();
+	//CheckState(speed);
+	//Actions();
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {
-	
+	CheckState(speed);
+	Actions();
 	return true;
 }
 
@@ -133,6 +138,7 @@ bool j1Player::LoadPlayer(const char* file) {
 		player.animations[i].FrameCount(node.child("animation").child("frame"));
 		player.animations[i].frames = new SDL_Rect[player.animations[i].num_frames];
 		player.animations[i].id = node.attribute("id").as_uint();
+		player.animations[i].name = node.child("animation").attribute("name").value();
 		node = node.next_sibling("tile");
 	}
 
@@ -160,15 +166,34 @@ bool j1Player::LoadPlayer(const char* file) {
 	return ret;
 }
 
-Animation* j1Player::PushBack(int anim_type) {
+void j1Player::PushBack(int anim_type) {
 
-	Animation* anim = nullptr;
+	
+	Animation* aux_anim = new Animation();
+	
+	aux_anim->name = player.animations[anim_type].name;
+
+	if (!strcmp(aux_anim->name, "idle"))
+		idle = aux_anim;
+	
+	else if (!strcmp(aux_anim->name, "walking_right"))
+		walking_right = aux_anim;
+		
+	else if (!strcmp(aux_anim->name, "walking_left"))
+		walking_left = aux_anim;
+		
+	else if (!strcmp(aux_anim->name, "jumping"))
+		jumping = aux_anim;
+
+	else if (!strcmp(aux_anim->name, "falling"))
+		falling = aux_anim;
+
+
 	for (int i = 0; i < player.animations[anim_type].num_frames; ++i) {
-		animation.PushBack(player.animations[anim_type].frames[i]);
+		aux_anim->PushBack(player.animations[anim_type].frames[i]);
 	}
 
-	anim = &animation;
-	return anim;
+	
 }
 
 bool j1Player::Load(pugi::xml_node&)
@@ -228,15 +253,15 @@ void j1Player::Actions() {
 	switch (state)
 	{
 	case IDLE:
-		current_animation = PushBack(IDLE);
+		current_animation = idle;
 		current_animation->speed = 0.025f;
 		break;
 	case WALKING_RIGHT:
-		current_animation = PushBack(WALKING_RIGHT);
+		current_animation = walking_right;
 		current_animation->speed = 0.025f;
 		break;
 	case WALKING_LEFT:
-		current_animation = PushBack(WALKING_LEFT); //it doesnt exist :s
+		current_animation = walking_left; //it doesnt exist :s
 		current_animation->speed = 0.025f;
 		break;
 	case JUMP:

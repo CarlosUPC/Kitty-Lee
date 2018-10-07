@@ -4,6 +4,7 @@
 #include "j1Module.h"	
 #include "p2Point.h"
 #include "Animation.h"
+#include "p2List.h"
 
 struct SDL_Texture;
 
@@ -52,9 +53,6 @@ class j1Player : public j1Module
 
 public:
 
-	
-	
-
 	j1Player();
 
 	~j1Player();
@@ -98,7 +96,7 @@ private:
 
 	void PushBack();
 	
-	//Animation* current_animation = nullptr;
+	Animation* current_animation = nullptr;
 
 	//Animation jump;
 	//Animation fall;

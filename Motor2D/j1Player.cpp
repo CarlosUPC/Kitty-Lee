@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "p2List.h"
 
 
 j1Player::j1Player() {
@@ -26,9 +27,11 @@ void j1Player::Init()
 // Called before render is available
 bool j1Player::Awake(pugi::xml_node& node)
 {
+	bool ret = true;
 	LOG("Loading Player Module");
 	
 	LoadPlayer(node.child("file").text().as_string());
+
 	PushBack();
 	animation.speed = 0.025f;
 
@@ -38,11 +41,14 @@ bool j1Player::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool j1Player::Start()
 {
+	bool ret = true;
 
 	player.tileset.texture = App->tex->Load(player.tileset.imagePath.GetString());
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
+
+	
 
 	return true;
 }
@@ -63,6 +69,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	App->render->Blit(player.tileset.texture, position.x, position.y, &animation.GetCurrentFrame());
+
 	return true;
 }
 

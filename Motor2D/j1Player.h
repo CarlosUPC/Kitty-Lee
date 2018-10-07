@@ -92,13 +92,14 @@ private:
 	
 	float		scale = 1.0f;
 	iPoint		position;
+	fPoint		speed;
 
 	pugi::xml_document	player_file;
 
 	Animation animation;
-	Animation* PushBack(int anim_type);
+	Animation* PushBack(int);
 
-	void CheckState();
+	void CheckState(fPoint);
 	void Actions();
 
 	Animation* current_animation = nullptr;

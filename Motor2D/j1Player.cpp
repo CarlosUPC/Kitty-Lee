@@ -47,9 +47,11 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-	Actions();
 	
+	speed = { 0,0 };
 
+	CheckState(speed);
+	Actions();
 	return true;
 }
 
@@ -199,7 +201,26 @@ uint Anim::FrameCount(pugi::xml_node& n) {
 	return ret;
 }
 
-void j1Player::CheckState() {
+void j1Player::CheckState(fPoint speed) {
+
+	if (speed.x != 0)
+	{
+		if (speed.x > 0)
+		{
+			state = WALKING_RIGHT;
+
+		}
+		else if (speed.x < 0)
+		{
+
+			state = WALKING_LEFT;
+		}
+	}
+
+	else
+	{
+		state = IDLE;
+	}
 }
 
 void j1Player::Actions() {
@@ -212,9 +233,11 @@ void j1Player::Actions() {
 		break;
 	case WALKING_RIGHT:
 		current_animation = PushBack(WALKING_RIGHT);
+		current_animation->speed = 0.025f;
 		break;
 	case WALKING_LEFT:
-		current_animation = PushBack(WALKING_LEFT);
+		current_animation = PushBack(WALKING_LEFT); //it doesnt exist :s
+		current_animation->speed = 0.025f;
 		break;
 	case JUMP:
 		break;

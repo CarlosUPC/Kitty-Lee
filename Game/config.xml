@@ -33,10 +33,6 @@
   <scene>
     <map>Test.tmx</map>
   </scene>
-  
-  <player>
-    
-  </player>
 
   <player>
     <file>player.tsx</file>

@@ -30,13 +30,13 @@ public:
 		frames[last_frame++] = rect;
 	}
 
-	SDL_Rect& GetCurrentFrame(int frame=-1)
+	SDL_Rect& GetCurrentFrame(int frame = -1)
 	{
 		current_frame += speed;
 		if (current_frame >= last_frame)
 		{
-			if(frame==-1)
-			current_frame = (loop) ? 0.0f : last_frame - 1;
+			if (frame == -1)
+				current_frame = (loop) ? 0.0f : last_frame - 1;
 			else {
 				current_frame = frame;
 			}

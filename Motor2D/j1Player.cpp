@@ -1,10 +1,13 @@
 #include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "j1App.h"
+#include "j1Render.h"
+#include "j1Textures.h"
 
 
 j1Player::j1Player() {
-
+	name.create("player");
 }
 
 
@@ -19,15 +22,18 @@ void j1Player::Init()
 }
 
 // Called before render is available
-bool j1Player::Awake(pugi::xml_node&)
+bool j1Player::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Player Module");
+	
+	animation.PushBack({16,15,32,32});
 	return true;
 }
 
 // Called before the first frame
 bool j1Player::Start()
 {
+	texture = App->tex->Load("textures/Player.png");
 	return true;
 }
 
@@ -46,6 +52,8 @@ bool j1Player::Update(float dt)
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {
+	SDL_Rect r = { 16,15,32,32 };
+	App->render->Blit(texture, 0, 0, &r);
 	return true;
 }
 

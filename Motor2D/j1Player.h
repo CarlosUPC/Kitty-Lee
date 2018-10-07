@@ -3,6 +3,8 @@
 
 #include "j1Module.h"	
 #include "p2Point.h"
+#include "j1Textures.h"
+#include "Animation.h"
 
 class j1Player : public j1Module{	
 
@@ -50,6 +52,10 @@ private:
 
 	float		scale = 1.0f;
 	iPoint		position;
+
+	pugi::xml_document	player_file;
+	SDL_Texture* texture = nullptr;
+	Animation animation;
 	
 };
 

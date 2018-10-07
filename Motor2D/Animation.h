@@ -15,7 +15,7 @@ class Animation
 public:
 	bool loop = true;
 	float speed = 1.0f;
-	//p2DynArray<FrameList> frames;
+	p2DynArray<FrameList> frames;
 	const char* name;
 
 private:

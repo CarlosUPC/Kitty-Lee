@@ -99,15 +99,15 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 
 {
-<<<<<<< HEAD
+
 
 	
 	
 	//App->render->Blit(texture, position.x, position.y, &frame.rect);
-=======
+
 	SDL_Rect r = { 16,15,32,32 };
 	App->render->Blit(player.tileset.texture, position.x, position.y, &r);
->>>>>>> bfafadad6e21d6cdba5af4529bbfd2cdd16220de
+
 	return true;
 }
 

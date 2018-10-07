@@ -58,13 +58,16 @@ private:
 	pugi::xml_document	player_file;
 	SDL_Texture* texture = nullptr;
 	
+	Animation animation;
+	
 	//Animation* current_animation = nullptr;
 
-	//Animation idle;
 	//Animation jump;
 	//Animation fall;
 	//Animation land;
 	//Animation walk;
 	
+	
 };
-#endif
+
+#endif 

@@ -34,6 +34,7 @@ bool j1Player::Start()
 {
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
+	LOG("Player position %i,%i", position.x, position.y);
 	return true;
 }
 

@@ -28,7 +28,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Player Module");
 	
-	idle.PushBack({16,15,32,32});
+	//idle.PushBack({16,15,32,32});
 
 	return true;
 }

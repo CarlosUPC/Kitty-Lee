@@ -3,6 +3,7 @@
 
 #include "j1Module.h"	
 #include "p2Point.h"
+#include "j1Textures.h"
 #include "SDL\include\SDL.h"
 #include "Animation.h"
 
@@ -53,13 +54,17 @@ private:
 
 	float		scale = 1.0f;
 	iPoint		position;
-	
-	Animation* current_animation = nullptr;
 
-	Animation jump;
-	Animation fall;
-	Animation land;
-	Animation walk;
+	pugi::xml_document	player_file;
+	SDL_Texture* texture = nullptr;
+	Animation animation;
+	
+	//Animation* current_animation = nullptr;
+
+	//Animation jump;
+	//Animation fall;
+	//Animation land;
+	//Animation walk;
 	
 	
 };

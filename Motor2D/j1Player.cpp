@@ -32,8 +32,8 @@ bool j1Player::Awake(pugi::xml_node& node)
 	
 	LoadPlayer(node.child("file").text().as_string());
 
-	PushBack();
-	animation.speed = 0.025f;
+	PlayerState state = IDLE;
+	
 
 	return true;
 }
@@ -47,7 +47,7 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-
+	Actions();
 	
 
 	return true;
@@ -56,12 +56,14 @@ bool j1Player::Start()
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {
+	
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+	
 	return true;
 }
 
@@ -69,7 +71,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 
-	App->render->Blit(player.tileset.texture, position.x, position.y, &animation.GetCurrentFrame());
+	App->render->Blit(player.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame());
 
 
 	return true;
@@ -156,10 +158,15 @@ bool j1Player::LoadPlayer(const char* file) {
 	return ret;
 }
 
-void j1Player::PushBack() {
-	for (int i = 0; i < player.animations[0].num_frames; ++i) {
-		animation.PushBack(player.animations[0].frames[i]);
+Animation* j1Player::PushBack(int anim_type) {
+
+	Animation* anim = nullptr;
+	for (int i = 0; i < player.animations[anim_type].num_frames; ++i) {
+		animation.PushBack(player.animations[anim_type].frames[i]);
 	}
+
+	anim = &animation;
+	return anim;
 }
 
 bool j1Player::Load(pugi::xml_node&)
@@ -190,4 +197,34 @@ uint Anim::FrameCount(pugi::xml_node& n) {
 	num_frames = ret;
 
 	return ret;
+}
+
+void j1Player::CheckState() {
+}
+
+void j1Player::Actions() {
+
+	switch (state)
+	{
+	case IDLE:
+		current_animation = PushBack(IDLE);
+		current_animation->speed = 0.025f;
+		break;
+	case WALKING_RIGHT:
+		current_animation = PushBack(WALKING_RIGHT);
+		break;
+	case WALKING_LEFT:
+		current_animation = PushBack(WALKING_LEFT);
+		break;
+	case JUMP:
+		break;
+	case FALL:
+		break;
+	case LAND:
+		break;
+	case RUN:
+		break;
+	default:
+		break;
+	}
 }

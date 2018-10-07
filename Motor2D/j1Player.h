@@ -33,11 +33,13 @@ struct Anim {
 };
 
 enum PlayerState {
-	IDLE,
-	JUMP,
-	FALL,
-	LAND,
-	RUN
+	IDLE = 0,
+	WALKING_RIGHT = 1,
+	WALKING_LEFT = 2,
+	JUMP = 3,
+	FALL = 4,
+	LAND = 5,
+	RUN = 6
 };
 
 struct PlayerInfo {
@@ -87,21 +89,21 @@ private:
 
 	PlayerInfo player;
 
+	
 	float		scale = 1.0f;
 	iPoint		position;
 
 	pugi::xml_document	player_file;
 
 	Animation animation;
+	Animation* PushBack(int anim_type);
 
-	void PushBack();
-	
+	void CheckState();
+	void Actions();
+
 	Animation* current_animation = nullptr;
-
-	//Animation jump;
-	//Animation fall;
-	//Animation land;
-	//Animation walk;
+	PlayerState state = IDLE;
+	
 	
 	
 };

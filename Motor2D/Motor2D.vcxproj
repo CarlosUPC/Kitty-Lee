@@ -117,6 +117,10 @@
     <Xml Include="..\Game\save_game.xml" />
     <Xml Include="Animations.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game\maps\Test.tmx" />
+    <None Include="..\Game\player.tsx" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

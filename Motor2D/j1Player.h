@@ -88,6 +88,7 @@ private:
 
 	void PushBack(const int);
 
+	void Movement();
 	void CheckState(fPoint);
 	void Actions();
 
@@ -98,8 +99,10 @@ public:
 	PlayerState state = IDLE;
 
 	float		scale = 1.0f;
-	iPoint		position;
+	fPoint		position;
 	fPoint		speed;
+	float		incrementSpeed = 0.05f;
+	float		maxSpeedX = 0.4f;
 
 	pugi::xml_document	player_file;
 

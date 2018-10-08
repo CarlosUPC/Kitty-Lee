@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "p2List.h"
+#include "j1Input.h"
 #include <cstring>
 
 
@@ -61,24 +62,24 @@ bool j1Player::Start()
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {
-	CheckState(speed);
-	Actions();
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
-	
+	Movement();
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {
+	
+	CheckState(speed);
+	Actions();
 
-	App->render->Blit(player.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame());
-
+	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
 
 	return true;
 }
@@ -97,6 +98,26 @@ bool j1Player::CleanUp()
 	return true;
 }
 
+void j1Player::Movement() {
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+		if (speed.x < maxSpeedX) {
+			speed.x += incrementSpeed;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+		if (speed.x > -1 * maxSpeedX) {
+			speed.x -= incrementSpeed;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
+		speed.x = 0.0f;
+	}
+
+	position.x += speed.x;
+
+}
 void j1Player::PushBack(const int anim_type) {
 
 	
@@ -192,7 +213,7 @@ void j1Player::Actions() {
 		current_animation->speed = 0.025f;
 		break;
 	case WALKING_LEFT:
-		current_animation = walking_left; //it doesnt exist :s
+		current_animation = walking_right; //it doesnt exist :s
 		current_animation->speed = 0.025f;
 		break;
 

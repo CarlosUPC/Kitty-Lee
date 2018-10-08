@@ -12,7 +12,7 @@
 
 struct MapObject {
 	p2SString name;
-	iPoint initialPosition;
+	fPoint initialPosition;
 	uint width = 0;
 	uint height = 0;	
 };
@@ -96,7 +96,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	
-	iPoint GetInitialPosition() const;
+	fPoint GetInitialPosition() const;
 	
 
 private:

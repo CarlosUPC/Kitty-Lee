@@ -424,8 +424,8 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
 	//Solved if-condition problem in this way, but i would like to improve the code
 	if (node_object.attribute("name").as_string()[0] == 'P') {
 			obj->name = node_object.attribute("name").as_string();
-			obj->initialPosition.x = node_object.attribute("x").as_float();
-			obj->initialPosition.y = node_object.attribute("y").as_float();	
+			obj->initialPosition.x = node_object.attribute("x").as_int();
+			obj->initialPosition.y = node_object.attribute("y").as_int();	
 			obj->width = node_object.attribute("width").as_uint();
 			obj->height = node_object.attribute("height").as_uint();
 		}

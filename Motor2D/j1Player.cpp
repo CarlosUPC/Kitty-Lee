@@ -31,22 +31,21 @@ bool j1Player::Awake(pugi::xml_node& node)
 	bool ret = true;
 	LOG("Loading Player Module");
 	
-	LoadPlayer(node.child("file").text().as_string());
+	ret = LoadPlayer(node.child("file").text().as_string());
 
-	PlayerState state = IDLE;
+	state = IDLE;
 	
 	// Load animation pointers
 	PushBack(IDLE);
 	PushBack(WALKING_RIGHT);
 	PushBack(WALKING_LEFT);
 
-	return true;
+	return ret;
 }
 
 // Called before the first frame
 bool j1Player::Start()
 {
-	bool ret = true;
 
 	player.tileset.texture = App->tex->Load(player.tileset.imagePath.GetString());
 
@@ -87,7 +86,7 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	for (int i = 0; i < player.num_animations; ++i) {
+	for (uint i = 0; i < player.num_animations; ++i) {
 		delete[] player.animations[i].frames;
 		player.animations[i].frames = nullptr;
 	}
@@ -98,78 +97,10 @@ bool j1Player::CleanUp()
 	return true;
 }
 
-bool j1Player::LoadPlayer(const char* file) {
-	bool ret = true;
-
-	pugi::xml_parse_result result = player_file.load_file(file);
-
-	if (result == NULL)
-	{
-		LOG("Could not load map xml file %s. pugi error: %s", file, result.description());
-		ret = false;
-	}
-
-	//fill tileset info
-	pugi::xml_node node = player_file.child("tileset");
-	player.tileset.name.create(node.attribute("name").as_string());
-	player.tileset.tilewidth = node.attribute("tilewidth").as_uint();
-	player.tileset.tileheight = node.attribute("tileheight").as_uint();
-	player.tileset.spacing = node.attribute("spacing").as_uint();
-	player.tileset.margin = node.attribute("margin").as_uint();
-	player.tileset.tilecount = node.attribute("tilecount").as_uint();
-	player.tileset.columns = node.attribute("columns").as_uint();
-	player.tileset.imagePath = node.child("image").attribute("source").as_string();
-	player.tileset.width = node.child("image").attribute("width").as_uint();
-	player.tileset.height = node.child("image").attribute("height").as_uint();
-
-	//count how many animations are in file
-	node = node.child("tile");
-	player.num_animations = 0;
-	while (node != NULL) {
-		player.num_animations++;
-		node = node.next_sibling("tile");
-	}
-	//reserve memory for all animations
-	player.animations = new Anim[player.num_animations];
-
-	//count how many frames for each animation, assign memory for those frames and set id frame start
-	node = player_file.child("tileset").child("tile");
-	for (int i = 0; i < player.num_animations; ++i) {
-		player.animations[i].FrameCount(node.child("animation").child("frame"));
-		player.animations[i].frames = new SDL_Rect[player.animations[i].num_frames];
-		player.animations[i].id = node.attribute("id").as_uint();
-		player.animations[i].name = node.child("animation").attribute("name").value();
-		node = node.next_sibling("tile");
-	}
-
-	//fill frame array with current information
-	node = player_file.child("tileset").child("tile");
-	pugi::xml_node node_frame;
-	for (int i = 0; i < player.num_animations; ++i) {
-		node_frame = node.child("animation").child("frame");
-		for (int j = 0; j < player.animations[i].num_frames; ++j) {
-			player.animations[i].frames[j] = player.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
-			node_frame = node_frame.next_sibling("frame");
-		}
-		node = node.next_sibling("tile");
-	}
-	//LOG all information in animations
-	for (int i = 0; i < player.num_animations; ++i) {
-		LOG("Animation %i--------", player.animations[i].id);
-			for (int j = 0; j < player.animations[i].num_frames; ++j) {
-				LOG("frame %i x: %i y: %i w: %i h: %i",
-					j, player.animations[i].frames[j].x, player.animations[i].frames[j].y,
-					player.animations[i].frames[j].w, player.animations[i].frames[j].h);
-			}
-	}
-
-	return ret;
-}
-
-void j1Player::PushBack(int anim_type) {
+void j1Player::PushBack(const int anim_type) {
 
 	
-	Animation* aux_anim = new Animation();
+	Animation* aux_anim = new Animation;
 	
 	aux_anim->name = player.animations[anim_type].name;
 
@@ -188,12 +119,11 @@ void j1Player::PushBack(int anim_type) {
 	else if (!strcmp(aux_anim->name, "falling"))
 		falling = aux_anim;
 
-
-	for (int i = 0; i < player.animations[anim_type].num_frames; ++i) {
+	for (uint i = 0; i < player.animations[anim_type].num_frames; ++i) {
 		aux_anim->PushBack(player.animations[anim_type].frames[i]);
 	}
-
 	
+	//delete aux_anim;
 }
 
 bool j1Player::Load(pugi::xml_node&)
@@ -216,14 +146,13 @@ SDL_Rect TileSetPlayer::GetTileRect(int id) const {
 }
 
 uint Anim::FrameCount(pugi::xml_node& n) {
-	uint ret = 0;
+	num_frames = 0;
 	pugi::xml_node node = n;
-	for (node; node != NULL; node = node.next_sibling("frame")) {
-		ret++;
+	for (; node != NULL; node = node.next_sibling("frame")) {
+		num_frames++;
 	}
-	num_frames = ret;
 
-	return ret;
+	return num_frames;
 }
 
 void j1Player::CheckState(fPoint speed) {
@@ -278,4 +207,73 @@ void j1Player::Actions() {
 	default:
 		break;
 	}
+}
+
+//Load all initial information of player saved in a xml file
+bool j1Player::LoadPlayer(const char* file) {
+	bool ret = true;
+
+	pugi::xml_parse_result result = player_file.load_file(file);
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file %s. pugi error: %s", file, result.description());
+		ret = false;
+	}
+
+	//fill tileset info
+	pugi::xml_node node = player_file.child("tileset");
+	player.tileset.name.create(node.attribute("name").as_string());
+	player.tileset.tilewidth = node.attribute("tilewidth").as_uint();
+	player.tileset.tileheight = node.attribute("tileheight").as_uint();
+	player.tileset.spacing = node.attribute("spacing").as_uint();
+	player.tileset.margin = node.attribute("margin").as_uint();
+	player.tileset.tilecount = node.attribute("tilecount").as_uint();
+	player.tileset.columns = node.attribute("columns").as_uint();
+	player.tileset.imagePath = node.child("image").attribute("source").as_string();
+	player.tileset.width = node.child("image").attribute("width").as_uint();
+	player.tileset.height = node.child("image").attribute("height").as_uint();
+
+	//count how many animations are in file
+	node = node.child("tile");
+	player.num_animations = 0;
+	while (node != NULL) {
+		player.num_animations++;
+		node = node.next_sibling("tile");
+	}
+	//reserve memory for all animations
+	player.animations = new Anim[player.num_animations];
+
+	//count how many frames for each animation, assign memory for those frames and set id frame start
+	node = player_file.child("tileset").child("tile");
+	for (uint i = 0; i < player.num_animations; ++i) {
+		player.animations[i].FrameCount(node.child("animation").child("frame"));
+		player.animations[i].frames = new SDL_Rect[player.animations[i].num_frames];
+		player.animations[i].id = node.attribute("id").as_uint();
+		player.animations[i].name = node.child("animation").attribute("name").value();
+		node = node.next_sibling("tile");
+	}
+
+	//fill frame array with current information
+	node = player_file.child("tileset").child("tile");
+	pugi::xml_node node_frame;
+	for (uint i = 0; i < player.num_animations; ++i) {
+		node_frame = node.child("animation").child("frame");
+		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
+			player.animations[i].frames[j] = player.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
+			node_frame = node_frame.next_sibling("frame");
+		}
+		node = node.next_sibling("tile");
+	}
+	//LOG all information in animations
+	for (uint i = 0; i < player.num_animations; ++i) {
+		LOG("Animation %i--------", player.animations[i].id);
+		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
+			LOG("frame %i x: %i y: %i w: %i h: %i",
+				j, player.animations[i].frames[j].x, player.animations[i].frames[j].y,
+				player.animations[i].frames[j].w, player.animations[i].frames[j].h);
+		}
+	}
+
+	return ret;
 }

@@ -45,7 +45,6 @@ enum PlayerState {
 struct PlayerInfo {
 	TileSetPlayer tileset; //will only use one for the player
 	Anim* animations = nullptr;
-	PlayerState state = IDLE;
 
 	uint num_animations = 0;
 };
@@ -87,9 +86,17 @@ public:
 
 private:
 
+	void PushBack(const int);
+
+	void CheckState(fPoint);
+	void Actions();
+
+public:
+
 	PlayerInfo player;
 
-	
+	PlayerState state = IDLE;
+
 	float		scale = 1.0f;
 	iPoint		position;
 	fPoint		speed;
@@ -97,13 +104,8 @@ private:
 	pugi::xml_document	player_file;
 
 	Animation animation;
-	void PushBack(int);
-
-	void CheckState(fPoint);
-	void Actions();
 
 	Animation* current_animation = nullptr;
-	PlayerState state = IDLE;
 
 	Animation* idle = nullptr;
 	Animation* walking_right = nullptr;
@@ -111,9 +113,6 @@ private:
 	Animation* jumping = nullptr;
 	Animation* falling = nullptr;
 
-	
-	
-	
 };
 
 #endif 

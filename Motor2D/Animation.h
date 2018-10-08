@@ -15,7 +15,7 @@ public:
 
 
 private:
-	int last_frame = 0.0f;
+	int last_frame = 0;
 	float current_frame = 0.0f;
 	int frame = -1;
 	int loops = 0;

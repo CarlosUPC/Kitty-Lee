@@ -69,6 +69,7 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	Movement();
+	
 	return true;
 }
 
@@ -115,7 +116,19 @@ void j1Player::Movement() {
 		speed.x = 0.0f;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_DOWN && air == false) {
+		speed.y = -1.0f;
+		air = true;
+	}
+	if (air)
+		speed.y += 0.009f;
+
 	position.x += speed.x;
+	if (position.y <= App->map->GetInitialPosition().y) { //just while we don't have collision system player will stop in initial y
+		position.y += speed.y;
+	}
+	else { air = false; }
+	
 
 }
 void j1Player::PushBack(const int anim_type) {

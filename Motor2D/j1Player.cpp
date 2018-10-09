@@ -84,7 +84,7 @@ bool j1Player::PostUpdate()
 
 	//Player collider update
 	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
-
+	LOG("Player position: (%.2f, %.2f)", position.x, position.y);
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
 
 	return true;

@@ -85,7 +85,7 @@ bool j1Player::PostUpdate()
 	//Player collider update
 	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
 	LOG("Player position: (%.2f, %.2f)", position.x, position.y);
-	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
+	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 
 	return true;
 }
@@ -182,12 +182,14 @@ void j1Player::CheckState(fPoint speed) {
 		if (speed.x > 0)
 		{
 			state = WALKING_RIGHT;
+			flip = SDL_FLIP_NONE;
 
 		}
 		else if (speed.x < 0)
 		{
 
 			state = WALKING_LEFT;
+			flip = SDL_FLIP_HORIZONTAL;
 		}
 	}
 

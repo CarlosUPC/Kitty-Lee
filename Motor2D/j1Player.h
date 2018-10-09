@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "p2List.h"
+#include "SDL_image/include/SDL_image.h"
 
 struct SDL_Texture;
 
@@ -111,6 +112,8 @@ public:
 	pugi::xml_document	player_file;
 
 	Animation animation;
+
+	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;
 
 	Animation* current_animation = nullptr;
 

@@ -5,6 +5,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 #include "p2List.h"
 #include "j1Input.h"
@@ -31,7 +32,8 @@ bool j1Player::Awake(pugi::xml_node& node)
 {
 	bool ret = true;
 	LOG("Loading Player Module");
-	
+	//position = App->map->GetInitialPosition();
+	//collPlayer = App->collider->AddCollider({ (int)position.x, (int)position.y, 32, 32 }, COLLIDER_PLAYER, this);
 	ret = LoadPlayer(node.child("file").text().as_string());
 
 	state = IDLE;
@@ -52,7 +54,7 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-	
+	collPlayer = App->collider->AddCollider({ (int)position.x, (int)position.y, 32, 32 }, COLLIDER_PLAYER, this);
 	//Speed of player
 	speed = { 0,0 };
 
@@ -79,6 +81,9 @@ bool j1Player::PostUpdate()
 	
 	CheckState(speed);
 	Actions();
+
+	//Player collider update
+	collPlayer->SetPos(position.x, position.y);
 
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
 

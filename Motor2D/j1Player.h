@@ -119,6 +119,9 @@ public:
 	Animation* jumping = nullptr;
 	Animation* falling = nullptr;
 
+	Collider* collPlayer;
+	
+
 };
 
 #endif 

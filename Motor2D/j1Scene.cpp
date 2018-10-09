@@ -7,7 +7,11 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include "j1Scene.h"
+
+
+
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -33,6 +37,10 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(map.GetString());
+
+	win_width = App->win->screen_surface->w;
+	win_height = App->win->screen_surface->h;
+
 	return true;
 }
 
@@ -51,7 +59,7 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	/*if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -61,7 +69,18 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
+		App->render->camera.x -= 1;*/
+
+	//if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//{
+
+	//if (App->player->position.x >= (win_width / 4) && App->player->position.x <= win_width)
+	if (App->player->position.x >= 0 && App->player->position.x <= win_width/2)
+	App->render->camera.x = -(App->player->position.x + (App->player->speed.x));
+		
+	//}
+
+
 
 	App->map->Draw();
 
@@ -69,11 +88,12 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d MousePos:%d,%d",
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d MousePos:%d,%d Player.x:%.2f Player.y:%.2f CameraPosition.x:%i ",
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count(),
-		map_coordinates.x, map_coordinates.y, x, y);
+		map_coordinates.x, map_coordinates.y, x, y,
+		App->player->position.x, App->player->position.y, App->render->camera.x);
 
 	App->win->SetTitle(title.GetString());
 	return true;

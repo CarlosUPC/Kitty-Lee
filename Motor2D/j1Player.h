@@ -101,11 +101,14 @@ public:
 	float		scale = 1.0f;
 	fPoint		position;
 	fPoint		speed;
+	
 	float		incrementSpeed = 0.005f;
 	float		maxSpeedX = 0.25f;
 
 	bool		air = false;
 	bool		land = false;
+
+	
 
 	pugi::xml_document	player_file;
 

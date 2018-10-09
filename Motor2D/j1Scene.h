@@ -34,6 +34,9 @@ public:
 
 private:
 	p2SString map;
+
+	uint win_width;
+	uint win_height;
 };
 
 #endif // __j1SCENE_H__

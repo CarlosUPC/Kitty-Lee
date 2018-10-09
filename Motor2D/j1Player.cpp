@@ -58,6 +58,9 @@ bool j1Player::Start()
 	//Speed of player
 	speed = { 0,0 };
 
+	
+	
+	
 	return true;
 }
 
@@ -129,6 +132,8 @@ void j1Player::Movement() {
 		speed.y += 0.009f;
 
 	position.x += speed.x;
+	
+
 	if (position.y <= App->map->GetInitialPosition().y && air == true) { //just while we don't have collision system player will stop in initial y
 		position.y += speed.y;
 	}

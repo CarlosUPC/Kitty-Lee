@@ -72,7 +72,7 @@ public:
 		x += v.x;
 		y += v.y;
 
-		return(*this);
+		return (*this);
 	}
 
 	bool operator ==(const p2Point& v) const
@@ -84,6 +84,7 @@ public:
 	{
 		return (x != v.x || y != v.y);
 	}
+
 
 	// Utils ------------------------------------------------
 	bool IsZero() const

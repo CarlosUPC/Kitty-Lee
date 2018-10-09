@@ -101,16 +101,16 @@ public:
 
 	fPoint		position;
 	fPoint		speed;
-<<<<<<< HEAD
+
 	
 	float		incrementSpeed = 0.005f;
 	float		maxSpeedX = 0.25f;
-=======
+
 	float		incrementSpeedX;
 	float		gravity;
-	float		maxSpeedX;
+	
 	float		jump;
->>>>>>> f38e71ebb0b7b7a147ec0c70a0fb5a43df9308be
+
 
 	bool		air = false;
 	bool		land = false;

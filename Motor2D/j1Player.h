@@ -98,11 +98,12 @@ public:
 
 	PlayerState state = IDLE;
 
-	float		scale = 1.0f;
 	fPoint		position;
 	fPoint		speed;
-	float		incrementSpeed = 0.005f;
-	float		maxSpeedX = 0.25f;
+	float		incrementSpeedX;
+	float		gravity;
+	float		maxSpeedX;
+	float		jump;
 
 	bool		air = false;
 	bool		land = false;

@@ -59,3 +59,6 @@
   </animation>
  </tile>
 </tileset>
+<data>
+	<speed incrementSpeedX="0.005f" gravity="0.009f" maxSpeedX="0.25f" jump="-1.0f"/>
+</data>

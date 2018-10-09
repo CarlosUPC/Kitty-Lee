@@ -9,6 +9,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Player.h"
@@ -25,6 +26,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
+	collider = new j1Colliders();
 	map = new j1Map();
 	player = new j1Player();
 
@@ -36,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(collider);
 	AddModule(player);
 	// render last to swap buffer
 	AddModule(render);

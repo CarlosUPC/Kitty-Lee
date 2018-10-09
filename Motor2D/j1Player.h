@@ -25,22 +25,24 @@ struct TileSetPlayer {
 	uint height = 0;
 };
 
+enum PlayerState {
+	IDLE = 0,
+	WALKING,
+	JUMP,
+	FALL,
+	LAND,
+	DEAD,
+	HADOUKEN,
+	PUNCH,
+	UNKNOWN
+};
+
 struct Anim {
 	uint id = 0;
 	uint num_frames = 0;
 	SDL_Rect* frames = nullptr;
-	const pugi::char_t*  name;
+	PlayerState  animType;
 	uint FrameCount(pugi::xml_node&);
-};
-
-enum PlayerState {
-	IDLE = 0,
-	WALKING_RIGHT = 1,
-	WALKING_LEFT = 2,
-	JUMP = 3,
-	FALL = 4,
-	LAND = 5,
-	RUN = 6
 };
 
 struct PlayerInfo {
@@ -87,7 +89,7 @@ public:
 
 private:
 
-	void PushBack(const int);
+	void PushBack();
 
 	void Movement();
 	void CheckState(fPoint);
@@ -119,17 +121,17 @@ public:
 
 	pugi::xml_document	player_file;
 
-	Animation animation;
-
 	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;
 
 	Animation* current_animation = nullptr;
 
-	Animation* idle = nullptr;
-	Animation* walking_right = nullptr;
-	Animation* walking_left = nullptr;
-	Animation* jumping = nullptr;
-	Animation* falling = nullptr;
+	Animation anim_idle;
+	Animation anim_walking;
+	Animation anim_jump;
+	Animation anim_fall;
+	Animation anim_land;
+	Animation anim_default;
+
 
 	Collider* collPlayer;
 	iPoint collider;

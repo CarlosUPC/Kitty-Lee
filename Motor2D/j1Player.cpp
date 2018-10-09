@@ -39,9 +39,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 	state = IDLE;
 	
 	// Load animation pointers
-	PushBack(IDLE);
-	PushBack(WALKING_RIGHT);
-	PushBack(WALKING_LEFT);
+	PushBack();
 
 	return ret;
 }
@@ -87,7 +85,9 @@ bool j1Player::PostUpdate()
 
 	//Player collider update
 	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
-	LOG("Player position: (%.2f, %.2f)", position.x, position.y);
+	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
+		LOG("Player position: (%.2f, %.2f)", position.x, position.y);
+
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 
 	return true;
@@ -137,33 +137,32 @@ void j1Player::Movement() {
 	
 
 }
-void j1Player::PushBack(const int anim_type) {
+void j1Player::PushBack() {
 
-	
-	Animation* aux_anim = new Animation;
-	
-	aux_anim->name = player.animations[anim_type].name;
-
-	if (!strcmp(aux_anim->name, "idle"))
-		idle = aux_anim;
-	
-	else if (!strcmp(aux_anim->name, "walking_right"))
-		walking_right = aux_anim;
-		
-	else if (!strcmp(aux_anim->name, "walking_left"))
-		walking_left = aux_anim;
-		
-	else if (!strcmp(aux_anim->name, "jumping"))
-		jumping = aux_anim;
-
-	else if (!strcmp(aux_anim->name, "falling"))
-		falling = aux_anim;
-
-	for (uint i = 0; i < player.animations[anim_type].num_frames; ++i) {
-		aux_anim->PushBack(player.animations[anim_type].frames[i]);
+	for (uint i = 0; i < player.num_animations; ++i) {
+		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
+			switch (player.animations[i].animType) {
+			case IDLE:
+				anim_idle.PushBack(player.animations[i].frames[j]);
+				break;
+			case WALKING:
+				anim_walking.PushBack(player.animations[i].frames[j]);
+				break;
+			case JUMP:
+				anim_jump.PushBack(player.animations[i].frames[j]);
+				break;
+			case FALL:
+				anim_fall.PushBack(player.animations[i].frames[j]);
+				break;
+			case LAND:
+				anim_land.PushBack(player.animations[i].frames[j]);
+				break;
+			default:
+				break;
+			}
+		}
 	}
-	
-	//delete aux_anim;
+
 }
 
 bool j1Player::Load(pugi::xml_node&)
@@ -184,16 +183,13 @@ void j1Player::CheckState(fPoint speed) {
 
 	if (speed.x != 0)
 	{
-		if (speed.x > 0)
+		state = WALKING;
+		if (speed.x > 0 && flip != SDL_FLIP_NONE)
 		{
-			state = WALKING_RIGHT;
 			flip = SDL_FLIP_NONE;
-
 		}
-		else if (speed.x < 0)
+		else if (speed.x < 0 && flip != SDL_FLIP_HORIZONTAL)
 		{
-
-			state = WALKING_LEFT;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 	}
@@ -209,29 +205,26 @@ void j1Player::Actions() {
 	switch (state)
 	{
 	case IDLE:
-		current_animation = idle;
-		current_animation->speed = 0.025f;
+		current_animation = &anim_idle;
 		break;
-	case WALKING_RIGHT:
-		current_animation = walking_right;
-		current_animation->speed = 0.025f;
+	case WALKING:
+		current_animation = &anim_walking;
 		break;
-	case WALKING_LEFT:
-		current_animation = walking_right; //it doesnt exist :s
-		current_animation->speed = 0.025f;
-		break;
-
 	case JUMP:
+		current_animation = &anim_jump;
 		break;
 	case FALL:
+		current_animation = &anim_fall;
 		break;
 	case LAND:
-		break;
-	case RUN:
+		current_animation = &anim_land;
 		break;
 	default:
 		break;
 	}
+
+	current_animation->speed = 0.025f;
+
 }
 
 //Load all initial information of player saved in a xml file
@@ -275,7 +268,6 @@ bool j1Player::LoadPlayer(const char* file) {
 		player.animations[i].FrameCount(node.child("animation").child("frame"));
 		player.animations[i].frames = new SDL_Rect[player.animations[i].num_frames];
 		player.animations[i].id = node.attribute("id").as_uint();
-		player.animations[i].name = node.child("animation").attribute("name").value();
 		node = node.next_sibling("tile");
 	}
 
@@ -312,6 +304,39 @@ bool j1Player::LoadPlayer(const char* file) {
 	collider.y = node.child("rect").attribute("height").as_int();
 	offset.x = node.child("offset").attribute("x").as_int();
 	offset.y = node.child("offset").attribute("y").as_int();
+
+	//Convert id animations to enum
+	for (uint i = 0; i < player.num_animations; ++i) {
+		switch (player.animations[i].id) {
+		case 0:
+			player.animations[i].animType = PlayerState::IDLE;
+			break;
+		case 16:
+			player.animations[i].animType = PlayerState::WALKING;
+			break;
+		case 32:
+			player.animations[i].animType = PlayerState::JUMP;
+			break;
+		case 35:
+			player.animations[i].animType = PlayerState::FALL;
+			break;
+		case 36:
+			player.animations[i].animType = PlayerState::LAND;
+			break;
+		case 64:
+			player.animations[i].animType = PlayerState::DEAD;
+			break;
+		case 80:
+			player.animations[i].animType = PlayerState::HADOUKEN;
+			break;
+		case 96:
+			player.animations[i].animType = PlayerState::PUNCH;
+			break;
+		default:
+			player.animations[i].animType = PlayerState::UNKNOWN;
+			break;
+		}
+	}
 
 	return ret;
 }

@@ -61,4 +61,8 @@
 </tileset>
 <data>
 	<speed incrementSpeedX="0.005f" gravity="0.009f" maxSpeedX="0.25f" jump="-1.0f"/>
+	<collider>
+		<rect width="12" height="29"/>
+		<offset x="10" y="3"/>
+	</collider>
 </data>

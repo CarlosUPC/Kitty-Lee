@@ -121,6 +121,8 @@ public:
 	Animation* falling = nullptr;
 
 	Collider* collPlayer;
+	iPoint collider;
+	iPoint offset;
 	
 
 };

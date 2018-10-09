@@ -54,7 +54,7 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-	collPlayer = App->collider->AddCollider({ (int)position.x, (int)position.y, 32, 32 }, COLLIDER_PLAYER, this);
+	collPlayer = App->collider->AddCollider({ (int)position.x + offset.x, (int)position.y + offset.y, collider.x, collider.y }, COLLIDER_PLAYER, this);
 	//Speed of player
 	speed = { 0,0 };
 
@@ -83,7 +83,7 @@ bool j1Player::PostUpdate()
 	Actions();
 
 	//Player collider update
-	collPlayer->SetPos(position.x, position.y);
+	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
 
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame());
 
@@ -105,16 +105,12 @@ bool j1Player::CleanUp()
 }
 
 void j1Player::Movement() {
-	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
-		if (speed.x < maxSpeedX) {
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
-		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
-		if (speed.x > -maxSpeedX) {
+	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeedX) {
 			speed.x -= incrementSpeedX;
-		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
@@ -303,6 +299,12 @@ bool j1Player::LoadPlayer(const char* file) {
 	gravity = node.attribute("gravity").as_float();
 	maxSpeedX = node.attribute("maxSpeedX").as_float();
 	jump = node.attribute("jump").as_float();
+
+	node = player_file.child("data").child("collider");
+	collider.x = node.child("rect").attribute("width").as_int();
+	collider.y = node.child("rect").attribute("height").as_int();
+	offset.x = node.child("offset").attribute("x").as_int();
+	offset.y = node.child("offset").attribute("y").as_int();
 
 	return ret;
 }

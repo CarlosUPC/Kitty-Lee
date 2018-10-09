@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "p2List.h"
+#include "SDL_image/include/SDL_image.h"
 
 struct SDL_Texture;
 
@@ -98,12 +99,18 @@ public:
 
 	PlayerState state = IDLE;
 
-	float		scale = 1.0f;
 	fPoint		position;
 	fPoint		speed;
+<<<<<<< HEAD
 	
 	float		incrementSpeed = 0.005f;
 	float		maxSpeedX = 0.25f;
+=======
+	float		incrementSpeedX;
+	float		gravity;
+	float		maxSpeedX;
+	float		jump;
+>>>>>>> f38e71ebb0b7b7a147ec0c70a0fb5a43df9308be
 
 	bool		air = false;
 	bool		land = false;
@@ -114,6 +121,8 @@ public:
 
 	Animation animation;
 
+	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;
+
 	Animation* current_animation = nullptr;
 
 	Animation* idle = nullptr;
@@ -123,6 +132,8 @@ public:
 	Animation* falling = nullptr;
 
 	Collider* collPlayer;
+	iPoint collider;
+	iPoint offset;
 	
 
 };

@@ -88,12 +88,20 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+<<<<<<< HEAD
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d MousePos:%d,%d Player.x:%.2f Player.y:%.2f CameraPosition.x:%i ",
+=======
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d MousePos:%d,%d CameraPos:%d,%d",
+>>>>>>> f38e71ebb0b7b7a147ec0c70a0fb5a43df9308be
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count(),
 		map_coordinates.x, map_coordinates.y, x, y,
+<<<<<<< HEAD
 		App->player->position.x, App->player->position.y, App->render->camera.x);
+=======
+		App->render->camera.x, App->render->camera.y);
+>>>>>>> f38e71ebb0b7b7a147ec0c70a0fb5a43df9308be
 
 	App->win->SetTitle(title.GetString());
 	return true;

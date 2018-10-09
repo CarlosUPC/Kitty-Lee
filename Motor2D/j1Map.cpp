@@ -37,7 +37,7 @@ void j1Map::Draw()
 	float velocity = 1.0f;
 	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
 		if (item_layer->data->name.GetString()[0] == 'b')
-			velocity = 0.2f;
+			velocity = 0.7f;
 		else velocity = 1.0f;
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {

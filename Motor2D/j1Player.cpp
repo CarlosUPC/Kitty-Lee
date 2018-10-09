@@ -194,7 +194,11 @@ void j1Player::CheckState(fPoint speed) {
 		}
 	}
 
-	else
+	if (air) {
+		state = FALL;
+	}
+
+	if (!air&&speed.x == 0)
 	{
 		state = IDLE;
 	}

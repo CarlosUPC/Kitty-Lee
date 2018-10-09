@@ -124,10 +124,10 @@ void j1Player::Movement() {
 		speed.y += 0.009f;
 
 	position.x += speed.x;
-	if (position.y <= App->map->GetInitialPosition().y) { //just while we don't have collision system player will stop in initial y
+	if (position.y <= App->map->GetInitialPosition().y && air == true) { //just while we don't have collision system player will stop in initial y
 		position.y += speed.y;
 	}
-	else { air = false; }
+	else { position.y = App->map->GetInitialPosition().y;  air = false; }
 	
 
 }

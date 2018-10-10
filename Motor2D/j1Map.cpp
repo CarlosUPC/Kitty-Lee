@@ -6,7 +6,6 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include <math.h>
-#include <cstring>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -36,19 +35,15 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	uint id = 0;
-	float velocity = 1.0f;
+
 	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
-		if (item_layer->data->name.GetString()[0] == 'b')
-			velocity = 0.7f;
-		else velocity = 1.0f;
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {
 				for (uint i = 0; i < item_layer->data->height; i++) {
-
 					for (uint j = 0; j < item_layer->data->width; j++) {
 						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 						if (id != 0)
-							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), velocity);
+							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), item_layer->data->speed);
 					}
 				}
 			}
@@ -493,6 +488,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
 	layer->visible = node.attribute("visible").as_bool(true);
+
+	//Load properties of layer
+	pugi::xml_node n_property = node.child("properties").child("property");
+	while (n_property != NULL) {
+		if (n_property.attribute("speed").as_string())
+			layer->speed = n_property.attribute("value").as_float();
+		n_property = n_property.next_sibling();
+	}
 	
 	layer->tiles = new uint[layer->width*layer->height];
 

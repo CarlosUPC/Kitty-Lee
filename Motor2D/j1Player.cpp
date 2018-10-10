@@ -9,7 +9,6 @@
 #include "j1Map.h"
 #include "p2List.h"
 #include "j1Input.h"
-#include <cstring>
 
 
 j1Player::j1Player() {

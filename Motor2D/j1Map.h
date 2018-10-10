@@ -22,6 +22,9 @@ struct ColliderObject {
 	int	coll_y;
 	uint coll_width = 0;
 	uint coll_height = 0;	
+
+	
+	inline uint Get(int x, int y) const;
 };
 
 
@@ -116,7 +119,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadObject(pugi::xml_node& node, ColliderObject* layer);
+	bool LoadObject(pugi::xml_node& node, ColliderObject* obj);
 
 public:
 

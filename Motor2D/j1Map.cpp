@@ -70,6 +70,7 @@ void j1Map::ColliderPrint()
 	{
 
 		for (item = data.tilesets.start; item; item = item->next) {
+			
 			for (uint i = 0; i < item_layer->data->height; i++)
 			{
 				for (uint j = 0; j < item_layer->data->width; j++)
@@ -78,42 +79,34 @@ void j1Map::ColliderPrint()
 
 					if (id != 0)
 					{
-						if (item_layer->data->tiles[item_layer->data->Get(j + 1, i)] == id)
+						/*if (item_layer->data->tiles[item_layer->data->Get(j + 1, i)] == id)
 						{
 							counter++;
 							continue;
-						}
-						else
-						{
+						}*/
+						//else
+						//{
 							for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
 							{
-								uint collider_num = item_coll->data->tile_id;
+								//uint collider_id = item_layer->data->tiles[item_coll->data->Get(j,i)];
+								int WorldX = item_coll->data->coll_x;
+								int WorldY = item_coll->data->coll_y;
 
-								if (id - item->data->firstgid == collider_num)
-								{
-									int x = MapToWorld(j - counter, i).x;
-									int y = MapToWorld(j - counter, i).y;
+								int x = MapToWorld(j - counter, i).x;
+								int y = MapToWorld(j - counter, i).y;
+								
+								if(x == WorldX && y == WorldY){
+							
 									SDL_Rect collider_rec = { x,y,data.tile_width*(counter + 1),data.tile_height };
 									App->collider->AddCollider(collider_rec, item_coll->data->type);
 								}
 								counter = 0;
 							}
-						}
+						//}
 					}
 				}
 
-				/*for (uint indx = 0; indx < data.entities.count(); indx++)
-				{
-					if (id - data.tilesets[tile_indx]->firstgid == data.entities[indx]->tile_id)
-					{
-						int x = MapToWorld(i, j).x;
-						int y = MapToWorld(i, j).y;
-						SDL_Rect collider_rec = { x,y,data.tile_width,data.tile_height };
-						App->collider->AddCollider(collider_rec, data.entities[indx]->type);
-					}
-				}
-			}
-		}*/
+				
 			}
 		}
 	}
@@ -165,6 +158,10 @@ iPoint j1Map::WorldToMap(int x, int y) const {
 
 inline uint MapLayer::Get(int x, int y) const {
 	return y * this->width + x;
+}
+
+inline uint ColliderObject::Get(int x, int y) const {
+	return y * this->coll_width + x;
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -266,14 +263,18 @@ bool j1Map::Load(const char* file_name)
 	//Load Object data ------------------------------------------------
 	pugi::xml_node objectGroup;
 	pugi::xml_node object;
+	
 	for (objectGroup = map_file.child("map").child("objectgroup"); objectGroup && ret; objectGroup = objectGroup.next_sibling("objectgroup"))
 	{
 		for (object = objectGroup.first_child(); object;object = object.next_sibling("object")) {
 
 			ColliderObject* obj = new ColliderObject();
+			MapLayer* lay = new MapLayer();
 
-			if (ret == true && object != NULL)
+			if (ret == true && object != NULL) 
 				ret = LoadObject(object, obj);
+				
+			
 
 			data.colliders.add(obj);
 		}
@@ -484,6 +485,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
+	//pugi::xml_node tile = map_file.child("map").child("tile");
 
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();
@@ -505,8 +507,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_FLOOR;
 	}
-
-	//data.colliders.add(obj);
 
 	//Take initial position of player
 	// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 

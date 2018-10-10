@@ -36,14 +36,17 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	uint id = 0;
-	int camera_width = App->render->camera.w / App->win->GetScale();
-	int camera_height = App->render->camera.h / App->win->GetScale();
+	
+	//Local variables to simplify code
+	int scale = App->win->GetScale();
+	iPoint camera(WorldToMap(-App->render->camera.x/scale, -App->render->camera.y/scale)); //camera pass virtual coordinates to map coordinates with the correct scale
+	iPoint cameraSize(WorldToMap(App->render->camera.w / scale, App->render->camera.h / scale));
 
 	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {
-				for (uint i = -App->render->camera.y / item->data->tile_height / App->win->GetScale(); i <= camera_height / item->data->tile_height + (-App->render->camera.y / item->data->tile_height / App->win->GetScale()) && i < item_layer->data->height; ++i) {
-					for (uint j = -App->render->camera.x / item->data->tile_width / App->win->GetScale(); j <= camera_width / item->data->tile_width + (-App->render->camera.x / item->data->tile_width / App->win->GetScale())+1 && j < item_layer->data->width; ++j) {
+				for (uint i = camera.y; i <= cameraSize.y + camera.y && i < item_layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+					for (uint j = camera.x; j <= cameraSize.x + camera.x + 1 && j < item_layer->data->width; ++j) {
 						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 						if (id != 0)
 							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), item_layer->data->speed);

@@ -292,7 +292,7 @@ bool j1Map::Load(const char* file_name)
 	
 	for (objectGroup = map_file.child("map").child("objectgroup"); objectGroup && ret; objectGroup = objectGroup.next_sibling("objectgroup"))
 	{
-		for (object = objectGroup.first_child(); object;object = object.next_sibling("object")) {
+		for (object = objectGroup.child("object"); object;object = object.next_sibling("object")) {
 
 			ColliderObject* obj = new ColliderObject();
 			

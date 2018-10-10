@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -35,12 +36,12 @@ void j1Map::Draw()
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	uint id = 0;
-
+	
 	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {
-				for (uint i = 0; i < item_layer->data->height; i++) {
-					for (uint j = 0; j < item_layer->data->width; j++) {
+				for (uint i = 0; i <= App->render->camera.h / item->data->tile_height/App->win->GetScale() && i < item_layer->data->height; ++i) {
+					for (uint j = 0; j <= App->render->camera.w / item->data->tile_width/App->win->GetScale() && j < item_layer->data->width; ++j) {
 						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 						if (id != 0)
 							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), item_layer->data->speed);
@@ -68,7 +69,7 @@ void j1Map::ColliderPrint()
 	{
 
 		for (item = data.tilesets.start; item; item = item->next) {
-			
+
 			for (uint i = 0; i < item_layer->data->height; i++)
 			{
 				for (uint j = 0; j < item_layer->data->width; j++)
@@ -77,47 +78,47 @@ void j1Map::ColliderPrint()
 
 					if (id != 0)
 					{
-						
-							for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
-							{
-								
-								int WorldX = item_coll->data->coll_x;
-								int WorldY = item_coll->data->coll_y;
 
-								int WidthColl= item_coll->data->coll_width;
-								int HeightColl = item_coll->data->coll_height;
+						for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
+						{
 
-								int x = MapToWorld(j, i).x;
-								int y = MapToWorld(j, i).y;
-								
-								if(x == WorldX && y == WorldY){
+							int WorldX = item_coll->data->coll_x;
+							int WorldY = item_coll->data->coll_y;
 
-									while (!(HeightColl <= aux_height)) {
-										aux_height += 16;
-										counterHeight++;
+							int WidthColl = item_coll->data->coll_width;
+							int HeightColl = item_coll->data->coll_height;
 
-										
-									}
-									while (!(WidthColl <= aux_width)) {
-										aux_width += 16;
-										counterWidth++;
-									}
+							int x = MapToWorld(j, i).x;
+							int y = MapToWorld(j, i).y;
 
-									SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
-									App->collider->AddCollider(collider_rec, item_coll->data->type);
-									
+							if (x == WorldX && y == WorldY) {
+
+								while (!(HeightColl <= aux_height)) {
+									aux_height += 16;
+									counterHeight++;
+
+
 								}
-								counterWidth = 1;
-								aux_width = 16;
+								while (!(WidthColl <= aux_width)) {
+									aux_width += 16;
+									counterWidth++;
+								}
 
-								counterHeight = 1;
-								aux_height = 16;
-							
+								SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
+								App->collider->AddCollider(collider_rec, item_coll->data->type);
+
+							}
+							counterWidth = 1;
+							aux_width = 16;
+
+							counterHeight = 1;
+							aux_height = 16;
+
 						}
 					}
 				}
 
-				
+
 			}
 		}
 	}
@@ -578,16 +579,22 @@ fPoint j1Map::GetInitialPosition() const {
 
 }
 
-const char* getTypeCollider(enum COLLIDER_TYPE type) {
+void LOG_TypeCollider(enum COLLIDER_TYPE type) {
 
 	switch (type)
 	{
 	case COLLIDER_FLOOR:
-		return "Collider_Floor";
+		LOG("COLLIDER TYPE: FLOOR");
+		break;
 	case COLLIDER_WALL:
-		return "Collider_Wall";
+		LOG("COLLIDER TYPE: WALL");
+		break;
 	case COLLIDER_NONE:
-		return "none collider type";
+		LOG("COLLIDER TYPE: NONE");
+		break;
+	default:
+		LOG("COLLIDER TYPE: NAN");
+		break;
 	}
 }
 

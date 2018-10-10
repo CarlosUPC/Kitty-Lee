@@ -106,9 +106,11 @@ void j1Map::ColliderPrint()
 								int y = MapToWorld(j, i).y;
 								
 								if(x == WorldX && y == WorldY){
-							
-									SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
-									App->collider->AddCollider(collider_rec, item_coll->data->type);
+									if (!(item_coll->data->type == COLLIDER_PLAYER_POS)) {
+
+										SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
+										App->collider->AddCollider(collider_rec, item_coll->data->type);
+									}
 								}
 								counterWidth = 1;
 								aux_width = 16;
@@ -540,6 +542,10 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	else if (type == "COLLIDER_FLOOR")
 	{
 		obj->type = COLLIDER_FLOOR;
+	}
+	else if (type == "COLLIDER_PLAYER_POS")
+	{
+		obj->type = COLLIDER_PLAYER_POS;
 	}
 
 	return ret;

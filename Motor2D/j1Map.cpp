@@ -103,11 +103,9 @@ void j1Map::ColliderPrint()
 										counterWidth++;
 									}
 
-									if (!(item_coll->data->type == COLLIDER_PLAYER_POS)) {
-
-										SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
-										App->collider->AddCollider(collider_rec, item_coll->data->type);
-									}
+									SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
+									App->collider->AddCollider(collider_rec, item_coll->data->type);
+									
 								}
 								counterWidth = 1;
 								aux_width = 16;

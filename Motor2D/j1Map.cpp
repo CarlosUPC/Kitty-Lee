@@ -360,6 +360,7 @@ bool j1Map::LoadMap()
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
+		LoadProperties(map.child("properties"));
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -408,6 +409,15 @@ bool j1Map::LoadMap()
 	}
 
 	return ret;
+}
+
+void j1Map::LoadProperties(pugi::xml_node& properties_node) {
+	p2SString nameProperty;
+	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
+		nameProperty = properties_node.attribute("name").as_string();
+		if (nameProperty == "gravity")
+			data.gravity = properties_node.attribute("value").as_float();
+	}
 }
 
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)

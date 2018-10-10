@@ -77,6 +77,7 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
+	float				gravity;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ColliderObject*>	colliders;
@@ -119,8 +120,9 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadObject(pugi::xml_node& node, ColliderObject* obj);
+	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
+	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
+	void LoadProperties(pugi::xml_node& properties_node);
 
 public:
 

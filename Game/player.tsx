@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
-  <property name="animationSpeed" type="float" value="0.3"/>
+  <property name="animationSpeed" type="float" value="0.2"/>
   <property name="colliderHeight" type="int" value="29"/>
   <property name="colliderOffsetX" type="int" value="10"/>
   <property name="colliderOffsetY" type="int" value="3"/>
   <property name="colliderWidth" type="int" value="12"/>
   <property name="incrementSpeedX" type="float" value="1"/>
-  <property name="jumpSpeed" type="float" value="-7"/>
+  <property name="jumpSpeed" type="float" value="-8"/>
   <property name="maxSpeedX" type="float" value="2"/>
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>

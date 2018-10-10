@@ -124,7 +124,7 @@ void j1Player::Movement() {
 		air = true;
 	}
 	if (air)
-		speed.y += gravity;
+		speed.y += App->map->data.gravity;
 
 	position.x += speed.x;
 	

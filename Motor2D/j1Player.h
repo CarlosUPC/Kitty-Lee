@@ -105,10 +105,8 @@ public:
 	fPoint		speed;
 
 	float		maxSpeedX;
-
 	float		incrementSpeedX;
-	float		gravity;
-	
+
 	float		jumpSpeed;
 
 	bool		air = false;

@@ -101,11 +101,13 @@ void j1Map::ColliderPrint()
 										aux_height += 16;
 										counterHeight++;
 
-										while (!(WidthColl <= aux_width)) {
-											aux_width += 16;
-											counterWidth++;
-										}
+										
 									}
+									while (!(WidthColl <= aux_width)) {
+										aux_width += 16;
+										counterWidth++;
+									}
+
 									if (!(item_coll->data->type == COLLIDER_PLAYER_POS)) {
 
 										SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
@@ -295,13 +297,10 @@ bool j1Map::Load(const char* file_name)
 		for (object = objectGroup.child("object"); object;object = object.next_sibling("object")) {
 
 			ColliderObject* obj = new ColliderObject();
-			
-
+		
 			if (ret == true && object != NULL) 
 				ret = LoadObject(object, obj);
 				
-			
-
 			data.colliders.add(obj);
 		}
 	}

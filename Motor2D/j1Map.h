@@ -33,6 +33,7 @@ struct MapLayer {
 	uint width = 0;
 	uint height = 0;
 	uint* tiles = nullptr;
+	float speed = 1.0f;
 	bool visible = true;
 
 	~MapLayer() { delete[] tiles; tiles = nullptr; }

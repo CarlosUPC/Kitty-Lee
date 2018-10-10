@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "p2List.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 
 j1Player::j1Player() {
@@ -122,6 +123,7 @@ void j1Player::Movement() {
 	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
 		air = true;
+		App->audio->PlayFx(2);
 	}
 	if (air)
 		speed.y += App->map->data.gravity;

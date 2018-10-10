@@ -92,7 +92,7 @@ private:
 	void PushBack();
 
 	void Movement();
-	void CheckState(fPoint);
+	void CheckState();
 	void Actions();
 
 public:
@@ -104,15 +104,12 @@ public:
 	fPoint		position;
 	fPoint		speed;
 
-	
-	float		incrementSpeed = 0.005f;
-	float		maxSpeedX = 0.25f;
+	float		maxSpeedX;
 
 	float		incrementSpeedX;
 	float		gravity;
 	
-	float		jump;
-
+	float		jumpSpeed;
 
 	bool		air = false;
 	bool		land = false;
@@ -124,6 +121,7 @@ public:
 	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;
 
 	Animation* current_animation = nullptr;
+	float animationSpeed;
 
 	Animation anim_idle;
 	Animation anim_walking;

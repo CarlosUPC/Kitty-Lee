@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
+ <properties>
+  <property name="animationSpeed" type="float" value="0.3"/>
+  <property name="colliderHeight" type="int" value="29"/>
+  <property name="colliderOffsetX" type="int" value="10"/>
+  <property name="colliderOffsetY" type="int" value="3"/>
+  <property name="colliderWidth" type="int" value="12"/>
+  <property name="incrementSpeedX" type="float" value="1"/>
+  <property name="jumpSpeed" type="float" value="-7"/>
+  <property name="maxSpeedX" type="float" value="2"/>
+ </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">
   <animation>
@@ -76,10 +86,3 @@
   </animation>
  </tile>
 </tileset>
-<data>
-	<speed incrementSpeedX="0.005f" gravity="0.009f" maxSpeedX="0.25f" jump="-1.0f"/>
-	<collider>
-		<rect width="12" height="29"/>
-		<offset x="10" y="3"/>
-	</collider>
-</data>

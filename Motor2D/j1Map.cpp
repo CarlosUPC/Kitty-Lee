@@ -491,8 +491,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load properties of layer
 	pugi::xml_node n_property = node.child("properties").child("property");
+	p2SString nameProperty;
 	while (n_property != NULL) {
-		if (n_property.attribute("speed").as_string())
+		nameProperty = n_property.attribute("speed").as_string();
+		if (nameProperty == "speed")
 			layer->speed = n_property.attribute("value").as_float();
 		n_property = n_property.next_sibling();
 	}

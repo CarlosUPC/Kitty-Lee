@@ -37,7 +37,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 
 	state = IDLE;
 	
-	// Load animation pointers
+	// Load animation
 	PushBack();
 
 	return ret;
@@ -79,7 +79,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	
-	CheckState(speed);
+	CheckState();
 	Actions();
 
 	//Player collider update
@@ -120,7 +120,7 @@ void j1Player::Movement() {
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_DOWN && air == false) {
-		speed.y = jump;
+		speed.y = jumpSpeed;
 		air = true;
 	}
 	if (air)
@@ -161,7 +161,6 @@ void j1Player::PushBack() {
 			}
 		}
 	}
-
 }
 
 bool j1Player::Load(pugi::xml_node&)
@@ -174,9 +173,7 @@ bool j1Player::Save(pugi::xml_node&) const
 	return true;
 }
 
-
-
-void j1Player::CheckState(fPoint speed) {
+void j1Player::CheckState() {
 
 	//IN PROGRESS 
 
@@ -226,7 +223,7 @@ void j1Player::Actions() {
 		break;
 	}
 
-	current_animation->speed = 0.025f;
+	current_animation->speed = animationSpeed;
 
 }
 
@@ -285,7 +282,7 @@ bool j1Player::LoadPlayer(const char* file) {
 		}
 		node = node.next_sibling("tile");
 	}
-	//LOG all information in animations
+	//LOG all animation information
 	for (uint i = 0; i < player.num_animations; ++i) {
 		LOG("Animation %i--------", player.animations[i].id);
 		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
@@ -296,18 +293,38 @@ bool j1Player::LoadPlayer(const char* file) {
 	}
 	
 	//Load data
-	node = player_file.child("data").child("speed");
-	incrementSpeedX = node.attribute("incrementSpeedX").as_float();
-	gravity = node.attribute("gravity").as_float();
-	maxSpeedX = node.attribute("maxSpeedX").as_float();
-	jump = node.attribute("jump").as_float();
+	node = player_file.child("tileset").child("properties").child("property");
+	p2SString nameProperty;
+	while (node) {
+		nameProperty = node.attribute("name").as_string();
 
-	node = player_file.child("data").child("collider");
-	collider.x = node.child("rect").attribute("width").as_int();
-	collider.y = node.child("rect").attribute("height").as_int();
-	offset.x = node.child("offset").attribute("x").as_int();
-	offset.y = node.child("offset").attribute("y").as_int();
+		if (nameProperty == "animationSpeed")
+			animationSpeed = node.attribute("value").as_float();
 
+		else if (nameProperty == "colliderWidth")
+			collider.x = node.attribute("value").as_int();
+
+		else if (nameProperty == "colliderHeight")
+			collider.y = node.attribute("value").as_int();
+
+		else if (nameProperty == "colliderOffsetX")
+			offset.x = node.attribute("value").as_int();
+
+		else if (nameProperty == "colliderOffsetY")
+			offset.y = node.attribute("value").as_int();
+
+		else if (nameProperty == "incrementSpeedX")
+			incrementSpeedX = node.attribute("value").as_float();
+
+		else if (nameProperty == "jumpSpeed")
+			jumpSpeed = node.attribute("value").as_float();
+
+		else if (nameProperty == "maxSpeedX")
+			maxSpeedX = node.attribute("value").as_float();
+
+		node = node.next_sibling();
+	}
+	
 	//Convert id animations to enum
 	for (uint i = 0; i < player.num_animations; ++i) {
 		switch (player.animations[i].id) {

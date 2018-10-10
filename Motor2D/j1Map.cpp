@@ -92,20 +92,20 @@ void j1Map::ColliderPrint()
 								int WidthColl= item_coll->data->coll_width;
 								int HeightColl = item_coll->data->coll_height;
 
-								while(!(WidthColl <= aux_width)) {
-									aux_width += 16;
-									counterWidth++;
-								}
-
-								while (!(HeightColl <= aux_height)) {
-									aux_height += 16;
-									counterHeight++;
-								}
-
 								int x = MapToWorld(j, i).x;
 								int y = MapToWorld(j, i).y;
 								
 								if(x == WorldX && y == WorldY){
+
+									while (!(HeightColl <= aux_height)) {
+										aux_height += 16;
+										counterHeight++;
+
+										while (!(WidthColl <= aux_width)) {
+											aux_width += 16;
+											counterWidth++;
+										}
+									}
 									if (!(item_coll->data->type == COLLIDER_PLAYER_POS)) {
 
 										SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };

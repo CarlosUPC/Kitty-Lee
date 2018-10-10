@@ -4381,6 +4381,6 @@
   <object id="13" name="coll_1" x="160" y="160" width="16" height="16"/>
   <object id="19" name="coll_2" x="208" y="160" width="48" height="16"/>
   <object id="20" name="coll_3" x="160" y="192" width="16" height="32"/>
-  <object id="21" name="coll_4" x="48" y="143.667" width="32" height="48"/>
+  <object id="21" name="coll_4" x="48" y="144" width="32" height="48"/>
  </objectgroup>
 </map>

@@ -203,6 +203,16 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	// Remove all colliders
+	p2List_item<ColliderObject*>* item3;
+	item3 = data.colliders.start;
+
+	while (item3!= NULL) {
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.colliders.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -271,7 +281,7 @@ bool j1Map::Load(const char* file_name)
 		for (object = objectGroup.first_child(); object;object = object.next_sibling("object")) {
 
 			ColliderObject* obj = new ColliderObject();
-			MapLayer* lay = new MapLayer();
+			
 
 			if (ret == true && object != NULL) 
 				ret = LoadObject(object, obj);

@@ -4372,7 +4372,7 @@
   <properties>
    <property name="type" value="COLLIDER_PLAYER_POS"/>
   </properties>
-  <object id="1" name="Player" x="176.333" y="128.333" width="16" height="15.6667"/>
+  <object id="1" name="Player" x="176.333" y="128.333" width="16" height="15.6667" visible="0"/>
  </objectgroup>
  <objectgroup name="Colliders">
   <properties>

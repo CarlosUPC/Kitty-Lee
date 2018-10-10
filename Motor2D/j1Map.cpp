@@ -56,12 +56,11 @@ void j1Map::Draw()
 
 void j1Map::ColliderPrint()
 {
-	uint tile_indx = 0;
-	uint layer_indx;
-	int counter = 0;
+	
 
-	uint id = 0;
-
+	
+	uint counter = 1;
+	uint aux_width = 16;
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	p2List_item<ColliderObject*>* item_coll = nullptr;
@@ -75,34 +74,37 @@ void j1Map::ColliderPrint()
 			{
 				for (uint j = 0; j < item_layer->data->width; j++)
 				{
-					id = item_layer->data->tiles[item_layer->data->Get(j, i)];
+					uint id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 
 					if (id != 0)
 					{
-						/*if (item_layer->data->tiles[item_layer->data->Get(j + 1, i)] == id)
-						{
-							counter++;
-							continue;
-						}*/
-						//else
-						//{
+						
 							for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
 							{
-								//uint collider_id = item_layer->data->tiles[item_coll->data->Get(j,i)];
+								
 								int WorldX = item_coll->data->coll_x;
 								int WorldY = item_coll->data->coll_y;
 
-								int x = MapToWorld(j - counter, i).x;
-								int y = MapToWorld(j - counter, i).y;
+								int WidthColl= item_coll->data->coll_width;
+								int HeightColl = item_coll->data->coll_height;
+
+								while(!(WidthColl <= aux_width)) {
+									aux_width += 16;
+									counter++;
+								}
+
+								int x = MapToWorld(j, i).x;
+								int y = MapToWorld(j, i).y;
 								
 								if(x == WorldX && y == WorldY){
 							
-									SDL_Rect collider_rec = { x,y,data.tile_width*(counter + 1),data.tile_height };
+									SDL_Rect collider_rec = { x,y,data.tile_width*(counter),data.tile_height };
 									App->collider->AddCollider(collider_rec, item_coll->data->type);
 								}
-								counter = 0;
-							}
-						//}
+								counter = 1;
+								aux_width = 16;
+							
+						}
 					}
 				}
 
@@ -484,8 +486,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 
 	bool ret = true;
 	if (node_object.empty())	ret = false;
-
-	//pugi::xml_node tile = map_file.child("map").child("tile");
 
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();

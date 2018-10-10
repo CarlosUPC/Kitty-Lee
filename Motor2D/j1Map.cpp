@@ -335,7 +335,8 @@ bool j1Map::Load(const char* file_name)
 			ColliderObject* o = item_object->data;
 			LOG("Object ------");
 			LOG("name: %s", o->name.GetString());
-			LOG("Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
+			LOG("Player Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
+			LOG("Collider Position: (%i , %i)", o->coll_x, o->coll_y);
 			LOG("width: %i  height: %i", o->coll_width, o->coll_height);
 			item_object = item_object->next;
 		}
@@ -508,13 +509,15 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
+	obj->name = node_object.attribute("name").as_string();
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();
 	obj->coll_y = node_object.attribute("y").as_int();
 	obj->coll_height = node_object.attribute("height").as_uint();
 	obj->coll_width = node_object.attribute("width").as_uint();
 
-	p2SString type(node_object.attribute("type").as_string());
+	pugi::xml_node objGroup = node_object.parent();
+	p2SString type(objGroup.child("properties").child("property").attribute("value").as_string());
 
 	if (type == "COLLIDER_NONE")
 	{

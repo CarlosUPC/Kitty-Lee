@@ -4372,17 +4372,11 @@
   <object id="1" name="Player" x="176.333" y="128.333" width="16" height="15.6667"/>
  </objectgroup>
  <objectgroup name="Colliders">
-  <object id="6" name="coll_2" x="159.5" y="160">
-   <polyline points="40,-0.363636 192.5,0 192.5,-16 208.5,-16 208.5,0 256.5,0 256.5,-16 248.773,-16.0909 240.591,-22.1818 240.591,-31.9091 336.5,-32 336.25,-23 328,-16.5 320.5,-16.5 320.5,0 416.25,-0.25 416.5,-16 448.25,-15.75 448.25,-0.25 495.75,0.25 496.25,15.5 39.9545,15.2727 40.1364,-0.363636"/>
-  </object>
-  <object id="11" name="coll_1" x="16" y="96.3333">
-   <polyline points="0,0 15,-0.333333 15,31.3333 47.3333,31.6667 47.6667,47.6667 63.3333,48.3333 63.3333,62.3333 -15.6667,62.6667 -15.6667,-0.333333 -0.333333,0"/>
-  </object>
-  <object id="13" name="coll_3" x="160" y="160" width="15.9688" height="15.9688">
+  <object id="13" name="coll_1" x="160" y="160" width="64.3021" height="15.9688">
    <properties>
     <property name="height" type="int" value="16"/>
     <property name="type" value="COLLIDER_FLOOR"/>
-    <property name="width" type="int" value="16"/>
+    <property name="width" type="int" value="64"/>
    </properties>
   </object>
  </objectgroup>

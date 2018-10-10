@@ -61,52 +61,60 @@ void j1Map::ColliderPrint()
 	int counter = 0;
 
 	uint id = 0;
-	
-	for (layer_indx = 0; layer_indx < data.layers.count(); layer_indx++)
-	{
-		for (int j = 0; j < data.height; j++)
-		{
-			for (int i = 0; i < data.width; i++)
-			{
-				id = data.layers[layer_indx]->tiles[data.layers[layer_indx]->Get(i, j)];
 
-				if (id != 0)
+	p2List_item<TileSet*>* item = nullptr;
+	p2List_item<MapLayer*>* item_layer = nullptr;
+	p2List_item<ColliderObject*>* item_coll = nullptr;
+	
+	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next)
+	{
+
+		for (item = data.tilesets.start; item; item = item->next) {
+			for (uint i = 0; i < item_layer->data->height; i++)
+			{
+				for (uint j = 0; j < item_layer->data->width; j++)
 				{
-					if (data.layers[layer_indx]->tiles[data.layers[layer_indx]->Get(i + 1, j)] == id)
+					id = item_layer->data->tiles[item_layer->data->Get(j, i)];
+
+					if (id != 0)
 					{
-						counter++;
-						continue;
-					}
-					else
-					{
-						for (uint indx = 0; indx < data.entities.count(); indx++)
+						if (item_layer->data->tiles[item_layer->data->Get(j + 1, i)] == id)
 						{
-							uint collider_num = data.entities[indx]->tile_id;
-							if (id - data.tilesets[tile_indx]->firstgid == collider_num)
+							counter++;
+							continue;
+						}
+						else
+						{
+							for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
 							{
-								int x = MapToWorld(i - counter, j).x;
-								int y = MapToWorld(i - counter, j).y;
-								SDL_Rect collider_rec = { x,y,data.tile_width*(counter + 1),data.tile_height };
-								App->collider->AddCollider(collider_rec, data.entities[indx]->type);
+								uint collider_num = item_coll->data->tile_id;
+
+								if (id - item->data->firstgid == collider_num)
+								{
+									int x = MapToWorld(j - counter, i).x;
+									int y = MapToWorld(j - counter, i).y;
+									SDL_Rect collider_rec = { x,y,data.tile_width*(counter + 1),data.tile_height };
+									App->collider->AddCollider(collider_rec, item_coll->data->type);
+								}
+								counter = 0;
 							}
-							counter = 0;
 						}
 					}
 				}
-			}
 
-			/*for (uint indx = 0; indx < data.entities.count(); indx++)
-			{
-				if (id - data.tilesets[tile_indx]->firstgid == data.entities[indx]->tile_id)
+				/*for (uint indx = 0; indx < data.entities.count(); indx++)
 				{
-					int x = MapToWorld(i, j).x;
-					int y = MapToWorld(i, j).y;
-					SDL_Rect collider_rec = { x,y,data.tile_width,data.tile_height };
-					App->collider->AddCollider(collider_rec, data.entities[indx]->type);
+					if (id - data.tilesets[tile_indx]->firstgid == data.entities[indx]->tile_id)
+					{
+						int x = MapToWorld(i, j).x;
+						int y = MapToWorld(i, j).y;
+						SDL_Rect collider_rec = { x,y,data.tile_width,data.tile_height };
+						App->collider->AddCollider(collider_rec, data.entities[indx]->type);
+					}
 				}
 			}
-		}
-	}*/
+		}*/
+			}
 		}
 	}
 }
@@ -267,7 +275,7 @@ bool j1Map::Load(const char* file_name)
 			if (ret == true && object != NULL)
 				ret = LoadObject(object, obj);
 
-			data.entities.add(obj);
+			data.colliders.add(obj);
 		}
 	}
 
@@ -298,7 +306,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 
-		p2List_item<ColliderObject*>* item_object = data.entities.start;
+		p2List_item<ColliderObject*>* item_object = data.colliders.start;
 		while (item_object != NULL) {
 			ColliderObject* o = item_object->data;
 			LOG("Object ------");
@@ -520,7 +528,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 fPoint j1Map::GetInitialPosition() const {
 
 	fPoint initialPos;
-	p2List_item<ColliderObject*>* ente = data.entities.start;
+	p2List_item<ColliderObject*>* ente = data.colliders.start;
 
 	while (ente != NULL)
 	{

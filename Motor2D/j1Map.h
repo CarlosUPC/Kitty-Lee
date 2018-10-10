@@ -77,8 +77,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
-
-	p2List<ColliderObject*>	entities;
+	p2List<ColliderObject*>	colliders;
 };
 
 // ----------------------------------------------------

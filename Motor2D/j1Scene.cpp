@@ -41,7 +41,7 @@ bool j1Scene::Start()
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 	camPos = win_width;
-	
+	App->map->ColliderPrint();
 	return true;
 }
 
@@ -88,7 +88,7 @@ bool j1Scene::Update(float dt)
 
 
 	App->map->Draw();
-	App->map->ColliderPrint();
+	//App->map->ColliderPrint();
 
 
 	int x, y;

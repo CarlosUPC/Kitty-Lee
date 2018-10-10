@@ -23,8 +23,6 @@ struct ColliderObject {
 	uint coll_width = 0;
 	uint coll_height = 0;	
 
-	
-	inline uint Get(int x, int y) const;
 };
 
 

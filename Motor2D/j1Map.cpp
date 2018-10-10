@@ -173,10 +173,6 @@ inline uint MapLayer::Get(int x, int y) const {
 	return y * this->width + x;
 }
 
-inline uint ColliderObject::Get(int x, int y) const {
-	return y * this->coll_width + x;
-}
-
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;

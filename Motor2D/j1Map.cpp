@@ -96,11 +96,13 @@ void j1Map::ColliderPrint()
 										aux_height += 16;
 										counterHeight++;
 
-										while (!(WidthColl <= aux_width)) {
-											aux_width += 16;
-											counterWidth++;
-										}
+										
 									}
+									while (!(WidthColl <= aux_width)) {
+										aux_width += 16;
+										counterWidth++;
+									}
+
 									if (!(item_coll->data->type == COLLIDER_PLAYER_POS)) {
 
 										SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
@@ -169,10 +171,6 @@ iPoint j1Map::WorldToMap(int x, int y) const {
 
 inline uint MapLayer::Get(int x, int y) const {
 	return y * this->width + x;
-}
-
-inline uint ColliderObject::Get(int x, int y) const {
-	return y * this->coll_width + x;
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
@@ -290,13 +288,10 @@ bool j1Map::Load(const char* file_name)
 		for (object = objectGroup.child("object"); object;object = object.next_sibling("object")) {
 
 			ColliderObject* obj = new ColliderObject();
-			
-
+		
 			if (ret == true && object != NULL) 
 				ret = LoadObject(object, obj);
 				
-			
-
 			data.colliders.add(obj);
 		}
 	}

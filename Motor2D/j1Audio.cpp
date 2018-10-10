@@ -52,6 +52,8 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	}
 
 	volumeMusic = config.child("volume").attribute("lvl").as_int(128);
+	LoadFx("audio/fx/Jump_Sound.wav");
+	LoadFx("audio/fx/jump_03.wav");
 	return ret;
 }
 

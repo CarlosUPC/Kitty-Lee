@@ -6,6 +6,8 @@
 #include "Animation.h"
 #include "p2List.h"
 #include "SDL_image/include/SDL_image.h"
+#include "SDL_mixer\include\SDL_mixer.h"
+#pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
 struct SDL_Texture;
 
@@ -112,7 +114,7 @@ public:
 	bool		air = false;
 	bool		land = false;
 
-	
+	Mix_Chunk* jump_sound = NULL;
 
 	pugi::xml_document	player_file;
 

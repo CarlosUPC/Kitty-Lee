@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "p2List.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 
 j1Player::j1Player() {
@@ -122,6 +123,7 @@ void j1Player::Movement() {
 	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
 		air = true;
+		App->audio->PlayFx(2);
 	}
 	if (air)
 		speed.y += App->map->data.gravity;
@@ -163,13 +165,22 @@ void j1Player::PushBack() {
 	}
 }
 
-bool j1Player::Load(pugi::xml_node&)
+// Load / Save
+bool j1Player::Load(pugi::xml_node& data)
 {
-	return true;
-}
+	position.x = data.child("player").attribute("x").as_int();
+	position.y = data.child("player").attribute("y").as_int();
 
-bool j1Player::Save(pugi::xml_node&) const
+	return true;
+
+}
+bool j1Player::Save(pugi::xml_node& data) const
 {
+	pugi::xml_node player = data.append_child("player");
+
+	player.append_attribute("x") = position.x;
+	player.append_attribute("y") = position.y;
+
 	return true;
 }
 
@@ -382,3 +393,4 @@ uint Anim::FrameCount(pugi::xml_node& n) {
 
 	return num_frames;
 }
+

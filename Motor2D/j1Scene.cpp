@@ -37,7 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(map.GetString());
-
+	App->audio->PlayMusic("audio/music/Grasslands Theme.ogg");
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 	camPos = win_width;
@@ -54,10 +54,10 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

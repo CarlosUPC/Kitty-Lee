@@ -7,8 +7,10 @@
 	<map />
 	<scene />
 	<colliders />
-	<player />
+	<player>
+		<player x="355" y="128" />
+	</player>
 	<renderer>
-		<camera x="-239" y="0" />
+		<camera x="-355" y="0" />
 	</renderer>
 </game_state>

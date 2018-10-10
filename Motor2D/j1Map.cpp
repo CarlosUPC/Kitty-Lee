@@ -59,8 +59,11 @@ void j1Map::ColliderPrint()
 	
 
 	
-	uint counter = 1;
+	uint counterWidth = 1;
+	uint counterHeight = 1;
 	uint aux_width = 16;
+	uint aux_height = 16;
+
 	p2List_item<TileSet*>* item = nullptr;
 	p2List_item<MapLayer*>* item_layer = nullptr;
 	p2List_item<ColliderObject*>* item_coll = nullptr;
@@ -90,7 +93,12 @@ void j1Map::ColliderPrint()
 
 								while(!(WidthColl <= aux_width)) {
 									aux_width += 16;
-									counter++;
+									counterWidth++;
+								}
+
+								while (!(HeightColl <= aux_height)) {
+									aux_height += 16;
+									counterHeight++;
 								}
 
 								int x = MapToWorld(j, i).x;
@@ -98,11 +106,14 @@ void j1Map::ColliderPrint()
 								
 								if(x == WorldX && y == WorldY){
 							
-									SDL_Rect collider_rec = { x,y,data.tile_width*(counter),data.tile_height };
+									SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
 									App->collider->AddCollider(collider_rec, item_coll->data->type);
 								}
-								counter = 1;
+								counterWidth = 1;
 								aux_width = 16;
+
+								counterHeight = 1;
+								aux_height = 16;
 							
 						}
 					}

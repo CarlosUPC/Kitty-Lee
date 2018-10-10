@@ -109,6 +109,8 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 	
 	fPoint GetInitialPosition() const;
+	
+	const char* getTypeCollider(enum COLLIDER_TYPE);
 
 	void ColliderPrint();
 	

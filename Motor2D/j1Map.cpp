@@ -6,6 +6,7 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include <math.h>
+#include <cstring>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -338,6 +339,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("Player Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
 			LOG("Collider Position: (%i , %i)", o->coll_x, o->coll_y);
 			LOG("width: %i  height: %i", o->coll_width, o->coll_height);
+			LOG("Type: %d", o->type);
 			item_object = item_object->next;
 		}
 
@@ -509,6 +511,13 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
+	// Load Initial Position Player
+	if (node_object.attribute("name").as_string()[0] == 'P') {
+		obj->initialPosition.x = node_object.attribute("x").as_int();
+		obj->initialPosition.y = node_object.attribute("y").as_int();
+	}
+
+	//Load Collider / Player data
 	obj->name = node_object.attribute("name").as_string();
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();
@@ -516,6 +525,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	obj->coll_height = node_object.attribute("height").as_uint();
 	obj->coll_width = node_object.attribute("width").as_uint();
 
+	//Load Collider type from ObjectGroup
 	pugi::xml_node objGroup = node_object.parent();
 	p2SString type(objGroup.child("properties").child("property").attribute("value").as_string());
 
@@ -531,20 +541,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_FLOOR;
 	}
-
-	//Take initial position of player
-	// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 
-	// i commented the condition to run the code in right way at the moment because we have only one object xD
-
-	//Solved if-condition problem in this way, but i would like to improve the code
-	if (node_object.attribute("name").as_string()[0] == 'P') {
-			obj->name = node_object.attribute("name").as_string();
-			obj->initialPosition.x = node_object.attribute("x").as_int();
-			obj->initialPosition.y = node_object.attribute("y").as_int();	
-			obj->coll_width = node_object.attribute("width").as_uint();
-			obj->coll_height = node_object.attribute("height").as_uint();
-		}
-
 
 	return ret;
 }
@@ -566,5 +562,18 @@ fPoint j1Map::GetInitialPosition() const {
 
 	return initialPos;
 
+}
+
+const char* getTypeCollider(enum COLLIDER_TYPE type) {
+
+	switch (type)
+	{
+	case COLLIDER_FLOOR:
+		return "Collider_Floor";
+	case COLLIDER_WALL:
+		return "Collider_Wall";
+	case COLLIDER_NONE:
+		return "none collider type";
+	}
 }
 

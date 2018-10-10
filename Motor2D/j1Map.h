@@ -6,15 +6,22 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Collision.h"
 
 
 // ----------------------------------------------------
 
-struct MapObject {
+struct ColliderObject {
+
 	p2SString name;
 	fPoint initialPosition;
-	uint width = 0;
-	uint height = 0;	
+
+	COLLIDER_TYPE type;
+	uint tile_id;
+	int	coll_x;
+	int	coll_y;
+	uint coll_width = 0;
+	uint coll_height = 0;	
 };
 
 
@@ -48,6 +55,8 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+
+	//p2List<ColliderObject*>	colliders;
 };
 
 enum MapTypes
@@ -68,7 +77,8 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
-	p2List<MapObject*>	entities;
+
+	p2List<ColliderObject*>	entities;
 };
 
 // ----------------------------------------------------
@@ -97,6 +107,8 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 	
 	fPoint GetInitialPosition() const;
+
+	void ColliderPrint();
 	
 
 private:
@@ -105,7 +117,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
-	bool LoadObject(pugi::xml_node& node, MapObject* layer);
+	bool LoadObject(pugi::xml_node& node, ColliderObject* layer);
 
 public:
 

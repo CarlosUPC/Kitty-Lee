@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Collision.h"
 #include "j1Map.h"
 #include <math.h>
 
@@ -53,6 +54,62 @@ void j1Map::Draw()
 	}
 }
 
+void j1Map::ColliderPrint()
+{
+	uint tile_indx = 0;
+	uint layer_indx;
+	int counter = 0;
+
+	uint id = 0;
+	
+	for (layer_indx = 0; layer_indx < data.layers.count(); layer_indx++)
+	{
+		for (int j = 0; j < data.height; j++)
+		{
+			for (int i = 0; i < data.width; i++)
+			{
+				id = data.layers[layer_indx]->tiles[data.layers[layer_indx]->Get(i, j)];
+
+				if (id != 0)
+				{
+					if (data.layers[layer_indx]->tiles[data.layers[layer_indx]->Get(i + 1, j)] == id)
+					{
+						counter++;
+						continue;
+					}
+					else
+					{
+						for (uint indx = 0; indx < data.entities.count(); indx++)
+						{
+							uint collider_num = data.entities[indx]->tile_id;
+							if (id - data.tilesets[tile_indx]->firstgid == collider_num)
+							{
+								int x = MapToWorld(i - counter, j).x;
+								int y = MapToWorld(i - counter, j).y;
+								SDL_Rect collider_rec = { x,y,data.tile_width*(counter + 1),data.tile_height };
+								App->collider->AddCollider(collider_rec, data.entities[indx]->type);
+							}
+							counter = 0;
+						}
+					}
+				}
+			}
+
+			/*for (uint indx = 0; indx < data.entities.count(); indx++)
+			{
+				if (id - data.tilesets[tile_indx]->firstgid == data.entities[indx]->tile_id)
+				{
+					int x = MapToWorld(i, j).x;
+					int y = MapToWorld(i, j).y;
+					SDL_Rect collider_rec = { x,y,data.tile_width,data.tile_height };
+					App->collider->AddCollider(collider_rec, data.entities[indx]->type);
+				}
+			}
+		}
+	}*/
+		}
+	}
+}
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -205,7 +262,7 @@ bool j1Map::Load(const char* file_name)
 	{
 		for (object = objectGroup.first_child(); object;object = object.next_sibling("object")) {
 
-			MapObject* obj = new MapObject();
+			ColliderObject* obj = new ColliderObject();
 
 			if (ret == true && object != NULL)
 				ret = LoadObject(object, obj);
@@ -241,13 +298,13 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 
-		p2List_item<MapObject*>* item_object = data.entities.start;
+		p2List_item<ColliderObject*>* item_object = data.entities.start;
 		while (item_object != NULL) {
-			MapObject* o = item_object->data;
+			ColliderObject* o = item_object->data;
 			LOG("Object ------");
 			LOG("name: %s", o->name.GetString());
 			LOG("Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
-			LOG("width: %i  height: %i", o->width, o->height);
+			LOG("width: %i  height: %i", o->coll_width, o->coll_height);
 			item_object = item_object->next;
 		}
 
@@ -335,6 +392,8 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->tile_height = tileset_node.attribute("tileheight").as_int();
 	set->margin = tileset_node.attribute("margin").as_int();
 	set->spacing = tileset_node.attribute("spacing").as_int();
+
+
 	pugi::xml_node offset = tileset_node.child("tileoffset");
 
 	if(offset != NULL)
@@ -412,10 +471,34 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
+bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 
 	bool ret = true;
 	if (node_object.empty())	ret = false;
+
+
+	obj->tile_id = node_object.attribute("id").as_uint();
+	obj->coll_x = node_object.attribute("x").as_int();
+	obj->coll_y = node_object.attribute("y").as_int();
+	obj->coll_height = node_object.attribute("height").as_uint();
+	obj->coll_width = node_object.attribute("width").as_uint();
+
+	p2SString type(node_object.attribute("type").as_string());
+
+	if (type == "COLLIDER_NONE")
+	{
+		obj->type = COLLIDER_NONE;
+	}
+	else if (type == "COLLIDER_WALL")
+	{
+		obj->type = COLLIDER_WALL;
+	}
+	else if (type == "COLLIDER_FLOOR")
+	{
+		obj->type = COLLIDER_FLOOR;
+	}
+
+	//data.colliders.add(obj);
 
 	//Take initial position of player
 	// if-condition doesnt work, i dont know why but xml doesnt detect object child name "Player" 
@@ -426,8 +509,8 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
 			obj->name = node_object.attribute("name").as_string();
 			obj->initialPosition.x = node_object.attribute("x").as_int();
 			obj->initialPosition.y = node_object.attribute("y").as_int();	
-			obj->width = node_object.attribute("width").as_uint();
-			obj->height = node_object.attribute("height").as_uint();
+			obj->coll_width = node_object.attribute("width").as_uint();
+			obj->coll_height = node_object.attribute("height").as_uint();
 		}
 
 
@@ -437,7 +520,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, MapObject* obj) {
 fPoint j1Map::GetInitialPosition() const {
 
 	fPoint initialPos;
-	p2List_item<MapObject*>* ente = data.entities.start;
+	p2List_item<ColliderObject*>* ente = data.entities.start;
 
 	while (ente != NULL)
 	{

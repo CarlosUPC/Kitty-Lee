@@ -32,8 +32,8 @@ bool j1Player::Awake(pugi::xml_node& node)
 {
 	bool ret = true;
 	LOG("Loading Player Module");
-	//position = App->map->GetInitialPosition();
-	//collPlayer = App->collider->AddCollider({ (int)position.x, (int)position.y, 32, 32 }, COLLIDER_PLAYER, this);
+
+	
 	ret = LoadPlayer(node.child("file").text().as_string());
 
 	state = IDLE;
@@ -89,7 +89,7 @@ bool j1Player::PostUpdate()
 	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
 	LOG("Player position: (%.2f, %.2f)", position.x, position.y);
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
-
+	
 	return true;
 }
 

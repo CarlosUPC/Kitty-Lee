@@ -37,6 +37,10 @@ private:
 
 	uint win_width;
 	uint win_height;
+
+	int camPos;
+	
+	
 };
 
 #endif // __j1SCENE_H__

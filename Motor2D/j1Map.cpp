@@ -27,7 +27,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	return ret;
 }
-#include "j1Player.h"
+
 void j1Map::Draw()
 {
 	if(map_loaded == false)
@@ -46,7 +46,7 @@ void j1Map::Draw()
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {
 				for (uint i = camera.y; i <= cameraSize.y + camera.y && i < item_layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
-					for (uint j = camera.x; j <= cameraSize.x + camera.x + 1 && j < item_layer->data->width; ++j) {
+					for (uint j = camera.x*item_layer->data->speed; j <= cameraSize.x + camera.x + 1 && j < item_layer->data->width; ++j) {
 						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 						if (id != 0)
 							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), item_layer->data->speed);
@@ -502,7 +502,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	pugi::xml_node n_property = node.child("properties").child("property");
 	p2SString nameProperty;
 	while (n_property != NULL) {
-		nameProperty = n_property.attribute("speed").as_string();
+		nameProperty = n_property.attribute("name").as_string();
 		if (nameProperty == "speed")
 			layer->speed = n_property.attribute("value").as_float();
 		n_property = n_property.next_sibling();

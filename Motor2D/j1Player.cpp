@@ -56,9 +56,6 @@ bool j1Player::Start()
 	//Speed of player
 	speed = { 0,0 };
 
-	
-	
-	
 	return true;
 }
 
@@ -110,20 +107,26 @@ bool j1Player::CleanUp()
 void j1Player::Movement() {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
+			App->audio->PlayFx(3, -1); //Walk fx
+			
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeedX) {
 			speed.x -= incrementSpeedX;
+			App->audio->PlayFx(3, -1); //Walk fx
+		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
 		speed.x = 0.0f;
+		App->audio->FadeOutFx(3, 200); //Walk fx
+		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
 		air = true;
-		App->audio->PlayFx(2);
+		App->audio->PlayFx(2); //Jump fx
 	}
 	if (air)
 		speed.y += App->map->data.gravity;

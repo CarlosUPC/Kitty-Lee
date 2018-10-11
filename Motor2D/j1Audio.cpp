@@ -52,8 +52,12 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	}
 
 	volumeMusic = config.child("volume").attribute("lvl").as_int(128);
+
+	//I will convert this path into xml path
 	LoadFx("audio/fx/Jump_Sound.wav");
 	LoadFx("audio/fx/jump_03.wav");
+	LoadFx("audio/fx/Walk_Sound02.wav");
+
 	return ret;
 }
 
@@ -171,6 +175,22 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
+	}
+
+	return ret;
+}
+
+// Fade out WAV
+bool j1Audio::FadeOutFx(unsigned int id, int fade)
+{
+	bool ret = false;
+
+	if (!active)
+		return false;
+
+	if (id > 0 && id <= fx.count())
+	{
+		Mix_FadeOutChannel(-1, fade);
 	}
 
 	return ret;

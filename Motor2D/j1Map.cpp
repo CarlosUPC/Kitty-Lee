@@ -45,7 +45,7 @@ void j1Map::Draw()
 	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
 		if (item_layer->data->visible)
 			for (item = data.tilesets.start; item; item = item->next) {
-				for (uint i = camera.y; i <= cameraSize.y + camera.y && i < item_layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+				for (uint i = camera.y*item_layer->data->speed; i <= cameraSize.y + camera.y && i < item_layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
 					for (uint j = camera.x*item_layer->data->speed; j <= cameraSize.x + camera.x + 1 && j < item_layer->data->width; ++j) {
 						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
 						if (id != 0)

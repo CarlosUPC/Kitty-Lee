@@ -38,10 +38,7 @@ private:
 
 	iPoint cameraOffset;
 	uint win_width;
-	uint win_height;
-
-	int camPos;
-	
+	uint win_height;	
 	
 };
 

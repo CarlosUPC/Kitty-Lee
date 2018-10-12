@@ -72,7 +72,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return ret;
 }
 
-void j1Map::ColliderPrint()
+void j1Map::AddCollidersMap()
 {
 
 	p2List_item<ColliderObject*>* colliders = data.colliders.start;
@@ -180,6 +180,8 @@ bool j1Map::CleanUp()
 		item3 = item3->next;
 	}
 	data.colliders.clear();
+
+
 
 	// Clean up the pugui tree
 	map_file.reset();

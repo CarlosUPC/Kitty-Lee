@@ -88,6 +88,8 @@ public:
 
 	bool LoadPlayer(const char*);
 
+	void OnCollision(Collider*, Collider*);
+
 private:
 
 	void PushBack();

@@ -46,7 +46,7 @@ bool j1Scene::Start()
 	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
 	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
 
-	App->map->ColliderPrint();
+	App->map->AddCollidersMap();
 	return true;
 }
 

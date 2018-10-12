@@ -109,7 +109,7 @@ public:
 	
 	void getTypeCollider(enum COLLIDER_TYPE);
 
-	void ColliderPrint();
+	void AddCollidersMap();
 	
 
 private:

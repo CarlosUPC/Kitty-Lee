@@ -44,7 +44,8 @@ public:
 	//update_status PostUpdate();
 	bool CleanUp();
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
-	bool EraseCollider(Collider* collider);
+	bool EraseAllCollider(Collider* collider);
+	bool EraseMapCollider();
 	void DebugDraw();
 	bool checkColisionList(Collider* enemCollider);
 private:

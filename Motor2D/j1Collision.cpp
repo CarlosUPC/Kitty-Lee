@@ -84,7 +84,7 @@ bool j1Colliders::Update(float dt)
 }
 void j1Colliders::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		LOG("YOu can see the colliders");
 		debug = !debug;
 	}
@@ -155,7 +155,7 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 	}
 	return ret;
 }
-bool j1Colliders::EraseCollider(Collider* collider)
+bool j1Colliders::EraseAllCollider(Collider* collider)
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -164,6 +164,19 @@ bool j1Colliders::EraseCollider(Collider* collider)
 			delete colliders[i];
 			colliders[i] = nullptr;
 			return true;
+		}
+	}
+	return false;
+}
+
+bool j1Colliders::EraseMapCollider()
+{
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] != nullptr && colliders[i]->type != COLLIDER_PLAYER)
+		{
+			delete colliders[i];
+			colliders[i] = nullptr;
 		}
 	}
 	return false;

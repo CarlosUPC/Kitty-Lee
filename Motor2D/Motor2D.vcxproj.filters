@@ -130,12 +130,6 @@
     <Xml Include="..\Game\save_game.xml">
       <Filter>XML</Filter>
     </Xml>
-    <Xml Include="Animations.xml">
-      <Filter>XML</Filter>
-    </Xml>
-    <Xml Include="audio_data.xml">
-      <Filter>XML</Filter>
-    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\Test.tmx">

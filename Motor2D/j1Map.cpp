@@ -33,8 +33,7 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	p2List_item<TileSet*>* item = nullptr;
-	p2List_item<MapLayer*>* item_layer = nullptr;
+	p2List_item<MapLayer*>* layer = data.layers.start;
 	uint id = 0;
 	
 	//Local variables to simplify code
@@ -42,18 +41,35 @@ void j1Map::Draw()
 	iPoint camera(WorldToMap(-App->render->camera.x/scale, -App->render->camera.y/scale)); //camera pass virtual coordinates to map coordinates with the correct scale
 	iPoint cameraSize(WorldToMap(App->render->camera.w / scale, App->render->camera.h / scale));
 
-	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next) {
-		if (item_layer->data->visible)
-			for (item = data.tilesets.start; item; item = item->next) {
-				for (uint i = camera.y*item_layer->data->speed; i <= cameraSize.y + camera.y && i < item_layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
-					for (uint j = camera.x*item_layer->data->speed; j <= cameraSize.x + camera.x + 1 && j < item_layer->data->width; ++j) {
-						id = item_layer->data->tiles[item_layer->data->Get(j, i)];
-						if (id != 0)
-							App->render->Blit(item->data->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &item->data->GetTileRect(id), item_layer->data->speed);
+	while (layer) {
+		if (layer->data->visible)
+			for (uint i = camera.y*layer->data->speed; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+				for (uint j = camera.x*layer->data->speed; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
+
+					id = layer->data->Get(j, i);
+					if (id != 0) {
+						TileSet* tileset = GetTilesetFromTileId(id);
+						if (tileset != nullptr)
+							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id), layer->data->speed);
 					}
 				}
 			}
+		layer = layer->next;
 	}
+}
+
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* tileset = data.tilesets.start;
+	TileSet* ret = tileset->data;
+	while (tileset) {
+		if (id >= tileset->data->firstgid)
+			ret = tileset->data;
+		else return ret;
+
+		tileset = tileset->next;
+	}
+	return ret;
 }
 
 void j1Map::ColliderPrint()
@@ -174,7 +190,7 @@ iPoint j1Map::WorldToMap(int x, int y) const {
 
 
 inline uint MapLayer::Get(int x, int y) const {
-	return y * this->width + x;
+	return tiles[y * this->width + x];
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const

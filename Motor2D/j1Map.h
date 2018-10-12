@@ -124,6 +124,8 @@ private:
 	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
 	void LoadProperties(pugi::xml_node& properties_node);
 
+	TileSet* GetTilesetFromTileId(int id) const;
+
 public:
 
 	MapData data;

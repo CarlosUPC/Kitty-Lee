@@ -32,12 +32,10 @@
   </map>
 
   <scene>
-    <map>Test.tmx</map>
+    <level_1>Test.tmx</level_1>
+	<level_2>Test.tmx</level_2>
   </scene>
   
-  <scene2>
-    <map>Test.tmx</map>
-  </scene2>
 
   <player>
     <file>player.tsx</file>

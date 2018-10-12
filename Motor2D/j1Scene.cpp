@@ -28,7 +28,8 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	map.create(conf.child("map").child_value());
+	lvl1.create(conf.child("level_1").child_value());
+	lvl2.create(conf.child("level_2").child_value());
 
 	return ret;
 }
@@ -36,7 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(map.GetString());
+	App->map->Load(lvl1.GetString());
 	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	
 	win_width = App->win->screen_surface->w;

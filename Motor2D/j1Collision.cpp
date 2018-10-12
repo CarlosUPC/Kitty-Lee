@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collision.h"
+#include "j1Window.h"
 
 
 j1Colliders::j1Colliders() : j1Module()
@@ -112,6 +113,9 @@ void j1Colliders::DebugDraw()
 				break;
 			}
 		}
+		uint width, height;
+		App->win->GetWindowSize(width, height);
+		App->render->DrawCircle(width*0.5f, height*0.5f, 3, 255, 0, 0);//Draw a circle on the middle of screen to know the center
 	}
 }
 bool j1Colliders::checkColisionList(Collider * enemCollider)

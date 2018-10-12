@@ -95,12 +95,16 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	for (uint i = 0; i < player.num_animations; ++i) {
-		delete[] player.animations[i].frames;
-		player.animations[i].frames = nullptr;
+	/*for (uint i = 0; i < player.num_animations; ++i) {	this block of code delete animation data loaded of xml
+		if (player.animations[i].frames != nullptr) {		but is in PushBack() because when load all animation in its
+			delete[] player.animations[i].frames;			corresponding variables, that data is useless
+			player.animations[i].frames = nullptr;
+		}
 	}
-	delete[] player.animations;
-	player.animations = nullptr;
+	if (player.animations != nullptr) {
+		delete[] player.animations;
+		player.animations = nullptr;
+	}*/
 
 	App->tex->UnLoad(player.tileset.texture);
 	return true;
@@ -170,6 +174,18 @@ void j1Player::PushBack() {
 
 	anim_jump.loop = false;
 	anim_land.loop = false;
+
+	//deleting player animation data already loaded in its corresponding animation variables
+	for (uint i = 0; i < player.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (player.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
+			delete[] player.animations[i].frames;			//corresponding variables, that data is useless
+			player.animations[i].frames = nullptr;
+		}
+	}
+	if (player.animations != nullptr) {
+		delete[] player.animations;
+		player.animations = nullptr;
+	}
 }
 
 // Load / Save

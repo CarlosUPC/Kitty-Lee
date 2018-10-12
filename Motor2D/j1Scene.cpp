@@ -43,15 +43,15 @@ bool j1Scene::Start()
 	win_height = App->win->screen_surface->h;
 	
 	camPos = win_width;
-<<<<<<< HEAD
+
 	cameraOffset.x = win_width*0.5f/App->win->GetScale() - App->map->WorldToMap(App->render->camera.x, App->render->camera.y).x;
 	
 	LOG("%d %d", App->player->position.x, App->player->position.y);
 	cameraOffset.y = -App->render->camera.y - App->player->position.y;
-=======
+
 	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
 	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
->>>>>>> ebd6a6b507af5c556a4073ce5d2586845a45da8e
+
 	App->map->ColliderPrint();
 	return true;
 }

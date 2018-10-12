@@ -37,6 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
+	Stages stg = LEVEL_1;
 	App->map->Load(lvl1.GetString());
 	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	
@@ -53,6 +54,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	CheckLevel();
 	return true;
 }
 
@@ -78,6 +80,9 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x -= 1;
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		SwitchingLevel();
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->player->position = App->map->GetInitialPosition();
 
 
@@ -120,6 +125,7 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	
 	return ret;
 }
 
@@ -130,3 +136,39 @@ bool j1Scene::CleanUp()
 
 	return true;
 }
+
+void j1Scene::CheckLevel()
+{
+	switch (stg)
+	{
+	case LEVEL_1:
+		level1 = true;
+		level2 = false;
+		break;
+	case LEVEL_2:
+		level2 = true;
+		level1 = false;
+		break;
+	default:
+		break;
+	}
+}
+
+void j1Scene::SwitchingLevel() {
+
+	if (level1) {
+		App->player->position = App->map->GetInitialPosition();
+	}
+
+	else if (level2) {
+		//Switch to level 1
+		App->map->CleanUp();
+		App->collider->EraseMapCollider();
+		App->map->Load(lvl1.GetString());
+		App->player->position = App->map->GetInitialPosition();
+	}
+
+
+}
+
+

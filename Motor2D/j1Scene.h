@@ -5,6 +5,11 @@
 
 struct SDL_Texture;
 
+enum Stages {
+	LEVEL_1 = 0,
+	LEVEL_2
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -32,13 +37,24 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void CheckLevel();
+	void SwitchingLevel();
+
 private:
 	p2SString lvl1;
 	p2SString lvl2;
 
 	iPoint cameraOffset;
 	uint win_width;
-	uint win_height;	
+
+	uint win_height;
+
+	int camPos;
+	
+	bool level1;
+	bool level2;
+	Stages stg;
+	
 	
 };
 

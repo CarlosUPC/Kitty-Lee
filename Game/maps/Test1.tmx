@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="4">
- <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="576" source="middle.tsx"/>
- <tileset firstgid="829" source="back.tsx"/>
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="575" columns="25">
+  <image source="tileset.png" width="400" height="368"/>
+ </tileset>
+ <tileset firstgid="576" name="middle" tilewidth="16" tileheight="16" tilecount="253" columns="11">
+  <image source="middle.png" width="176" height="368"/>
+ </tileset>
+ <tileset firstgid="829" name="back" tilewidth="16" tileheight="16" tilecount="360" columns="24">
+  <image source="back.png" width="384" height="240"/>
+ </tileset>
  <layer name="sky" width="58" height="25">
   <data>
    <tile gid="829"/>

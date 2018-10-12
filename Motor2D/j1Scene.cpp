@@ -54,7 +54,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	CheckLevel();
+	
 	return true;
 }
 
@@ -85,6 +85,19 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->player->position = App->map->GetInitialPosition();
 
+
+	if (App->player->position.x >= 350 && stg == LEVEL_1)
+	{
+		//Switch to level 2
+		App->map->CleanUp();
+		App->collider->EraseMapCollider();
+		App->map->Load(lvl2.GetString());
+		App->player->position = App->map->GetInitialPosition();
+		stg = LEVEL_2;
+		App->render->camera.x = -78;
+		App->render->camera.y = 0;
+
+	}
 
 	App->map->Draw();
 	
@@ -125,7 +138,8 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	
+	CheckLevel();
+
 	return ret;
 }
 

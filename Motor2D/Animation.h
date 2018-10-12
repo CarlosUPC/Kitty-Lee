@@ -2,7 +2,7 @@
 #define __ANIMATION_H__
 
 #include "SDL/include/SDL_rect.h"
-#define MAX_FRAMES 300
+#define MAX_FRAMES 30
 
 class Animation
 {
@@ -38,6 +38,10 @@ public:
 		return frames[(int)current_frame];
 	}
 
+	float GetNumCurrentFrame() {
+		return current_frame;
+	}
+
 	bool Finished() const
 	{
 		return loops > 0;
@@ -45,6 +49,7 @@ public:
 
 	void reset() {
 		current_frame = 0;
+		loops = 0;
 	}
 
 	bool isInFrame(int f) {

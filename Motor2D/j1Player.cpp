@@ -38,7 +38,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 
 	state = IDLE;
 	
-	// Load animation
+	// Load animations
 	PushBack();
 
 	return ret;
@@ -52,6 +52,8 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
+	current_animation = &anim_idle;
+	current_animation->speed = animationSpeed;
 	collPlayer = App->collider->AddCollider({ (int)position.x + colliderOffset.x, (int)position.y + colliderOffset.y, colliderInfo.x, colliderInfo.y }, COLLIDER_PLAYER, this);
 	//Speed of player
 	speed = { 0,0 };
@@ -81,7 +83,6 @@ bool j1Player::PostUpdate()
 {
 	
 	CheckState();
-	Actions();
 
 	//Player collider update
 	collPlayer->SetPos(position.x + colliderOffset.x, position.y + colliderOffset.y);
@@ -166,6 +167,9 @@ void j1Player::PushBack() {
 			}
 		}
 	}
+
+	anim_jump.loop = false;
+	anim_land.loop = false;
 }
 
 // Load / Save
@@ -188,30 +192,47 @@ bool j1Player::Save(pugi::xml_node& data) const
 }
 
 void j1Player::CheckState() {
-
-	//IN PROGRESS 
-
-	if (speed.x != 0)
-	{
-		state = WALKING;
-		if (speed.x > 0 && flip != SDL_FLIP_NONE)
-		{
-			flip = SDL_FLIP_NONE;
-		}
-		else if (speed.x < 0 && flip != SDL_FLIP_HORIZONTAL)
-		{
-			flip = SDL_FLIP_HORIZONTAL;
-		}
+	
+	PlayerState prevState = state;
+	switch (state) {
+	case IDLE:
+		if (speed.x != 0.0f)
+			state = WALKING;
+		if (air)
+			state = JUMP;
+		break;
+	case WALKING:
+		if (speed.x == 0.0f)
+			state = IDLE;
+		if (air)
+			state = JUMP;
+		break;
+	case JUMP:
+		if (current_animation->Finished() && current_animation == &anim_jump)
+			state = FALL;
+		else if (!air)
+			state = LAND;
+		break;
+	case FALL:
+		if (!air)
+			state = LAND;
+		break;
+	case LAND:
+		if (current_animation->Finished() && current_animation == &anim_land)
+			state = IDLE;
+		else if (air)
+			state = JUMP;
+		break;
+	default:
+		break;
 	}
+	if (prevState != state)//only will change animation when change state
+		Actions();
 
-	if (air) {
-		state = FALL;
-	}
-
-	if (!air&&speed.x == 0)
-	{
-		state = IDLE;
-	}
+	if (speed.x > 0 && flip != SDL_FLIP_NONE)
+		flip = SDL_FLIP_NONE;
+	if (speed.x < 0 && flip != SDL_FLIP_HORIZONTAL)
+		flip = SDL_FLIP_HORIZONTAL;
 }
 
 void j1Player::Actions() {
@@ -223,15 +244,18 @@ void j1Player::Actions() {
 		break;
 	case WALKING:
 		current_animation = &anim_walking;
+		current_animation->reset();
 		break;
 	case JUMP:
 		current_animation = &anim_jump;
+		current_animation->reset();
 		break;
 	case FALL:
 		current_animation = &anim_fall;
 		break;
 	case LAND:
 		current_animation = &anim_land;
+		current_animation->reset();
 		break;
 	default:
 		break;

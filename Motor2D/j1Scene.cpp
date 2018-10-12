@@ -180,7 +180,9 @@ void j1Scene::SwitchingLevel() {
 		App->map->CleanUp();
 		App->collider->EraseMapCollider();
 		App->map->Load(lvl1.GetString());
+		App->map->AddCollidersMap();
 		App->player->position = App->map->GetInitialPosition();
+		stg = LEVEL_1;
 	}
 
 

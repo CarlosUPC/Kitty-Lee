@@ -1,8 +1,6 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
-#include "PugiXml/src/pugixml.hpp"
-
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
@@ -14,14 +12,13 @@
 struct ColliderObject {
 
 	p2SString name;
-	fPoint initialPosition;
 
 	COLLIDER_TYPE type;
 	uint tile_id;
 	int	coll_x;
 	int	coll_y;
-	uint coll_width = 0;
-	uint coll_height = 0;	
+	int coll_width = 0;
+	int coll_height = 0;	
 
 };
 
@@ -110,7 +107,7 @@ public:
 	
 	fPoint GetInitialPosition() const;
 	
-	const char* getTypeCollider(enum COLLIDER_TYPE);
+	void getTypeCollider(enum COLLIDER_TYPE);
 
 	void ColliderPrint();
 	

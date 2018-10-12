@@ -115,7 +115,7 @@ void j1Colliders::DebugDraw()
 		}
 		uint width, height;
 		App->win->GetWindowSize(width, height);
-		App->render->DrawCircle(width*0.5f, height*0.5f, 3, 255, 0, 0);//Draw a circle on the middle of screen to know the center
+		App->render->DrawCircle(width*0.5f, height*0.5f, 3, 255, 0, 0);//Draw a circle on the middle of screen to know where is the center
 	}
 }
 bool j1Colliders::checkColisionList(Collider * enemCollider)
@@ -171,12 +171,7 @@ bool j1Colliders::EraseCollider(Collider* collider)
 // -----------------------------------------------------
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	if (rect.x <= r.x + r.w && rect.x + rect.w >= r.x)
-	{
-		if (rect.y <= r.y + r.h && rect.y + rect.h >= r.y)
-		{
-			return true;
-		}
-	}
-	return false;
+	if (r.x > rect.x + rect.w || r.x + r.w<rect.x || r.y>rect.y + rect.h || r.y + r.h < rect.y)
+		return false;
+	return true;
 }

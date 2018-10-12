@@ -74,75 +74,16 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 
 void j1Map::ColliderPrint()
 {
+
+	p2List_item<ColliderObject*>* colliders = data.colliders.start;
+
+	while (colliders) {
+		SDL_Rect collider_rect = { colliders->data->coll_x,colliders->data->coll_y,colliders->data->coll_width,colliders->data->coll_height };
+		App->collider->AddCollider(collider_rect, colliders->data->type);
 	
-
-	
-	uint counterWidth = 1;
-	uint counterHeight = 1;
-	uint aux_width = 16;
-	uint aux_height = 16;
-
-	p2List_item<TileSet*>* item = nullptr;
-	p2List_item<MapLayer*>* item_layer = nullptr;
-	p2List_item<ColliderObject*>* item_coll = nullptr;
-	
-	for (item_layer = data.layers.start; item_layer; item_layer = item_layer->next)
-	{
-
-		for (item = data.tilesets.start; item; item = item->next) {
-
-			for (uint i = 0; i < item_layer->data->height; i++)
-			{
-				for (uint j = 0; j < item_layer->data->width; j++)
-				{
-					uint id = item_layer->data->tiles[item_layer->data->Get(j, i)];
-
-					if (id != 0)
-					{
-
-						for (item_coll = data.colliders.start; item_coll; item_coll = item_coll->next)
-						{
-
-							int WorldX = item_coll->data->coll_x;
-							int WorldY = item_coll->data->coll_y;
-
-							int WidthColl = item_coll->data->coll_width;
-							int HeightColl = item_coll->data->coll_height;
-
-							int x = MapToWorld(j, i).x;
-							int y = MapToWorld(j, i).y;
-
-							if (x == WorldX && y == WorldY) {
-
-								while (!(HeightColl <= aux_height)) {
-									aux_height += 16;
-									counterHeight++;
-
-
-								}
-								while (!(WidthColl <= aux_width)) {
-									aux_width += 16;
-									counterWidth++;
-								}
-
-								SDL_Rect collider_rec = { x,y,data.tile_width*(counterWidth),data.tile_height*(counterHeight) };
-								App->collider->AddCollider(collider_rec, item_coll->data->type);
-
-							}
-							counterWidth = 1;
-							aux_width = 16;
-
-							counterHeight = 1;
-							aux_height = 16;
-
-						}
-					}
-				}
-
-
-			}
-		}
+		colliders = colliders->next;
 	}
+
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -345,13 +286,12 @@ bool j1Map::Load(const char* file_name)
 
 		p2List_item<ColliderObject*>* item_object = data.colliders.start;
 		while (item_object != NULL) {
-			ColliderObject* o = item_object->data;
+			ColliderObject* obj = item_object->data;
 			LOG("Object ------");
-			LOG("name: %s", o->name.GetString());
-			LOG("Player Position: (%i , %i)", o->initialPosition.x, o->initialPosition.y);
-			LOG("Collider Position: (%i , %i)", o->coll_x, o->coll_y);
-			LOG("width: %i  height: %i", o->coll_width, o->coll_height);
-			LOG("Type: %d", o->type);
+			LOG("name: %s", obj->name.GetString());
+			LOG("Collider Position: (%i , %i)", obj->coll_x, obj->coll_y);
+			LOG("width: %i  height: %i", obj->coll_width, obj->coll_height);
+			getTypeCollider(obj->type);
 			item_object = item_object->next;
 		}
 
@@ -546,12 +486,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
-	// Load Initial Position Player
-	if (node_object.attribute("name").as_string()[0] == 'P') {
-		obj->initialPosition.x = node_object.attribute("x").as_int();
-		obj->initialPosition.y = node_object.attribute("y").as_int();
-	}
-
 	//Load Collider / Player data
 	obj->name = node_object.attribute("name").as_string();
 	obj->tile_id = node_object.attribute("id").as_uint();
@@ -576,34 +510,29 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_FLOOR;
 	}
-	else if (type == "COLLIDER_PLAYER_POS")
-	{
-		obj->type = COLLIDER_PLAYER_POS;
-	}
-
+	
 	return ret;
 }
 
 fPoint j1Map::GetInitialPosition() const {
 
-	fPoint initialPos;
+	fPoint ret(0.0f, 0.0f);
 	p2List_item<ColliderObject*>* ente = data.colliders.start;
 
 	while (ente != NULL)
 	{
-
-		if (ente->data->name == "Player")
-			initialPos = ente->data->initialPosition;
-		
-	
+		if (ente->data->name == "Player") {
+			ret.x = ente->data->coll_x;
+			ret.y = ente->data->coll_y;
+			return ret;
+		}
 		ente = ente->next;
 	}
 
-	return initialPos;
-
+	return ret;
 }
 
-void LOG_TypeCollider(enum COLLIDER_TYPE type) {
+void j1Map::getTypeCollider(enum COLLIDER_TYPE type) {
 
 	switch (type)
 	{
@@ -616,9 +545,11 @@ void LOG_TypeCollider(enum COLLIDER_TYPE type) {
 	case COLLIDER_NONE:
 		LOG("COLLIDER TYPE: NONE");
 		break;
+	case COLLIDER_PLAYER:
+		LOG("COLLIDER TYPE: PLAYER");
+		break;
 	default:
 		LOG("COLLIDER TYPE: NAN");
 		break;
 	}
 }
-

@@ -35,6 +35,7 @@ public:
 private:
 	p2SString map;
 
+	iPoint cameraOffset;
 	uint win_width;
 	uint win_height;
 

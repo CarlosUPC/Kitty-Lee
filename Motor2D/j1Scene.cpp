@@ -41,6 +41,9 @@ bool j1Scene::Start()
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 	camPos = win_width;
+	cameraOffset.x = win_width*0.5f/App->win->GetScale() - App->map->WorldToMap(App->render->camera.x, App->render->camera.y).x;
+	LOG("%d %d", App->player->position.x, App->player->position.y);
+	cameraOffset.y = -App->render->camera.y - App->player->position.y;
 	App->map->ColliderPrint();
 	return true;
 }
@@ -81,8 +84,8 @@ bool j1Scene::Update(float dt)
 	}*/
 
 
-	if (App->player->position.x >= 0 && App->player->position.x <= win_width)
-		App->render->camera.x = -(App->player->position.x + (App->player->speed.x));
+	/*if (App->player->position.x >= 0 && App->player->position.x <= win_width)
+		App->render->camera.x = -(App->player->position.x + (App->player->speed.x));*/
 
 	
 
@@ -115,6 +118,8 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
+	App->render->camera.x = cameraOffset.x * App->win->GetScale() - App->player->position.x* App->win->GetScale();
+	//App->render->camera.y = App->player->position.y + cameraOffset.y;
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 

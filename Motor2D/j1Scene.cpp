@@ -61,36 +61,39 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		App->render->camera.y -= 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		App->render->camera.x += 1;
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 1;
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		SwitchingLevel();
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
+		App->render->camera.x = 0;
+		App->render->camera.y = 0;
+}
 
 
 	if (App->player->position.x >= 350 && stg == LEVEL_1)
 	{
 		//Switch to level 2
-		App->map->CleanUp();
 		App->collider->EraseMapCollider();
+		App->map->CleanUp();
 		App->map->Load(lvl2.GetString());
 		App->map->AddCollidersMap();
 		App->player->position = App->map->GetInitialPosition();
@@ -177,8 +180,8 @@ void j1Scene::SwitchingLevel() {
 
 	else if (level2) {
 		//Switch to level 1
-		App->map->CleanUp();
 		App->collider->EraseMapCollider();
+		App->map->CleanUp();
 		App->map->Load(lvl1.GetString());
 		App->map->AddCollidersMap();
 		App->player->position = App->map->GetInitialPosition();

@@ -52,7 +52,7 @@ bool j1Player::Start()
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
-	collPlayer = App->collider->AddCollider({ (int)position.x + offset.x, (int)position.y + offset.y, collider.x, collider.y }, COLLIDER_PLAYER, this);
+	collPlayer = App->collider->AddCollider({ (int)position.x + colliderOffset.x, (int)position.y + colliderOffset.y, colliderInfo.x, colliderInfo.y }, COLLIDER_PLAYER, this);
 	//Speed of player
 	speed = { 0,0 };
 
@@ -84,9 +84,7 @@ bool j1Player::PostUpdate()
 	Actions();
 
 	//Player collider update
-	collPlayer->SetPos(position.x + offset.x, position.y + offset.y);
-	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
-		LOG("Player position: (%.2f, %.2f)", position.x, position.y);
+	collPlayer->SetPos(position.x + colliderOffset.x, position.y + colliderOffset.y);
 
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 	
@@ -181,10 +179,10 @@ bool j1Player::Load(pugi::xml_node& data)
 }
 bool j1Player::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node player = data.append_child("player");
+	pugi::xml_node player_node = data.append_child("player");
 
-	player.append_attribute("x") = position.x;
-	player.append_attribute("y") = position.y;
+	player_node.append_attribute("x") = position.x;
+	player_node.append_attribute("y") = position.y;
 
 	return true;
 }
@@ -318,16 +316,16 @@ bool j1Player::LoadPlayer(const char* file) {
 			animationSpeed = node.attribute("value").as_float();
 
 		else if (nameProperty == "colliderWidth")
-			collider.x = node.attribute("value").as_int();
+			colliderInfo.x = node.attribute("value").as_int();
 
 		else if (nameProperty == "colliderHeight")
-			collider.y = node.attribute("value").as_int();
+			colliderInfo.y = node.attribute("value").as_int();
 
 		else if (nameProperty == "colliderOffsetX")
-			offset.x = node.attribute("value").as_int();
+			colliderOffset.x = node.attribute("value").as_int();
 
 		else if (nameProperty == "colliderOffsetY")
-			offset.y = node.attribute("value").as_int();
+			colliderOffset.y = node.attribute("value").as_int();
 
 		else if (nameProperty == "incrementSpeedX")
 			incrementSpeedX = node.attribute("value").as_float();

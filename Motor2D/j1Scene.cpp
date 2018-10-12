@@ -43,10 +43,15 @@ bool j1Scene::Start()
 	win_height = App->win->screen_surface->h;
 	
 	camPos = win_width;
+<<<<<<< HEAD
 	cameraOffset.x = win_width*0.5f/App->win->GetScale() - App->map->WorldToMap(App->render->camera.x, App->render->camera.y).x;
 	
 	LOG("%d %d", App->player->position.x, App->player->position.y);
 	cameraOffset.y = -App->render->camera.y - App->player->position.y;
+=======
+	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
+	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
+>>>>>>> ebd6a6b507af5c556a4073ce5d2586845a45da8e
 	App->map->ColliderPrint();
 	return true;
 }
@@ -79,20 +84,6 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x -= 1;
 
 
-	/*if (App->player->position.x > camPos / 3 && App->player->position.x <= camPos) {
-
-		App->render->camera.x = -(App->player->position.x + camPos / 1.5);
-		camPos = camPos + win_width;
-		camPosMin = camPosMin + win_width;
-	}*/
-
-
-	/*if (App->player->position.x >= 0 && App->player->position.x <= win_width)
-		App->render->camera.x = -(App->player->position.x + (App->player->speed.x));*/
-
-	
-
-
 	App->map->Draw();
 	
 
@@ -121,9 +112,15 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	App->render->camera.x = cameraOffset.x * App->win->GetScale() - App->player->position.x* App->win->GetScale();
-	//App->render->camera.y = App->player->position.y + cameraOffset.y;
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	int offsetPlayerPositionX = App->player->colliderInfo.x - App->player->player.tileset.tilewidth;
+
+	if ((cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0)
+		App->render->camera.x = (cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale();
+	if ((cameraOffset.y - App->player->position.y) * App->win->GetScale() < 0)
+		App->render->camera.y = (cameraOffset.y - App->player->position.y) * App->win->GetScale();
+	
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;

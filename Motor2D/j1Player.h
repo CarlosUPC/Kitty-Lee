@@ -134,8 +134,8 @@ public:
 
 
 	Collider* collPlayer;
-	iPoint collider;
-	iPoint offset;
+	iPoint colliderInfo;
+	iPoint colliderOffset;
 	
 
 };

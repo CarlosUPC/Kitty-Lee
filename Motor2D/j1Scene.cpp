@@ -95,7 +95,7 @@ bool j1Scene::Update(float dt)
 		App->map->AddCollidersMap();
 		App->player->position = App->map->GetInitialPosition();
 		stg = LEVEL_2;
-		App->render->camera.x = -78;
+		App->render->camera.x = 0;
 		App->render->camera.y = 0;
 
 	}

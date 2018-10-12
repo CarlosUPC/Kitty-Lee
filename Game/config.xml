@@ -34,6 +34,10 @@
   <scene>
     <map>Test.tmx</map>
   </scene>
+  
+  <scene2>
+    <map>Test.tmx</map>
+  </scene2>
 
   <player>
     <file>player.tsx</file>

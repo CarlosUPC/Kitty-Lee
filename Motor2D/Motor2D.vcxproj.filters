@@ -36,9 +36,6 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Scene2.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -98,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Scene2.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

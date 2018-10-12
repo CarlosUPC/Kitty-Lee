@@ -33,7 +33,8 @@ public:
 	bool CleanUp();
 
 private:
-	p2SString map;
+	p2SString lvl1;
+	p2SString lvl2;
 
 	iPoint cameraOffset;
 	uint win_width;

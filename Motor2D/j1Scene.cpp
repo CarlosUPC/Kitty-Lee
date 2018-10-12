@@ -92,6 +92,7 @@ bool j1Scene::Update(float dt)
 		App->map->CleanUp();
 		App->collider->EraseMapCollider();
 		App->map->Load(lvl2.GetString());
+		App->map->AddCollidersMap();
 		App->player->position = App->map->GetInitialPosition();
 		stg = LEVEL_2;
 		App->render->camera.x = -78;

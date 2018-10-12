@@ -58,7 +58,6 @@ struct TileSet
 	int					offset_x;
 	int					offset_y;
 
-	//p2List<ColliderObject*>	colliders;
 };
 
 enum MapTypes
@@ -78,6 +77,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	float				gravity;
+	const char*			musicEnvironment;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ColliderObject*>	colliders;

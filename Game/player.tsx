@@ -7,8 +7,10 @@
   <property name="colliderOffsetY" type="int" value="3"/>
   <property name="colliderWidth" type="int" value="12"/>
   <property name="incrementSpeedX" type="float" value="1"/>
+  <property name="jumpSound" value="audio/fx/jump_03.wav"/>
   <property name="jumpSpeed" type="float" value="-8"/>
   <property name="maxSpeedX" type="float" value="2"/>
+  <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">

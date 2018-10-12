@@ -3,10 +3,12 @@
 
 #include "j1Module.h"
 
+
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
 struct _Mix_Music;
 struct Mix_Chunk;
+
 
 class j1Audio : public j1Module
 {
@@ -43,12 +45,14 @@ public:
 	int DecreaseVolume();
 
 	bool FadeOutFx(unsigned int fx, int fade = 0);
+	bool StopFx(unsigned int fx);
 
 private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 	int					volumeMusic;
+	
 };
 
 #endif // __j1AUDIO_H__

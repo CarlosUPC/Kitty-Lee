@@ -45,6 +45,7 @@ public:
 	int DecreaseVolume();
 
 	bool FadeOutFx(unsigned int fx, int fade = 0);
+	bool StopFx(unsigned int fx);
 
 private:
 

@@ -192,6 +192,22 @@ bool j1Audio::FadeOutFx(unsigned int id, int fade)
 	return ret;
 }
 
+
+bool j1Audio::StopFx(unsigned int id)
+{
+	bool ret = false;
+
+	if (!active)
+		return false;
+
+	if (id > 0 && id <= fx.count())
+	{
+		Mix_HaltChannel(-1);
+	}
+	return ret;
+}
+
+
 bool j1Audio::Save(pugi::xml_node& save) {
 	
 	return save.child("volume").attribute("lvl").set_value(volumeMusic);

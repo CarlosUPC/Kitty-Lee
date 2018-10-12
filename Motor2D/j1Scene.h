@@ -46,21 +46,16 @@ private:
 
 	iPoint cameraOffset;
 	uint win_width;
-<<<<<<< HEAD
+
 	uint win_height;
 
 	int camPos;
 	
-	//STAGES stage = LEVEL_1;
 	bool level1;
 	bool level2;
-
-public:
 	Stages stg;
-=======
-	uint win_height;	
 	
->>>>>>> 5ac7332694828e21c4d2b291a7ded9dea5fb69f7
+	
 };
 
 #endif // __j1SCENE_H__

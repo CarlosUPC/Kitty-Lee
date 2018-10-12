@@ -113,6 +113,9 @@ public:
 	bool		air = false;
 	bool		land = false;
 
+	const char* walkingSound;
+	const char* jumpingSound;
+
 	
 
 	pugi::xml_document	player_file;

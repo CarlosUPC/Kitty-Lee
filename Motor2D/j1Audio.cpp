@@ -12,6 +12,7 @@ j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
 	name.create("audio");
+	
 }
 
 // Destructor
@@ -52,11 +53,6 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	}
 
 	volumeMusic = config.child("volume").attribute("lvl").as_int(128);
-
-	//I will convert this path into xml path
-	LoadFx("audio/fx/Jump_Sound.wav");
-	LoadFx("audio/fx/jump_03.wav");
-	LoadFx("audio/fx/Walk_Sound02.wav");
 
 	return ret;
 }

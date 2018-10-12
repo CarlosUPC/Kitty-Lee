@@ -118,6 +118,9 @@
     </Xml>
     <Xml Include="..\Game\save_game.xml" />
     <Xml Include="Animations.xml" />
+    <Xml Include="audio_data.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\Test.tmx" />

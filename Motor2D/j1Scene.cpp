@@ -37,7 +37,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(map.GetString());
-	App->audio->PlayMusic("audio/music/Grasslands Theme.ogg");
+	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 	camPos = win_width;

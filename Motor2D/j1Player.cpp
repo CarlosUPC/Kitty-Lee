@@ -81,7 +81,7 @@ bool j1Player::Update(float dt)
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {
-	
+
 	CheckState();
 
 	//Player collider update
@@ -318,7 +318,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (air)
 			air = false;
 		if (c1->rect.y >= c2->rect.y)
-			position.y = c2->rect.y - playerColliders.colliderPlayer.height - c1->rect.h;
+			position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
 	}
 }
 

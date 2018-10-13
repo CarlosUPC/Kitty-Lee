@@ -120,6 +120,7 @@ void j1Player::Movement() {
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
+		air = true;
 		App->audio->PlayFx(2); //Jump fx
 	}
 
@@ -268,6 +269,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c1 == collPlayer && c2->type == COLLIDER_FLOOR) {
 		speed.y = 0.0f;
 		speed.y -= App->map->data.gravity;
+		if (air)
+			air = false;
+		if (position.y + c1->rect.h + colliderOffset.y >= c2->rect.y)
+			position.y = c2->rect.y - c1->rect.h - colliderOffset.y;
 	}
 }
 

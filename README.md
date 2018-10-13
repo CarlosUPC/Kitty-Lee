@@ -1,18 +1,31 @@
-# Project Title
+# Kitty Lee
 
-One Paragraph of project description goes here
+A 2D platformer of a fighter cat.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These is a small project made by two students of CITM - Terrassa of Design and Development of Video Games grade.
 
 ### Installing
 
-
+* Download last release zip from our [Repository](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/releases).
+* Extract zip.
+* Run .exe.
 
 ## Controls
 
+* A to move left.
+* D to move right.
+* Spacebar to jump.
 
+  ###Development controls
+  
+  * F1 Start from the very first level.
+  * F2 Start from the beginning of the current level
+  * F5 Save the current state.
+  * F6 Load the previous state (even across levels).
+  * F9 To view colliders.
+  * F10 God Mode.
 
 ## Built With
 
@@ -20,6 +33,13 @@ These instructions will get you a copy of the project up and running on your loc
 * [Tiled](https://www.mapeditor.org/)
 * [SDL](https://www.libsdl.org/license.php)
 * [Pugi](https://pugixml.org/license.html)
+
+## Art/Music used
+
+[Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
+[Map Tileset]()
+[Music Scene]()
+[Fx]()
 
 ## Authors
 
@@ -30,10 +50,7 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/blob/master/LICENSE) file for details
 
-## Acknowledgments
+## Innovation
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc

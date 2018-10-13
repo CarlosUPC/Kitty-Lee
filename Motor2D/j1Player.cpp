@@ -271,6 +271,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		speed.y -= App->map->data.gravity;
 		if (air)
 			air = false;
+		if (position.y + c1->rect.h + colliderOffset.y >= c2->rect.y)
+			position.y = c2->rect.y - c1->rect.h - colliderOffset.y;
 	}
 }
 

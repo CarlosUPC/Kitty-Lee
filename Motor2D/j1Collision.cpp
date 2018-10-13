@@ -67,10 +67,12 @@ j1Colliders::~j1Colliders()
 {
 }
 
-bool j1Colliders::Awake()
+bool j1Colliders::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	debug = node.child("debug").attribute("value").as_bool();
 	return ret;
 }
 bool j1Colliders::PreUpdate()

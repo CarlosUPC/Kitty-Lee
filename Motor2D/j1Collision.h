@@ -43,7 +43,7 @@ class j1Colliders : public j1Module
 public:
 	j1Colliders();
 	~j1Colliders();
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 	bool PreUpdate();
 	bool Update(float dt);
 	//update_status PostUpdate();

@@ -11,6 +11,10 @@
 	<camera camera_x="0" camera_y="0"/>
   </renderer>
 
+  <colliders>
+    <debug value="true"/>
+  </colliders>
+
   <window>
     <resolution width="1024" height="768" scale="3"/>
     <fullscreen value="false"/>

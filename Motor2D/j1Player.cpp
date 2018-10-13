@@ -7,9 +7,11 @@
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1Map.h"
+#include "j1Scene.h"
 #include "p2List.h"
 #include "j1Input.h"
 #include "j1Audio.h"
+#include "j1FadeToBlack.h"
 
 
 j1Player::j1Player() {
@@ -221,8 +223,18 @@ void j1Player::SetCollidersPos() {
 // Load / Save
 bool j1Player::Load(pugi::xml_node& data)
 {
-	position.x = data.child("player").attribute("x").as_int();
-	position.y = data.child("player").attribute("y").as_int();
+	
+
+	if (App->fade->num_level == 1) {
+		position.x = data.child("player").attribute("x").as_int();
+		position.y = data.child("player").attribute("y").as_int();
+	}
+
+	if (App->fade->num_level == 2) {
+		App->fade->SwitchingLevel(App->scene->lvl2.GetString());
+		position.x = data.child("player").attribute("x").as_int();
+		position.y = data.child("player").attribute("y").as_int();
+	}
 
 	return true;
 

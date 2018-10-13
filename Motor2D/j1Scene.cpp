@@ -62,12 +62,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->SaveGame();
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1;
 
@@ -84,13 +79,17 @@ bool j1Scene::Update(float dt)
 		if (!isLevel1) App->fade->FadeToBlack();
 		else App->player->position = App->map->GetInitialPosition();
 	}
-		
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
 		App->render->camera.x = 0;
 		App->render->camera.y = 0;
 }
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
@@ -170,4 +169,19 @@ void j1Scene::CheckLevel()
 	}
 }
 
+
+bool j1Scene::Load(pugi::xml_node& data)
+{
+	App->fade->num_level = data.child("levels").attribute("level").as_int();
+	return true;
+
+}
+bool j1Scene::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node player_node = data.append_child("levels");
+
+	player_node.append_attribute("level") = App->fade->num_level;
+	
+	return true;
+}
 

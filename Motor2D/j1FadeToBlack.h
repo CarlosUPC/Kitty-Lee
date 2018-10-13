@@ -42,6 +42,7 @@ private:
 public:
 	bool level1;
 	bool level2;
+	int num_level;
 
 private:
 

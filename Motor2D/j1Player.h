@@ -135,7 +135,7 @@ public:
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;
 
-	
+	int level;
 
 	pugi::xml_document	player_file;
 

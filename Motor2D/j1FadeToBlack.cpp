@@ -43,17 +43,22 @@ bool j1FadeToBlack::Update(float dt)
 		if (now >= total_time)
 		{
 			
+
 			//App->player->Start();
 			if (level1) {
 				//Switch to level 2
+				num_level = 2;
 				SwitchingLevel(App->scene->lvl2.GetString());
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_2;
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
+				
+
 			}
 			else if (level2) {
 				//Switch to level 1
+				num_level = 1;
 				SwitchingLevel(App->scene->lvl1.GetString());
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_1;
@@ -62,7 +67,7 @@ bool j1FadeToBlack::Update(float dt)
 				
 			}
 			
-
+			
 			/*total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;*/

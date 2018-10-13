@@ -324,32 +324,47 @@ void j1Player::Actions() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	switch (c2->type) {
+	case COLLIDER_FLOOR:
+		if (c1 == playerColliders.colliderPlayer_ground.collider && c2->type == COLLIDER_FLOOR) {
+			speed.y = 0.0f;
+			speed.y -= App->map->data.gravity;
+			if (air)
+				air = false;
+			if (c1->rect.y >= c2->rect.y)
+				position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
+		}
 
-	if (c1 == playerColliders.colliderPlayer_ground.collider && c2->type == COLLIDER_FLOOR) {
-		speed.y = 0.0f;
-		speed.y -= App->map->data.gravity;
-		if (air)
-			air = false;
-		if (c1->rect.y >= c2->rect.y)
-			position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
-	}
+		if (c1 == playerColliders.colliderPlayer_left.collider && c2->type == COLLIDER_FLOOR) {
+			speed.x = 0.0f;
+			if (c2->rect.x + c2->rect.w >= c1->rect.x)
+				position.x = c2->rect.x + c2->rect.w - playerColliders.colliderPlayer.offset.x;
+		}
 
-	if (c1 == playerColliders.colliderPlayer_left.collider && c2->type == COLLIDER_FLOOR) {
-		speed.x = 0.0f;
-		if (c2->rect.x + c2->rect.w >= c1->rect.x)
-			position.x = c2->rect.x + c2->rect.w - playerColliders.colliderPlayer.offset.x;
-	}
+		if (c1 == playerColliders.colliderPlayer_up.collider && c2->type == COLLIDER_FLOOR) {
+			speed.y = 0.0f;
+			if (c2->rect.y + c2->rect.h >= c1->rect.y)
+				position.y = c2->rect.y + c2->rect.h - playerColliders.colliderPlayer.offset.y + c1->rect.h;
+		}
 
-	if (c1 == playerColliders.colliderPlayer_up.collider && c2->type == COLLIDER_FLOOR) {
-		speed.y = 0.0f;
-		if (c2->rect.y + c2->rect.h >= c1->rect.y)
-			position.y = c2->rect.y + c2->rect.h - playerColliders.colliderPlayer.offset.y + c1->rect.h;
-	}
-
-	if (c1 == playerColliders.colliderPlayer_right.collider && c2->type == COLLIDER_FLOOR) {
-		speed.x = 0.0f;
-		if (c2->rect.x <= c1->rect.x)
-			position.x = c2->rect.x - playerColliders.colliderPlayer.width - playerColliders.colliderPlayer.offset.x;
+		if (c1 == playerColliders.colliderPlayer_right.collider && c2->type == COLLIDER_FLOOR) {
+			speed.x = 0.0f;
+			if (c2->rect.x <= c1->rect.x)
+				position.x = c2->rect.x - playerColliders.colliderPlayer.width - playerColliders.colliderPlayer.offset.x;
+		}
+		break;
+	case COLLIDER_PLATFORM:
+		if (c1 == playerColliders.colliderPlayer_ground.collider) {
+			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y) {
+				speed.y = 0.0f;
+				speed.y -= App->map->data.gravity;
+				if (air)
+					air = false;
+				if (c1->rect.y >= c2->rect.y)
+					position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
+			}
+		}
+		break;
 	}
 }
 

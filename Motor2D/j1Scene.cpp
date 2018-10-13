@@ -38,7 +38,6 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	Stages stg = LEVEL_1;
 	App->map->Load(lvl1.GetString());
 	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	
@@ -127,11 +126,16 @@ bool j1Scene::PostUpdate()
 	bool ret = true;
 
 	int offsetPlayerPositionX = App->player->playerColliders.colliderPlayer.width - App->player->player.tileset.tilewidth;
+	int offsetPlayerPositionY = App->player->playerColliders.colliderPlayer.height - App->player->player.tileset.tileheight;
 
-	if ((cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0)
+	if ((cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0 &&
+		(cameraOffset.x + App->player->position.x - offsetPlayerPositionX) * App->win->GetScale() < App->map->data.width*App->map->data.tile_width*App->win->GetScale()) {
 		App->render->camera.x = (cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale();
-	if ((cameraOffset.y - App->player->position.y) * App->win->GetScale() < 0)
-		App->render->camera.y = (cameraOffset.y - App->player->position.y) * App->win->GetScale();
+	}
+	if ((cameraOffset.y - App->player->position.y + offsetPlayerPositionY) * App->win->GetScale() < 0 &&
+		(cameraOffset.y + App->player->position.y - offsetPlayerPositionY) * App->win->GetScale() < App->map->data.height*App->map->data.tile_height*App->win->GetScale()) {
+		App->render->camera.y = (cameraOffset.y - App->player->position.y + offsetPlayerPositionY) * App->win->GetScale();
+	}
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

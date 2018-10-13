@@ -12,17 +12,55 @@ j1Colliders::j1Colliders() : j1Module()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL][COLLIDER_FLOOR] = false;
-	
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
-
-	matrix[COLLIDER_FLOOR][COLLIDER_WALL] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_GROUND] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_LEFT] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_RIGHT] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_UP] = true;
+	
+	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_GROUND] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_UP] = false;
+
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLATFORM] = true;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_GROUND] = false;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_UP] = false;
+
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_GROUND] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_UP] = false;
+
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_GROUND] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_UP] = false;
+
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_GROUND] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_UP] = false;
+
+
 }
 // Destructor
 j1Colliders::~j1Colliders()
@@ -102,14 +140,23 @@ void j1Colliders::DebugDraw()
 			case COLLIDER_NONE: // white
 				App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 				break;
-			case COLLIDER_WALL: // blue
-				App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			case COLLIDER_FLOOR: // light blue
+				App->render->DrawQuad(colliders[i]->rect, 220, 20, 60, alpha);
 				break;
 			case COLLIDER_PLAYER: // green
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 				break;
-			case COLLIDER_FLOOR: // light blue
-				App->render->DrawQuad(colliders[i]->rect, 220, 20, 60, alpha);
+			case COLLIDER_PLAYER_GROUND: // orange
+				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
+				break;
+			case COLLIDER_PLAYER_UP: // orange
+				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
+				break;
+			case COLLIDER_PLAYER_LEFT: // orange
+				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
+				break;
+			case COLLIDER_PLAYER_RIGHT: // orange
+				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
 				break;
 			}
 		}

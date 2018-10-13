@@ -293,7 +293,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s", obj->name.GetString());
 			LOG("Collider Position: (%i , %i)", obj->coll_x, obj->coll_y);
 			LOG("width: %i  height: %i", obj->coll_width, obj->coll_height);
-			getTypeCollider(obj->type);
 			item_object = item_object->next;
 		}
 
@@ -504,13 +503,13 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_NONE;
 	}
-	else if (type == "COLLIDER_WALL")
-	{
-		obj->type = COLLIDER_WALL;
-	}
 	else if (type == "COLLIDER_FLOOR")
 	{
 		obj->type = COLLIDER_FLOOR;
+	}
+	else if (type == "COLLIDER_PLATFORM")
+	{
+		obj->type = COLLIDER_PLATFORM;
 	}
 	
 	return ret;
@@ -532,26 +531,4 @@ fPoint j1Map::GetInitialPosition() const {
 	}
 
 	return ret;
-}
-
-void j1Map::getTypeCollider(enum COLLIDER_TYPE type) {
-
-	switch (type)
-	{
-	case COLLIDER_FLOOR:
-		LOG("COLLIDER TYPE: FLOOR");
-		break;
-	case COLLIDER_WALL:
-		LOG("COLLIDER TYPE: WALL");
-		break;
-	case COLLIDER_NONE:
-		LOG("COLLIDER TYPE: NONE");
-		break;
-	case COLLIDER_PLAYER:
-		LOG("COLLIDER TYPE: PLAYER");
-		break;
-	default:
-		LOG("COLLIDER TYPE: NAN");
-		break;
-	}
 }

@@ -2,10 +2,6 @@
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
   <property name="animationSpeed" type="float" value="0.2"/>
-  <property name="colliderHeight" type="int" value="29"/>
-  <property name="colliderOffsetX" type="int" value="10"/>
-  <property name="colliderOffsetY" type="int" value="3"/>
-  <property name="colliderWidth" type="int" value="12"/>
   <property name="incrementSpeedX" type="float" value="1"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
   <property name="jumpSpeed" type="float" value="-8"/>
@@ -14,6 +10,13 @@
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">
+  <objectgroup draworder="index">
+   <object id="4" name="Collider" type="COLLIDER_PLAYER" x="9" y="2" width="14" height="30"/>
+   <object id="7" name="ColliderGround" type="COLLIDER_PLAYER_GROUND" x="10" y="31" width="12" height="1"/>
+   <object id="8" name="ColliderLeft" type="COLLIDER_PLAYER_LEFT" x="9" y="3" width="1" height="28"/>
+   <object id="9" name="ColliderRight" type="COLLIDER_PLAYER_RIGHT" x="22" y="3" width="1" height="28"/>
+   <object id="10" name="ColliderUp" type="COLLIDER_PLAYER_UP" x="11" y="2" width="10" height="1"/>
+  </objectgroup>
   <animation>
    <frame tileid="0" duration="200"/>
    <frame tileid="1" duration="100"/>

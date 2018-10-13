@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "p2List.h"
+#include "j1Collision.h"
 #include "SDL_image/include/SDL_image.h"
 
 
@@ -38,6 +39,22 @@ enum PlayerState {
 	UNKNOWN
 };
 
+struct COLLIDER_INFO {
+	Collider* collider = nullptr;
+	iPoint offset;
+	int width = 0;
+	int height = 0;
+	COLLIDER_TYPE type;
+};
+
+struct Colliders {
+	COLLIDER_INFO colliderPlayer;
+	COLLIDER_INFO colliderPlayer_ground;
+	COLLIDER_INFO colliderPlayer_up;
+	COLLIDER_INFO colliderPlayer_left;
+	COLLIDER_INFO colliderPlayer_right;
+};
+
 struct Anim {
 	uint id = 0;
 	uint num_frames = 0;
@@ -49,7 +66,6 @@ struct Anim {
 struct PlayerInfo {
 	TileSetPlayer tileset; //will only use one for the player
 	Anim* animations = nullptr;
-
 	uint num_animations = 0;
 };
 
@@ -93,10 +109,11 @@ public:
 private:
 
 	void PushBack();
-
+	void AddColliders();
 	void Movement();
 	void CheckState();
 	void Actions();
+	void SetCollidersPos();
 
 public:
 
@@ -115,8 +132,8 @@ public:
 	bool		air = false;
 	bool		land = false;
 
-	const char* walkingSound;
-	const char* jumpingSound;
+	const char* walkingSound = nullptr;
+	const char* jumpingSound = nullptr;
 
 	
 
@@ -134,11 +151,7 @@ public:
 	Animation anim_land;
 	Animation anim_default;
 
-
-	Collider* collPlayer;
-	iPoint colliderInfo;
-	iPoint colliderOffset;
-	
+	Colliders playerColliders;
 
 };
 

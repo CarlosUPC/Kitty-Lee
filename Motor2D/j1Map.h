@@ -107,8 +107,6 @@ public:
 	
 	fPoint GetInitialPosition() const;
 	
-	void getTypeCollider(enum COLLIDER_TYPE);
-
 	void AddCollidersMap();
 	
 

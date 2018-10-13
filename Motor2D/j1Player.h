@@ -39,22 +39,6 @@ enum PlayerState {
 	UNKNOWN
 };
 
-struct COLLIDER_INFO {
-	Collider* collider = nullptr;
-	iPoint offset;
-	int width = 0;
-	int height = 0;
-	COLLIDER_TYPE type;
-};
-
-struct Colliders {
-	COLLIDER_INFO colliderPlayer;
-	COLLIDER_INFO colliderPlayer_ground;
-	COLLIDER_INFO colliderPlayer_up;
-	COLLIDER_INFO colliderPlayer_left;
-	COLLIDER_INFO colliderPlayer_right;
-};
-
 struct Anim {
 	uint id = 0;
 	uint num_frames = 0;
@@ -109,11 +93,9 @@ public:
 private:
 
 	void PushBack();
-	void AddColliders();
 	void Movement();
 	void CheckState();
 	void Actions();
-	void SetCollidersPos();
 
 public:
 
@@ -151,7 +133,10 @@ public:
 	Animation anim_land;
 	Animation anim_default;
 
-	Colliders playerColliders;
+	Collider* colliderPlayer = nullptr;
+	iPoint		colliderOffset;
+	int		colliderWidth;
+	int		colliderHeight;
 
 };
 

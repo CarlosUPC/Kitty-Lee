@@ -14,51 +14,12 @@ j1Colliders::j1Colliders() : j1Module()
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_GROUND] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_LEFT] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_RIGHT] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_UP] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
+
 	
-	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_GROUND] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_LEFT] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_RIGHT] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_UP] = false;
-
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLATFORM] = true;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_GROUND] = false;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_LEFT] = false;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_RIGHT] = false;
-	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLAYER_UP] = false;
-
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = false;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_GROUND] = false;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_LEFT] = false;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_RIGHT] = false;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_UP] = false;
-
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = false;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_GROUND] = false;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_LEFT] = false;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_RIGHT] = false;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_UP] = false;
-
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = false;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_GROUND] = false;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_LEFT] = false;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_RIGHT] = false;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_UP] = false;
 
 
 }
@@ -67,10 +28,12 @@ j1Colliders::~j1Colliders()
 {
 }
 
-bool j1Colliders::Awake()
+bool j1Colliders::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	debug = node.child("debug").attribute("value").as_bool();
 	return ret;
 }
 bool j1Colliders::PreUpdate()
@@ -123,7 +86,7 @@ bool j1Colliders::Update(float dt)
 void j1Colliders::DebugDraw()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		LOG("YOu can see the colliders");
+		LOG("Debug activated");
 		debug = !debug;
 	}
 	if (debug == false) {
@@ -145,18 +108,6 @@ void j1Colliders::DebugDraw()
 				break;
 			case COLLIDER_PLAYER: // green
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-				break;
-			case COLLIDER_PLAYER_GROUND: // orange
-				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
-				break;
-			case COLLIDER_PLAYER_UP: // orange
-				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
-				break;
-			case COLLIDER_PLAYER_LEFT: // orange
-				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
-				break;
-			case COLLIDER_PLAYER_RIGHT: // orange
-				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
 				break;
 			}
 		}

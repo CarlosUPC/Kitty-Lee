@@ -43,7 +43,7 @@ bool j1FadeToBlack::Update(float dt)
 		if (now >= total_time)
 		{
 			
-
+			
 			if (level1) {
 				//Switch to level 2
 				SwitchingLevel(App->scene->lvl2.GetString());
@@ -61,6 +61,11 @@ bool j1FadeToBlack::Update(float dt)
 				App->render->camera.y = 0;
 				
 			}
+			App->player->Start();
+
+			/*total_time += total_time;
+			start_time = SDL_GetTicks();
+			current_step = fade_step::fade_from_black;*/
 		
 			fading = false;
 			current_step = fade_step::fade_from_black;
@@ -94,9 +99,11 @@ bool j1FadeToBlack::CleanUp()
 bool j1FadeToBlack::FadeToBlack(float time)
 {
 	bool ret = false;
+	App->player->CleanUp();
 
 	if (current_step == fade_step::none)
 	{
+	
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
 		total_time = (uint)(time * 0.5f * 1000.0f);
@@ -105,7 +112,7 @@ bool j1FadeToBlack::FadeToBlack(float time)
 	}
 
 	return ret;
-	return false;
+	
 }
 
 bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)

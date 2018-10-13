@@ -55,7 +55,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	
+	CheckLevel();
 	return true;
 }
 
@@ -92,15 +92,12 @@ bool j1Scene::Update(float dt)
 		App->render->camera.y = 0;
 }
 
-
-	if (App->player->position.x >= 350 && stg == LEVEL_1)
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		//Switch to level 2
 		App->fade->FadeToBlack();
-		
-
 	}
-
+	
 	App->map->Draw();
 	
 
@@ -108,6 +105,7 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+
 
 	
 
@@ -140,7 +138,7 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	CheckLevel();
+	//CheckLevel();
 
 	return ret;
 }

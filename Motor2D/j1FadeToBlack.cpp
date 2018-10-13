@@ -56,6 +56,8 @@ bool j1FadeToBlack::Update(float dt)
 				SwitchingLevel(App->scene->lvl1.GetString());
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_1;
+				App->render->camera.x = 0;
+				App->render->camera.y = 0;
 				
 			}
 

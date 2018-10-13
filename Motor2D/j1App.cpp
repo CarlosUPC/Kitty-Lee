@@ -29,8 +29,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	collider = new j1Colliders();
 	map = new j1Map();
-	player = new j1Player();
 	fade = new j1FadeToBlack();
+	player = new j1Player();
+	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp

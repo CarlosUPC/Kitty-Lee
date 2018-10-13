@@ -9,7 +9,12 @@ enum COLLIDER_TYPE
 	COLLIDER_NONE = -1,
 	COLLIDER_FLOOR,
 	COLLIDER_PLATFORM,
+
 	COLLIDER_PLAYER,
+	COLLIDER_PLAYER_GROUND,
+	COLLIDER_PLAYER_UP,
+	COLLIDER_PLAYER_LEFT,
+	COLLIDER_PLAYER_RIGHT,
 
 
 	COLLIDER_MAX
@@ -38,7 +43,7 @@ class j1Colliders : public j1Module
 public:
 	j1Colliders();
 	~j1Colliders();
-	bool Awake(pugi::xml_node&);
+	bool Awake();
 	bool PreUpdate();
 	bool Update(float dt);
 	//update_status PostUpdate();

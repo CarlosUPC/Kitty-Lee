@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "j1FadeToBlack.h"
 
 
 
@@ -79,8 +80,11 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		SwitchingLevel();
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (!isLevel1) App->fade->FadeToBlack();
+		else App->player->position = App->map->GetInitialPosition();
+	}
+		
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
@@ -92,14 +96,8 @@ bool j1Scene::Update(float dt)
 	if (App->player->position.x >= 350 && stg == LEVEL_1)
 	{
 		//Switch to level 2
-		App->collider->EraseMapCollider();
-		App->map->CleanUp();
-		App->map->Load(lvl2.GetString());
-		App->map->AddCollidersMap();
-		App->player->position = App->map->GetInitialPosition();
-		stg = LEVEL_2;
-		App->render->camera.x = 0;
-		App->render->camera.y = 0;
+		App->fade->FadeToBlack();
+		
 
 	}
 
@@ -160,35 +158,18 @@ void j1Scene::CheckLevel()
 	switch (stg)
 	{
 	case LEVEL_1:
-		level1 = true;
-		level2 = false;
+		App->fade->level1 = true;
+		App->fade->level2 = false;
+		isLevel1 = true;
 		break;
 	case LEVEL_2:
-		level2 = true;
-		level1 = false;
+		App->fade->level2 = true;
+		App->fade->level1 = false;
+		isLevel1 = false;
 		break;
 	default:
 		break;
 	}
-}
-
-void j1Scene::SwitchingLevel() {
-
-	if (level1) {
-		App->player->position = App->map->GetInitialPosition();
-	}
-
-	else if (level2) {
-		//Switch to level 1
-		App->collider->EraseMapCollider();
-		App->map->CleanUp();
-		App->map->Load(lvl1.GetString());
-		App->map->AddCollidersMap();
-		App->player->position = App->map->GetInitialPosition();
-		stg = LEVEL_1;
-	}
-
-
 }
 
 

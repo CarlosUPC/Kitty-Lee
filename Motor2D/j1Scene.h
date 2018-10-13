@@ -38,23 +38,20 @@ public:
 	bool CleanUp();
 
 	void CheckLevel();
-	void SwitchingLevel();
+	
 
-private:
+public:
 	p2SString lvl1;
 	p2SString lvl2;
+	Stages stg;
+	
+private:
 
 	iPoint cameraOffset;
 	uint win_width;
-
 	uint win_height;
 
-	int camPos;
-	
-	bool level1;
-	bool level2;
-	Stages stg;
-	
+	bool isLevel1;
 	
 };
 

@@ -42,6 +42,7 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		if (now >= total_time)
 		{
+			
 
 			if (level1) {
 				//Switch to level 2
@@ -60,7 +61,7 @@ bool j1FadeToBlack::Update(float dt)
 				App->render->camera.y = 0;
 				
 			}
-
+		
 			fading = false;
 			current_step = fade_step::fade_from_black;
 		}

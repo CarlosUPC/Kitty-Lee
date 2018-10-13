@@ -298,6 +298,7 @@ bool j1Map::Load(const char* file_name)
 
 	}
 
+	map_file.reset();
 	map_loaded = ret;
 
 	return ret;
@@ -511,7 +512,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_PLATFORM;
 	}
-	
+
 	return ret;
 }
 

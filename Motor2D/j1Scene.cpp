@@ -38,7 +38,6 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	Stages stg = LEVEL_1;
 	App->map->Load(lvl1.GetString());
 	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	

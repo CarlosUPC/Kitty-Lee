@@ -10,7 +10,7 @@ These is a small project made by two students of CITM - Terrassa of Design and D
 
 * Download last release zip from our [Repository](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/releases).
 * Extract zip.
-* Run .exe.
+* Run KittyLee.exe.
 
 ## Controls
 
@@ -18,7 +18,7 @@ These is a small project made by two students of CITM - Terrassa of Design and D
 * D to move right.
 * Spacebar to jump.
 
-  ###Development controls
+  ### Development controls
   
   * F1 Start from the very first level.
   * F2 Start from the beginning of the current level
@@ -36,10 +36,11 @@ These is a small project made by two students of CITM - Terrassa of Design and D
 
 ## Art/Music used
 
-[Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
-[Map Tileset]()
-[Music Scene]()
-[Fx]()
+* [Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
+* [Map Tileset](https://ansimuz.itch.io/sunny-land-pixel-game-art)
+* [Music Scene](https://opengameart.org/content/platformer-game-music-pack) - Grasslands Theme
+* [jump fx](https://opengameart.org/content/platformer-jumping-sounds)
+* [walk_fx](https://freesound.org/people/FxKid2/sounds/362609/)
 
 ## Authors
 

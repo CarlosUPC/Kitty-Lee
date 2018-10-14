@@ -437,7 +437,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		App->LoadGame();
 		break;
 	case COLLIDER_SCENE:
-		App->fade->FadeToBlack();
+		if (!App->fade->IsFading())
+			App->fade->FadeToBlack();
 		break;
 	case COLLIDER_WIN:
 

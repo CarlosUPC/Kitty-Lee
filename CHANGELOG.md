@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.2.1] - 2018-10-13
+## [0.2.1] - 2018-10-14
 ### Added
 
 - God mode utility.
 - Player death animation and functionality.
 
-## [0.2.0] - 2018-10-13
+## [0.2.0] - 2018-10-14
 ### Added
 
 - New mechanic. Become a ghost.

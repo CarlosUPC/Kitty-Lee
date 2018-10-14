@@ -333,10 +333,11 @@ void j1Player::CheckState() {
 			state = JUMP;
 		break;
 	case DEAD:
-		if (current_animation->Finished()) {
+		if (current_animation->Finished() && current_animation == &anim_death) {
+			state = IDLE;
 			App->LoadGame();
-			current_animation = &anim_idle;
 		}
+		speed.x = 0.0F;
 		break;
 	default:
 		break;

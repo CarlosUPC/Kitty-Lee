@@ -126,7 +126,12 @@ void j1Player::Movement() {
 		App->audio->StopFx(1); //Walk fx
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && air == false) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT && App->collider->Check(colliderPlayer_down.collider,COLLIDER_PLATFORM)) {
+		if (!platformOverstep)
+			platformOverstep = true;
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
 		air = true;
 		App->audio->PlayFx(2); //Jump fx
@@ -386,13 +391,16 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		break;
 	case COLLIDER_PLATFORM:
 		if (c1 == colliderPlayer_down.collider) {
-			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y) {
+			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep) {
 				speed.y = 0.0f;
 				speed.y -= App->map->data.gravity;
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)
 					position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
+			}
+			else if (c2->rect.y + c2->rect.h * 0.5f < c1->rect.y && platformOverstep) {
+				platformOverstep = false;
 			}
 		}
 		break;

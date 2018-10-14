@@ -77,6 +77,11 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	Movement();
+
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+		ghost = !ghost;
+		Actions();
+	}
 	//Player collider update
 	SetCollidersPos();
 
@@ -152,6 +157,12 @@ void j1Player::PushBack() {
 				break;
 			case LAND:
 				anim_land.PushBack(player.animations[i].frames[j]);
+				break;
+			case IDLE_GHOST:
+				anim_idle_ghost.PushBack(player.animations[i].frames[j]);
+				break;
+			case WALKING_GHOST:
+				anim_walking_ghost.PushBack(player.animations[i].frames[j]);
 				break;
 			default:
 				break;
@@ -309,10 +320,14 @@ void j1Player::Actions() {
 	switch (state)
 	{
 	case IDLE:
-		current_animation = &anim_idle;
+		if (!ghost)
+			current_animation = &anim_idle;
+		else  current_animation = &anim_idle_ghost;
 		break;
 	case WALKING:
-		current_animation = &anim_walking;
+		if (!ghost)
+			current_animation = &anim_walking;
+		else current_animation = &anim_walking_ghost;
 		current_animation->reset();
 		break;
 	case JUMP:
@@ -551,6 +566,12 @@ bool j1Player::LoadPlayer(const char* file) {
 			break;
 		case 96:
 			player.animations[i].animType = PlayerState::PUNCH;
+			break;
+		case 4:
+			player.animations[i].animType = PlayerState::IDLE_GHOST;
+			break;
+		case 24:
+			player.animations[i].animType = PlayerState::WALKING_GHOST;
 			break;
 		default:
 			player.animations[i].animType = PlayerState::UNKNOWN;

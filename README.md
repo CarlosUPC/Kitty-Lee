@@ -23,9 +23,12 @@ This is a small project made by two students of CITM - Terrassa of Design and De
   ### Development controls
   
   * F1 Start from the very first level.
-  * F2 Start from the beginning of the current level
+  * F2 Start from the beginning of the current level.
+  * F3 Increase music volume of game.
+  * F4 Decrease music volume of game.
   * F5 Save the current state.
   * F6 Load the previous state (even across levels).
+  * F8 Switch between levels.
   * F9 To view colliders.
   * F10 God Mode.
 

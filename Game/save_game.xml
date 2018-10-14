@@ -5,13 +5,15 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<levels level="2" />
+	</scene>
 	<colliders />
 	<player>
-		<player x="176" y="128" />
+		<player x="229" y="256" />
 	</player>
 	<:anonymous />
 	<renderer>
-		<camera x="-78" y="0" />
+		<camera x="-231" y="-384" />
 	</renderer>
 </game_state>

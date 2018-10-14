@@ -38,21 +38,23 @@ public:
 	bool CleanUp();
 
 	void CheckLevel();
+
+	bool Load(pugi::xml_node&);
+
+	bool Save(pugi::xml_node&) const;
 	
 
 public:
 	p2SString lvl1;
 	p2SString lvl2;
 	Stages stg;
-	
+	bool isLevel1;
 private:
 
 	iPoint cameraOffset;
 	uint win_width;
 	uint win_height;
 
-	bool isLevel1;
-	
 };
 
 #endif // __j1SCENE_H__

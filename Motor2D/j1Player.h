@@ -49,14 +49,6 @@ struct COLLIDER_INFO {
 	COLLIDER_TYPE type;
 };
 
-struct Colliders {
-	COLLIDER_INFO colliderPlayer;
-	COLLIDER_INFO colliderPlayer_ground;
-	COLLIDER_INFO colliderPlayer_up;
-	COLLIDER_INFO colliderPlayer_left;
-	COLLIDER_INFO colliderPlayer_right;
-};
-
 struct Anim {
 	uint id = 0;
 	uint num_frames = 0;
@@ -158,8 +150,11 @@ public:
 	Animation anim_walking_ghost;
 	Animation anim_default;
 
-	Colliders playerColliders;
-
+	COLLIDER_INFO colliderPlayer;
+	COLLIDER_INFO colliderPlayer_down;
+	COLLIDER_INFO colliderPlayer_up;
+	COLLIDER_INFO colliderPlayer_left;
+	COLLIDER_INFO colliderPlayer_right;
 };
 
 #endif 

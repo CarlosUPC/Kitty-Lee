@@ -87,6 +87,13 @@ bool j1Render::CleanUp()
 	return true;
 }
 
+SDL_Rect j1Render::CameraInitPos() {
+	camera.x = 0;
+	camera.y = 0;
+
+	return camera;
+}
+
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {

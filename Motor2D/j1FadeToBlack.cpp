@@ -43,16 +43,13 @@ bool j1FadeToBlack::Update(float dt)
 		if (now >= total_time)
 		{
 			
-
-			//App->player->Start();
 			if (level1) {
 				//Switch to level 2
 				num_level = 2;
 				SwitchingLevel(App->scene->lvl2.GetString());
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_2;
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
+				App->render->camera = App->render->CameraInitPos();
 				
 
 			}
@@ -62,8 +59,7 @@ bool j1FadeToBlack::Update(float dt)
 				SwitchingLevel(App->scene->lvl1.GetString());
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_1;
-				App->render->camera.x = 0;
-				App->render->camera.y = 0;
+				App->render->camera = App->render->CameraInitPos();
 				
 			}
 			
@@ -104,7 +100,7 @@ bool j1FadeToBlack::CleanUp()
 bool j1FadeToBlack::FadeToBlack(float time)
 {
 	bool ret = false;
-	//App->player->CleanUp();
+
 	level1 = true;
 
 	if (current_step == fade_step::none)

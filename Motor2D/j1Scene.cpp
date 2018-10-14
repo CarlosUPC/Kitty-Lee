@@ -81,14 +81,20 @@ bool j1Scene::Update(float dt)
 	
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
-		App->render->camera.x = 0;
-		App->render->camera.y = 0;
+		App->render->camera = App->render->CameraInitPos();
+		
 }
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		App->collider->GodMode();
+
+
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{

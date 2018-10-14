@@ -240,3 +240,18 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 		return false;
 	return true;
 }
+
+void j1Colliders::GodMode() {
+
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = god_mode;
+
+	//Just a test for God mode debug key
+	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = god_mode;
+	matrix[COLLIDER_PLAYER_GROUND][COLLIDER_PLATFORM] = god_mode;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = god_mode;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = god_mode;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = god_mode;
+	
+	god_mode = !god_mode;
+
+}

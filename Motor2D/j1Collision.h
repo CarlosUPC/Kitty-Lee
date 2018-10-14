@@ -16,6 +16,8 @@ enum COLLIDER_TYPE
 	COLLIDER_PLAYER_LEFT,
 	COLLIDER_PLAYER_RIGHT,
 
+	COLLIDER_DEATH,
+
 
 	COLLIDER_MAX
 };
@@ -53,9 +55,11 @@ public:
 	bool EraseMapCollider();
 	void DebugDraw();
 	bool checkColisionList(Collider* enemCollider);
+	void GodMode();
 private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
+	bool god_mode = false;
 };
 #endif // __J1COLLIDERS_H__ 

@@ -132,11 +132,14 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Game\maps\Test.tmx">
-      <Filter>Scenes</Filter>
-    </None>
     <None Include="..\Game\player.tsx">
       <Filter>XML</Filter>
+    </None>
+    <None Include="..\Game\maps\SceneIndoor.tmx">
+      <Filter>Scenes</Filter>
+    </None>
+    <None Include="..\Game\maps\Scene1.tmx">
+      <Filter>Scenes</Filter>
     </None>
   </ItemGroup>
 </Project>

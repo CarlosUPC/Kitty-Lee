@@ -125,7 +125,8 @@
     <Xml Include="..\Game\save_game.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Game\maps\Test.tmx" />
+    <None Include="..\Game\maps\Scene1.tmx" />
+    <None Include="..\Game\maps\SceneIndoor.tmx" />
     <None Include="..\Game\player.tsx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

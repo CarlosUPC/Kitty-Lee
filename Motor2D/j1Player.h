@@ -114,7 +114,7 @@ private:
 
 public:
 
-	PlayerInfo player;
+	PlayerInfo data;
 
 	PlayerState state = IDLE;
 

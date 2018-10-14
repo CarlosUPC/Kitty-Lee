@@ -12,7 +12,7 @@
   </renderer>
 
   <colliders>
-    <debug value="true"/>
+    <debug value="false"/>
   </colliders>
 
   <window>

@@ -123,12 +123,9 @@ bool j1FadeToBlack::FadeToBlack(float time)
 bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 {
 	bool ret = true;
-	App->collider->CleanUp();
-	App->player->CleanUp();
+	App->collider->EraseMapCollider();
 	App->map->CleanUp();
-	App->collider->Start();
 	App->map->Load(tmx_map);
-	App->player->Start();
 	App->map->AddCollidersMap();
 	return ret;
 }

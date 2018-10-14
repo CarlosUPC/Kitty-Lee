@@ -3,7 +3,7 @@
  <properties>
   <property name="gravity" type="float" value="0.7"/>
   <property name="maxAccelerationY" type="float" value="7"/>
-  <property name="musicEnvironment" value="audio/music/Grasslands_Theme.ogg"/>
+  <property name="musicEnvironment" value="audio/music/Dungeon Theme.ogg"/>
  </properties>
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="575" columns="25">
   <image source="tileset.png" width="400" height="368"/>

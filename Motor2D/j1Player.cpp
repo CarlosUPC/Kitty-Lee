@@ -78,6 +78,13 @@ bool j1Player::Update(float dt)
 {
 	Movement();
 
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+		ghost = !ghost;
+		Actions();
+	}
+	//Player collider update
+	SetCollidersPos();
+
 	return true;
 }
 
@@ -86,9 +93,6 @@ bool j1Player::PostUpdate()
 {
 
 	CheckState();
-
-	//Player collider update
-	SetCollidersPos();
 
 	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 	
@@ -127,7 +131,8 @@ void j1Player::Movement() {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
-	speed.y += App->map->data.gravity;
+	if (speed.y < App->map->data.maxAccelerationY)
+		speed.y += App->map->data.gravity;
 
 
 
@@ -152,6 +157,12 @@ void j1Player::PushBack() {
 				break;
 			case LAND:
 				anim_land.PushBack(player.animations[i].frames[j]);
+				break;
+			case IDLE_GHOST:
+				anim_idle_ghost.PushBack(player.animations[i].frames[j]);
+				break;
+			case WALKING_GHOST:
+				anim_walking_ghost.PushBack(player.animations[i].frames[j]);
 				break;
 			default:
 				break;
@@ -237,6 +248,8 @@ bool j1Player::Load(pugi::xml_node& data)
 		position.y = data.child("player").attribute("y").as_int();
 	}
 
+	App->player->speed.SetToZero();
+
 	return true;
 
 }
@@ -259,12 +272,20 @@ void j1Player::CheckState() {
 			state = WALKING;
 		if (air)
 			state = JUMP;
+		if (speed.y != 0.0f) {
+			state = FALL;
+			air = true;
+		}
 		break;
 	case WALKING:
 		if (speed.x == 0.0f)
 			state = IDLE;
 		if (air)
 			state = JUMP;
+		if (speed.y != 0.0f) {
+			state = FALL;
+			air = true;
+		}
 		break;
 	case JUMP:
 		if (current_animation->Finished() && current_animation == &anim_jump)
@@ -299,10 +320,14 @@ void j1Player::Actions() {
 	switch (state)
 	{
 	case IDLE:
-		current_animation = &anim_idle;
+		if (!ghost)
+			current_animation = &anim_idle;
+		else  current_animation = &anim_idle_ghost;
 		break;
 	case WALKING:
-		current_animation = &anim_walking;
+		if (!ghost)
+			current_animation = &anim_walking;
+		else current_animation = &anim_walking_ghost;
 		current_animation->reset();
 		break;
 	case JUMP:
@@ -327,7 +352,7 @@ void j1Player::Actions() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type) {
 	case COLLIDER_FLOOR:
-		if (c1 == playerColliders.colliderPlayer_ground.collider && c2->type == COLLIDER_FLOOR) {
+		if (c1 == playerColliders.colliderPlayer_ground.collider) {
 			speed.y = 0.0f;
 			speed.y -= App->map->data.gravity;
 			if (air)
@@ -336,7 +361,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
 		}
 
-		if (c1 == playerColliders.colliderPlayer_left.collider && c2->type == COLLIDER_FLOOR) {
+		else if (c1 == playerColliders.colliderPlayer_up.collider) {
+			speed.y = 0.0f;
+			if (c2->rect.y + c2->rect.h >= c1->rect.y)
+				position.y = c2->rect.y + c2->rect.h - playerColliders.colliderPlayer.offset.y + c1->rect.h;
+		}
+		else if (c1 == playerColliders.colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			//App->audio->PlayFx(3);
@@ -344,18 +374,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				position.x = c2->rect.x + c2->rect.w - playerColliders.colliderPlayer.offset.x;
 		}
 
-		if (c1 == playerColliders.colliderPlayer_up.collider && c2->type == COLLIDER_FLOOR) {
-			speed.y = 0.0f;
-			if (c2->rect.y + c2->rect.h >= c1->rect.y)
-				position.y = c2->rect.y + c2->rect.h - playerColliders.colliderPlayer.offset.y + c1->rect.h;
-		}
-
-		if (c1 == playerColliders.colliderPlayer_right.collider && c2->type == COLLIDER_FLOOR) {
+		else if (c1 == playerColliders.colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			//App->audio->PlayFx(3);
 			if (c2->rect.x <= c1->rect.x)
 				position.x = c2->rect.x - playerColliders.colliderPlayer.width - playerColliders.colliderPlayer.offset.x;
+
 		}
 		break;
 	case COLLIDER_PLATFORM:
@@ -541,6 +566,12 @@ bool j1Player::LoadPlayer(const char* file) {
 			break;
 		case 96:
 			player.animations[i].animType = PlayerState::PUNCH;
+			break;
+		case 4:
+			player.animations[i].animType = PlayerState::IDLE_GHOST;
+			break;
+		case 24:
+			player.animations[i].animType = PlayerState::WALKING_GHOST;
 			break;
 		default:
 			player.animations[i].animType = PlayerState::UNKNOWN;

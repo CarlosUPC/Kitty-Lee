@@ -36,6 +36,8 @@ enum PlayerState {
 	DEAD,
 	HADOUKEN,
 	PUNCH,
+	IDLE_GHOST,
+	WALKING_GHOST,
 	UNKNOWN
 };
 
@@ -145,11 +147,15 @@ public:
 	Animation* current_animation = nullptr;
 	float animationSpeed;
 
+	bool ghost = false;
+
 	Animation anim_idle;
 	Animation anim_walking;
 	Animation anim_jump;
 	Animation anim_fall;
 	Animation anim_land;
+	Animation anim_idle_ghost;
+	Animation anim_walking_ghost;
 	Animation anim_default;
 
 	Colliders playerColliders;

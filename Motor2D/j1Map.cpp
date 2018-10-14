@@ -379,6 +379,8 @@ void j1Map::LoadProperties(pugi::xml_node& properties_node) {
 		nameProperty = properties_node.attribute("name").as_string();
 		if (nameProperty == "gravity")
 			data.gravity = properties_node.attribute("value").as_float();
+		if (nameProperty == "maxAccelerationY")
+			data.maxAccelerationY = properties_node.attribute("value").as_float();
 		if (nameProperty == "musicEnvironment") 
 			data.musicEnvironment = properties_node.attribute("value").as_string();
 		
@@ -512,7 +514,9 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_PLATFORM;
 	}
-
+	else if (type == "COLLIDER_DEATH") {
+		obj->type = COLLIDER_DEATH;
+	}
 	return ret;
 }
 

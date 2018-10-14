@@ -74,6 +74,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	float				gravity;
+	float				maxAccelerationY;
 	const char*			musicEnvironment;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;

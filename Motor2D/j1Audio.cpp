@@ -93,9 +93,9 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 
 	if(music != NULL)
 	{
-		if(fade_time > 0.0f)
+		if(fade_time > 0.0F)
 		{
-			Mix_FadeOutMusic(int(fade_time * 150.0f));
+			Mix_FadeOutMusic(int(fade_time * 150.0F));
 		}
 		else
 		{
@@ -115,9 +115,9 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	}
 	else
 	{
-		if(fade_time > 0.0f)
+		if(fade_time > 0.0F)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0F)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -163,7 +163,7 @@ unsigned int j1Audio::LoadFx(const char* path)
 // Play WAV
 bool j1Audio::PlayFx(unsigned int id, int repeat)
 {
-	bool ret = false;
+	bool ret = true;
 
 	if(!active)
 		return false;
@@ -179,7 +179,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 // Fade out WAV
 bool j1Audio::FadeOutFx(unsigned int id, int fade)
 {
-	bool ret = false;
+	bool ret = true;
 
 	if (!active)
 		return false;
@@ -195,7 +195,7 @@ bool j1Audio::FadeOutFx(unsigned int id, int fade)
 
 bool j1Audio::StopFx(unsigned int id)
 {
-	bool ret = false;
+	bool ret = true;
 
 	if (!active)
 		return false;

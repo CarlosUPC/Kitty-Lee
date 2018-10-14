@@ -50,7 +50,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 bool j1Player::Start()
 {
 
-	player.tileset.texture = App->tex->Load(player.tileset.imagePath.GetString());
+	data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
 
 	//This method returns player object's position
 	position = App->map->GetInitialPosition();
@@ -95,7 +95,7 @@ bool j1Player::PostUpdate()
 
 	CheckState();
 
-	App->render->Blit(player.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
 	
 	return true;
 }
@@ -104,7 +104,7 @@ bool j1Player::PostUpdate()
 bool j1Player::CleanUp()
 {
 
-	App->tex->UnLoad(player.tileset.texture);
+	App->tex->UnLoad(data.tileset.texture);
 	return true;
 }
 
@@ -146,38 +146,38 @@ void j1Player::Movement() {
 }
 void j1Player::PushBack() {
 
-	for (uint i = 0; i < player.num_animations; ++i) {
-		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
-			switch (player.animations[i].animType) {
+	for (uint i = 0; i < data.num_animations; ++i) {
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			switch (data.animations[i].animType) {
 			case IDLE:
-				anim_idle.PushBack(player.animations[i].frames[j]);
+				anim_idle.PushBack(data.animations[i].frames[j]);
 				break;
 			case WALKING:
-				anim_walking.PushBack(player.animations[i].frames[j]);
+				anim_walking.PushBack(data.animations[i].frames[j]);
 				break;
 			case JUMP:
-				anim_jump.PushBack(player.animations[i].frames[j]);
+				anim_jump.PushBack(data.animations[i].frames[j]);
 				break;
 			case FALL:
-				anim_fall.PushBack(player.animations[i].frames[j]);
+				anim_fall.PushBack(data.animations[i].frames[j]);
 				break;
 			case LAND:
-				anim_land.PushBack(player.animations[i].frames[j]);
+				anim_land.PushBack(data.animations[i].frames[j]);
 				break;
 			case IDLE_GHOST:
-				anim_idle_ghost.PushBack(player.animations[i].frames[j]);
+				anim_idle_ghost.PushBack(data.animations[i].frames[j]);
 				break;
 			case WALKING_GHOST:
-				anim_walking_ghost.PushBack(player.animations[i].frames[j]);
+				anim_walking_ghost.PushBack(data.animations[i].frames[j]);
 				break;
 			case JUMP_GHOST:
-				anim_jump_ghost.PushBack(player.animations[i].frames[j]);
+				anim_jump_ghost.PushBack(data.animations[i].frames[j]);
 				break;
 			case FALL_GHOST:
-				anim_fall_ghost.PushBack(player.animations[i].frames[j]);
+				anim_fall_ghost.PushBack(data.animations[i].frames[j]);
 				break;
 			case LAND_GHOST:
-				anim_land_ghost.PushBack(player.animations[i].frames[j]);
+				anim_land_ghost.PushBack(data.animations[i].frames[j]);
 				break;
 			default:
 				break;
@@ -189,15 +189,15 @@ void j1Player::PushBack() {
 	anim_land.loop = false;
 
 	//deleting player animation data already loaded in its corresponding animation variables
-	for (uint i = 0; i < player.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
-		if (player.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
-			delete[] player.animations[i].frames;			//corresponding variables, that data is useless
-			player.animations[i].frames = nullptr;
+	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
+			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
+			data.animations[i].frames = nullptr;
 		}
 	}
-	if (player.animations != nullptr) {
-		delete[] player.animations;
-		player.animations = nullptr;
+	if (data.animations != nullptr) {
+		delete[] data.animations;
+		data.animations = nullptr;
 	}
 }
 
@@ -231,19 +231,19 @@ void j1Player::SetCollidersPos() {
 	COLLIDER_INFO* actual_collider;
 
 	actual_collider = &colliderPlayer;
-	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_down;
-	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_up;
-	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_left;
-	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_right;
-	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 }
 
@@ -263,8 +263,8 @@ bool j1Player::Load(pugi::xml_node& data)
 	if (App->fade->num_level == 2) {
 		App->scene->stg = LEVEL_2;
 		App->fade->SwitchingLevel(App->scene->lvl2.GetString());
-		position.x = data.child("player").attribute("x").as_int();
-		position.y = data.child("player").attribute("y").as_int();
+		position.x = data.child("player").attribute("x").as_float();
+		position.y = data.child("player").attribute("y").as_float();
 	}
 
 	App->player->speed.SetToZero();
@@ -394,7 +394,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		else if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			//App->audio->PlayFx(3);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
 		}
@@ -402,7 +401,22 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			//App->audio->PlayFx(3);
+			if (c2->rect.x <= c1->rect.x)
+				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
+
+		}
+		break;
+	case COLLIDER_GHOST:
+		if (c1 == colliderPlayer_left.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			if (c2->rect.x + c2->rect.w >= c1->rect.x)
+				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
+		}
+
+		else if (c1 == colliderPlayer_right.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
 				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
 
@@ -427,24 +441,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		App->LoadGame();
 		break;
 	case COLLIDER_SCENE:
-		App->fade->FadeToBlack();
+		if (!App->fade->IsFading())
+			App->fade->FadeToBlack();
 		break;
+	case COLLIDER_WIN:
 
-	case COLLIDER_GHOST:
-		if (c1 == colliderPlayer_left.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
-		}
-
-		else if (c1 == colliderPlayer_right.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
-
-		}
+		break;
+	default:
 		break;
 	}
 }
@@ -463,54 +466,54 @@ bool j1Player::LoadPlayer(const char* file) {
 
 	//fill tileset info
 	pugi::xml_node node = player_file.child("tileset");
-	player.tileset.name.create(node.attribute("name").as_string());
-	player.tileset.tilewidth = node.attribute("tilewidth").as_uint();
-	player.tileset.tileheight = node.attribute("tileheight").as_uint();
-	player.tileset.spacing = node.attribute("spacing").as_uint();
-	player.tileset.margin = node.attribute("margin").as_uint();
-	player.tileset.tilecount = node.attribute("tilecount").as_uint();
-	player.tileset.columns = node.attribute("columns").as_uint();
-	player.tileset.imagePath = node.child("image").attribute("source").as_string();
-	player.tileset.width = node.child("image").attribute("width").as_uint();
-	player.tileset.height = node.child("image").attribute("height").as_uint();
+	data.tileset.name.create(node.attribute("name").as_string());
+	data.tileset.tilewidth = node.attribute("tilewidth").as_uint();
+	data.tileset.tileheight = node.attribute("tileheight").as_uint();
+	data.tileset.spacing = node.attribute("spacing").as_uint();
+	data.tileset.margin = node.attribute("margin").as_uint();
+	data.tileset.tilecount = node.attribute("tilecount").as_uint();
+	data.tileset.columns = node.attribute("columns").as_uint();
+	data.tileset.imagePath = node.child("image").attribute("source").as_string();
+	data.tileset.width = node.child("image").attribute("width").as_uint();
+	data.tileset.height = node.child("image").attribute("height").as_uint();
 
 	//count how many animations are in file
 	node = node.child("tile");
-	player.num_animations = 0;
+	data.num_animations = 0;
 	while (node != NULL) {
-		player.num_animations++;
+		data.num_animations++;
 		node = node.next_sibling("tile");
 	}
 	//reserve memory for all animations
-	player.animations = new Anim[player.num_animations];
+	data.animations = new Anim[data.num_animations];
 
 	//count how many frames for each animation, assign memory for those frames and set id frame start
 	node = player_file.child("tileset").child("tile");
-	for (uint i = 0; i < player.num_animations; ++i) {
-		player.animations[i].FrameCount(node.child("animation").child("frame"));
-		player.animations[i].frames = new SDL_Rect[player.animations[i].num_frames];
-		player.animations[i].id = node.attribute("id").as_uint();
+	for (uint i = 0; i < data.num_animations; ++i) {
+		data.animations[i].FrameCount(node.child("animation").child("frame"));
+		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
+		data.animations[i].id = node.attribute("id").as_uint();
 		node = node.next_sibling("tile");
 	}
 
 	//fill frame array with current information
 	node = player_file.child("tileset").child("tile");
 	pugi::xml_node node_frame;
-	for (uint i = 0; i < player.num_animations; ++i) {
+	for (uint i = 0; i < data.num_animations; ++i) {
 		node_frame = node.child("animation").child("frame");
-		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
-			player.animations[i].frames[j] = player.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			data.animations[i].frames[j] = data.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
 			node_frame = node_frame.next_sibling("frame");
 		}
 		node = node.next_sibling("tile");
 	}
 	//LOG all animation information
-	for (uint i = 0; i < player.num_animations; ++i) {
-		LOG("Animation %i--------", player.animations[i].id);
-		for (uint j = 0; j < player.animations[i].num_frames; ++j) {
+	for (uint i = 0; i < data.num_animations; ++i) {
+		LOG("Animation %i--------", data.animations[i].id);
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
 			LOG("frame %i x: %i y: %i w: %i h: %i",
-				j, player.animations[i].frames[j].x, player.animations[i].frames[j].y,
-				player.animations[i].frames[j].w, player.animations[i].frames[j].h);
+				j, data.animations[i].frames[j].x, data.animations[i].frames[j].y,
+				data.animations[i].frames[j].w, data.animations[i].frames[j].h);
 		}
 	}
 	
@@ -592,49 +595,49 @@ bool j1Player::LoadPlayer(const char* file) {
 
 	
 	//Convert id animations to enum
-	for (uint i = 0; i < player.num_animations; ++i) {
-		switch (player.animations[i].id) {
+	for (uint i = 0; i < data.num_animations; ++i) {
+		switch (data.animations[i].id) {
 		case 0:
-			player.animations[i].animType = PlayerState::IDLE;
+			data.animations[i].animType = PlayerState::IDLE;
 			break;
 		case 16:
-			player.animations[i].animType = PlayerState::WALKING;
+			data.animations[i].animType = PlayerState::WALKING;
 			break;
 		case 32:
-			player.animations[i].animType = PlayerState::JUMP;
+			data.animations[i].animType = PlayerState::JUMP;
 			break;
 		case 35:
-			player.animations[i].animType = PlayerState::FALL;
+			data.animations[i].animType = PlayerState::FALL;
 			break;
 		case 36:
-			player.animations[i].animType = PlayerState::LAND;
+			data.animations[i].animType = PlayerState::LAND;
 			break;
 		case 64:
-			player.animations[i].animType = PlayerState::DEAD;
+			data.animations[i].animType = PlayerState::DEAD;
 			break;
 		case 80:
-			player.animations[i].animType = PlayerState::HADOUKEN;
+			data.animations[i].animType = PlayerState::HADOUKEN;
 			break;
 		case 96:
-			player.animations[i].animType = PlayerState::PUNCH;
+			data.animations[i].animType = PlayerState::PUNCH;
 			break;
 		case 4:
-			player.animations[i].animType = PlayerState::IDLE_GHOST;
+			data.animations[i].animType = PlayerState::IDLE_GHOST;
 			break;
 		case 24:
-			player.animations[i].animType = PlayerState::WALKING_GHOST;
+			data.animations[i].animType = PlayerState::WALKING_GHOST;
 			break;
 		case 40:
-			player.animations[i].animType = PlayerState::JUMP_GHOST;
+			data.animations[i].animType = PlayerState::JUMP_GHOST;
 			break;
 		case 43:
-			player.animations[i].animType = PlayerState::FALL_GHOST;
+			data.animations[i].animType = PlayerState::FALL_GHOST;
 			break;
 		case 44:
-			player.animations[i].animType = PlayerState::LAND_GHOST;
+			data.animations[i].animType = PlayerState::LAND_GHOST;
 			break;
 		default:
-			player.animations[i].animType = PlayerState::UNKNOWN;
+			data.animations[i].animType = PlayerState::UNKNOWN;
 			break;
 		}
 	}

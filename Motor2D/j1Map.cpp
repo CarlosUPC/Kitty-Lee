@@ -98,8 +98,8 @@ iPoint j1Map::MapToWorld(int x, int y) const
 		ret.y = y * data.tile_height;
 		break;
 	case MAPTYPE_ISOMETRIC:
-		ret.x = int (data.tile_width * 0.5f) * (x - y);
-		ret.y = int (data.tile_height * 0.5f) * (x + y);
+		ret.x = int (data.tile_width * 0.5F) * (x - y);
+		ret.y = int (data.tile_height * 0.5F) * (x + y);
 		break;
 	default:
 		LOG("Map type unknown");
@@ -526,12 +526,15 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	else if (type == "COLLIDER_GHOST") {
 		obj->type = COLLIDER_GHOST;
 	}
+	else if (type == "COLLIDER_WIN") {
+		obj->type = COLLIDER_WIN;
+	}
 	return ret;
 }
 
 fPoint j1Map::GetInitialPosition() const {
 
-	fPoint ret(0.0f, 0.0f);
+	fPoint ret(0.0F, 0.0F);
 	p2List_item<ColliderObject*>* ente = data.colliders.start;
 
 	while (ente != NULL)

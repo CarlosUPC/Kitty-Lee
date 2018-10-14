@@ -42,7 +42,7 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			
+
 			if (level1) {
 				//Switch to level 2
 				num_level = 2;
@@ -50,7 +50,7 @@ bool j1FadeToBlack::Update(float dt)
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_2;
 				App->render->camera = App->render->CameraInitPos();
-				
+
 
 			}
 			else if (level2) {
@@ -60,14 +60,14 @@ bool j1FadeToBlack::Update(float dt)
 				App->player->position = App->map->GetInitialPosition();
 				App->scene->stg = LEVEL_1;
 				App->render->camera = App->render->CameraInitPos();
-				
+
 			}
-			
-			
+
+
 			total_time += total_time;
 			start_time = SDL_GetTicks();
-			
-		
+
+
 			fading = false;
 			current_step = fade_step::fade_from_black;
 		}
@@ -84,7 +84,10 @@ bool j1FadeToBlack::Update(float dt)
 
 
 	} break;
+	default:
+		break;
 	}
+	
 
 	// Render the black square with alpha on the screen
 	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
@@ -108,7 +111,7 @@ bool j1FadeToBlack::FadeToBlack(float time)
 	
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
-		total_time = (uint)(time * 0.5f * 1000.0f);
+		total_time = (uint)(time * 0.5F * 1000.0F);
 		fading = true;
 		ret = true;
 	}

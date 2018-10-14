@@ -10,16 +10,10 @@
 	</scene>
 	<colliders />
 	<player>
-		<player x="80" y="256.700012" />
+		<player x="80" y="256" />
 	</player>
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="-392" />
-
-		<player x="320" y="208" />
-	</player>
-	<:anonymous />
-	<renderer>
-		<camera x="-504" y="-246" />
+		<camera x="0" y="-390" />
 	</renderer>
 </game_state>

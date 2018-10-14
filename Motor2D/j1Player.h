@@ -124,7 +124,7 @@ public:
 	float		jumpSpeed;
 
 	bool		air = false;
-	bool		land = false;
+	bool		platformOverstep = false;
 
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;

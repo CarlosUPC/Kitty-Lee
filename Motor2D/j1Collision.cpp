@@ -259,6 +259,26 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	return true;
 }
 
+bool j1Colliders::Check(Collider* c1, COLLIDER_TYPE type) {
+
+	Collider* c2 = nullptr;
+	// avoid checking collisions already checked
+	for (uint k = 0; k < MAX_COLLIDERS; ++k)
+	{
+		// skip empty colliders
+		if (colliders[k] == nullptr || colliders[k]->type != type)
+			continue;
+		c2 = colliders[k];
+		if (c1->CheckCollision(c2->rect) == true)
+		{
+			return true;
+		}
+	}
+
+	return false;
+	
+}
+
 void j1Colliders::GodMode() {
 
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = god_mode;

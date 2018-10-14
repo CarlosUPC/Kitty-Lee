@@ -55,6 +55,7 @@ public:
 	bool EraseMapCollider();
 	void DebugDraw();
 	bool checkColisionList(Collider* enemCollider);
+	bool Check(Collider* c1, COLLIDER_TYPE type);
 	void GodMode();
 private:
 	Collider* colliders[MAX_COLLIDERS];

@@ -24,10 +24,14 @@ This is a small project made by two students of CITM - Terrassa of Design and De
   
   * F1 Start from the very first level.
   * F2 Start from the beginning of the current level
+  * F3 Increade music volume.
+  * F4 Decrease music volume.
   * F5 Save the current state.
   * F6 Load the previous state (even across levels).
+  * F8 Switch between levels.
   * F9 To view colliders.
   * F10 God Mode.
+  * F11 Insta kill.
 
 ## Built With
 

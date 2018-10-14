@@ -102,8 +102,6 @@
    <frame tileid="68" duration="100"/>
    <frame tileid="69" duration="100"/>
    <frame tileid="70" duration="100"/>
-   <frame tileid="71" duration="100"/>
-   <frame tileid="72" duration="100"/>
   </animation>
  </tile>
  <tile id="80">

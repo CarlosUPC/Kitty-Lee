@@ -83,6 +83,11 @@ bool j1Player::Update(float dt)
 		ghost = !ghost;
 		Actions();
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		death = !death;
+		state = DEAD;
+		Actions();
+	}
 	//Player collider update
 	SetCollidersPos();
 
@@ -179,6 +184,9 @@ void j1Player::PushBack() {
 			case LAND_GHOST:
 				anim_land_ghost.PushBack(data.animations[i].frames[j]);
 				break;
+			case DEAD:
+				anim_death.PushBack(data.animations[i].frames[j]);
+				break;
 			default:
 				break;
 			}
@@ -187,6 +195,7 @@ void j1Player::PushBack() {
 
 	anim_jump.loop = false;
 	anim_land.loop = false;
+	anim_death.loop = false;
 
 	//deleting player animation data already loaded in its corresponding animation variables
 	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
@@ -322,9 +331,14 @@ void j1Player::CheckState() {
 		else if (air)
 			state = JUMP;
 		break;
+	case DEAD:
+		if (!death)
+			current_animation = &anim_idle;
+		break;
 	default:
 		break;
 	}
+
 	if (prevState != state)//only will change animation when change state
 		Actions();
 
@@ -364,6 +378,10 @@ void j1Player::Actions() {
 		if (!ghost)
 			current_animation = &anim_land;
 		else current_animation = &anim_land_ghost;
+		current_animation->reset();
+		break;
+	case DEAD:
+		current_animation = &anim_death;
 		current_animation->reset();
 		break;
 	default:

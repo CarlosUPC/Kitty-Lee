@@ -128,6 +128,7 @@ public:
 
 	bool		air = false;
 	bool		platformOverstep = false;
+	bool		death = false;
 
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;
@@ -149,6 +150,7 @@ public:
 	Animation anim_jump;
 	Animation anim_fall;
 	Animation anim_land;
+	Animation anim_death;
 	Animation anim_idle_ghost;
 	Animation anim_walking_ghost;
 	Animation anim_jump_ghost;

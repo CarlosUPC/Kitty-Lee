@@ -347,11 +347,11 @@ bool j1Colliders::Check(Collider* c1, COLLIDER_TYPE type) {
 void j1Colliders::GodMode() {
 
 	//Just a test for God mode debug key
-	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = god_mode;
-	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLATFORM] = god_mode;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = god_mode;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = god_mode;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = god_mode;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = god_mode;
+	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_DEATH] = god_mode;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_DEATH] = god_mode;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_DEATH] = god_mode;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_DEATH] = god_mode;
 	
 	god_mode = !god_mode;
 

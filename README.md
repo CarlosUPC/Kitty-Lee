@@ -1,10 +1,10 @@
-# Kitty Lee
+﻿# Kitty Lee
 
 A 2D platformer of a fighter cat.
 
 ## Getting Started
 
-These is a small project made by two students of CITM - Terrassa of Design and Development of Video Games grade.
+This is a small project made by two students of CITM - Terrassa of Design and Development of Video Games grade.
 
 ### Installing
 
@@ -16,7 +16,9 @@ These is a small project made by two students of CITM - Terrassa of Design and D
 
 * A to move left.
 * D to move right.
+* G to change between ghost form and normal form.
 * Spacebar to jump.
+* S + Spacebar on a platform to go down.
 
   ### Development controls
   
@@ -38,7 +40,8 @@ These is a small project made by two students of CITM - Terrassa of Design and D
 
 * [Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
 * [Map Tileset](https://ansimuz.itch.io/sunny-land-pixel-game-art)
-* [Music Scene](https://opengameart.org/content/platformer-game-music-pack) - Grasslands Theme
+* [Map objects](https://opengameart.org/content/a-platformer-in-the-forest)
+* [Music Scene](https://opengameart.org/content/platformer-game-music-pack)
 * [jump fx](https://opengameart.org/content/platformer-jumping-sounds)
 * [walk_fx](https://freesound.org/people/FxKid2/sounds/362609/)
 
@@ -55,3 +58,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 ## Innovation
 
+* Created a system to load data animation provided directly from Tiled. All player information is in a xml edited with Tiled.
+* Created system to load parallax info from Tiled.
+* Load collision boxes from Tiled with its own type collision.
+* Created a mechanic that player can change to a ghost and be able to enter in rooms across specific walls. In ghost form, player oversteps platforms.
+* While pressing 'S' and spacebar on top of a platform, player will trespass that platform.
+* Save and Load functionallity in run time.

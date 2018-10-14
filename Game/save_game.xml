@@ -6,10 +6,16 @@
 	<audio />
 	<map />
 	<scene>
-		<levels level="2" />
+		<levels level="1" />
 	</scene>
 	<colliders />
 	<player>
+		<player x="80" y="256.700012" />
+	</player>
+	<:anonymous />
+	<renderer>
+		<camera x="0" y="-392" />
+
 		<player x="320" y="208" />
 	</player>
 	<:anonymous />

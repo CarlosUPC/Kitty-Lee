@@ -38,6 +38,9 @@ enum PlayerState {
 	PUNCH,
 	IDLE_GHOST,
 	WALKING_GHOST,
+	JUMP_GHOST,
+	FALL_GHOST,
+	LAND_GHOST,
 	UNKNOWN
 };
 
@@ -148,6 +151,9 @@ public:
 	Animation anim_land;
 	Animation anim_idle_ghost;
 	Animation anim_walking_ghost;
+	Animation anim_jump_ghost;
+	Animation anim_fall_ghost;
+	Animation anim_land_ghost;
 	Animation anim_default;
 
 	COLLIDER_INFO colliderPlayer;

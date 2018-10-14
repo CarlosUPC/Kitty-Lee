@@ -170,6 +170,15 @@ void j1Player::PushBack() {
 			case WALKING_GHOST:
 				anim_walking_ghost.PushBack(player.animations[i].frames[j]);
 				break;
+			case JUMP_GHOST:
+				anim_jump_ghost.PushBack(player.animations[i].frames[j]);
+				break;
+			case FALL_GHOST:
+				anim_fall_ghost.PushBack(player.animations[i].frames[j]);
+				break;
+			case LAND_GHOST:
+				anim_land_ghost.PushBack(player.animations[i].frames[j]);
+				break;
 			default:
 				break;
 			}
@@ -294,7 +303,7 @@ void j1Player::CheckState() {
 		}
 		break;
 	case JUMP:
-		if (current_animation->Finished() && current_animation == &anim_jump)
+		if (current_animation->Finished() && (current_animation == &anim_jump || current_animation == &anim_jump_ghost))
 			state = FALL;
 		else if (!air)
 			state = LAND;
@@ -304,7 +313,7 @@ void j1Player::CheckState() {
 			state = LAND;
 		break;
 	case LAND:
-		if (current_animation->Finished() && current_animation == &anim_land)
+		if (current_animation->Finished() && (current_animation == &anim_land || current_animation == &anim_land_ghost))
 			state = IDLE;
 		else if (air)
 			state = JUMP;
@@ -337,14 +346,20 @@ void j1Player::Actions() {
 		current_animation->reset();
 		break;
 	case JUMP:
-		current_animation = &anim_jump;
+		if (!ghost)
+			current_animation = &anim_jump;
+		else current_animation = &anim_jump_ghost;
 		current_animation->reset();
 		break;
 	case FALL:
-		current_animation = &anim_fall;
+		if (!ghost)
+			current_animation = &anim_fall;
+		else current_animation = &anim_fall_ghost;
 		break;
 	case LAND:
-		current_animation = &anim_land;
+		if (!ghost)
+			current_animation = &anim_land;
+		else current_animation = &anim_land_ghost;
 		current_animation->reset();
 		break;
 	default:
@@ -620,6 +635,15 @@ bool j1Player::LoadPlayer(const char* file) {
 			break;
 		case 24:
 			player.animations[i].animType = PlayerState::WALKING_GHOST;
+			break;
+		case 40:
+			player.animations[i].animType = PlayerState::JUMP_GHOST;
+			break;
+		case 43:
+			player.animations[i].animType = PlayerState::FALL_GHOST;
+			break;
+		case 44:
+			player.animations[i].animType = PlayerState::LAND_GHOST;
 			break;
 		default:
 			player.animations[i].animType = PlayerState::UNKNOWN;

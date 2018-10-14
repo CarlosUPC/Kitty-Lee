@@ -335,7 +335,7 @@ void j1Player::CheckState() {
 	case DEAD:
 		if (current_animation->Finished()) {
 			App->LoadGame();
-			current_animation = &anim_idle;
+			state = IDLE;
 		}
 		break;
 	default:

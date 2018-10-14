@@ -134,6 +134,7 @@ public:
 
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;
+	const char* crashingSound = nullptr;
 
 	int level;
 

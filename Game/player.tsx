@@ -2,6 +2,7 @@
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
   <property name="animationSpeed" type="float" value="0.2"/>
+  <property name="crashSound" value="audio/fx/jump_07.wav"/>
   <property name="incrementSpeedX" type="float" value="1"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
   <property name="jumpSpeed" type="float" value="-8"/>

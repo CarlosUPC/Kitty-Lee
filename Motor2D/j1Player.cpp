@@ -62,6 +62,7 @@ bool j1Player::Start()
 
 	App->audio->LoadFx(walkingSound);
 	App->audio->LoadFx(jumpingSound);
+	App->audio->LoadFx(crashingSound);
 
 	return true;
 }
@@ -337,6 +338,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if (c1 == playerColliders.colliderPlayer_left.collider && c2->type == COLLIDER_FLOOR) {
 			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			//App->audio->PlayFx(3);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - playerColliders.colliderPlayer.offset.x;
 		}
@@ -349,6 +352,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if (c1 == playerColliders.colliderPlayer_right.collider && c2->type == COLLIDER_FLOOR) {
 			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			//App->audio->PlayFx(3);
 			if (c2->rect.x <= c1->rect.x)
 				position.x = c2->rect.x - playerColliders.colliderPlayer.width - playerColliders.colliderPlayer.offset.x;
 		}
@@ -457,6 +462,9 @@ bool j1Player::LoadPlayer(const char* file) {
 
 		else if (nameIdentificator == "jumpSound")
 			jumpingSound = node.attribute("value").as_string();
+
+		else if (nameIdentificator == "crashSound")
+			crashingSound = node.attribute("value").as_string();
 
 		node = node.next_sibling();
 	}

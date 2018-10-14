@@ -64,9 +64,9 @@ bool j1FadeToBlack::Update(float dt)
 			}
 			
 			
-			/*total_time += total_time;
+			total_time += total_time;
 			start_time = SDL_GetTicks();
-			current_step = fade_step::fade_from_black;*/
+			
 		
 			fading = false;
 			current_step = fade_step::fade_from_black;
@@ -100,7 +100,7 @@ bool j1FadeToBlack::CleanUp()
 bool j1FadeToBlack::FadeToBlack(float time)
 {
 	bool ret = false;
-
+	
 	level1 = true;
 
 	if (current_step == fade_step::none)
@@ -123,6 +123,7 @@ bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 	App->collider->EraseMapCollider();
 	App->map->CleanUp();
 	App->map->Load(tmx_map);
+	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	App->map->AddCollidersMap();
 	return ret;
 }

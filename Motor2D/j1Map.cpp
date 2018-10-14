@@ -7,6 +7,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include <math.h>
+#include "j1Audio.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -323,6 +324,8 @@ bool j1Map::LoadMap()
 		data.tile_height = map.attribute("tileheight").as_int();
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
 		LoadProperties(map.child("properties"));
+
+		App->audio->PlayMusic(App->map->data.musicEnvironment);
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;

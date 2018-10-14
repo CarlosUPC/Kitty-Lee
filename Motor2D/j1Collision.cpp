@@ -322,8 +322,6 @@ bool j1Colliders::Check(Collider* c1, COLLIDER_TYPE type) {
 
 void j1Colliders::GodMode() {
 
-	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = god_mode;
-
 	//Just a test for God mode debug key
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = god_mode;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLATFORM] = god_mode;
@@ -335,17 +333,10 @@ void j1Colliders::GodMode() {
 
 }
 
-void j1Colliders::GhostMode() {
-
-	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = ghost_mode;
+void j1Colliders::GhostMode(const bool active) {
 
 	//Just a test for God mode debug key
-	matrix[COLLIDER_PLAYER][COLLIDER_GHOST] = ghost_mode;
-	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_GHOST] = ghost_mode;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_GHOST] = ghost_mode;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = ghost_mode;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = ghost_mode;
-
-	ghost_mode = !ghost_mode;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = active;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = active;
 
 }

@@ -57,12 +57,11 @@ public:
 	bool checkColisionList(Collider* enemCollider);
 	bool Check(Collider* c1, COLLIDER_TYPE type);
 	void GodMode();
-	void GhostMode();
+	void GhostMode(const bool active);
 private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
 	bool god_mode = false;
-	bool ghost_mode = false;
 };
 #endif // __J1COLLIDERS_H__ 

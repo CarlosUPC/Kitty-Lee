@@ -22,6 +22,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_FLOOR][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_WIN] = false;
 	
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = false;
@@ -33,6 +34,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_SCENE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLATFORM] = true;
@@ -44,6 +46,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = false;
@@ -55,6 +58,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = false;
@@ -66,6 +70,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = true;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = false;
@@ -77,6 +82,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = true;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_DEATH][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLATFORM] = false;
@@ -88,6 +94,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_SCENE][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_PLATFORM] = false;
@@ -99,6 +106,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_SCENE][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_SCENE][COLLIDER_WIN] = false;
 
 	matrix[COLLIDER_GHOST][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_PLATFORM] = false;
@@ -110,6 +118,19 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_GHOST][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_SCENE] = false;
+	matrix[COLLIDER_GHOST][COLLIDER_WIN] = false;
+
+	matrix[COLLIDER_WIN][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_WIN][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_WIN][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WIN][COLLIDER_PLAYER_UP] = false;
+	matrix[COLLIDER_WIN][COLLIDER_PLAYER_DOWN] = false;
+	matrix[COLLIDER_WIN][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_WIN][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_WIN][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_WIN][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_WIN][COLLIDER_SCENE] = false;
+	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 
 
 }
@@ -176,13 +197,11 @@ bool j1Colliders::Update(float dt)
 void j1Colliders::DebugDraw()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		LOG("YOu can see the colliders");
+		LOG("You can see the colliders");
 		debug = !debug;
 	}
-	if (debug == false) {
-		return;
-	}
-	else {
+
+	if(debug) {
 		Uint8 alpha = 80;
 		for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		{
@@ -204,8 +223,12 @@ void j1Colliders::DebugDraw()
 				break;
 			case COLLIDER_DEATH: //purple
 				App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
+				break;
 			case COLLIDER_GHOST: //green
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 60, alpha);
+				break;
+			case COLLIDER_WIN: //yellow
+				App->render->DrawQuad(colliders[i]->rect, 255, 255, 60, alpha);
 				break;
 			case COLLIDER_PLAYER: // green
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
@@ -222,11 +245,12 @@ void j1Colliders::DebugDraw()
 			case COLLIDER_PLAYER_RIGHT: // orange
 				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
 				break;
+			default: //white
+				App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+				break;
 			}
 		}
-		uint width, height;
-		App->win->GetWindowSize(width, height);
-		App->render->DrawCircle(width*0.5f, height*0.5f, 3, 255, 0, 0);//Draw a circle on the middle of screen to know where is the center
+		App->render->DrawCircle(App->win->GetWindowWidth()*0.5F, App->win->GetWindowHeight()*0.5F, 3, 255, 0, 0);//Draw a circle on the middle of screen to know where is the center
 	}
 }
 bool j1Colliders::checkColisionList(Collider * enemCollider)

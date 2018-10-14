@@ -514,7 +514,9 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	{
 		obj->type = COLLIDER_PLATFORM;
 	}
-
+	else if (type == "COLLIDER_DEATH") {
+		obj->type = COLLIDER_DEATH;
+	}
 	return ret;
 }
 

@@ -2935,7 +2935,6 @@
   <object id="5" x="208" y="336" width="32" height="16"/>
   <object id="6" x="224" y="352" width="16" height="32"/>
   <object id="7" x="240" y="368" width="64" height="16"/>
-  <object id="8" x="288" y="320" width="16" height="48"/>
   <object id="9" x="288" y="304" width="80" height="16"/>
   <object id="10" x="352" y="320" width="64" height="16"/>
   <object id="11" x="304" y="368" width="80" height="16"/>
@@ -2969,6 +2968,12 @@
   <object id="44" x="704" y="288" width="32" height="16"/>
   <object id="45" x="720" y="272" width="32" height="16"/>
   <object id="51" x="928" y="304" width="16" height="48"/>
+ </objectgroup>
+ <objectgroup name="collider Ghost">
+  <properties>
+   <property name="type" value="COLLIDER_GHOST"/>
+  </properties>
+  <object id="8" x="288" y="320" width="16" height="48"/>
  </objectgroup>
  <objectgroup name="platforms">
   <properties>

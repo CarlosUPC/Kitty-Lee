@@ -87,6 +87,7 @@ bool j1Player::Update(float dt)
 		death = !death;
 		state = DEAD;
 		Actions();
+		
 	}
 	//Player collider update
 	SetCollidersPos();
@@ -332,8 +333,10 @@ void j1Player::CheckState() {
 			state = JUMP;
 		break;
 	case DEAD:
-		if (!death)
+		if (current_animation->Finished()) {
+			App->LoadGame();
 			current_animation = &anim_idle;
+		}
 		break;
 	default:
 		break;
@@ -383,6 +386,7 @@ void j1Player::Actions() {
 	case DEAD:
 		current_animation = &anim_death;
 		current_animation->reset();
+		
 		break;
 	default:
 		break;

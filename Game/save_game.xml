@@ -10,12 +10,7 @@
 	</scene>
 	<colliders />
 	<player>
-		<player x="315" y="272" />
-	</player>
-	<:anonymous />
-	<renderer>
-		<camera x="-489" y="-417" />
-		<player x="80" y="256" />
+		<player x="107" y="256" />
 	</player>
 	<:anonymous />
 	<renderer>

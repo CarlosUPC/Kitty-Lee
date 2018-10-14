@@ -67,12 +67,16 @@ bool j1Scene::Update(float dt)
 	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
-		else App->player->position = App->map->GetInitialPosition();
+		else {
+			App->player->position = App->map->GetInitialPosition();
+			App->render->CameraInitPos();
+		}
 	}
 
 	//F2 - Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
+		App->player->speed.SetToZero();
 		App->render->camera = App->render->CameraInitPos();
 		}
 	

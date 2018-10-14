@@ -95,17 +95,16 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
+	//F8 - Switch between levels
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->fade->FadeToBlack();
+	
 	//F10 - God Mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		App->collider->GodMode();
 
 
-	//Just for testing
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	{
-		//Switch to level 2
-		App->fade->FadeToBlack();
-	}
+	
 	
 
 	App->map->Draw();

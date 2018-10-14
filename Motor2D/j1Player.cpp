@@ -79,7 +79,7 @@ bool j1Player::Update(float dt)
 	Movement();
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
-		App->collider->GhostMode();
+		App->collider->GhostMode(ghost);
 		ghost = !ghost;
 		Actions();
 	}
@@ -406,7 +406,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		break;
 	case COLLIDER_PLATFORM:
 		if (c1 == colliderPlayer_down.collider) {
-			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep) {
+			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
 				speed.y = 0.0f;
 				speed.y -= App->map->data.gravity;
 				if (air)
@@ -427,24 +427,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		break;
 
 	case COLLIDER_GHOST:
-		if (c1 == colliderPlayer_down.collider) {
-			speed.y = 0.0f;
-			speed.y -= App->map->data.gravity;
-			if (air)
-				air = false;
-			if (c1->rect.y >= c2->rect.y)
-				position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
-		}
-
-		else if (c1 == colliderPlayer_up.collider) {
-			speed.y = 0.0f;
-			if (c2->rect.y + c2->rect.h >= c1->rect.y)
-				position.y = c2->rect.y + c2->rect.h - colliderPlayer.offset.y + c1->rect.h;
-		}
-		else if (c1 == colliderPlayer_left.collider) {
+		if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			//App->audio->PlayFx(3);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
 		}
@@ -452,7 +437,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			//App->audio->PlayFx(3);
 			if (c2->rect.x <= c1->rect.x)
 				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
 

@@ -61,51 +61,52 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	//----------------------DEBUG KEYS-------------------------//
 	
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 1;
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
-
+	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else App->player->position = App->map->GetInitialPosition();
 	}
-	
+
+	//F2 - Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		App->player->position = App->map->GetInitialPosition();
 		App->render->camera = App->render->CameraInitPos();
-		
-}
+		}
+	
+	//F3 - Increase music volume
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		App->audio->RaiseVolume();
 
+	//F4 - Decrease music volume
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		App->audio->DecreaseVolume();
+
+	//F5 - Save the currant state
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+	//F6 - Load the previous state (even across levels)
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
+	//F10 - God Mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		App->collider->GodMode();
 
 
-
+	//Just for testing
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		//Switch to level 2
 		App->fade->FadeToBlack();
 	}
 	
+
 	App->map->Draw();
 	
-
-
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);

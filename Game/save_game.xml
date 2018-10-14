@@ -6,14 +6,14 @@
 	<audio />
 	<map />
 	<scene>
-		<levels level="1" />
+		<levels level="2" />
 	</scene>
 	<colliders />
 	<player>
-		<player x="443" y="96" />
+		<player x="271" y="256" />
 	</player>
 	<:anonymous />
 	<renderer>
-		<camera x="-873" y="-6" />
+		<camera x="-357" y="-390" />
 	</renderer>
 </game_state>

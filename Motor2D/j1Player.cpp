@@ -253,11 +253,13 @@ bool j1Player::Load(pugi::xml_node& data)
 	
 
 	if (App->fade->num_level == 1) {
+		
 		position.x = data.child("player").attribute("x").as_int();
 		position.y = data.child("player").attribute("y").as_int();
 	}
 
 	if (App->fade->num_level == 2) {
+		App->scene->stg = LEVEL_2;
 		App->fade->SwitchingLevel(App->scene->lvl2.GetString());
 		position.x = data.child("player").attribute("x").as_int();
 		position.y = data.child("player").attribute("y").as_int();

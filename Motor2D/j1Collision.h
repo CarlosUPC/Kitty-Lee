@@ -15,7 +15,7 @@ enum COLLIDER_TYPE
 	COLLIDER_PLAYER_UP,
 	COLLIDER_PLAYER_LEFT,
 	COLLIDER_PLAYER_RIGHT,
-
+	COLLIDER_GHOST,
 	COLLIDER_DEATH,
 
 
@@ -56,10 +56,12 @@ public:
 	void DebugDraw();
 	bool checkColisionList(Collider* enemCollider);
 	void GodMode();
+	void GhostMode();
 private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
 	bool god_mode = false;
+	bool ghost_mode = false;
 };
 #endif // __J1COLLIDERS_H__ 

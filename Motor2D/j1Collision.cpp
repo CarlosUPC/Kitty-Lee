@@ -20,6 +20,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_RIGHT] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER_UP] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_GHOST] = false;
 	
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = false;
@@ -29,6 +30,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_UP] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_GHOST] = true;
 
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLATFORM] = true;
@@ -38,6 +40,8 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLAYER_UP] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_GHOST] = true;
+
 
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = false;
@@ -47,6 +51,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLAYER_UP] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_GHOST] = true;
 
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = false;
@@ -56,6 +61,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLAYER_UP] = false;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = true;
 
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = false;
@@ -65,6 +71,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLAYER_UP] = false;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = true;
 
 	matrix[COLLIDER_DEATH][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLATFORM] = false;
@@ -74,6 +81,17 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER_LEFT] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER_RIGHT] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_GHOST] = false;
+
+	matrix[COLLIDER_GHOST][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_GHOST][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_GHOST][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_GHOST][COLLIDER_PLAYER_UP] = true;
+	matrix[COLLIDER_GHOST][COLLIDER_PLAYER_DOWN] = true;
+	matrix[COLLIDER_GHOST][COLLIDER_PLAYER_LEFT] = true;
+	matrix[COLLIDER_GHOST][COLLIDER_PLAYER_RIGHT] = true;
+	matrix[COLLIDER_GHOST][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_GHOST][COLLIDER_GHOST] = false;
 
 
 }
@@ -163,8 +181,11 @@ void j1Colliders::DebugDraw()
 			case COLLIDER_PLATFORM: //purple
 				App->render->DrawQuad(colliders[i]->rect, 220, 20, 150, alpha);
 				break;
-			case COLLIDER_DEATH: //purple
-				App->render->DrawQuad(colliders[i]->rect, 0, 0, 0, alpha);
+			case COLLIDER_GHOST: //green
+				App->render->DrawQuad(colliders[i]->rect, 0, 255, 60, alpha);
+				break;
+			case COLLIDER_DEATH: //violet
+				App->render->DrawQuad(colliders[i]->rect, 128, 128, 128, alpha);
 				break;
 			case COLLIDER_PLAYER: // green
 				App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
@@ -271,5 +292,20 @@ void j1Colliders::GodMode() {
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = god_mode;
 	
 	god_mode = !god_mode;
+
+}
+
+void j1Colliders::GhostMode() {
+
+	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = ghost_mode;
+
+	//Just a test for God mode debug key
+	matrix[COLLIDER_PLAYER][COLLIDER_GHOST] = ghost_mode;
+	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_GHOST] = ghost_mode;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_GHOST] = ghost_mode;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = ghost_mode;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = ghost_mode;
+
+	ghost_mode = !ghost_mode;
 
 }

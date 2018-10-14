@@ -190,23 +190,23 @@ void j1Player::AddColliders() {
 	SDL_Rect r;
 	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
 	
-	actual_collider = &playerColliders.colliderPlayer;
+	actual_collider = &colliderPlayer;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
-	actual_collider = &playerColliders.colliderPlayer_ground;
+	actual_collider = &colliderPlayer_down;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
-	actual_collider = &playerColliders.colliderPlayer_up;
+	actual_collider = &colliderPlayer_up;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
-	actual_collider = &playerColliders.colliderPlayer_left;
+	actual_collider = &colliderPlayer_left;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
-	actual_collider = &playerColliders.colliderPlayer_right;
+	actual_collider = &colliderPlayer_right;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
@@ -215,19 +215,19 @@ void j1Player::AddColliders() {
 void j1Player::SetCollidersPos() {
 	COLLIDER_INFO* actual_collider;
 
-	actual_collider = &playerColliders.colliderPlayer;
+	actual_collider = &colliderPlayer;
 	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
 
-	actual_collider = &playerColliders.colliderPlayer_ground;
+	actual_collider = &colliderPlayer_down;
 	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
 
-	actual_collider = &playerColliders.colliderPlayer_up;
+	actual_collider = &colliderPlayer_up;
 	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
 
-	actual_collider = &playerColliders.colliderPlayer_left;
+	actual_collider = &colliderPlayer_left;
 	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
 
-	actual_collider = &playerColliders.colliderPlayer_right;
+	actual_collider = &colliderPlayer_right;
 	actual_collider->collider->SetPos(position.x + actual_collider->offset.x, position.y + actual_collider->offset.y);
 
 }
@@ -352,48 +352,51 @@ void j1Player::Actions() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type) {
 	case COLLIDER_FLOOR:
-		if (c1 == playerColliders.colliderPlayer_ground.collider) {
+		if (c1 == colliderPlayer_down.collider) {
 			speed.y = 0.0f;
 			speed.y -= App->map->data.gravity;
 			if (air)
 				air = false;
 			if (c1->rect.y >= c2->rect.y)
-				position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
+				position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
 		}
 
-		else if (c1 == playerColliders.colliderPlayer_up.collider) {
+		else if (c1 == colliderPlayer_up.collider) {
 			speed.y = 0.0f;
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
-				position.y = c2->rect.y + c2->rect.h - playerColliders.colliderPlayer.offset.y + c1->rect.h;
+				position.y = c2->rect.y + c2->rect.h - colliderPlayer.offset.y + c1->rect.h;
 		}
-		else if (c1 == playerColliders.colliderPlayer_left.collider) {
+		else if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			//App->audio->PlayFx(3);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - playerColliders.colliderPlayer.offset.x;
+				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
 		}
 
-		else if (c1 == playerColliders.colliderPlayer_right.collider) {
+		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			//App->audio->PlayFx(3);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - playerColliders.colliderPlayer.width - playerColliders.colliderPlayer.offset.x;
+				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
 
 		}
 		break;
 	case COLLIDER_PLATFORM:
-		if (c1 == playerColliders.colliderPlayer_ground.collider) {
+		if (c1 == colliderPlayer_down.collider) {
 			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y) {
 				speed.y = 0.0f;
 				speed.y -= App->map->data.gravity;
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)
-					position.y = c2->rect.y - playerColliders.colliderPlayer.height - playerColliders.colliderPlayer.offset.y;
+					position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
 			}
 		}
+		break;
+	case COLLIDER_DEATH:
+		App->LoadGame();
 		break;
 	}
 }
@@ -500,40 +503,40 @@ bool j1Player::LoadPlayer(const char* file) {
 		nameIdentificator = node.attribute("name").as_string();
 		
 		if (nameIdentificator == "Collider") {
-			playerColliders.colliderPlayer.offset.x = node.attribute("x").as_int();
-			playerColliders.colliderPlayer.offset.y = node.attribute("y").as_int();
-			playerColliders.colliderPlayer.width = node.attribute("width").as_uint();
-			playerColliders.colliderPlayer.height = node.attribute("height").as_uint();
-			playerColliders.colliderPlayer.type = COLLIDER_TYPE::COLLIDER_PLAYER;
+			colliderPlayer.offset.x = node.attribute("x").as_int();
+			colliderPlayer.offset.y = node.attribute("y").as_int();
+			colliderPlayer.width = node.attribute("width").as_uint();
+			colliderPlayer.height = node.attribute("height").as_uint();
+			colliderPlayer.type = COLLIDER_TYPE::COLLIDER_PLAYER;
 		}
 
-		else if (nameIdentificator == "ColliderGround") {
-			playerColliders.colliderPlayer_ground.offset.x = node.attribute("x").as_int();
-			playerColliders.colliderPlayer_ground.offset.y = node.attribute("y").as_int();
-			playerColliders.colliderPlayer_ground.width = node.attribute("width").as_uint();
-			playerColliders.colliderPlayer_ground.height = node.attribute("height").as_uint();
-			playerColliders.colliderPlayer_ground.type = COLLIDER_TYPE::COLLIDER_PLAYER_GROUND;
+		else if (nameIdentificator == "ColliderDown") {
+			colliderPlayer_down.offset.x = node.attribute("x").as_int();
+			colliderPlayer_down.offset.y = node.attribute("y").as_int();
+			colliderPlayer_down.width = node.attribute("width").as_uint();
+			colliderPlayer_down.height = node.attribute("height").as_uint();
+			colliderPlayer_down.type = COLLIDER_TYPE::COLLIDER_PLAYER_DOWN;
 		}
 		else if (nameIdentificator == "ColliderLeft") {
-			playerColliders.colliderPlayer_left.offset.x = node.attribute("x").as_int();
-			playerColliders.colliderPlayer_left.offset.y = node.attribute("y").as_int();
-			playerColliders.colliderPlayer_left.width = node.attribute("width").as_uint();
-			playerColliders.colliderPlayer_left.height = node.attribute("height").as_uint();
-			playerColliders.colliderPlayer_left.type = COLLIDER_TYPE::COLLIDER_PLAYER_LEFT;
+			colliderPlayer_left.offset.x = node.attribute("x").as_int();
+			colliderPlayer_left.offset.y = node.attribute("y").as_int();
+			colliderPlayer_left.width = node.attribute("width").as_uint();
+			colliderPlayer_left.height = node.attribute("height").as_uint();
+			colliderPlayer_left.type = COLLIDER_TYPE::COLLIDER_PLAYER_LEFT;
 		}
 		else if (nameIdentificator == "ColliderRight") {
-			playerColliders.colliderPlayer_right.offset.x = node.attribute("x").as_int();
-			playerColliders.colliderPlayer_right.offset.y = node.attribute("y").as_int();
-			playerColliders.colliderPlayer_right.width = node.attribute("width").as_uint();
-			playerColliders.colliderPlayer_right.height = node.attribute("height").as_uint();
-			playerColliders.colliderPlayer_right.type = COLLIDER_TYPE::COLLIDER_PLAYER_RIGHT;
+			colliderPlayer_right.offset.x = node.attribute("x").as_int();
+			colliderPlayer_right.offset.y = node.attribute("y").as_int();
+			colliderPlayer_right.width = node.attribute("width").as_uint();
+			colliderPlayer_right.height = node.attribute("height").as_uint();
+			colliderPlayer_right.type = COLLIDER_TYPE::COLLIDER_PLAYER_RIGHT;
 		}
 		else if (nameIdentificator == "ColliderUp") {
-			playerColliders.colliderPlayer_up.offset.x = node.attribute("x").as_int();
-			playerColliders.colliderPlayer_up.offset.y = node.attribute("y").as_int();
-			playerColliders.colliderPlayer_up.width = node.attribute("width").as_uint();
-			playerColliders.colliderPlayer_up.height = node.attribute("height").as_uint();
-			playerColliders.colliderPlayer_up.type = COLLIDER_TYPE::COLLIDER_PLAYER_UP;
+			colliderPlayer_up.offset.x = node.attribute("x").as_int();
+			colliderPlayer_up.offset.y = node.attribute("y").as_int();
+			colliderPlayer_up.width = node.attribute("width").as_uint();
+			colliderPlayer_up.height = node.attribute("height").as_uint();
+			colliderPlayer_up.type = COLLIDER_TYPE::COLLIDER_PLAYER_UP;
 		}
 
 		node = node.next_sibling();

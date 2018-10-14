@@ -136,8 +136,8 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	int offsetPlayerPositionX = App->player->playerColliders.colliderPlayer.width - App->player->player.tileset.tilewidth;
-	int offsetPlayerPositionY = App->player->playerColliders.colliderPlayer.height - App->player->player.tileset.tileheight;
+	int offsetPlayerPositionX = App->player->colliderPlayer.width - App->player->player.tileset.tilewidth;
+	int offsetPlayerPositionY = App->player->colliderPlayer.height - App->player->player.tileset.tileheight;
 
 	if ((cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0 &&
 		(cameraOffset.x + App->player->position.x - offsetPlayerPositionX) * App->win->GetScale() < App->map->data.width*App->map->data.tile_width*App->win->GetScale()) {

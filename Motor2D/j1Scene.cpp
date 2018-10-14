@@ -39,7 +39,6 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
-	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

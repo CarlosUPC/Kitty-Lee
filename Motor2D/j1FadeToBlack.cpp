@@ -123,7 +123,6 @@ bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 	App->collider->EraseMapCollider();
 	App->map->CleanUp();
 	App->map->Load(tmx_map);
-	App->audio->PlayMusic(App->map->data.musicEnvironment);
 	App->map->AddCollidersMap();
 	return ret;
 }

@@ -407,6 +407,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_DEATH:
 		App->LoadGame();
 		break;
+	case COLLIDER_SCENE:
+		App->fade->FadeToBlack();
+		break;
 
 	case COLLIDER_GHOST:
 		if (c1 == colliderPlayer_down.collider) {

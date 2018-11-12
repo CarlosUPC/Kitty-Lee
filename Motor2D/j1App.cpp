@@ -44,10 +44,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(fade);
 	AddModule(collider);
 	AddModule(player);
 	AddModule(enemies);
-	AddModule(fade);
 	
 	// render last to swap buffer
 	AddModule(render);
@@ -212,7 +212,8 @@ void j1App::FinishUpdate()
 		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
 	App->win->SetTitle(title);
 
-	SDL_Delay(1000 / framerate_cap - last_frame_ms);
+	if (1000/ framerate_cap >= last_frame_ms)
+		SDL_Delay(1000 / framerate_cap - last_frame_ms);
 }
 
 // Call modules before each loop iteration

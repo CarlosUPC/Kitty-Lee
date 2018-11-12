@@ -13,6 +13,8 @@
 #include "j1Audio.h"
 #include "j1FadeToBlack.h"
 
+#include <cmath>
+
 
 j1Player::j1Player() {
 	name.create("player");
@@ -148,7 +150,7 @@ void j1Player::Movement(float dt) {
 
 
 
-	position += speed * dt;
+	position += speed * ceil(dt);
 }
 void j1Player::PushBack() {
 

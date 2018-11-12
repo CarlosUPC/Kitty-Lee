@@ -46,8 +46,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(collider);
 	AddModule(player);
-	AddModule(fade);
 	AddModule(enemies);
+	AddModule(fade);
 	
 	// render last to swap buffer
 	AddModule(render);

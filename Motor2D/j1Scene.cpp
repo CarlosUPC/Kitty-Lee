@@ -68,6 +68,7 @@ bool j1Scene::Update(float dt)
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
 			App->player->position = App->map->GetInitialPosition();
+			App->player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}
 	}

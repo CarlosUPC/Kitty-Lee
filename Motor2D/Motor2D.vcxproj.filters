@@ -126,6 +126,9 @@
     <ClInclude Include="j1Enemies.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

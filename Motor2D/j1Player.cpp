@@ -76,7 +76,7 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
-	Movement();
+	Movement(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		App->collider->GhostMode(ghost);
@@ -114,7 +114,7 @@ bool j1Player::CleanUp()
 	return true;
 }
 
-void j1Player::Movement() {
+void j1Player::Movement(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
 			App->audio->PlayFx(1, -1); //Walk fx
@@ -148,7 +148,7 @@ void j1Player::Movement() {
 
 
 
-	position += speed;
+	position += speed * dt;
 }
 void j1Player::PushBack() {
 

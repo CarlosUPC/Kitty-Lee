@@ -107,7 +107,7 @@ private:
 
 	void PushBack();
 	void AddColliders();
-	void Movement();
+	void Movement(float dt);
 	void CheckState();
 	void Actions();
 	void SetCollidersPos();

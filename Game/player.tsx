@@ -3,10 +3,10 @@
  <properties>
   <property name="animationSpeed" type="float" value="0.2"/>
   <property name="crashSound" value="audio/fx/jump_07.wav"/>
-  <property name="incrementSpeedX" type="float" value="1"/>
+  <property name="incrementSpeedX" type="float" value="0.1"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
-  <property name="jumpSpeed" type="float" value="-8"/>
-  <property name="maxSpeedX" type="float" value="2"/>
+  <property name="jumpSpeed" type="float" value="-0.6"/>
+  <property name="maxSpeedX" type="float" value="0.2"/>
   <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>

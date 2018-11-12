@@ -51,6 +51,9 @@
     <ClCompile Include="j1Enemies.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="GLADIATOR.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -129,6 +132,9 @@
     <ClInclude Include="Path.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="GLADIATOR.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -148,6 +154,9 @@
     </Filter>
     <Filter Include="XML">
       <UniqueIdentifier>{48d64bc6-a610-4b19-96f7-4a550350eb72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemies">
+      <UniqueIdentifier>{9c31cc54-d857-4fbd-bcd3-0a455531cf81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

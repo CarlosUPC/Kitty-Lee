@@ -8,7 +8,8 @@
 
 enum ENEMY_TYPES
 {
-	NO_TYPE
+	NO_TYPE,
+	GLADIATOR
 };
 
 class Enemy;
@@ -37,14 +38,15 @@ public:
 
 public:
 
-	bool draw_underlayed = false;
+	
 	Enemy* enemies[MAX_ENEMIES];
-	bool boss_death = false;
+	
 
 private:
 
 	void SpawnEnemy(const EnemyInfo& info);
 	SDL_Texture* sprites;
+	SDL_Texture* gladiatorSprite = nullptr;
 
 private:
 

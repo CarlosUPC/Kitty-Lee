@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GLADIATOR.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemies.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
@@ -102,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GLADIATOR.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Enemies.h" />
     <ClInclude Include="j1FadeToBlack.h" />

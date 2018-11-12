@@ -7,11 +7,12 @@
 #include "j1Textures.h"
 #include "j1Scene.h"
 #include "Enemy.h"
+#include "Gladiator.h"
 
 //Include all enemies
 
 
-#define SPAWN_MARGIN 2000
+#define SPAWN_MARGIN 50
 #define SCREEN_SIZE 1
 
 j1Enemies::j1Enemies()
@@ -28,6 +29,7 @@ j1Enemies::~j1Enemies()
 bool j1Enemies::Start()
 {
 	LOG("loading enemies");
+	gladiatorSprite = App->tex->Load("D:/UPC CITM/Kitty-Lee/Game/textures/enemies/Gladiator.png");
 
 	return true;
 }
@@ -39,7 +41,7 @@ bool j1Enemies::PreUpdate()
 	{
 		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
 		{
-			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + SPAWN_MARGIN)
+			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
 			{
 				SpawnEnemy(queue[i]);
 				queue[i].type = ENEMY_TYPES::NO_TYPE;
@@ -64,7 +66,7 @@ bool j1Enemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr) {
-			enemies[i]->Draw(sprites);
+			enemies[i]->Draw(gladiatorSprite);
 
 
 		}
@@ -140,7 +142,9 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info)
 	{
 		switch (info.type)
 		{
-
+		case ENEMY_TYPES::GLADIATOR:
+			enemies[i] = new Gladiator(info.x, info.y,info.path_type);
+			break;
 		}
 	}
 }

@@ -13,11 +13,11 @@ class Enemy
 protected:
 	Animation* animation = nullptr;
 
-
 public:
 
 	Collider* collider = nullptr;
 	fPoint position;
+	fPoint original_pos;
 
 
 public:

@@ -10,7 +10,7 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
-#include "j1Enemies.h"
+#include "j1EntityManager.h"
 
 
 
@@ -40,9 +40,9 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
-	App->map->GetInitialPosition2();
+	App->map->InitialEntityPosition();
 
-	App->enemies->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->enemies->tsx1);
+	App->entities->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->entities->tsx1);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
@@ -71,7 +71,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
-			App->player->position = App->map->GetInitialPosition();
+			App->player->position = App->map->queue[PLAYER].initialPos;
 			App->player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}
@@ -79,7 +79,7 @@ bool j1Scene::Update(float dt)
 
 	//F2 - Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
-		App->player->position = App->map->GetInitialPosition();
+		App->player->position = App->map->queue[PLAYER].initialPos;
 		App->player->speed.SetToZero();
 		App->render->camera = App->render->CameraInitPos();
 		}

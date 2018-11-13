@@ -7,7 +7,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 
-Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, type)
+Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx, type)
 {
 	
 	
@@ -51,7 +51,7 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, t
 	
 	e_animation = &e_anim_idle;
 	e_animation->speed = e_animationSpeed;
-	collider = App->collider->AddCollider({ 0, 0, 18, 24 }, COLLIDER_ENEMY, (j1Module*)App->enemies);
+	collider = App->collider->AddCollider({ 0, 0, 18, 24 }, COLLIDER_ENEMY, (j1Module*)App->entities);
 	original_pos = { (float)x,(float)y };
 
 	

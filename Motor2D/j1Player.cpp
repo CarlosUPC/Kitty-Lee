@@ -12,6 +12,7 @@
 #include "j1Input.h"
 #include "j1Audio.h"
 #include "j1FadeToBlack.h"
+#include "j1EntityManager.h"
 
 #include <cmath>
 
@@ -55,7 +56,9 @@ bool j1Player::Start()
 	data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
 
 	//This method returns player object's position
-	position = App->map->GetInitialPosition();
+	//position = App->map->GetInitialPosition();
+	
+	position = App->map->queue[PLAYER].initialPos;
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
 	AddColliders();

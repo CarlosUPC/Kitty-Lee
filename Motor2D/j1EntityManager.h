@@ -6,27 +6,28 @@
 #define MAX_ENEMIES 100
 
 
-enum ENEMY_TYPES
+enum ENTITY_TYPES
 {
 	NO_TYPE,
+	PLAYER,
 	GLADIATOR
 };
 
-class Enemy;
+class j1Entity;
 
 struct EnemyData
 {
-	ENEMY_TYPES type = ENEMY_TYPES::NO_TYPE;
+	ENTITY_TYPES type = ENTITY_TYPES::NO_TYPE;
 	int x, y, path_type;
 	p2SString tsx_file;
 };
 
-class j1Enemies : public j1Module
+class j1EntityManager : public j1Module
 {
 public:
 
-	j1Enemies();
-	~j1Enemies();
+	j1EntityManager();
+	~j1EntityManager();
 	
 	bool Awake(pugi::xml_node&);
 	bool Start();
@@ -36,12 +37,12 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
-	bool AddEnemy(ENEMY_TYPES type, int x, int y, p2SString tsx_file, int path_type = 0);
+	bool AddEnemy(ENTITY_TYPES type, int x, int y, p2SString tsx_file, int path_type = 0);
 
 public:
 
 	
-	Enemy* enemies[MAX_ENEMIES];
+	j1Entity* enemies[MAX_ENEMIES];
 
 	p2SString tsx1;
 	p2SString tsx2;

@@ -1,6 +1,6 @@
 
 #include "j1App.h"
-#include "Enemy.h"
+#include "j1Entity.h"
 #include "j1Collision.h"
 #include "j1Render.h"
 #include "j1Textures.h"
@@ -18,29 +18,29 @@
 #include <cmath>
 
 
-Enemy::Enemy(int x, int y, p2SString tsx, int type) : position(x, y), enemyTSX(tsx)
+j1Entity::j1Entity(int x, int y, p2SString tsx, int type) : position(x, y), enemyTSX(tsx)
 {
 
 }
 
-Enemy::~Enemy()
+j1Entity::~j1Entity()
 {
 	if (collider != nullptr)
 		collider->to_delete = true;
 }
 
-const Collider* Enemy::GetCollider() const
+const Collider* j1Entity::GetCollider() const
 {
 	return collider;
 }
 
-void Enemy::OnCollision(Collider* collider)
+void j1Entity::OnCollision(Collider* collider)
 {
 
 
 }
 
-bool Enemy::LoadEnemy(const char* file) {
+bool j1Entity::LoadEnemy(const char* file) {
 
 	bool ret = true;
 
@@ -146,7 +146,7 @@ bool Enemy::LoadEnemy(const char* file) {
 	return ret;
 }
 
-void Enemy::PushBack() {
+void j1Entity::PushBack() {
 
 	for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {

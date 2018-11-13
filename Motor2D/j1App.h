@@ -18,7 +18,7 @@ class j1Colliders;
 class j1Map;
 class j1Player;
 class j1FadeToBlack;
-class j1Enemies;
+class j1EntityManager;
 
 class j1App
 {
@@ -92,7 +92,7 @@ public:
 	j1Map*				map;
 	j1Player*			player;
 	j1FadeToBlack*      fade;
-	j1Enemies*			enemies;
+	j1EntityManager*	entities;
 private:
 
 	p2List<j1Module*>	modules;

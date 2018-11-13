@@ -1,12 +1,12 @@
 #ifndef __GLADIATOR_H__
 #define __GLADIATOR_H__
 
-#include "Enemy.h"
+#include "j1Entity.h"
 #include "Path.h"
 
 class SDL_Texture;
 
-class Gladiator : public Enemy
+class Gladiator : public j1Entity
 {
 public:
 

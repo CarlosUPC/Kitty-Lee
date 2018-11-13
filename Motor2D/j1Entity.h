@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
 #include "p2Point.h"
 #include "Animation.h"
@@ -57,7 +57,7 @@ struct EnemyInfo {
 
 
 
-class Enemy
+class j1Entity
 {
 protected:
 
@@ -84,8 +84,8 @@ public:
 
 
 public:
-	Enemy(int x, int y, p2SString tsx, int type);
-	virtual ~Enemy();
+	j1Entity(int x, int y, p2SString tsx, int type);
+	virtual ~j1Entity();
 
 	const Collider* GetCollider() const;
 
@@ -103,4 +103,4 @@ private:
 	
 };
 
-#endif // __ENEMY_H__
+#endif // __ENTITY_H__

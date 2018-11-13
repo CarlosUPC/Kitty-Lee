@@ -45,14 +45,14 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Enemies.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="GLADIATOR.cpp">
-      <Filter>Enemies</Filter>
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,17 +123,17 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Enemies.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="GLADIATOR.h">
-      <Filter>Enemies</Filter>
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +155,7 @@
     <Filter Include="XML">
       <UniqueIdentifier>{48d64bc6-a610-4b19-96f7-4a550350eb72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemies">
+    <Filter Include="Entities">
       <UniqueIdentifier>{9c31cc54-d857-4fbd-bcd3-0a455531cf81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

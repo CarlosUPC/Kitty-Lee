@@ -10,10 +10,9 @@
 
 
 // ----------------------------------------------------
-struct EntityData
+struct EntityPos
 {
-	fPoint initialPos;
-	
+	fPoint initialPos;	
 };
 
 struct ColliderObject {
@@ -113,8 +112,8 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	
-	fPoint GetInitialPosition();
-	void GetInitialPosition2();
+	
+	void InitialEntityPosition();
 	
 	void AddCollidersMap();
 	
@@ -133,7 +132,7 @@ private:
 public:
 
 	MapData data;
-	EntityData queue[MAX_ENTITIES];
+	EntityPos queue[MAX_ENTITIES];
 	
 private:
 

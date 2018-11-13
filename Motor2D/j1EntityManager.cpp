@@ -3,10 +3,10 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collision.h"
-#include "j1Enemies.h"
+#include "j1EntityManager.h"
 #include "j1Textures.h"
 #include "j1Scene.h"
-#include "Enemy.h"
+#include "j1Entity.h"
 #include "Gladiator.h"
 
 //Include all enemies
@@ -15,7 +15,7 @@
 #define SPAWN_MARGIN 50
 #define SCREEN_SIZE 1
 
-j1Enemies::j1Enemies()
+j1EntityManager::j1EntityManager()
 {
 	name.create("enemies");
 
@@ -24,12 +24,12 @@ j1Enemies::j1Enemies()
 }
 
 // Destructor
-j1Enemies::~j1Enemies()
+j1EntityManager::~j1EntityManager()
 {
 }
 
 
-bool j1Enemies::Awake(pugi::xml_node& conf)
+bool j1EntityManager::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading TSX files");
 	bool ret = true;
@@ -42,7 +42,7 @@ bool j1Enemies::Awake(pugi::xml_node& conf)
 }
 
 
-bool j1Enemies::Start()
+bool j1EntityManager::Start()
 {
 	LOG("loading enemies");
 	//gladiatorSprite = App->tex->Load("textures/enemies/Gladiator.png");
@@ -50,17 +50,17 @@ bool j1Enemies::Start()
 	return true;
 }
 
-bool j1Enemies::PreUpdate()
+bool j1EntityManager::PreUpdate()
 {
 	// check camera position to decide what to spawn
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+		if (queue[i].type != ENTITY_TYPES::NO_TYPE)
 		{
 			if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
 			{
 				SpawnEnemy(queue[i]);
-				queue[i].type = ENEMY_TYPES::NO_TYPE;
+				queue[i].type = ENTITY_TYPES::NO_TYPE;
 				LOG("Spawning enemy at %d", queue[i].x * SCREEN_SIZE);
 			}
 		}
@@ -70,7 +70,7 @@ bool j1Enemies::PreUpdate()
 }
 
 // Called before render is available
-bool j1Enemies::Update(float dt)
+bool j1EntityManager::Update(float dt)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr)
@@ -91,7 +91,7 @@ bool j1Enemies::Update(float dt)
 	return true;
 }
 
-bool j1Enemies::PostUpdate()
+bool j1EntityManager::PostUpdate()
 {
 	// check camera position to decide what to despawn
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -111,7 +111,7 @@ bool j1Enemies::PostUpdate()
 }
 
 // Called before quitting
-bool j1Enemies::CleanUp()
+bool j1EntityManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 
@@ -124,9 +124,9 @@ bool j1Enemies::CleanUp()
 				delete enemies[i];
 				enemies[i] = nullptr;
 			}
-			if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+			if (queue[i].type != ENTITY_TYPES::NO_TYPE)
 			{
-				queue[i].type = ENEMY_TYPES::NO_TYPE;
+				queue[i].type = ENTITY_TYPES::NO_TYPE;
 			}
 		}
 	}
@@ -134,13 +134,13 @@ bool j1Enemies::CleanUp()
 	return true;
 }
 
-bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, p2SString tsx_file, int path_type)
+bool j1EntityManager::AddEnemy(ENTITY_TYPES type, int x, int y, p2SString tsx_file, int path_type)
 {
 	bool ret = false;
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (queue[i].type == ENEMY_TYPES::NO_TYPE)
+		if (queue[i].type == ENTITY_TYPES::NO_TYPE)
 		{
 			queue[i].type = type;
 			queue[i].x = x;
@@ -155,7 +155,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, p2SString tsx_file, int
 	return ret;
 }
 
-void j1Enemies::SpawnEnemy(const EnemyData& info)
+void j1EntityManager::SpawnEnemy(const EnemyData& info)
 {
 	// find room for the new enemy
 	uint i = 0;
@@ -165,14 +165,14 @@ void j1Enemies::SpawnEnemy(const EnemyData& info)
 	{
 		switch (info.type)
 		{
-		case ENEMY_TYPES::GLADIATOR:
+		case ENTITY_TYPES::GLADIATOR:
 			enemies[i] = new Gladiator(info.x, info.y,info.tsx_file,info.path_type);
 			break;
 		}
 	}
 }
 
-void j1Enemies::OnCollision(Collider* c1, Collider* c2)
+void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 {
 
 }

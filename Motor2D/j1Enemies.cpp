@@ -45,7 +45,7 @@ bool j1Enemies::Awake(pugi::xml_node& conf)
 bool j1Enemies::Start()
 {
 	LOG("loading enemies");
-	gladiatorSprite = App->tex->Load("textures/enemies/Gladiator.png");
+	//gladiatorSprite = App->tex->Load("textures/enemies/Gladiator.png");
 
 	return true;
 }

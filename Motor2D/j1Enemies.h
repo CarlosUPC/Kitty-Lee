@@ -50,7 +50,7 @@ private:
 
 	void SpawnEnemy(const EnemyData& info);
 	SDL_Texture* sprites;
-	SDL_Texture* gladiatorSprite = nullptr;
+	//SDL_Texture* gladiatorSprite = nullptr;
 
 	
 

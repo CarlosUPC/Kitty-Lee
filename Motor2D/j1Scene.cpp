@@ -40,7 +40,9 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
-	App->enemies->AddEnemy(GLADIATOR, 140, 262, App->enemies->tsx1);
+	App->map->GetInitialPosition2();
+
+	App->enemies->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->enemies->tsx1);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

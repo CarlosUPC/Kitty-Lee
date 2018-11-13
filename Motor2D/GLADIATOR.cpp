@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "j1Render.h"
 #include "j1Player.h"
-
+#include "j1Map.h"
 
 Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, type)
 {
@@ -19,6 +19,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, t
 
 	//Load Enemy sprite
 	sprite = App->tex->Load(data.tileset.imagePath.GetString());;
+
+	
 
 	////Idle
 	//idle.PushBack({ 8, 7, 17, 24 });

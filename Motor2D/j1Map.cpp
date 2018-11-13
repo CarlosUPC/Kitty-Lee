@@ -8,6 +8,8 @@
 #include "j1Window.h"
 #include <math.h>
 #include "j1Audio.h"
+#include "j1Enemies.h"
+#include "p2Point.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -25,7 +27,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-
+	
 	return ret;
 }
 
@@ -532,20 +534,42 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	return ret;
 }
 
-fPoint j1Map::GetInitialPosition() const {
+fPoint j1Map::GetInitialPosition()  {
 
 	fPoint ret(0.0F, 0.0F);
 	p2List_item<ColliderObject*>* ente = data.colliders.start;
-
+	
 	while (ente != NULL)
 	{
+		if (ente->data->name == "Gladiator") {
+			 queue[ENEMY_TYPES::GLADIATOR].initialPos.x = ente->data->coll_x;
+			 queue[ENEMY_TYPES::GLADIATOR].initialPos.y = ente->data->coll_y;
+		}
 		if (ente->data->name == "Player") {
 			ret.x = ente->data->coll_x;
 			ret.y = ente->data->coll_y;
-			return ret;
+			
 		}
 		ente = ente->next;
 	}
 
 	return ret;
+}
+
+void j1Map::GetInitialPosition2() {
+
+	
+	p2List_item<ColliderObject*>* ente = data.colliders.start;
+
+	while (ente != NULL)
+	{
+		if (ente->data->name == "Gladiator") {
+			queue[ENEMY_TYPES::GLADIATOR].initialPos.x = ente->data->coll_x;
+			queue[ENEMY_TYPES::GLADIATOR].initialPos.y = ente->data->coll_y;
+		}
+		
+		ente = ente->next;
+	}
+
+	;
 }

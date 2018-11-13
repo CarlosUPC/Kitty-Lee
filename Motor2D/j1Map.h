@@ -6,8 +6,15 @@
 #include "j1Module.h"
 #include "j1Collision.h"
 
+#define MAX_ENTITIES 100
+
 
 // ----------------------------------------------------
+struct EntityData
+{
+	fPoint initialPos;
+	
+};
 
 struct ColliderObject {
 
@@ -106,7 +113,8 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	
-	fPoint GetInitialPosition() const;
+	fPoint GetInitialPosition();
+	void GetInitialPosition2();
 	
 	void AddCollidersMap();
 	
@@ -125,6 +133,7 @@ private:
 public:
 
 	MapData data;
+	EntityData queue[MAX_ENTITIES];
 	
 private:
 

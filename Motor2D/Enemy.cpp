@@ -34,15 +34,16 @@ const Collider* Enemy::GetCollider() const
 	return collider;
 }
 
-void Enemy::Draw(SDL_Texture* sprites)
+void Enemy::Draw()
 {
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
-	if (animation != nullptr)
+	if (e_animation != nullptr)
 	{
-		App->render->Blit(sprites, position.x, position.y , &(animation->GetCurrentFrame()));
+		data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
+		App->render->Blit(data.tileset.texture, position.x, position.y , &(e_animation->GetCurrentFrame()));
 	}
 
 }
@@ -120,7 +121,17 @@ bool Enemy::LoadEnemy(const char* file) {
 		}
 	}
 
+	//Load data
+	node = enemy_file.child("tileset").child("properties").child("property");
+	p2SString nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
 
+		if (nameIdentificator == "AnimationSpeed")
+			e_animationSpeed = node.attribute("value").as_float();
+
+		node = node.next_sibling();
+	}
 
 	//Convert id animations to enum
 	for (uint i = 0; i < data.num_animations; ++i) {
@@ -147,6 +158,33 @@ bool Enemy::LoadEnemy(const char* file) {
 	}
 
 	return ret;
+}
+
+void Enemy::PushBack() {
+
+	for (uint i = 0; i < data.num_animations; ++i) {
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			switch (data.animations[i].animType) {
+			case E_IDLE:
+				e_anim_idle.PushBack(data.animations[i].frames[j]);
+				break;
+			case E_WALKING:
+				e_anim_walking.PushBack(data.animations[i].frames[j]);
+				break;
+			case E_HIT:
+				e_anim_hit.PushBack(data.animations[i].frames[j]);
+				break;
+			case E_DETECTING:
+				e_anim_detecting.PushBack(data.animations[i].frames[j]);
+				break;
+			case E_DEAD:
+				e_anim_death.PushBack(data.animations[i].frames[j]);
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 //Functions to help loading data in xml-------------------------------------

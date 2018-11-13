@@ -82,7 +82,7 @@ bool j1Enemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr) {
-			enemies[i]->Draw(gladiatorSprite);
+			enemies[i]->Draw();
 
 
 		}

@@ -60,8 +60,17 @@ struct EnemyInfo {
 class Enemy
 {
 protected:
-	Animation* animation = nullptr;
 
+	float e_animationSpeed;
+	Animation* e_animation = nullptr;
+
+	Animation e_anim_idle;
+	Animation e_anim_walking;
+	Animation e_anim_hit;
+	Animation e_anim_detecting;
+	Animation e_anim_death;
+	
+	void PushBack();
 public:
 
 	Collider* collider = nullptr;
@@ -83,12 +92,15 @@ public:
 	bool LoadEnemy(const char*);
 	
 	virtual void Move() {};
-	virtual void Draw(SDL_Texture* sprites);
+	virtual void Draw();
 	virtual void OnCollision(Collider* collider);
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};
 	//virtual void DeadAnim();
 	//virtual void Drop();
+
+private:
+	
 };
 
 #endif // __ENEMY_H__

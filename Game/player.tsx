@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
-  <property name="animationSpeed" type="float" value="0.2"/>
+  <property name="animationSpeed" type="float" value="0.01"/>
   <property name="crashSound" value="audio/fx/jump_07.wav"/>
   <property name="incrementSpeedX" type="float" value="0.1"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
-  <property name="jumpSpeed" type="float" value="-0.6"/>
-  <property name="maxSpeedX" type="float" value="0.2"/>
+  <property name="jumpSpeed" type="float" value="-0.4"/>
+  <property name="maxSpeedX" type="float" value="0.1"/>
   <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>
  <tile id="0">
   <objectgroup draworder="index">
    <object id="4" name="Collider" type="COLLIDER_PLAYER" x="9" y="2" width="14" height="30"/>
-   <object id="7" name="ColliderDown" type="COLLIDER_PLAYER_DOWN" x="13" y="31" width="7" height="1"/>
-   <object id="8" name="ColliderLeft" type="COLLIDER_PLAYER_LEFT" x="9" y="14" width="1" height="6"/>
-   <object id="9" name="ColliderRight" type="COLLIDER_PLAYER_RIGHT" x="22" y="15" width="1" height="6"/>
-   <object id="10" name="ColliderUp" type="COLLIDER_PLAYER_UP" x="13" y="2" width="5" height="1"/>
+   <object id="7" name="ColliderDown" type="COLLIDER_PLAYER_DOWN" x="13" y="28" width="6" height="4"/>
+   <object id="8" name="ColliderLeft" type="COLLIDER_PLAYER_LEFT" x="9" y="13" width="5" height="8"/>
+   <object id="9" name="ColliderRight" type="COLLIDER_PLAYER_RIGHT" x="18" y="13" width="5" height="8"/>
+   <object id="10" name="ColliderUp" type="COLLIDER_PLAYER_UP" x="13" y="2" width="7" height="5"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="200"/>

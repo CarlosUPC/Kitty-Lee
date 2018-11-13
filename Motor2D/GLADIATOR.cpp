@@ -80,7 +80,7 @@ void Gladiator::Draw()
 
 	if (e_animation != nullptr)
 	{
-		App->render->Blit(sprite, position.x, position.y, &(e_animation->GetCurrentFrame()));
+		App->render->Blit(sprite, position.x, position.y, &(e_animation->GetCurrentFrame(1)));
 	}
 
 }

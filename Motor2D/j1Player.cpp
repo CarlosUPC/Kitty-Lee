@@ -94,6 +94,10 @@ bool j1Player::Update(float dt)
 	//Player collider update
 	SetCollidersPos();
 
+	CheckState();
+
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
+
 	return true;
 }
 
@@ -101,9 +105,9 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 
-	CheckState();
+	/*CheckState();
 
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(), 1.0F, flip);
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);*/
 	
 	return true;
 }

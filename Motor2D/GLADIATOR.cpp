@@ -17,6 +17,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, t
 	//Load Enemy Anims
 	PushBack();
 
+	//Load Enemy sprite
+	sprite = App->tex->Load(data.tileset.imagePath.GetString());;
 
 	////Idle
 	//idle.PushBack({ 8, 7, 17, 24 });
@@ -66,6 +68,19 @@ void Gladiator::Move()
 	fPoint path_pos = path.GetCurrentPosition();
 	position.x = float(original_pos.x + path_pos.x);
 	position.y = float(original_pos.y + path_pos.y);
+}
+
+void Gladiator::Draw()
+{
+
+	if (collider != nullptr)
+		collider->SetPos(position.x, position.y);
+
+	if (e_animation != nullptr)
+	{
+		App->render->Blit(sprite, position.x, position.y, &(e_animation->GetCurrentFrame()));
+	}
+
 }
 
 void Gladiator::DeadAnim()

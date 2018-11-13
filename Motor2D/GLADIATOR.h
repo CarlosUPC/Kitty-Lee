@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "Path.h"
 
+class SDL_Texture;
+
 class Gladiator : public Enemy
 {
 public:
@@ -12,6 +14,7 @@ public:
 	~Gladiator();
 
 	void Move();
+	void Draw();
 	void DeadAnim();
 	void Drop();
 
@@ -22,6 +25,8 @@ public:
 	Animation dead;
 	Animation walking;
 
+private:
+	SDL_Texture* sprite = nullptr;
 };
 
 #endif // !__GLADIATOR_H__

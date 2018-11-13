@@ -92,7 +92,7 @@ public:
 	bool LoadEnemy(const char*);
 	
 	virtual void Move() {};
-	virtual void Draw();
+	virtual void Draw() {};
 	virtual void OnCollision(Collider* collider);
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};

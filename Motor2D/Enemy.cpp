@@ -34,20 +34,6 @@ const Collider* Enemy::GetCollider() const
 	return collider;
 }
 
-void Enemy::Draw()
-{
-
-	if (collider != nullptr)
-		collider->SetPos(position.x, position.y);
-
-	if (e_animation != nullptr)
-	{
-		data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
-		App->render->Blit(data.tileset.texture, position.x, position.y , &(e_animation->GetCurrentFrame()));
-	}
-
-}
-
 void Enemy::OnCollision(Collider* collider)
 {
 

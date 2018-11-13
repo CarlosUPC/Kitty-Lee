@@ -167,13 +167,9 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	// TODO 1: if origin or destination are not walkable, return -1
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
 
-	// TODO 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
 	PathList open;
 	PathList close;
 
@@ -184,15 +180,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	while (open.list.count() > 0) {
 
-		// TODO 3: Move the lowest score cell from open list to the closed list
 		changer = open.GetNodeLowestScore();
 
 		item = &close.list.add(changer->data)->data;
 		open.list.del(changer);
 
-		// TODO 4: If we just added the destination, we are done!
-		// Backtrack to create the final path
-		// Use the Pathnode::parent and Flip() the path when you are finish
 		if (item->pos == destination) {
 			PathNode* item_back = item;
 			
@@ -206,15 +198,9 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			break;
 		}
 
-		// TODO 5: Fill a list of all adjancent nodes
 		PathList adjacent_list;
 		item->FindWalkableAdjacents(adjacent_list);
 
-		// TODO 6: Iterate adjancent nodes:
-		// ignore nodes in the closed list
-		// If it is NOT found, calculate its F and add it to the open list
-		// If it is already in the open list, check if it is a better path (compare G)
-		// If it is a better path, Update the parent
 		p2List_item<PathNode>* adjacent_node = adjacent_list.list.start;
 
 		while (adjacent_node != nullptr) {
@@ -227,12 +213,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			adjacent_node = adjacent_node->next;
 		}
 		adjacent_list.list.clear();
-
-
 	}
-
-	
 
 	return last_path.Count();
 }
-

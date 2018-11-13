@@ -151,6 +151,7 @@ void j1Entity::PushBack() {
 	for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
 			switch (data.animations[i].animType) {
+
 			case E_IDLE:
 				e_anim_idle.PushBack(data.animations[i].frames[j]);
 				break;
@@ -170,6 +171,18 @@ void j1Entity::PushBack() {
 				break;
 			}
 		}
+	}
+
+	//deleting player animation data already loaded in its corresponding animation variables
+	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
+			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
+			data.animations[i].frames = nullptr;
+		}
+	}
+	if (data.animations != nullptr) {
+		delete[] data.animations;
+		data.animations = nullptr;
 	}
 }
 

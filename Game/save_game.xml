@@ -13,7 +13,7 @@
 	<player>
 		<player x="80" y="256" />
 	</player>
-	<:anonymous />
+	<enemies />
 	<renderer>
 		<camera x="0" y="-390" />
 	</renderer>

@@ -75,8 +75,7 @@ bool j1EntityManager::Update(float dt)
 	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr)
 		{
-			enemies[i]->Move();
-
+			enemies[i]->Move(dt);
 		}
 	}
 
@@ -121,6 +120,8 @@ bool j1EntityManager::CleanUp()
 		{
 			if (enemies[i] != nullptr)
 			{
+				App->tex->UnLoad(enemies[i]->sprite);
+				
 				delete enemies[i];
 				enemies[i] = nullptr;
 			}

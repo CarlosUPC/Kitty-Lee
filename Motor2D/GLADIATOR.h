@@ -13,7 +13,7 @@ public:
 	Gladiator(int x, int y, p2SString tsx, int type);
 	~Gladiator();
 
-	void Move();
+	void Move(float dt);
 	void Draw();
 	void DeadAnim();
 	void Drop();
@@ -24,9 +24,9 @@ public:
 	Animation idle;
 	Animation dead;
 	Animation walking;
-
+	
 private:
-	SDL_Texture* sprite = nullptr;
+	
 };
 
 #endif // !__GLADIATOR_H__

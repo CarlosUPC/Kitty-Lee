@@ -77,6 +77,7 @@ public:
 	fPoint position;
 	fPoint original_pos;
 	p2SString enemyTSX;
+	SDL_Texture* sprite = nullptr;
 
 	pugi::xml_document	enemy_file;
 
@@ -91,7 +92,7 @@ public:
 
 	bool LoadEnemy(const char*);
 	
-	virtual void Move() {};
+	virtual void Move(float dt) {};
 	virtual void Draw() {};
 	virtual void OnCollision(Collider* collider);
 

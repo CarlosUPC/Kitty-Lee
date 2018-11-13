@@ -155,7 +155,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, p2SString tsx_file, int
 	return ret;
 }
 
-void j1Enemies::SpawnEnemy(const EnemyInfo& info)
+void j1Enemies::SpawnEnemy(const EnemyData& info)
 {
 	// find room for the new enemy
 	uint i = 0;

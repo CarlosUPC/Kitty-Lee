@@ -14,7 +14,7 @@ enum ENEMY_TYPES
 
 class Enemy;
 
-struct EnemyInfo
+struct EnemyData
 {
 	ENEMY_TYPES type = ENEMY_TYPES::NO_TYPE;
 	int x, y, path_type;
@@ -48,7 +48,7 @@ public:
 
 private:
 
-	void SpawnEnemy(const EnemyInfo& info);
+	void SpawnEnemy(const EnemyData& info);
 	SDL_Texture* sprites;
 	SDL_Texture* gladiatorSprite = nullptr;
 
@@ -56,7 +56,7 @@ private:
 
 private:
 
-	EnemyInfo queue[MAX_ENEMIES];
+	EnemyData queue[MAX_ENEMIES];
 
 
 };

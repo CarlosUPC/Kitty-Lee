@@ -5,8 +5,57 @@
 #include "Animation.h"
 #include "SDL/include/SDL_timer.h"
 #include "p2SString.h"
+#include "j1Module.h"	
+#include "p2List.h"
+#include "j1Collision.h"
+#include "SDL_image/include/SDL_image.h"
+
+
 struct SDL_Texture;
 struct Collider;
+
+
+struct TileSetEnemy {
+
+	SDL_Rect GetTileRect(int id) const;
+
+	p2SString name;
+	uint tilewidth = 0;
+	uint tileheight = 0;
+	uint spacing = 0;
+	uint margin = 0;
+	uint tilecount = 0;
+	uint columns = 0;
+	p2SString imagePath;
+	SDL_Texture* texture = nullptr;
+	uint width = 0;
+	uint height = 0;
+};
+
+enum EnemyState {
+	E_IDLE = 0,
+	E_WALKING,
+	E_HIT,
+	E_DETECTING,
+	E_DEAD,
+	E_UNKNOWN
+};
+
+struct EnemyAnim {
+	uint id = 0;
+	uint num_frames = 0;
+	SDL_Rect* frames = nullptr;
+	EnemyState  animType;
+	uint FrameCount(pugi::xml_node&);
+};
+
+struct EnemyInfo {
+	TileSetEnemy tileset; //will only use one for the player
+	EnemyAnim* animations = nullptr;
+	uint num_animations = 0;
+};
+
+
 
 class Enemy
 {
@@ -20,6 +69,10 @@ public:
 	fPoint original_pos;
 	p2SString enemyTSX;
 
+	pugi::xml_document	enemy_file;
+
+	EnemyInfo data;
+
 
 public:
 	Enemy(int x, int y, p2SString tsx, int type);
@@ -27,6 +80,8 @@ public:
 
 	const Collider* GetCollider() const;
 
+	bool LoadEnemy(const char*);
+	
 	virtual void Move() {};
 	virtual void Draw(SDL_Texture* sprites);
 	virtual void OnCollision(Collider* collider);

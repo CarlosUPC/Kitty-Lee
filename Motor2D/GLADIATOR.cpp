@@ -11,6 +11,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, t
 {
 	//Open all textures
 	
+
+	LoadEnemy(tsx.GetString());
 	
 	//Idle
 	idle.PushBack({ 8, 7, 17, 24 });
@@ -43,6 +45,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, t
 
 	collider = App->collider->AddCollider({ 0, 0, 18, 24 }, COLLIDER_ENEMY, (j1Module*)App->enemies);
 	original_pos = { (float)x,(float)y };
+
+	
 }
 
 Gladiator::~Gladiator()

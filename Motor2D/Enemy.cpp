@@ -8,7 +8,8 @@
 #include "SDL/include/SDL_timer.h"
 #include "j1Audio.h"
 
-Enemy::Enemy(int x, int y, int type) : position(x, y)
+
+Enemy::Enemy(int x, int y, p2SString tsx, int type) : position(x, y), enemyTSX(tsx)
 {
 
 }

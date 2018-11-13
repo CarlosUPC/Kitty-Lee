@@ -44,5 +44,9 @@
   <player>
     <file>player.tsx</file>
   </player>
+  
+  <enemies>
+	<enemy_1>gladiator2.tsx</enemy_1>
+  </enemies>
 
 </config>

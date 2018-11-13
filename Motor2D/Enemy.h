@@ -4,7 +4,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL_timer.h"
-
+#include "p2SString.h"
 struct SDL_Texture;
 struct Collider;
 
@@ -18,10 +18,11 @@ public:
 	Collider* collider = nullptr;
 	fPoint position;
 	fPoint original_pos;
+	p2SString enemyTSX;
 
 
 public:
-	Enemy(int x, int y, int type);
+	Enemy(int x, int y, p2SString tsx, int type);
 	virtual ~Enemy();
 
 	const Collider* GetCollider() const;

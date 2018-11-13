@@ -17,6 +17,8 @@
 
 j1Enemies::j1Enemies()
 {
+	name.create("enemies");
+
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		enemies[i] = nullptr;
 }
@@ -25,6 +27,20 @@ j1Enemies::j1Enemies()
 j1Enemies::~j1Enemies()
 {
 }
+
+
+bool j1Enemies::Awake(pugi::xml_node& conf)
+{
+	LOG("Loading TSX files");
+	bool ret = true;
+
+	// TSX of each enemy
+	tsx1.create(conf.child("enemy_1").text().as_string());
+	
+
+	return ret;
+}
+
 
 bool j1Enemies::Start()
 {
@@ -103,16 +119,22 @@ bool j1Enemies::CleanUp()
 	{
 		if (enemies[i] != nullptr)
 		{
-			queue[i].type = ENEMY_TYPES::NO_TYPE;
-			delete enemies[i];
-			enemies[i] = nullptr;
+			if (enemies[i] != nullptr)
+			{
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+			if (queue[i].type != ENEMY_TYPES::NO_TYPE)
+			{
+				queue[i].type = ENEMY_TYPES::NO_TYPE;
+			}
 		}
 	}
 
 	return true;
 }
 
-bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, int path_type)
+bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, p2SString tsx_file, int path_type)
 {
 	bool ret = false;
 
@@ -123,6 +145,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y, int path_type)
 			queue[i].type = type;
 			queue[i].x = x;
 			queue[i].y = y;
+			queue[i].tsx_file = tsx_file;
 			queue[i].path_type = path_type;
 			ret = true;
 			break;
@@ -143,7 +166,7 @@ void j1Enemies::SpawnEnemy(const EnemyInfo& info)
 		switch (info.type)
 		{
 		case ENEMY_TYPES::GLADIATOR:
-			enemies[i] = new Gladiator(info.x, info.y,info.path_type);
+			enemies[i] = new Gladiator(info.x, info.y,info.tsx_file,info.path_type);
 			break;
 		}
 	}

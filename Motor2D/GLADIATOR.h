@@ -8,7 +8,7 @@ class Gladiator : public Enemy
 {
 public:
 
-	Gladiator(int x, int y, int type);
+	Gladiator(int x, int y, p2SString tsx, int type);
 	~Gladiator();
 
 	void Move();

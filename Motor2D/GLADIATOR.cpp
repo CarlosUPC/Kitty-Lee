@@ -7,7 +7,7 @@
 #include "j1Player.h"
 
 
-Gladiator::Gladiator(int x, int y, int type) : Enemy(x, y, type)
+Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : Enemy(x, y, tsx, type)
 {
 	//Open all textures
 	
@@ -53,8 +53,7 @@ Gladiator::~Gladiator()
 void Gladiator::Move()
 {
 	//position = original_pos + path.GetCurrentPosition();
-	/*original_pos.x -= 1;
-	original_pos.y += 10;*/
+	
 	fPoint path_pos = path.GetCurrentPosition();
 	position.x = float(original_pos.x + path_pos.x);
 	position.y = float(original_pos.y + path_pos.y);

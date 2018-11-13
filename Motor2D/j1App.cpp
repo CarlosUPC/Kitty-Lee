@@ -15,6 +15,7 @@
 #include "j1Player.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -24,17 +25,18 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	frames = 0;
 	want_to_save = want_to_load = false;
 
-	input = new j1Input();
-	win = new j1Window();
-	render = new j1Render();
-	tex = new j1Textures();
-	audio = new j1Audio();
-	scene = new j1Scene();
-	collider = new j1Colliders();
-	map = new j1Map();
-	fade = new j1FadeToBlack();
-	player = new j1Player();
-	entities = new j1EntityManager();
+	input =			new j1Input();
+	win =			new j1Window();
+	render =		new j1Render();
+	tex =			new j1Textures();
+	audio =			new j1Audio();
+	scene =			new j1Scene();
+	collider =		new j1Colliders();
+	map =			new j1Map();
+	fade =			new j1FadeToBlack();
+	player =		new j1Player();
+	entities =		new j1EntityManager();
+	pathfinding =	new j1PathFinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collider);
 	AddModule(player);
 	AddModule(entities);
+	AddModule(pathfinding);
 	
 	// render last to swap buffer
 	AddModule(render);

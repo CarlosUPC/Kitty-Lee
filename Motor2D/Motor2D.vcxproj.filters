@@ -54,6 +54,9 @@
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -133,6 +136,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="j1EntityManager.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

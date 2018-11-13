@@ -19,6 +19,7 @@ class j1Map;
 class j1Player;
 class j1FadeToBlack;
 class j1EntityManager;
+class j1PathFinding;
 
 class j1App
 {
@@ -93,6 +94,7 @@ public:
 	j1Player*			player;
 	j1FadeToBlack*      fade;
 	j1EntityManager*	entities;
+	j1PathFinding*		pathfinding;
 private:
 
 	p2List<j1Module*>	modules;

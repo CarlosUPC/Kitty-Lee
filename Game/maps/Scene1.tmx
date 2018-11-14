@@ -7528,7 +7528,7 @@
    <tile gid="33"/>
   </data>
  </layer>
- <layer name="PathFinding" width="125" height="30">
+ <layer name="PathFinding" width="125" height="30" visible="0">
   <properties>
    <property name="Navigation" type="int" value="1"/>
   </properties>

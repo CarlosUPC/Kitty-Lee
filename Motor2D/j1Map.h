@@ -140,6 +140,8 @@ public:
 	
 	
 	void InitialEntityPosition();
+
+	bool CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const;
 	
 	void AddCollidersMap();
 	

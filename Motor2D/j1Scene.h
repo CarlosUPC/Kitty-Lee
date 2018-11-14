@@ -54,6 +54,7 @@ private:
 	iPoint cameraOffset;
 	uint win_width;
 	uint win_height;
+	SDL_Texture* debug_tex;
 
 };
 

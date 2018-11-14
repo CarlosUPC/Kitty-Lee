@@ -4382,7 +4382,10 @@
    <tile/>
   </data>
  </layer>
- <layer name="pathfinding" width="58" height="25" visible="0">
+ <layer name="pathfinding" width="58" height="25">
+  <properties>
+   <property name="Navigation" type="int" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>

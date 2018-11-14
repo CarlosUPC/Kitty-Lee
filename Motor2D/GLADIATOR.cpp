@@ -56,6 +56,8 @@ void Gladiator::Move(float dt)
 {
 	SetAnimationsSpeed(dt, speedAnim);
 
+	
+	StatesMachine();
 	//position = original_pos + path.GetCurrentPosition();
 	
 	/*fPoint path_pos = path.GetCurrentPosition();
@@ -95,4 +97,56 @@ void Gladiator::SetAnimationsSpeed(float dt, float speed) {
 	gAnim.g_detecting.speed = speed * dt;
 	gAnim.g_dead.speed = speed * dt;
 
+}
+
+void Gladiator::StatesMachine() {
+
+	fPoint lastPosition;
+
+	switch (gState) {
+
+	case GladiatorState::G_IDLE:
+		if (position.x > lastPosition.x) {
+			gState = GladiatorState::G_WALKING;
+			flip = SDL_FLIP_HORIZONTAL;
+			break;
+		}
+		if (position.x < lastPosition.x) {
+			gState = GladiatorState::G_WALKING;
+			flip = SDL_FLIP_NONE;
+			break;
+		}
+		e_animation = &gAnim.g_idle;
+		break;
+
+	case GladiatorState::G_WALKING:
+
+		if (position.x > lastPosition.x) {
+			gState = GladiatorState::G_WALKING;
+			flip = SDL_FLIP_HORIZONTAL;
+			break;
+		}
+		if (position.x < lastPosition.x) {
+			gState = GladiatorState::G_WALKING;
+			flip = SDL_FLIP_NONE;
+			break;
+		}
+		
+		if (!position.x > lastPosition.x && !position.x < lastPosition.x) 
+			gState = GladiatorState::G_IDLE;
+			
+		
+		e_animation = &gAnim.g_walking;
+		break;
+
+	case GladiatorState::G_DETECTING:
+		break;
+	case GladiatorState::G_HIT:
+		break;
+	case GladiatorState::G_DEAD:
+		break;
+
+	}
+
+	lastPosition = position;
 }

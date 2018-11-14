@@ -399,7 +399,6 @@ void j1Map::LoadProperties(pugi::xml_node& properties_node, Properties& properti
 
 		if(p->name.operator==("musicEnvironment"))		//needs to implement loading properties with different types of var
 			data.musicEnvironment = properties_node.attribute("value").as_string();
-
 		else {
 			p->value = properties_node.attribute("value").as_float();
 
@@ -484,7 +483,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->visible = node.attribute("visible").as_bool(true);
 
 	//Load properties of layer
-	pugi::xml_node n_property = node.child("properties").child("property");
+	pugi::xml_node n_property = node.child("properties");
 	LoadProperties(n_property, layer->properties);
 	
 	layer->tiles = new uint[layer->width*layer->height];

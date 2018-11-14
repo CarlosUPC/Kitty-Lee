@@ -219,7 +219,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, T
 }
 
 
-int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type)
+int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type = TypePathDistance::MANHATTAN)
 {
 	int distance = 0;
 
@@ -231,6 +231,9 @@ int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distan
 		distance = origin.DistanceNoSqrt(destination);
 		break;
 	case MANHATTAN:
+		distance = origin.DistanceManhattan(destination);
+		break;
+	default:
 		distance = origin.DistanceManhattan(destination);
 		break;
 	}

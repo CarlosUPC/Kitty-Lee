@@ -35,9 +35,10 @@ public:
 	void DeadAnim();
 	void Drop();
 
-public:
+private:
 
 	void SetAnimationsSpeed(float dt, float speed);
+	void StatesMachine();
 	/*Path path;
 	Animation idle;
 	Animation dead;
@@ -46,7 +47,7 @@ public:
 private:
 	GladiatorAnims gAnim;
 	GladiatorState gState;
-
+	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float speedAnim;
 };
 

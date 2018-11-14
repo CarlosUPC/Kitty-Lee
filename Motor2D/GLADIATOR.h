@@ -39,6 +39,8 @@ private:
 
 	void SetAnimationsSpeed(float dt, float speed);
 	void StatesMachine();
+	void DefaultPath();
+	bool CreatePathfinding(iPoint destination);
 	/*Path path;
 	Animation idle;
 	Animation dead;
@@ -49,6 +51,13 @@ private:
 	GladiatorState gState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float speedAnim;
+
+	iPoint gSize;
+
+
+	bool pathfinding = false;
+	bool create_dpath = false;
+	bool do_dpath = false;
 };
 
 #endif // !__GLADIATOR_H__

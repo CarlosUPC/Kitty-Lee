@@ -8,6 +8,12 @@
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
+enum TypePathDistance {
+	DISTANCE_TO,
+	DISTANCE_NO_SQRT,
+	MANHATTAN
+};
+
 class j1PathFinding : public j1Module
 {
 public:
@@ -24,7 +30,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination);
+	int CreatePath(const iPoint& origin, const iPoint& destination, TypePathDistance distance_type);
 
 	// To request all tiles involved in the last generated path
 	const p2DynArray<iPoint>* GetLastPath() const;
@@ -37,6 +43,8 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+
+	
 
 private:
 
@@ -67,7 +75,7 @@ struct PathNode
 	// Calculates this tile score
 	int Score() const;
 	// Calculate the F for a specific destination tile
-	int CalculateF(const iPoint& destination);
+	int CalculateF(const iPoint& destination, TypePathDistance distance_type);
 
 	// -----------
 	int g;
@@ -92,6 +100,6 @@ struct PathList
 	p2List<PathNode> list;
 };
 
-
+int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type);
 
 #endif // __j1PATHFINDING_H__

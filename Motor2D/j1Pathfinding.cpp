@@ -154,10 +154,10 @@ int PathNode::Score() const
 // PathNode -------------------------------------------------------------------------
 // Calculate the F for a specific destination tile
 // ----------------------------------------------------------------------------------
-int PathNode::CalculateF(const iPoint& destination)
+int PathNode::CalculateF(const iPoint& destination, TypePathDistance distance_type)
 {
 	g = parent->g + 1;
-	h = pos.DistanceTo(destination);
+	h = CalculateDistance(pos, destination, distance_type);
 
 	return g + h;
 }
@@ -165,7 +165,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, TypePathDistance distance_type)
 {
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
@@ -173,7 +173,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	PathList open;
 	PathList close;
 
-	open.list.add(PathNode(0, origin.DistanceTo(destination), origin, nullptr));
+	open.list.add(PathNode(0, CalculateDistance(origin, destination, distance_type), origin, nullptr));
 
 	p2List_item<PathNode>* changer = nullptr;
 	PathNode* item = nullptr;
@@ -205,7 +205,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		while (adjacent_node != nullptr) {
 			if (close.Find(adjacent_node->data.pos) == NULL) {
-				adjacent_node->data.CalculateF(destination);
+				adjacent_node->data.CalculateF(destination, distance_type);
 				const p2List_item<PathNode>* open_node = open.Find(adjacent_node->data.pos);
 				if (open_node == NULL)
 					open.list.add(adjacent_node->data);
@@ -216,4 +216,24 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	}
 
 	return last_path.Count();
+}
+
+
+int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type)
+{
+	int distance = 0;
+
+	switch (distance_type) {
+	case DISTANCE_TO:
+		distance = origin.DistanceTo(destination);
+		break;
+	case DISTANCE_NO_SQRT:
+		distance = origin.DistanceNoSqrt(destination);
+		break;
+	case MANHATTAN:
+		distance = origin.DistanceManhattan(destination);
+		break;
+	}
+
+	return distance;
 }

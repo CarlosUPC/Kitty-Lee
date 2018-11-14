@@ -62,6 +62,7 @@ class j1Entity
 protected:
 
 	float e_animationSpeed;
+	
 	Animation* e_animation = nullptr;
 
 	Animation e_anim_idle;

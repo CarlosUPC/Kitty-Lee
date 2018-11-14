@@ -79,7 +79,7 @@ bool j1Scene::PreUpdate()
 	{
 		if (origin_selected == true)
 		{
-			App->pathfinding->CreatePath(origin, p);
+			App->pathfinding->CreatePath(origin, p, TypePathDistance::MANHATTAN);
 			origin_selected = false;
 		}
 		else

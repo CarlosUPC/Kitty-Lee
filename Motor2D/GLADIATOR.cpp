@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Player.h"
 #include "j1Map.h"
+#include "j1Pathfinding.h"
 
 Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx, type)
 {
@@ -27,6 +28,10 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	gAnim.g_detecting = e_anim_detecting;
 	gAnim.g_dead = e_anim_death;
 
+	//Load Collider Size
+	gSize.x = data.tileset.tilewidth;
+	gSize.y = data.tileset.tileheight;
+
 	//Set Gladiator State
 	gState = GladiatorState::G_IDLE;
 
@@ -34,10 +39,11 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	e_animation = &gAnim.g_idle;
 	speedAnim = e_animationSpeed;
 
+	//Set Collider
+	collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
+	
 
-
-	collider = App->collider->AddCollider({ 0, 0, 18, 24 }, COLLIDER_ENEMY, (j1Module*)App->entities);
-	original_pos = { (float)x,(float)y };
+	//original_pos = { (float)x,(float)y };
 
 	//Set path
 	/*path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
@@ -149,4 +155,21 @@ void Gladiator::StatesMachine() {
 	}
 
 	lastPosition = position;
+}
+
+void Gladiator::DefaultPath() {
+
+	iPoint to_go;
+
+	if (CreatePathfinding(to_go)) {}
+	
+}
+
+bool Gladiator::CreatePathfinding(iPoint destination) {
+
+	bool ret = false;
+
+	if (App->pathfinding->CreatePath(App->map->WorldToMap((int)position.x, (int)position.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN)) {}
+
+	return ret;
 }

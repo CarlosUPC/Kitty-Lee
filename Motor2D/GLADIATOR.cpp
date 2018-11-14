@@ -20,19 +20,30 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	//Load Enemy sprite
 	sprite = App->tex->Load(data.tileset.imagePath.GetString());;
 
+	//Set Gladiator Anims
+	gAnim.g_idle = e_anim_idle;
+	gAnim.g_walking = e_anim_walking;
+	gAnim.g_hit = e_anim_hit;
+	gAnim.g_detecting = e_anim_detecting;
+	gAnim.g_dead = e_anim_death;
 
-	//Set path
-	path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle); 
-	path.PushBack({ -0.5f, 0.0f }, 140, &e_anim_walking);
-	path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
-	path.PushBack({ 0.5f, 0.0f }, 140, &e_anim_walking);
-	
-	e_animation = &e_anim_idle;
-	e_animation->speed = e_animationSpeed;
+	//Set Gladiator State
+	gState = GladiatorState::G_IDLE;
+
+	//Set Default Anim & Anim Speed
+	e_animation = &gAnim.g_idle;
+	speedAnim = e_animationSpeed;
+
+
 
 	collider = App->collider->AddCollider({ 0, 0, 18, 24 }, COLLIDER_ENEMY, (j1Module*)App->entities);
 	original_pos = { (float)x,(float)y };
 
+	//Set path
+	/*path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
+	path.PushBack({ -0.5f, 0.0f }, 140, &e_anim_walking);
+	path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
+	path.PushBack({ 0.5f, 0.0f }, 140, &e_anim_walking);*/
 	
 }
 
@@ -43,12 +54,13 @@ Gladiator::~Gladiator()
 
 void Gladiator::Move(float dt)
 {
-	//position = original_pos + path.GetCurrentPosition();
-	e_animation->speed = e_animationSpeed;
+	SetAnimationsSpeed(dt, speedAnim);
 
-	fPoint path_pos = path.GetCurrentPosition();
+	//position = original_pos + path.GetCurrentPosition();
+	
+	/*fPoint path_pos = path.GetCurrentPosition();
 	position.x = float(original_pos.x + path_pos.x);
-	position.y = float(original_pos.y + path_pos.y);
+	position.y = float(original_pos.y + path_pos.y);*/
 }
 
 void Gladiator::Draw()
@@ -72,5 +84,15 @@ void Gladiator::DeadAnim()
 
 void Gladiator::Drop()
 {
+
+}
+
+void Gladiator::SetAnimationsSpeed(float dt, float speed) {
+
+	gAnim.g_idle.speed = speed * dt;
+	gAnim.g_walking.speed = speed * dt;
+	gAnim.g_hit.speed = speed * dt;
+	gAnim.g_detecting.speed = speed * dt;
+	gAnim.g_dead.speed = speed * dt;
 
 }

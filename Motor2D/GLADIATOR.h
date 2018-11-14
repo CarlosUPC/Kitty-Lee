@@ -6,6 +6,23 @@
 
 class SDL_Texture;
 
+enum GladiatorState {
+	G_IDLE,
+	G_WALKING,
+	G_HIT,
+	G_DETECTING,
+	G_DEAD
+};
+
+struct  GladiatorAnims {
+	Animation g_idle;
+	Animation g_walking;
+	Animation g_hit;
+	Animation g_detecting;
+	Animation g_dead;
+
+};
+
 class Gladiator : public j1Entity
 {
 public:
@@ -20,13 +37,17 @@ public:
 
 public:
 
-	Path path;
+	void SetAnimationsSpeed(float dt, float speed);
+	/*Path path;
 	Animation idle;
 	Animation dead;
-	Animation walking;
+	Animation walking;*/
 	
 private:
-	
+	GladiatorAnims gAnim;
+	GladiatorState gState;
+
+	float speedAnim;
 };
 
 #endif // !__GLADIATOR_H__

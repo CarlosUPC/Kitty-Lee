@@ -11,9 +11,7 @@
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
-
-
-
+#include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -44,6 +42,17 @@ bool j1Scene::Start()
 
 	App->entities->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->entities->tsx1);
 
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+
+		debug_tex = App->tex->Load("maps/path.png");
+
+	App->audio->PlayMusic(App->map->data.musicEnvironment);
+
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
@@ -57,6 +66,29 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	// debug pathfing ------------------
+	static iPoint origin;
+	static bool origin_selected = false;
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+		}
+	}
+
 	CheckLevel();
 	return true;
 }
@@ -113,9 +145,23 @@ bool j1Scene::Update(float dt)
 	
 
 	App->map->Draw();
-	
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	App->render->Blit(debug_tex, p.x, p.y);
+
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		App->render->Blit(debug_tex, pos.x, pos.y);
+	}
+	
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
 	return true;

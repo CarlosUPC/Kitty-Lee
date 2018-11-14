@@ -137,6 +137,20 @@ inline uint MapLayer::Get(int x, int y) const {
 	return tiles[y * this->width + x];
 }
 
+float Properties::Get(const char * value, int default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
+}
+
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
@@ -324,10 +338,8 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
+		LoadProperties(map.child("properties"), data.properties);
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
-		LoadProperties(map.child("properties"));
-
-		App->audio->PlayMusic(App->map->data.musicEnvironment);
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -378,16 +390,21 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
-void j1Map::LoadProperties(pugi::xml_node& properties_node) {
-	p2SString nameProperty;
+void j1Map::LoadProperties(pugi::xml_node& properties_node, Properties& properties) {
+
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
-		nameProperty = properties_node.attribute("name").as_string();
-		if (nameProperty == "gravity")
-			data.gravity = properties_node.attribute("value").as_float();
-		if (nameProperty == "maxAccelerationY")
-			data.maxAccelerationY = properties_node.attribute("value").as_float();
-		if (nameProperty == "musicEnvironment") 
+		Properties::Property* p = new Properties::Property();
+
+		p->name = properties_node.attribute("name").as_string();
+
+		if(p->name.operator==("musicEnvironment"))		//needs to implement loading properties with different types of var
 			data.musicEnvironment = properties_node.attribute("value").as_string();
+
+		else {
+			p->value = properties_node.attribute("value").as_float();
+
+			properties.list.add(p);
+		}
 		
 	}
 }
@@ -468,13 +485,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load properties of layer
 	pugi::xml_node n_property = node.child("properties").child("property");
-	p2SString nameProperty;
-	while (n_property != NULL) {
-		nameProperty = n_property.attribute("name").as_string();
-		if (nameProperty == "speed")
-			layer->speed = n_property.attribute("value").as_float();
-		n_property = n_property.next_sibling();
-	}
+	LoadProperties(n_property, layer->properties);
 	
 	layer->tiles = new uint[layer->width*layer->height];
 
@@ -554,6 +565,47 @@ void j1Map::InitialEntityPosition() {
 		
 		ente = ente->next;
 	}
+}
 
-	
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
 }

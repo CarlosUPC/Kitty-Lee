@@ -219,7 +219,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, T
 }
 
 
-int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type = TypePathDistance::MANHATTAN)
+int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type)
 {
 	int distance = 0;
 

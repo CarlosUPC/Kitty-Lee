@@ -28,14 +28,41 @@ struct ColliderObject {
 
 };
 
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		float value;
+	};
+
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	float Get(const char* name, int default_value = 0) const;
+
+	p2List<Property*>	list;
+};
 
 struct MapLayer {
-	p2SString name;
-	uint width = 0;
-	uint height = 0;
-	uint* tiles = nullptr;
-	float speed = 1.0f;
-	bool visible = true;
+	p2SString	name;
+	uint		width = 0;
+	uint		height = 0;
+	uint*		tiles = nullptr;
+	float		speed = 1.0f;
+	bool		visible = true;
+	Properties	properties;
 
 	~MapLayer() { delete[] tiles; tiles = nullptr; }
 
@@ -79,8 +106,7 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	float				gravity;
-	float				maxAccelerationY;
+	Properties			properties;
 	const char*			musicEnvironment;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
@@ -125,7 +151,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
-	void LoadProperties(pugi::xml_node& properties_node);
+	void LoadProperties(pugi::xml_node & properties_node, Properties & properties);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

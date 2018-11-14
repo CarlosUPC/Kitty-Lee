@@ -44,6 +44,8 @@ bool j1Scene::Start()
 
 	App->entities->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->entities->tsx1);
 
+	App->audio->PlayMusic(App->map->data.musicEnvironment);
+
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 

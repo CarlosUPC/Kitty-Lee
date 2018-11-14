@@ -137,6 +137,20 @@ inline uint MapLayer::Get(int x, int y) const {
 	return tiles[y * this->width + x];
 }
 
+float Properties::Get(const char * value, int default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
+}
+
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
@@ -324,10 +338,8 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
+		LoadProperties(map.child("properties"), data.properties);
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
-		LoadProperties(map.child("properties"));
-
-		App->audio->PlayMusic(App->map->data.musicEnvironment);
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -378,16 +390,21 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
-void j1Map::LoadProperties(pugi::xml_node& properties_node) {
-	p2SString nameProperty;
+void j1Map::LoadProperties(pugi::xml_node& properties_node, Properties& properties) {
+
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
-		nameProperty = properties_node.attribute("name").as_string();
-		if (nameProperty == "gravity")
-			data.gravity = properties_node.attribute("value").as_float();
-		if (nameProperty == "maxAccelerationY")
-			data.maxAccelerationY = properties_node.attribute("value").as_float();
-		if (nameProperty == "musicEnvironment") 
+		Properties::Property* p = new Properties::Property();
+
+		p->name = properties_node.attribute("name").as_string();
+
+		if(p->name.operator==("musicEnvironment"))		//needs to implement loading properties with different types of var
 			data.musicEnvironment = properties_node.attribute("value").as_string();
+
+		else {
+			p->value = properties_node.attribute("value").as_float();
+
+			properties.list.add(p);
+		}
 		
 	}
 }
@@ -468,13 +485,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load properties of layer
 	pugi::xml_node n_property = node.child("properties").child("property");
-	p2SString nameProperty;
-	while (n_property != NULL) {
-		nameProperty = n_property.attribute("name").as_string();
-		if (nameProperty == "speed")
-			layer->speed = n_property.attribute("value").as_float();
-		n_property = n_property.next_sibling();
-	}
+	LoadProperties(n_property, layer->properties);
 	
 	layer->tiles = new uint[layer->width*layer->height];
 

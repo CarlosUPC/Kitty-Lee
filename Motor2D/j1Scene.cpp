@@ -38,6 +38,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
+
 	p2List_item<ColliderObject*>* position = App->map->data.colliders.start;
 	j1Entity* ent = nullptr;
 
@@ -63,7 +64,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	App->audio->PlayMusic(App->map->data.musicEnvironment);
+	//App->audio->PlayMusic(App->map->data.musicEnvironment);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

@@ -156,8 +156,11 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type)
 		case j1Entity::Types::GLADIATOR: ret = new Gladiator(); break;
 		case j1Entity::Types::PLAYER: ret = new j1Player(); break;
 	}
-	if (ret != nullptr)
+	if (ret != nullptr) {
 		entities.PushBack(ret);
+		ret->Start();
+	}
+	
 	return ret;
 }
 

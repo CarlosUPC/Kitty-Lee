@@ -40,19 +40,19 @@ public:
 	//void Init();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&);
+	//bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
 
 	// Called each loop iteration
-	bool PreUpdate();
+	//bool PreUpdate();
 
 	// Called each loop iteration
-	//bool Update(float dt);
+	bool Update(float dt);
 
 	// Called each loop iteration
-	bool PostUpdate();
+	//bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -60,8 +60,6 @@ public:
 	bool Load(pugi::xml_node&);
 
 	bool Save(pugi::xml_node&) const;
-
-	bool LoadPlayer(const char*);
 
 	void OnCollision(Collider*, Collider*);
 

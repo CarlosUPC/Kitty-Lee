@@ -16,7 +16,6 @@
 
 
 j1Player::j1Player() : j1Entity(Types::PLAYER) {
-	LoadEntityData("player.tsx");
 }
 
 
@@ -25,38 +24,18 @@ j1Player::~j1Player()
 {
 }
 
-// Called before render is available
-bool j1Player::Awake(pugi::xml_node& node)
-{
-	bool ret = true;
-	LOG("Loading Player Module");
-
-	
-	ret = LoadPlayer(node.child("file").text().as_string());
-
-	state = IDLE;
-	
-	// Load animations
-	//PushBack();
-
-	return ret;
-}
-
-// Called before the first frame
 bool j1Player::Start()
 {
+	LoadEntityData("player.tsx");
 
-	data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
+	state = IDLE;
 
-	//This method returns player object's position
-	//position = App->map->GetInitialPosition();
-	
-	//position = App->map->queue[PLAYER].initialPos;
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
+
+	speed.SetToZero();
+
 	AddColliders();
-	//Speed of player
-	speed = { 0,0 };
 
 	App->audio->LoadFx(walkingSound);
 	App->audio->LoadFx(jumpingSound);
@@ -66,13 +45,13 @@ bool j1Player::Start()
 }
 
 // Called each loop iteration
-bool j1Player::PreUpdate()
-{
-	return true;
-}
+//bool j1Player::PreUpdate()
+//{
+//	return true;
+//}
 
 // Called each loop iteration
-/*bool j1Player::Update(float dt)
+bool j1Player::Update(float dt)
 {
 	Movement(dt);
 
@@ -92,16 +71,16 @@ bool j1Player::PreUpdate()
 
 	CheckState();
 
-	//App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 
-	return true;
-}*/
-
-// Called each loop iteration
-bool j1Player::PostUpdate()
-{	
 	return true;
 }
+
+// Called each loop iteration
+//bool j1Player::PostUpdate()
+//{	
+//	return true;
+//}
 
 // Called before quitting
 bool j1Player::CleanUp()
@@ -198,32 +177,32 @@ void j1Player::AddColliders() {
 	SDL_Rect r;
 	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
 	
-	/*actual_collider = &colliderPlayer;
+	actual_collider = &collider;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
 
 	actual_collider = &colliderPlayer_down;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
 
 	actual_collider = &colliderPlayer_up;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
 
 	actual_collider = &colliderPlayer_left;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
 
 	actual_collider = &colliderPlayer_right;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);*/
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
 
 }
 
 void j1Player::SetCollidersPos() {
 	COLLIDER_INFO* actual_collider;
-	/*
-	actual_collider = &colliderPlayer;
+	
+	actual_collider = &collider;
 	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_down;
@@ -236,7 +215,7 @@ void j1Player::SetCollidersPos() {
 	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_right;
-	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);*/
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 }
 
@@ -585,153 +564,4 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	default:
 		break;
 	}
-}
-
-//Load all initial information of player saved in a xml file
-bool j1Player::LoadPlayer(const char* file) {
-	bool ret = true;
-	/*
-	pugi::xml_parse_result result = player_file.load_file(file);
-
-	if (result == NULL)
-	{
-		LOG("Could not load map xml file %s. pugi error: %s", file, result.description());
-		ret = false;
-	}
-
-	//fill tileset info
-	pugi::xml_node node = player_file.child("tileset");
-	data.tileset.name.create(node.attribute("name").as_string());
-	data.tileset.tilewidth = node.attribute("tilewidth").as_uint();
-	data.tileset.tileheight = node.attribute("tileheight").as_uint();
-	data.tileset.spacing = node.attribute("spacing").as_uint();
-	data.tileset.margin = node.attribute("margin").as_uint();
-	data.tileset.tilecount = node.attribute("tilecount").as_uint();
-	data.tileset.columns = node.attribute("columns").as_uint();
-	data.tileset.imagePath = node.child("image").attribute("source").as_string();
-	data.tileset.width = node.child("image").attribute("width").as_uint();
-	data.tileset.height = node.child("image").attribute("height").as_uint();
-
-	//count how many animations are in file
-	node = node.child("tile");
-	data.num_animations = 0;
-	while (node != NULL) {
-		data.num_animations++;
-		node = node.next_sibling("tile");
-	}
-	//reserve memory for all animations
-	data.animations = new Anim[data.num_animations];
-
-	//count how many frames for each animation, assign memory for those frames and set id frame start
-	node = player_file.child("tileset").child("tile");
-	for (uint i = 0; i < data.num_animations; ++i) {
-		data.animations[i].FrameCount(node.child("animation").child("frame"));
-		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
-		data.animations[i].id = node.attribute("id").as_uint();
-		node = node.next_sibling("tile");
-	}
-
-	//fill frame array with current information
-	node = player_file.child("tileset").child("tile");
-	pugi::xml_node node_frame;
-	for (uint i = 0; i < data.num_animations; ++i) {
-		node_frame = node.child("animation").child("frame");
-		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-			data.animations[i].frames[j] = data.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
-			node_frame = node_frame.next_sibling("frame");
-		}
-		node = node.next_sibling("tile");
-	}
-	//LOG all animation information
-	for (uint i = 0; i < data.num_animations; ++i) {
-		LOG("Animation %i--------", data.animations[i].id);
-		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-			LOG("frame %i x: %i y: %i w: %i h: %i",
-				j, data.animations[i].frames[j].x, data.animations[i].frames[j].y,
-				data.animations[i].frames[j].w, data.animations[i].frames[j].h);
-		}
-	}
-	
-	//Load data
-	node = player_file.child("tileset").child("properties").child("property");
-	p2SString nameIdentificator;
-	while (node) {
-		nameIdentificator = node.attribute("name").as_string();
-
-		if (nameIdentificator == "animationSpeed")
-			animationSpeed = node.attribute("value").as_float();
-
-		else if (nameIdentificator == "incrementSpeedX")
-			incrementSpeedX = node.attribute("value").as_float();
-
-		else if (nameIdentificator == "jumpSpeed")
-			jumpSpeed = node.attribute("value").as_float();
-
-		else if (nameIdentificator == "maxSpeedX")
-			maxSpeedX = node.attribute("value").as_float();
-
-		//Load audio fx data
-		else if (nameIdentificator == "walkingSound")
-			walkingSound = node.attribute("value").as_string();
-
-		else if (nameIdentificator == "jumpSound")
-			jumpingSound = node.attribute("value").as_string();
-
-		else if (nameIdentificator == "crashSound")
-			crashingSound = node.attribute("value").as_string();
-
-		node = node.next_sibling();
-	}
-
-	//Load all colliders saved in the first tile
-	node = player_file.child("tileset").child("tile").child("objectgroup").child("object");
-	while (node) {
-		nameIdentificator = node.attribute("name").as_string();
-		
-		if (nameIdentificator == "Collider") {
-			colliderPlayer.offset.x = node.attribute("x").as_int();
-			colliderPlayer.offset.y = node.attribute("y").as_int();
-			colliderPlayer.width = node.attribute("width").as_uint();
-			colliderPlayer.height = node.attribute("height").as_uint();
-			colliderPlayer.type = COLLIDER_TYPE::COLLIDER_PLAYER;
-		}
-
-		else if (nameIdentificator == "ColliderDown") {
-			colliderPlayer_down.offset.x = node.attribute("x").as_int();
-			colliderPlayer_down.offset.y = node.attribute("y").as_int();
-			colliderPlayer_down.width = node.attribute("width").as_uint();
-			colliderPlayer_down.height = node.attribute("height").as_uint();
-			colliderPlayer_down.type = COLLIDER_TYPE::COLLIDER_PLAYER_DOWN;
-		}
-		else if (nameIdentificator == "ColliderLeft") {
-			colliderPlayer_left.offset.x = node.attribute("x").as_int();
-			colliderPlayer_left.offset.y = node.attribute("y").as_int();
-			colliderPlayer_left.width = node.attribute("width").as_uint();
-			colliderPlayer_left.height = node.attribute("height").as_uint();
-			colliderPlayer_left.type = COLLIDER_TYPE::COLLIDER_PLAYER_LEFT;
-		}
-		else if (nameIdentificator == "ColliderRight") {
-			colliderPlayer_right.offset.x = node.attribute("x").as_int();
-			colliderPlayer_right.offset.y = node.attribute("y").as_int();
-			colliderPlayer_right.width = node.attribute("width").as_uint();
-			colliderPlayer_right.height = node.attribute("height").as_uint();
-			colliderPlayer_right.type = COLLIDER_TYPE::COLLIDER_PLAYER_RIGHT;
-		}
-		else if (nameIdentificator == "ColliderUp") {
-			colliderPlayer_up.offset.x = node.attribute("x").as_int();
-			colliderPlayer_up.offset.y = node.attribute("y").as_int();
-			colliderPlayer_up.width = node.attribute("width").as_uint();
-			colliderPlayer_up.height = node.attribute("height").as_uint();
-			colliderPlayer_up.type = COLLIDER_TYPE::COLLIDER_PLAYER_UP;
-		}
-
-		node = node.next_sibling();
-	}*/
-
-	
-	//Convert id animations to enum
-	/*
-	}*/
-
-	return true;
 }

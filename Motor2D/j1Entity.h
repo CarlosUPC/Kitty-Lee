@@ -98,10 +98,11 @@ public:
 	virtual void IdAnimToEnum();
 	virtual void Pushback() {};
 
+	virtual bool Start() { return true; }
 	virtual bool Update(float dt);
 	virtual void Move(float dt) {}
 	virtual void Draw(float dt);
-	virtual void CreatePath() {};
+	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider);
 	virtual bool CleanUp();
 	void DeleteAnimation();

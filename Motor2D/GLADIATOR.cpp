@@ -47,7 +47,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 
 	//original_pos = { (float)x,(float)y };
 
-	
+	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
+	playerPathfinding = App->collider->AddCollider({ (int)App->player->position.x, (int)App->player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	
 }
 
@@ -63,7 +64,7 @@ void Gladiator::Move(float dt)
 	if (!pathfinding)
 		DefaultPath(dt);
 
-
+	DetectPlayer();
 	StatesMachine();
 	
 }
@@ -73,6 +74,13 @@ void Gladiator::Draw(float dt)
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
+
+	if (enemyPathfinding != nullptr)
+		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
+	
+	if (playerPathfinding != nullptr)
+		playerPathfinding->SetPos((int)App->player->position.x - 34, (int)App->player->position.y - 34);
+
 
 	if (e_animation != nullptr)
 	{
@@ -207,4 +215,17 @@ void Gladiator::TrackingPathfinding(float dt) {
 		}
 	}
 			
+}
+
+void Gladiator::DetectPlayer() {
+
+	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
+	SDL_Rect player_pos = { (int)App->player->position.x, (int)App->player->position.y, 100, 100 };
+	
+
+	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
+		pathfinding = true;
+		gState = GladiatorState::G_IDLE;
+	}
+
 }

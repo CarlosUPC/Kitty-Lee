@@ -42,6 +42,7 @@ private:
 	void DefaultPath(float dt);
 	void CreatePathfinding(iPoint destination);
 	void TrackingPathfinding(float dt);
+	void DetectPlayer();
 	
 	
 private:
@@ -61,6 +62,9 @@ private:
 	int index = 0;
 
 	fPoint lastPosition = {128, 256};
+
+	Collider* playerPathfinding;
+	Collider* enemyPathfinding;
 	
 };
 

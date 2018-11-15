@@ -100,6 +100,6 @@ struct PathList
 	p2List<PathNode> list;
 };
 
-int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type);
+int CalculateDistance(iPoint origin, iPoint destination, TypePathDistance distance_type = TypePathDistance::MANHATTAN);
 
 #endif // __j1PATHFINDING_H__

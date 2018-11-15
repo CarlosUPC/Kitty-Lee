@@ -60,10 +60,12 @@ public:
 	bool Check(Collider* c1, COLLIDER_TYPE type);
 	void GodMode();
 	void GhostMode(const bool active);
+
+	bool debug = false;
+
 private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	bool debug = false;
 	bool god_mode = false;
 };
 #endif // __J1COLLIDERS_H__ 

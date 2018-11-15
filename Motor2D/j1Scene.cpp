@@ -146,25 +146,27 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	if (App->collider->debug) {
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
 
-	SDL_Rect path_rect = { 0,0,16,16 };
+		SDL_Rect path_rect = { 0,0,16,16 };
 
-	App->render->Blit(debug_tex, p.x, p.y, &path_rect);
+		App->render->Blit(debug_tex, p.x, p.y, &path_rect);
 
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-	
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y, &path_rect);
+		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			App->render->Blit(debug_tex, pos.x, pos.y, &path_rect);
+		}
 	}
 	
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
 	return true;
 }

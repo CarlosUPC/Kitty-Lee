@@ -81,7 +81,7 @@ bool j1EntityManager::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i) {
 		if (enemies[i] != nullptr) {
-			enemies[i]->Draw();
+			enemies[i]->Draw(dt);
 
 
 		}

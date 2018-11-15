@@ -31,7 +31,7 @@ public:
 	~Gladiator();
 
 	void Move(float dt);
-	void Draw();
+	void Draw(float dt);
 	void DeadAnim();
 	void Drop();
 

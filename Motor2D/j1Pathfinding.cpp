@@ -118,7 +118,6 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
-	uint before = list_to_fill.list.count();
 
 	// north
 	cell.create(pos.x, pos.y + 1);
@@ -169,6 +168,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, T
 {
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
+	last_path.Clear();
 
 	PathList open;
 	PathList close;

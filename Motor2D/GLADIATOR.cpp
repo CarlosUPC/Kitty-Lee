@@ -42,7 +42,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	//Set Collider
 	collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
 	
-
+	create_dpath = true;
+	entityPath = nullptr;
 	//original_pos = { (float)x,(float)y };
 
 	//Set path
@@ -62,7 +63,10 @@ void Gladiator::Move(float dt)
 {
 	SetAnimationsSpeed(dt, speedAnim);
 
-	
+	if (!pathfinding)
+		DefaultPath(dt);
+
+
 	StatesMachine();
 	//position = original_pos + path.GetCurrentPosition();
 	
@@ -157,19 +161,54 @@ void Gladiator::StatesMachine() {
 	lastPosition = position;
 }
 
-void Gladiator::DefaultPath() {
+void Gladiator::DefaultPath(float dt) {
 
-	iPoint to_go;
+	if (create_dpath) {
+		iPoint to_go;
+		to_go.x = (int)position.x - 50;
+		to_go.y = (int)position.y;
+		
+		CreatePathfinding(to_go);
+		do_dpath = true;
+		create_dpath = false;
+	}
+	
+	if (do_dpath) {
+		TrackingPathfinding(dt);
+	}
+}
 
-	if (CreatePathfinding(to_go)) {}
+void Gladiator::CreatePathfinding(iPoint destination) {
+
+	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)position.x, (int)position.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
+	entityPath = App->pathfinding->GetLastPath();
+	index = 1;
+
+	entityPathSize = entityPath->Count();
+
 	
 }
 
-bool Gladiator::CreatePathfinding(iPoint destination) {
+void Gladiator::TrackingPathfinding(float dt) {
 
-	bool ret = false;
+	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+	fPoint speed = { 10.0f,2.0f };
 
-	if (App->pathfinding->CreatePath(App->map->WorldToMap((int)position.x, (int)position.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN)) {}
+	if ((int)position.x < forwardPos.x)
+		position.x += speed.x * dt;
+	else if ((int)position.x > forwardPos.x)
+		position.x -= speed.x * dt;
+	if ((int)position.y < forwardPos.y)
+		position.y += speed.x * dt;
+	else if ((int)position.y > forwardPos.y)
+		position.y -= speed.x * dt;
 
-	return ret;
+	if ((int)position.x == forwardPos.x) {
+		
+		if (index < entityPathSize - 1)
+			index++;
+		
+		else index = 0;
+	}
+			
 }

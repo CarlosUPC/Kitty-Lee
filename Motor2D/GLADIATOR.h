@@ -39,12 +39,10 @@ private:
 
 	void SetAnimationsSpeed(float dt, float speed);
 	void StatesMachine();
-	void DefaultPath();
-	bool CreatePathfinding(iPoint destination);
-	/*Path path;
-	Animation idle;
-	Animation dead;
-	Animation walking;*/
+	void DefaultPath(float dt);
+	void CreatePathfinding(iPoint destination);
+	void TrackingPathfinding(float dt);
+	
 	
 private:
 	GladiatorAnims gAnim;
@@ -58,6 +56,10 @@ private:
 	bool pathfinding = false;
 	bool create_dpath = false;
 	bool do_dpath = false;
+
+	int dest = 0;
+	int index = 0;
+	
 };
 
 #endif // !__GLADIATOR_H__

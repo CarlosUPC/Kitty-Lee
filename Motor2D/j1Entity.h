@@ -8,6 +8,7 @@
 #include "j1Module.h"	
 #include "p2List.h"
 #include "j1Collision.h"
+#include "p2DynArray.h"
 #include "SDL_image/include/SDL_image.h"
 
 
@@ -64,6 +65,8 @@ protected:
 	float e_animationSpeed;
 	
 	Animation* e_animation = nullptr;
+	const p2DynArray<iPoint>* entityPath;
+	uint entityPathSize = 0;
 
 	Animation e_anim_idle;
 	Animation e_anim_walking;

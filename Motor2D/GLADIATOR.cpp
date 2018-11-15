@@ -50,6 +50,8 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	playerPathfinding = App->collider->AddCollider({ (int)App->player->position.x, (int)App->player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	
+	pState = PathState::G_DEFAULT_PATH;
+
 }
 
 Gladiator::~Gladiator()
@@ -208,16 +210,34 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 	if ((int)position.x == forwardPos.x) {
 		
-		if (index < entityPathSize -1 )
+		if (index < entityPathSize - 1 )
 			index++;
 		
 		else {
-			index = 0;
-			lastPosition = position;
+
+			if (pState == PathState::G_DEFAULT_PATH) {
+				index = 0;
+				
+			}
+			else if (pState == PathState::G_CHASE_PATH) {
+
+				fPoint fplayerPos;
+				fplayerPos.x = playerPos.x;
+				fplayerPos.y = playerPos.y;
+
+				gState = GladiatorState::G_IDLE;
+
+				if (position.DistanceTo(fplayerPos) <= 10) {
+					gState = GladiatorState::G_IDLE;
+					
+				}
+
+			}
 		}
 	}
-			
 }
+		
+
 
 bool Gladiator::DetectPlayer() {
 
@@ -229,12 +249,14 @@ bool Gladiator::DetectPlayer() {
 	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
 		pathfinding = true;
 		detected = true;
+		pState = PathState::G_CHASE_PATH;
 	}
 
 	else {
 		pathfinding = false;
 		detected = false;
 		create_chase_path = true;
+		pState = PathState::G_DEFAULT_PATH;
 	}
 
 	return detected;
@@ -243,10 +265,14 @@ bool Gladiator::DetectPlayer() {
 
 void Gladiator::ChasePlayer(float dt) {
 	
+	
 	if (create_chase_path) {
-		iPoint playerPos;
+		
+		
 		playerPos.x = (int)App->player->position.x;
 		playerPos.y = (int)App->player->position.y;
+
+		
 
 		CreatePathfinding(playerPos);
 		create_chase_path = false;
@@ -256,4 +282,5 @@ void Gladiator::ChasePlayer(float dt) {
 
 	if (do_chase_path)
 		TrackingPathfinding(dt);
+
 }

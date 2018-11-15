@@ -6,6 +6,11 @@
 
 class SDL_Texture;
 
+enum PathState {
+	G_DEFAULT_PATH,
+	G_CHASE_PATH
+};
+
 enum GladiatorState {
 	G_IDLE,
 	G_WALKING,
@@ -49,6 +54,7 @@ private:
 private:
 	GladiatorAnims gAnim;
 	GladiatorState gState;
+	PathState pState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float speedAnim;
 
@@ -70,6 +76,8 @@ private:
 
 	Collider* playerPathfinding;
 	Collider* enemyPathfinding;
+
+	iPoint playerPos;
 	
 };
 

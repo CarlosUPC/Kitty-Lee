@@ -8,6 +8,7 @@
 	<scene>
 		<levels level="1" />
 	</scene>
+	<pathfinding />
 	<:anonymous />
 	<colliders />
 	<player>

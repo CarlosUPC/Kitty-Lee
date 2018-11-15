@@ -161,7 +161,7 @@ bool j1Colliders::PreUpdate()
 	return true;
 }
 // Called before render is available
-bool j1Colliders::PostUpdate()
+bool j1Colliders::Update(float dt)
 {
 	Collider* c1;
 	Collider* c2;

@@ -5,6 +5,9 @@
  </properties>
  <image source="textures/enemies/Gladiator.png" width="256" height="160"/>
  <tile id="0">
+  <objectgroup draworder="index">
+   <object id="1" name="Collider" type="Collider_enemy" x="10" y="11" width="12" height="21"/>
+  </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>
    <frame tileid="1" duration="100"/>

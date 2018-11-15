@@ -23,13 +23,13 @@ j1Entity::j1Entity(Types type) : type(type)
 
 j1Entity::~j1Entity()
 {
-	if (collider != nullptr)
-		collider->to_delete = true;
+	if (collider.collider != nullptr)
+		collider.collider->to_delete = true;
 }
 
 const Collider* j1Entity::GetCollider() const
 {
-	return collider;
+	return collider.collider;
 }
 
 void j1Entity::OnCollision(Collider* collider)
@@ -45,7 +45,7 @@ bool j1Entity::Update(float dt) {
 }
 
 void j1Entity::Draw(float dt) {
-	App->render->Blit(data.tileset.texture, 0, 0);
+	App->render->Blit(data.tileset.texture, position.x, position.y);
 }
 
 bool j1Entity::CleanUp()
@@ -121,7 +121,18 @@ bool j1Entity::LoadEntityData(const char* file) {
 	}
 
 	//Load data
-	node = entity_file.child("tileset").child("properties").child("property");
+	LoadProperties(entity_file.child("tileset").child("properties").child("property")); //Load properties, is a virtual function because every entity has its variables
+	
+	LoadCollider(entity_file.child("tileset").child("tile").child("objectgroup").child("object")); //Load collider
+
+	//Convert id animations to enum
+	IdAnimToEnum();
+
+	return ret;
+}
+
+void j1Entity::LoadProperties(pugi::xml_node & node)
+{
 	p2SString nameIdentificator;
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
@@ -131,32 +142,21 @@ bool j1Entity::LoadEntityData(const char* file) {
 
 		node = node.next_sibling();
 	}
+}
 
-	//Convert id animations to enum
-	for (uint i = 0; i < data.num_animations; ++i) {
-		switch (data.animations[i].id) {
-		case 0:
-			data.animations[i].animType = EntityState::IDLE;
-			break;
-		case 15:
-			data.animations[i].animType = EntityState::WALKING;
-			break;
-		case 16:
-			data.animations[i].animType = EntityState::HIT;
-			break;
-		case 24:
-			data.animations[i].animType = EntityState::DETECTING;
-			break;
-		case 32:
-			data.animations[i].animType = EntityState::DEAD;
-			break;
-		default:
-			data.animations[i].animType = EntityState::UNKNOWN;
-			break;
-		}
-	}
+void j1Entity::LoadCollider(pugi::xml_node &node)
+{
+	collider.offset.x = node.attribute("x").as_int();
+	collider.offset.y = node.attribute("y").as_int();
+	collider.width = node.attribute("width").as_uint();
+	collider.height = node.attribute("height").as_uint();
+	if(node.attribute("type").as_string() == "Collider_enemy")
+	collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
+}
 
-	return ret;
+void j1Entity::IdAnimToEnum()
+{
+	data.animations[0].animType = EntityState::IDLE;
 }
 
 //void j1Entity::PushBack() {

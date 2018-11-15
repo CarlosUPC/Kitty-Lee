@@ -28,14 +28,6 @@ enum PlayerState {
 	UNKNOWN
 };
 
-struct COLLIDER_INFO {
-	Collider* collider = nullptr;
-	iPoint offset;
-	int width = 0;
-	int height = 0;
-	COLLIDER_TYPE type;
-};
-
 class j1Player : public j1Entity
 {	
 

@@ -55,7 +55,13 @@ struct EntityInfo {
 	uint num_animations = 0;
 };
 
-
+struct COLLIDER_INFO {
+	Collider* collider = nullptr;
+	iPoint offset;
+	int width = 0;
+	int height = 0;
+	COLLIDER_TYPE type;
+};
 
 class j1Entity
 {
@@ -76,6 +82,9 @@ public:
 	const Collider* GetCollider() const;
 
 	bool LoadEntityData(const char*);
+	virtual void LoadProperties(pugi::xml_node&);
+	virtual void LoadCollider(pugi::xml_node&);
+	virtual void IdAnimToEnum();
 
 	virtual bool Update(float dt);
 	virtual void Move(float dt) {}
@@ -93,7 +102,7 @@ public:
 
 	Types type;
 
-	Collider* collider = nullptr;
+	COLLIDER_INFO collider;
 
 	EntityInfo data;
 

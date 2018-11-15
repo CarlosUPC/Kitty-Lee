@@ -81,6 +81,32 @@ void Gladiator::Draw(float dt)
 
 }
 
+void Gladiator::IdAnimToEnum()
+{
+	for (uint i = 0; i < data.num_animations; ++i) {
+		switch (data.animations[i].id) {
+		case 0:
+			data.animations[i].animType = EntityState::IDLE;
+			break;
+		case 15:
+			data.animations[i].animType = EntityState::WALKING;
+			break;
+		case 16:
+			data.animations[i].animType = EntityState::HIT;
+			break;
+		case 24:
+			data.animations[i].animType = EntityState::DETECTING;
+			break;
+		case 32:
+			data.animations[i].animType = EntityState::DEAD;
+			break;
+		default:
+			data.animations[i].animType = EntityState::UNKNOWN;
+			break;
+		}
+	}
+}
+
 void Gladiator::DeadAnim()
 {
 	/*animation = &dead;

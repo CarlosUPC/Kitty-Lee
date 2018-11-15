@@ -32,6 +32,7 @@ public:
 
 	void Move(float dt);
 	void Draw(float dt);
+	void IdAnimToEnum();
 	void DeadAnim();
 	void Drop();
 

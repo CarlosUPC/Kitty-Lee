@@ -134,8 +134,6 @@ public:
 	const char* jumpingSound = nullptr;
 	const char* crashingSound = nullptr;
 
-	int level;
-
 	pugi::xml_document	player_file;
 
 	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;

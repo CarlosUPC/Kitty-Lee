@@ -42,15 +42,12 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	//Set Collider
 	collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
 	
-	create_dpath = true;
+	//create_dpath = true;
 	entityPath = nullptr;
+
 	//original_pos = { (float)x,(float)y };
 
-	//Set path
-	/*path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
-	path.PushBack({ -0.5f, 0.0f }, 140, &e_anim_walking);
-	path.PushBack({ 0.0f, 0.0f }, 60, &e_anim_idle);
-	path.PushBack({ 0.5f, 0.0f }, 140, &e_anim_walking);*/
+	
 	
 }
 
@@ -68,11 +65,7 @@ void Gladiator::Move(float dt)
 
 
 	StatesMachine();
-	//position = original_pos + path.GetCurrentPosition();
 	
-	/*fPoint path_pos = path.GetCurrentPosition();
-	position.x = float(original_pos.x + path_pos.x);
-	position.y = float(original_pos.y + path_pos.y);*/
 }
 
 void Gladiator::Draw(float dt)
@@ -83,7 +76,7 @@ void Gladiator::Draw(float dt)
 
 	if (e_animation != nullptr)
 	{
-		App->render->Blit(sprite, position.x, position.y, &(e_animation->GetCurrentFrame(1)));
+		App->render->Blit(sprite, (int)position.x, (int)position.y, &(e_animation->GetCurrentFrame(1)), 1.0F, flip);
 	}
 
 }
@@ -101,21 +94,22 @@ void Gladiator::Drop()
 
 void Gladiator::SetAnimationsSpeed(float dt, float speed) {
 
-	gAnim.g_idle.speed = speed * dt;
-	gAnim.g_walking.speed = speed * dt;
-	gAnim.g_hit.speed = speed * dt;
-	gAnim.g_detecting.speed = speed * dt;
-	gAnim.g_dead.speed = speed * dt;
+	gAnim.g_idle.speed = speed;
+	gAnim.g_walking.speed = speed;
+	gAnim.g_hit.speed = speed;
+	gAnim.g_detecting.speed = speed;
+	gAnim.g_dead.speed = speed;
 
 }
 
 void Gladiator::StatesMachine() {
 
-	fPoint lastPosition;
-
+	
 	switch (gState) {
 
 	case GladiatorState::G_IDLE:
+		e_animation = &gAnim.g_idle;
+
 		if (position.x > lastPosition.x) {
 			gState = GladiatorState::G_WALKING;
 			flip = SDL_FLIP_HORIZONTAL;
@@ -126,10 +120,11 @@ void Gladiator::StatesMachine() {
 			flip = SDL_FLIP_NONE;
 			break;
 		}
-		e_animation = &gAnim.g_idle;
+		
 		break;
 
 	case GladiatorState::G_WALKING:
+		e_animation = &gAnim.g_walking;
 
 		if (position.x > lastPosition.x) {
 			gState = GladiatorState::G_WALKING;
@@ -145,8 +140,6 @@ void Gladiator::StatesMachine() {
 		if (!position.x > lastPosition.x && !position.x < lastPosition.x) 
 			gState = GladiatorState::G_IDLE;
 			
-		
-		e_animation = &gAnim.g_walking;
 		break;
 
 	case GladiatorState::G_DETECTING:
@@ -182,7 +175,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)position.x, (int)position.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
 	entityPath = App->pathfinding->GetLastPath();
-	index = 1;
+	index = 0;
 
 	entityPathSize = entityPath->Count();
 
@@ -192,20 +185,20 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 void Gladiator::TrackingPathfinding(float dt) {
 
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 10.0f,2.0f };
+	fPoint speed = { 8.0f, 1.0f };
 
 	if ((int)position.x < forwardPos.x)
-		position.x += speed.x * dt;
+		position.x += speed.x;
 	else if ((int)position.x > forwardPos.x)
-		position.x -= speed.x * dt;
+		position.x -= speed.x;
 	if ((int)position.y < forwardPos.y)
-		position.y += speed.x * dt;
+		position.y += speed.y;
 	else if ((int)position.y > forwardPos.y)
-		position.y -= speed.x * dt;
+		position.y -= speed.y;
 
 	if ((int)position.x == forwardPos.x) {
 		
-		if (index < entityPathSize - 1)
+		if (index < entityPathSize -1 )
 			index++;
 		
 		else index = 0;

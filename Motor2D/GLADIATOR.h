@@ -54,11 +54,13 @@ private:
 
 
 	bool pathfinding = false;
-	bool create_dpath = false;
+	bool create_dpath = true;
 	bool do_dpath = false;
 
 	int dest = 0;
 	int index = 0;
+
+	fPoint lastPosition = {128, 256};
 	
 };
 

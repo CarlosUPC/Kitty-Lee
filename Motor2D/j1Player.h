@@ -73,6 +73,9 @@ private:
 	void CheckState();
 	void ChangeState();
 	void SetCollidersPos();
+	void IdAnimToEnum();
+	void LoadProperties(pugi::xml_node&);
+	void LoadCollider(pugi::xml_node&);
 
 public:
 
@@ -115,7 +118,6 @@ public:
 	Animation anim_land_ghost;
 	Animation anim_default;
 
-	COLLIDER_INFO colliderPlayer;
 	COLLIDER_INFO colliderPlayer_down;
 	COLLIDER_INFO colliderPlayer_up;
 	COLLIDER_INFO colliderPlayer_left;

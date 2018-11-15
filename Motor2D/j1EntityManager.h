@@ -33,20 +33,18 @@ public:
 	j1Entity* CreateEntity(j1Entity::Types type);
 	void DestroyEntity(j1Entity* entity);
 
-private:
+public:
+	p2DynArray<j1Entity*> entities;
 
 	//void SpawnEnemy(const EntityData& info);
 	//SDL_Texture* sprites;
-	//SDL_Texture* gladiatorSprite = nullptr;
-
-	
+	//SDL_Texture* gladiatorSprite = nullptr;	
 
 private:
 
 	bool do_logic = true;
 	uint32 accumulated_time = 0;
 	uint32 update_ms_cycle = 500;
-	p2DynArray<j1Entity*> entities;
 	EntityData queue[MAX_ENEMIES];
 
 };

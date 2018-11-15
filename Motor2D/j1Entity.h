@@ -38,6 +38,16 @@ enum class EntityState {
 	HIT,
 	DETECTING,
 	DEAD,
+	JUMP,
+	FALL,
+	LAND,
+	HADOUKEN,
+	PUNCH,
+	IDLE_GHOST,
+	WALKING_GHOST,
+	JUMP_GHOST,
+	FALL_GHOST,
+	LAND_GHOST,
 	UNKNOWN
 };
 
@@ -45,12 +55,13 @@ struct EntityAnim {
 	uint id = 0;
 	uint num_frames = 0;
 	SDL_Rect* frames = nullptr;
-	EntityState  animType;
+	EntityState animType;
+
 	uint FrameCount(pugi::xml_node&);
 };
 
 struct EntityInfo {
-	TileSetEntity tileset; //will only use one for the player
+	TileSetEntity tileset;
 	EntityAnim* animations = nullptr;
 	uint num_animations = 0;
 };
@@ -85,6 +96,7 @@ public:
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void LoadCollider(pugi::xml_node&);
 	virtual void IdAnimToEnum();
+	virtual void Pushback() {};
 
 	virtual bool Update(float dt);
 	virtual void Move(float dt) {}
@@ -92,6 +104,7 @@ public:
 	virtual void CreatePath() {};
 	virtual void OnCollision(Collider* collider);
 	virtual bool CleanUp();
+	void DeleteAnimation();
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};
 	//virtual void DeadAnim();

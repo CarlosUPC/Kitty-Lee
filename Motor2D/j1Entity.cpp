@@ -53,6 +53,21 @@ bool j1Entity::CleanUp()
 	return false;
 }
 
+void j1Entity::DeleteAnimation()
+{
+	//deleting entity animation data already loaded in its corresponding animation variables
+	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (data.animations[i].frames != nullptr) {			//is in PushBack() because when load all animation in its
+			delete[] data.animations[i].frames;				//corresponding variables, that data is useless
+			data.animations[i].frames = nullptr;
+		}
+	}
+	if (data.animations != nullptr) {
+		delete[] data.animations;
+		data.animations = nullptr;
+	}
+}
+
 bool j1Entity::LoadEntityData(const char* file) {
 
 	bool ret = true;
@@ -128,6 +143,10 @@ bool j1Entity::LoadEntityData(const char* file) {
 	//Convert id animations to enum
 	IdAnimToEnum();
 
+	Pushback();
+
+	DeleteAnimation();
+
 	return ret;
 }
 
@@ -150,54 +169,18 @@ void j1Entity::LoadCollider(pugi::xml_node &node)
 	collider.offset.y = node.attribute("y").as_int();
 	collider.width = node.attribute("width").as_uint();
 	collider.height = node.attribute("height").as_uint();
-	if(node.attribute("type").as_string() == "Collider_enemy")
-	collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
+
+	p2SString colliderType = node.attribute("type").as_string();
+	if (colliderType == "Collider_enemy")
+		collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
+	else if(colliderType == "Collider_player")
+		collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
 }
 
 void j1Entity::IdAnimToEnum()
 {
 	data.animations[0].animType = EntityState::IDLE;
 }
-
-//void j1Entity::PushBack() {
-//
-//	for (uint i = 0; i < data.num_animations; ++i) {
-//		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-//			switch (data.animations[i].animType) {
-//
-//			case EntityState::IDLE:
-//				anim_idle.PushBack(data.animations[i].frames[j]);
-//				break;
-//			case EntityState::WALKING:
-//				anim_walking.PushBack(data.animations[i].frames[j]);
-//				break;
-//			case EntityState::HIT:
-//				anim_hit.PushBack(data.animations[i].frames[j]);
-//				break;
-//			case EntityState::DETECTING:
-//				anim_detecting.PushBack(data.animations[i].frames[j]);
-//				break;
-//			case EntityState::DEAD:
-//				anim_death.PushBack(data.animations[i].frames[j]);
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//	}
-//
-//	//deleting player animation data already loaded in its corresponding animation variables
-//	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
-//		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
-//			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
-//			data.animations[i].frames = nullptr;
-//		}
-//	}
-//	if (data.animations != nullptr) {
-//		delete[] data.animations;
-//		data.animations = nullptr;
-//	}
-//}
 
 //Functions to help loading data in xml-------------------------------------
 //Get the rect info of an id of tileset
@@ -220,16 +203,3 @@ uint EntityAnim::FrameCount(pugi::xml_node& n) {
 
 	return num_frames;
 }
-
-/*
-void Enemy::DeadAnim()
-{
-	animation = nullptr;
-}
-
-
-void Enemy::Drop()
-{
-
-}
-*/

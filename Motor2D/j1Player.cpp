@@ -147,63 +147,51 @@ void j1Player::Movement(float dt) {
 }
 void j1Player::PushBack() {
 
-	/*for (uint i = 0; i < data.num_animations; ++i) {
+	for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
 			switch (data.animations[i].animType) {
-			case IDLE:
+			case EntityState::IDLE:
 				anim_idle.PushBack(data.animations[i].frames[j]);
 				break;
-			case WALKING:
+			case EntityState::WALKING:
 				anim_walking.PushBack(data.animations[i].frames[j]);
 				break;
-			case JUMP:
+			case EntityState::JUMP:
 				anim_jump.PushBack(data.animations[i].frames[j]);
 				break;
-			case FALL:
+			case EntityState::FALL:
 				anim_fall.PushBack(data.animations[i].frames[j]);
 				break;
-			case LAND:
+			case EntityState::LAND:
 				anim_land.PushBack(data.animations[i].frames[j]);
 				break;
-			case IDLE_GHOST:
+			case EntityState::IDLE_GHOST:
 				anim_idle_ghost.PushBack(data.animations[i].frames[j]);
 				break;
-			case WALKING_GHOST:
+			case EntityState::WALKING_GHOST:
 				anim_walking_ghost.PushBack(data.animations[i].frames[j]);
 				break;
-			case JUMP_GHOST:
+			case EntityState::JUMP_GHOST:
 				anim_jump_ghost.PushBack(data.animations[i].frames[j]);
 				break;
-			case FALL_GHOST:
+			case EntityState::FALL_GHOST:
 				anim_fall_ghost.PushBack(data.animations[i].frames[j]);
 				break;
-			case LAND_GHOST:
+			case EntityState::LAND_GHOST:
 				anim_land_ghost.PushBack(data.animations[i].frames[j]);
 				break;
-			case DEAD:
+			case EntityState::DEAD:
 				anim_death.PushBack(data.animations[i].frames[j]);
 				break;
 			default:
 				break;
 			}
 		}
-	}*/
+	}
 
 	anim_jump.loop = false;
 	anim_land.loop = false;
 	anim_death.loop = false;
-
-	//deleting player animation data already loaded in its corresponding animation variables
-	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
-		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
-			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
-			data.animations[i].frames = nullptr;
-		}
-	}
-	if (data.animations != nullptr) {
-		delete[] data.animations;
-		data.animations = nullptr;
-	}
 }
 
 void j1Player::AddColliders() {
@@ -250,6 +238,135 @@ void j1Player::SetCollidersPos() {
 	actual_collider = &colliderPlayer_right;
 	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);*/
 
+}
+
+void j1Player::IdAnimToEnum()
+{
+	for (uint i = 0; i < data.num_animations; ++i) {
+		switch (data.animations[i].id) {
+		case 0:
+			data.animations[i].animType = EntityState::IDLE;
+			break;
+		case 16:
+			data.animations[i].animType = EntityState::WALKING;
+			break;
+		case 32:
+			data.animations[i].animType = EntityState::JUMP;
+			break;
+		case 35:
+			data.animations[i].animType = EntityState::FALL;
+			break;
+		case 36:
+			data.animations[i].animType = EntityState::LAND;
+			break;
+		case 64:
+			data.animations[i].animType = EntityState::DEAD;
+			break;
+		case 80:
+			data.animations[i].animType = EntityState::HADOUKEN;
+			break;
+		case 96:
+			data.animations[i].animType = EntityState::PUNCH;
+			break;
+		case 4:
+			data.animations[i].animType = EntityState::IDLE_GHOST;
+			break;
+		case 24:
+			data.animations[i].animType = EntityState::WALKING_GHOST;
+			break;
+		case 40:
+			data.animations[i].animType = EntityState::JUMP_GHOST;
+			break;
+		case 43:
+			data.animations[i].animType = EntityState::FALL_GHOST;
+			break;
+		case 44:
+			data.animations[i].animType = EntityState::LAND_GHOST;
+			break;
+		default:
+			data.animations[i].animType = EntityState::UNKNOWN;
+			break;
+		}
+	}
+}
+
+void j1Player::LoadProperties(pugi::xml_node &node)
+{
+	p2SString nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
+
+		if (nameIdentificator == "animationSpeed")
+			animationSpeed = node.attribute("value").as_float();
+
+		else if (nameIdentificator == "incrementSpeedX")
+			incrementSpeedX = node.attribute("value").as_float();
+
+		else if (nameIdentificator == "jumpSpeed")
+			jumpSpeed = node.attribute("value").as_float();
+
+		else if (nameIdentificator == "maxSpeedX")
+			maxSpeedX = node.attribute("value").as_float();
+
+		//Load audio fx data
+		else if (nameIdentificator == "walkingSound")
+			walkingSound = node.attribute("value").as_string();
+
+		else if (nameIdentificator == "jumpSound")
+			jumpingSound = node.attribute("value").as_string();
+
+		else if (nameIdentificator == "crashSound")
+			crashingSound = node.attribute("value").as_string();
+
+		node = node.next_sibling();
+	}
+}
+
+void j1Player::LoadCollider(pugi::xml_node &node)
+{
+	p2SString nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
+
+		if (nameIdentificator == "Collider") {
+			collider.offset.x = node.attribute("x").as_int();
+			collider.offset.y = node.attribute("y").as_int();
+			collider.width = node.attribute("width").as_uint();
+			collider.height = node.attribute("height").as_uint();
+			collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
+		}
+
+		else if (nameIdentificator == "ColliderDown") {
+			colliderPlayer_down.offset.x = node.attribute("x").as_int();
+			colliderPlayer_down.offset.y = node.attribute("y").as_int();
+			colliderPlayer_down.width = node.attribute("width").as_uint();
+			colliderPlayer_down.height = node.attribute("height").as_uint();
+			colliderPlayer_down.type = COLLIDER_TYPE::COLLIDER_PLAYER_DOWN;
+		}
+		else if (nameIdentificator == "ColliderLeft") {
+			colliderPlayer_left.offset.x = node.attribute("x").as_int();
+			colliderPlayer_left.offset.y = node.attribute("y").as_int();
+			colliderPlayer_left.width = node.attribute("width").as_uint();
+			colliderPlayer_left.height = node.attribute("height").as_uint();
+			colliderPlayer_left.type = COLLIDER_TYPE::COLLIDER_PLAYER_LEFT;
+		}
+		else if (nameIdentificator == "ColliderRight") {
+			colliderPlayer_right.offset.x = node.attribute("x").as_int();
+			colliderPlayer_right.offset.y = node.attribute("y").as_int();
+			colliderPlayer_right.width = node.attribute("width").as_uint();
+			colliderPlayer_right.height = node.attribute("height").as_uint();
+			colliderPlayer_right.type = COLLIDER_TYPE::COLLIDER_PLAYER_RIGHT;
+		}
+		else if (nameIdentificator == "ColliderUp") {
+			colliderPlayer_up.offset.x = node.attribute("x").as_int();
+			colliderPlayer_up.offset.y = node.attribute("y").as_int();
+			colliderPlayer_up.width = node.attribute("width").as_uint();
+			colliderPlayer_up.height = node.attribute("height").as_uint();
+			colliderPlayer_up.type = COLLIDER_TYPE::COLLIDER_PLAYER_UP;
+		}
+
+		node = node.next_sibling();
+	}
 }
 
 // Load / Save
@@ -401,26 +518,26 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if (air)
 				air = false;
 			if (c1->rect.y >= c2->rect.y)
-				position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
+				position.y = c2->rect.y - collider.height - collider.offset.y;
 		}
 
 		else if (c1 == colliderPlayer_up.collider) {
 			speed.y = 0.0f;
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
-				position.y = c2->rect.y + c2->rect.h - colliderPlayer.offset.y + c1->rect.h;
+				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
 		}
 		else if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
+				position.x = c2->rect.x - collider.width - collider.offset.x;
 
 		}
 		break;
@@ -429,14 +546,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - colliderPlayer.width - colliderPlayer.offset.x;
+				position.x = c2->rect.x - collider.width - collider.offset.x;
 
 		}
 		break;
@@ -448,7 +565,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)
-					position.y = c2->rect.y - colliderPlayer.height - colliderPlayer.offset.y;
+					position.y = c2->rect.y - collider.height - collider.offset.y;
 			}
 			else if (c2->rect.y + c2->rect.h * 0.5f < c1->rect.y && platformOverstep) {
 				platformOverstep = false;
@@ -472,8 +589,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 //Load all initial information of player saved in a xml file
 bool j1Player::LoadPlayer(const char* file) {
-	/*bool ret = true;
-
+	bool ret = true;
+	/*
 	pugi::xml_parse_result result = player_file.load_file(file);
 
 	if (result == NULL)
@@ -613,51 +730,7 @@ bool j1Player::LoadPlayer(const char* file) {
 
 	
 	//Convert id animations to enum
-	/*for (uint i = 0; i < data.num_animations; ++i) {
-		switch (data.animations[i].id) {
-		case 0:
-			data.animations[i].animType = PlayerState::IDLE;
-			break;
-		case 16:
-			data.animations[i].animType = PlayerState::WALKING;
-			break;
-		case 32:
-			data.animations[i].animType = PlayerState::JUMP;
-			break;
-		case 35:
-			data.animations[i].animType = PlayerState::FALL;
-			break;
-		case 36:
-			data.animations[i].animType = PlayerState::LAND;
-			break;
-		case 64:
-			data.animations[i].animType = PlayerState::DEAD;
-			break;
-		case 80:
-			data.animations[i].animType = PlayerState::HADOUKEN;
-			break;
-		case 96:
-			data.animations[i].animType = PlayerState::PUNCH;
-			break;
-		case 4:
-			data.animations[i].animType = PlayerState::IDLE_GHOST;
-			break;
-		case 24:
-			data.animations[i].animType = PlayerState::WALKING_GHOST;
-			break;
-		case 40:
-			data.animations[i].animType = PlayerState::JUMP_GHOST;
-			break;
-		case 43:
-			data.animations[i].animType = PlayerState::FALL_GHOST;
-			break;
-		case 44:
-			data.animations[i].animType = PlayerState::LAND_GHOST;
-			break;
-		default:
-			data.animations[i].animType = PlayerState::UNKNOWN;
-			break;
-		}
+	/*
 	}*/
 
 	return true;

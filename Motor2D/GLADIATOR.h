@@ -6,6 +6,11 @@
 
 class SDL_Texture;
 
+enum PathState {
+	G_DEFAULT_PATH,
+	G_CHASE_PATH
+};
+
 enum GladiatorState {
 	G_IDLE,
 	G_WALKING,
@@ -43,11 +48,14 @@ private:
 	void DefaultPath(float dt);
 	void CreatePathfinding(iPoint destination);
 	void TrackingPathfinding(float dt);
+	bool DetectPlayer();
+	void ChasePlayer(float dt);
 	
 	
 private:
 	GladiatorAnims gAnim;
 	GladiatorState gState;
+	PathState pState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 	float speedAnim;
 
@@ -55,13 +63,22 @@ private:
 
 
 	bool pathfinding = false;
+
 	bool create_dpath = true;
 	bool do_dpath = false;
+
+	bool create_chase_path = true;
+	bool do_chase_path = false;
 
 	int dest = 0;
 	int index = 0;
 
 	fPoint lastPosition = {128, 256};
+
+	Collider* playerPathfinding;
+	Collider* enemyPathfinding;
+
+	iPoint playerPos;
 	
 };
 

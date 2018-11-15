@@ -109,7 +109,7 @@ private:
 	void AddColliders();
 	void Movement(float dt);
 	void CheckState();
-	void Actions();
+	void ChangeState();
 	void SetCollidersPos();
 
 public:

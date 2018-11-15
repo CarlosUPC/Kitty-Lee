@@ -84,12 +84,12 @@ bool j1Player::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		App->collider->GhostMode(ghost);
 		ghost = !ghost;
-		Actions();
+		ChangeState();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
 		death = !death;
 		state = DEAD;
-		Actions();
+		ChangeState();
 		
 	}
 	//Player collider update
@@ -344,7 +344,7 @@ void j1Player::CheckState() {
 	}
 
 	if (prevState != state)//only will change animation when change state
-		Actions();
+		ChangeState();
 
 	if (speed.x > 0 && flip != SDL_FLIP_NONE)
 		flip = SDL_FLIP_NONE;
@@ -352,7 +352,7 @@ void j1Player::CheckState() {
 		flip = SDL_FLIP_HORIZONTAL;
 }
 
-void j1Player::Actions() {
+void j1Player::ChangeState() {
 
 	switch (state)
 	{

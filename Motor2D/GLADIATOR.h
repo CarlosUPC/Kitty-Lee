@@ -42,7 +42,8 @@ private:
 	void DefaultPath(float dt);
 	void CreatePathfinding(iPoint destination);
 	void TrackingPathfinding(float dt);
-	void DetectPlayer();
+	bool DetectPlayer();
+	void ChasePlayer(float dt);
 	
 	
 private:
@@ -55,8 +56,12 @@ private:
 
 
 	bool pathfinding = false;
+
 	bool create_dpath = true;
 	bool do_dpath = false;
+
+	bool create_chase_path = true;
+	bool do_chase_path = false;
 
 	int dest = 0;
 	int index = 0;

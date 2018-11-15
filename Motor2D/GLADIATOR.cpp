@@ -64,7 +64,9 @@ void Gladiator::Move(float dt)
 	if (!pathfinding)
 		DefaultPath(dt);
 
-	DetectPlayer();
+	if(DetectPlayer())
+		ChasePlayer(dt);
+
 	StatesMachine();
 	
 }
@@ -217,15 +219,41 @@ void Gladiator::TrackingPathfinding(float dt) {
 			
 }
 
-void Gladiator::DetectPlayer() {
+bool Gladiator::DetectPlayer() {
 
+	bool detected = false;
 	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
 	SDL_Rect player_pos = { (int)App->player->position.x, (int)App->player->position.y, 100, 100 };
 	
-
+	
 	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
 		pathfinding = true;
-		gState = GladiatorState::G_IDLE;
+		detected = true;
 	}
 
+	else {
+		pathfinding = false;
+		detected = false;
+		create_chase_path = true;
+	}
+
+	return detected;
+	
+}
+
+void Gladiator::ChasePlayer(float dt) {
+	
+	if (create_chase_path) {
+		iPoint playerPos;
+		playerPos.x = (int)App->player->position.x;
+		playerPos.y = (int)App->player->position.y;
+
+		CreatePathfinding(playerPos);
+		create_chase_path = false;
+		do_chase_path = true;
+
+	}
+
+	if (do_chase_path)
+		TrackingPathfinding(dt);
 }

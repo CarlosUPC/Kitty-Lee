@@ -14,8 +14,6 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 
-#include <cmath>
-
 
 j1Player::j1Player() {
 	name.create("player");
@@ -106,21 +104,14 @@ bool j1Player::Update(float dt)
 
 // Called each loop iteration
 bool j1Player::PostUpdate()
-{
-
-	/*CheckState();
-
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);*/
-	
+{	
 	return true;
 }
 
 // Called before quitting
 bool j1Player::CleanUp()
 {
-
-	App->tex->UnLoad(data.tileset.texture);
-	return true;
+	return App->tex->UnLoad(data.tileset.texture);
 }
 
 void j1Player::Movement(float dt) {
@@ -157,7 +148,7 @@ void j1Player::Movement(float dt) {
 
 
 
-	position += speed * ceil(dt);
+	position += speed * dt;
 }
 void j1Player::PushBack() {
 

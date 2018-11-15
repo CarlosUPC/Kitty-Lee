@@ -13,10 +13,10 @@
  <tile id="0">
   <objectgroup draworder="index">
    <object id="4" name="Collider" type="COLLIDER_PLAYER" x="9" y="2" width="14" height="30"/>
-   <object id="7" name="ColliderDown" type="COLLIDER_PLAYER_DOWN" x="13" y="28" width="6" height="4"/>
-   <object id="8" name="ColliderLeft" type="COLLIDER_PLAYER_LEFT" x="9" y="13" width="5" height="8"/>
-   <object id="9" name="ColliderRight" type="COLLIDER_PLAYER_RIGHT" x="18" y="13" width="5" height="8"/>
-   <object id="10" name="ColliderUp" type="COLLIDER_PLAYER_UP" x="13" y="2" width="7" height="5"/>
+   <object id="7" name="ColliderDown" type="COLLIDER_PLAYER_DOWN" x="14" y="31" width="4" height="1"/>
+   <object id="8" name="ColliderLeft" type="COLLIDER_PLAYER_LEFT" x="9" y="12" width="1" height="11"/>
+   <object id="9" name="ColliderRight" type="COLLIDER_PLAYER_RIGHT" x="22" y="12" width="1" height="11"/>
+   <object id="10" name="ColliderUp" type="COLLIDER_PLAYER_UP" x="15" y="2" width="1" height="1"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="200"/>

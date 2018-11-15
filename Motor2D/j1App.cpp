@@ -271,7 +271,7 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item->data->Update(ceil(dt));
 	}
 
 	return ret;

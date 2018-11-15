@@ -71,7 +71,7 @@ void Gladiator::Move(float dt)
 	position.y = float(original_pos.y + path_pos.y);*/
 }
 
-void Gladiator::Draw()
+void Gladiator::Draw(float dt)
 {
 
 	if (collider != nullptr)

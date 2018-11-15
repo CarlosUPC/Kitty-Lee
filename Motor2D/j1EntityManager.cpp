@@ -7,7 +7,7 @@
 #include "j1Textures.h"
 #include "j1Scene.h"
 #include "j1Entity.h"
-#include "Gladiator.h"
+#include "GLADIATOR.h"
 
 //Include all enemies
 

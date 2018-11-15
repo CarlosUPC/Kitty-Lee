@@ -112,6 +112,8 @@ private:
 	void Actions();
 	void SetCollidersPos();
 
+	float current_dt;
+
 public:
 
 	PlayerInfo data;

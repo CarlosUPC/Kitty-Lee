@@ -79,6 +79,8 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
+	current_dt = dt;
+
 	Movement(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
@@ -95,16 +97,17 @@ bool j1Player::Update(float dt)
 	//Player collider update
 	SetCollidersPos();
 
-	CheckState();
-
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
-
 	return true;
 }
 
 // Called each loop iteration
 bool j1Player::PostUpdate()
 {	
+	CheckState();
+
+	LOG("Pero en verdad estoy en pos.x = %f", position.x);
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(current_dt), 1.0F, flip);
+
 	return true;
 }
 
@@ -414,11 +417,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
 				position.y = c2->rect.y + c2->rect.h - colliderPlayer.offset.y + c1->rect.h;
 		}
-		else if (c1 == colliderPlayer_left.collider) {
+		if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - colliderPlayer.offset.x;
+			LOG("He colisionado y estoy en pos.x = %f", position.x);
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {

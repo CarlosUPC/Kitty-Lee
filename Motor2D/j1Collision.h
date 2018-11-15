@@ -49,7 +49,7 @@ public:
 	~j1Colliders();
 	bool Awake(pugi::xml_node&);
 	bool PreUpdate();
-	bool Update(float dt);
+	bool PostUpdate();
 	//update_status PostUpdate();
 	bool CleanUp();
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);

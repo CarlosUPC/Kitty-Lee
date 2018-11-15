@@ -15,8 +15,7 @@
 struct SDL_Texture;
 struct Collider;
 
-
-struct TileSetEnemy {
+struct TileSetEntity {
 
 	SDL_Rect GetTileRect(int id) const;
 
@@ -33,26 +32,26 @@ struct TileSetEnemy {
 	uint height = 0;
 };
 
-enum EnemyState {
-	E_IDLE = 0,
-	E_WALKING,
-	E_HIT,
-	E_DETECTING,
-	E_DEAD,
-	E_UNKNOWN
+enum class EntityState {
+	IDLE = 0,
+	WALKING,
+	HIT,
+	DETECTING,
+	DEAD,
+	UNKNOWN
 };
 
-struct EnemyAnim {
+struct EntityAnim {
 	uint id = 0;
 	uint num_frames = 0;
 	SDL_Rect* frames = nullptr;
-	EnemyState  animType;
+	EntityState  animType;
 	uint FrameCount(pugi::xml_node&);
 };
 
-struct EnemyInfo {
-	TileSetEnemy tileset; //will only use one for the player
-	EnemyAnim* animations = nullptr;
+struct EntityInfo {
+	TileSetEntity tileset; //will only use one for the player
+	EntityAnim* animations = nullptr;
 	uint num_animations = 0;
 };
 
@@ -60,52 +59,52 @@ struct EnemyInfo {
 
 class j1Entity
 {
-protected:
-
-	float e_animationSpeed;
-	
-	Animation* e_animation = nullptr;
-	const p2DynArray<iPoint>* entityPath;
-	uint entityPathSize = 0;
-
-	Animation e_anim_idle;
-	Animation e_anim_walking;
-	Animation e_anim_hit;
-	Animation e_anim_detecting;
-	Animation e_anim_death;
-	
-	void PushBack();
 public:
 
-	Collider* collider = nullptr;
-	fPoint position;
-	fPoint original_pos;
-	p2SString enemyTSX;
-	SDL_Texture* sprite = nullptr;
-
-	pugi::xml_document	enemy_file;
-
-	EnemyInfo data;
-
+	enum class Types
+	{
+		PLAYER,
+		GLADIATOR,
+		UNKNOWN
+	};
 
 public:
-	j1Entity(int x, int y, p2SString tsx, int type);
+
+	j1Entity(Types type);
 	virtual ~j1Entity();
 
 	const Collider* GetCollider() const;
 
-	bool LoadEnemy(const char*);
-	
-	virtual void Move(float dt) {};
-	virtual void Draw(float dt) {};
+	bool LoadEntityData(const char*);
+
+	virtual bool Update(float dt);
+	virtual void Move(float dt) {}
+	virtual void Draw(float dt);
+	virtual void CreatePath() {};
 	virtual void OnCollision(Collider* collider);
+	virtual bool CleanUp();
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};
 	//virtual void DeadAnim();
-	//virtual void Drop();
-
-private:
+	//virtual void Drop();	
 	
-};
 
+	fPoint position;
+
+	Types type;
+
+	Collider* collider = nullptr;
+
+	EntityInfo data;
+
+	pugi::xml_document	entity_file;
+	
+	Animation* current_animation = nullptr;
+	float animationSpeed;
+
+	const p2DynArray<iPoint>* entityPath;
+	uint entityPathSize = 0;
+
+	//void PushBack();
+};
 #endif // __ENTITY_H__

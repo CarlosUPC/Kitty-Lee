@@ -545,26 +545,26 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 }
 
 
-void j1Map::InitialEntityPosition() {
-
-	
-	p2List_item<ColliderObject*>* ente = data.colliders.start;
-
-	while (ente != NULL)
-	{
-		if (ente->data->name == "Player") {
-			queue[ENTITY_TYPES::PLAYER].initialPos.x = ente->data->coll_x;
-			queue[ENTITY_TYPES::PLAYER].initialPos.y = ente->data->coll_y;
-		}
-
-		if (ente->data->name == "Gladiator") {
-			queue[ENTITY_TYPES::GLADIATOR].initialPos.x = ente->data->coll_x;
-			queue[ENTITY_TYPES::GLADIATOR].initialPos.y = ente->data->coll_y;
-		}
-		
-		ente = ente->next;
-	}
-}
+//void j1Map::InitialEntityPosition() {
+//
+//	
+//	p2List_item<ColliderObject*>* ente = data.colliders.start;
+//
+//	while (ente != NULL)
+//	{
+//		if (ente->data->name == "Player") {
+//			queue[ENTITY_TYPES::PLAYER].initialPos.x = ente->data->coll_x;
+//			queue[ENTITY_TYPES::PLAYER].initialPos.y = ente->data->coll_y;
+//		}
+//
+//		if (ente->data->name == "Gladiator") {
+//			queue[ENTITY_TYPES::GLADIATOR].initialPos.x = ente->data->coll_x;
+//			queue[ENTITY_TYPES::GLADIATOR].initialPos.y = ente->data->coll_y;
+//		}
+//		
+//		ente = ente->next;
+//	}
+//}
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {

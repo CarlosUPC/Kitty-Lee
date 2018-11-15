@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="54">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="55">
  <properties>
   <property name="gravity" type="float" value="0.07"/>
   <property name="maxAccelerationY" type="float" value="0.4"/>
@@ -15,15 +15,6 @@
   <image source="sheet.png" width="272" height="128"/>
  </tileset>
  <tileset firstgid="1072" name="path" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="path.png" width="32" height="16"/>
- </tileset>
- <tileset firstgid="1074" name="meta2" tilewidth="64" tileheight="64" tilecount="0" columns="2">
-  <image source="maps/meta2.png" width="128" height="64"/>
- </tileset>
- <tileset firstgid="1074" name="meta2" tilewidth="64" tileheight="64" tilecount="0" columns="2">
-  <image source="../../../Dev_class2_handout/Game/maps/meta2.png" width="128" height="64"/>
- </tileset>
- <tileset firstgid="1074" name="path" tilewidth="16" tileheight="16" tilecount="2" columns="2">
   <image source="path.png" width="32" height="16"/>
  </tileset>
  <layer name="sky" width="58" height="25">
@@ -5852,7 +5843,8 @@
   <object id="1" name="Player" x="80" y="256" width="1" height="1"/>
  </objectgroup>
  <objectgroup name="Enemy Position">
-  <object id="53" name="Gladiator" x="352" y="272" width="1" height="1"/>
+  <object id="53" name="Gladiator" x="244" y="256" width="1" height="1"/>
+  <object id="54" name="Gladiator" x="352.5" y="272.5" width="1" height="1"/>
  </objectgroup>
  <objectgroup name="Colliders">
   <properties>

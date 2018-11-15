@@ -1,23 +1,15 @@
-#ifndef __J1ENEMIES_H__
-#define __J1ENEMIES_H__
+#ifndef __J1ENTITIES_H__
+#define __J1ENTITIES_H__
 
 #include "j1Module.h"
+#include "j1Entity.h"
+#include "p2DynArray.h"
 
-#define MAX_ENEMIES 100
+#define MAX_ENEMIES 10
 
-
-enum ENTITY_TYPES
+struct EntityData
 {
-	NO_TYPE,
-	PLAYER,
-	GLADIATOR
-};
-
-class j1Entity;
-
-struct EnemyData
-{
-	ENTITY_TYPES type = ENTITY_TYPES::NO_TYPE;
+	j1Entity::Types type = j1Entity::Types::UNKNOWN;
 	int x, y, path_type;
 	p2SString tsx_file;
 };
@@ -33,32 +25,29 @@ public:
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
+	bool UpdateAll(float dt, bool do_logic);
 	bool PostUpdate();
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
-	bool AddEnemy(ENTITY_TYPES type, int x, int y, p2SString tsx_file, int path_type = 0);
-
-public:
-
-	
-	j1Entity* enemies[MAX_ENEMIES];
-
-	p2SString tsx1;
-	p2SString tsx2;
+	j1Entity* CreateEntity(j1Entity::Types type);
+	void DestroyEntity(j1Entity* entity);
 
 private:
 
-	void SpawnEnemy(const EnemyData& info);
-	SDL_Texture* sprites;
+	//void SpawnEnemy(const EntityData& info);
+	//SDL_Texture* sprites;
 	//SDL_Texture* gladiatorSprite = nullptr;
 
 	
 
 private:
 
-	EnemyData queue[MAX_ENEMIES];
-
+	bool do_logic = true;
+	uint32 accumulated_time = 0;
+	uint32 update_ms_cycle = 500;
+	p2DynArray<j1Entity*> entities;
+	EntityData queue[MAX_ENEMIES];
 
 };
 

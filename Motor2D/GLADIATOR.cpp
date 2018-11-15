@@ -1,4 +1,4 @@
-#include "Gladiator.h"
+#include "GLADIATOR.h"
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
@@ -8,12 +8,11 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 
-Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx, type)
+Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 {
-	
-	
+
 	//Load Enemy data
-	LoadEnemy(tsx.GetString());
+	/*LoadEntityData(tsx.GetString());
 
 	//Load Enemy Anims
 	PushBack();
@@ -45,7 +44,7 @@ Gladiator::Gladiator(int x, int y, p2SString tsx ,int type) : j1Entity(x, y, tsx
 	//create_dpath = true;
 	entityPath = nullptr;
 
-	//original_pos = { (float)x,(float)y };
+	//original_pos = { (float)x,(float)y };*/
 
 	
 	
@@ -58,26 +57,27 @@ Gladiator::~Gladiator()
 
 void Gladiator::Move(float dt)
 {
-	SetAnimationsSpeed(dt, speedAnim);
+	/*SetAnimationsSpeed(dt, speedAnim);
 
 	if (!pathfinding)
 		DefaultPath(dt);
 
 
-	StatesMachine();
+	StatesMachine();*/
 	
 }
 
 void Gladiator::Draw(float dt)
 {
 
-	if (collider != nullptr)
+	/*if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 
 	if (e_animation != nullptr)
 	{
 		App->render->Blit(sprite, (int)position.x, (int)position.y, &(e_animation->GetCurrentFrame(1)), 1.0F, flip);
-	}
+	}*/
+	App->render->Blit(data.tileset.texture, position.x, position.y);
 
 }
 
@@ -104,7 +104,7 @@ void Gladiator::SetAnimationsSpeed(float dt, float speed) {
 
 void Gladiator::StatesMachine() {
 
-	
+	/*
 	switch (gState) {
 
 	case GladiatorState::G_IDLE:
@@ -151,11 +151,11 @@ void Gladiator::StatesMachine() {
 
 	}
 
-	lastPosition = position;
+	lastPosition = position;*/
 }
 
 void Gladiator::DefaultPath(float dt) {
-
+	/*
 	if (create_dpath) {
 		iPoint to_go;
 		to_go.x = (int)position.x - 50;
@@ -168,7 +168,7 @@ void Gladiator::DefaultPath(float dt) {
 	
 	if (do_dpath) {
 		TrackingPathfinding(dt);
-	}
+	}*/
 }
 
 void Gladiator::CreatePathfinding(iPoint destination) {

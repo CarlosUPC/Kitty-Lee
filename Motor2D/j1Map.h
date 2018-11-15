@@ -139,7 +139,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 	
 	
-	void InitialEntityPosition();
+	//void InitialEntityPosition();
 
 	bool CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const;
 	

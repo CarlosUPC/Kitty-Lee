@@ -15,19 +15,12 @@
 #include "j1EntityManager.h"
 
 
-j1Player::j1Player() {
-	name.create("player");
-}
+j1Player::j1Player() : j1Entity(Types::PLAYER) {}
 
 
 
 j1Player::~j1Player()
 {
-}
-
-void j1Player::Init()
-{
-	active = true;
 }
 
 // Called before render is available
@@ -56,7 +49,7 @@ bool j1Player::Start()
 	//This method returns player object's position
 	//position = App->map->GetInitialPosition();
 	
-	position = App->map->queue[PLAYER].initialPos;
+	//position = App->map->queue[PLAYER].initialPos;
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
 	AddColliders();
@@ -152,7 +145,7 @@ void j1Player::Movement(float dt) {
 }
 void j1Player::PushBack() {
 
-	for (uint i = 0; i < data.num_animations; ++i) {
+	/*for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
 			switch (data.animations[i].animType) {
 			case IDLE:
@@ -192,7 +185,7 @@ void j1Player::PushBack() {
 				break;
 			}
 		}
-	}
+	}*/
 
 	anim_jump.loop = false;
 	anim_land.loop = false;
@@ -215,7 +208,7 @@ void j1Player::AddColliders() {
 	SDL_Rect r;
 	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
 	
-	actual_collider = &colliderPlayer;
+	/*actual_collider = &colliderPlayer;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
@@ -233,13 +226,13 @@ void j1Player::AddColliders() {
 
 	actual_collider = &colliderPlayer_right;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);*/
 
 }
 
 void j1Player::SetCollidersPos() {
 	COLLIDER_INFO* actual_collider;
-
+	/*
 	actual_collider = &colliderPlayer;
 	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
@@ -253,7 +246,7 @@ void j1Player::SetCollidersPos() {
 	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
 
 	actual_collider = &colliderPlayer_right;
-	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);
+	actual_collider->collider->SetPos((int)position.x + actual_collider->offset.x, (int)position.y + actual_collider->offset.y);*/
 
 }
 
@@ -477,7 +470,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 //Load all initial information of player saved in a xml file
 bool j1Player::LoadPlayer(const char* file) {
-	bool ret = true;
+	/*bool ret = true;
 
 	pugi::xml_parse_result result = player_file.load_file(file);
 
@@ -614,11 +607,11 @@ bool j1Player::LoadPlayer(const char* file) {
 		}
 
 		node = node.next_sibling();
-	}
+	}*/
 
 	
 	//Convert id animations to enum
-	for (uint i = 0; i < data.num_animations; ++i) {
+	/*for (uint i = 0; i < data.num_animations; ++i) {
 		switch (data.animations[i].id) {
 		case 0:
 			data.animations[i].animType = PlayerState::IDLE;
@@ -663,30 +656,7 @@ bool j1Player::LoadPlayer(const char* file) {
 			data.animations[i].animType = PlayerState::UNKNOWN;
 			break;
 		}
-	}
+	}*/
 
-	return ret;
+	return true;
 }
-
-//Functions to help loading data in xml-------------------------------------
-//Get the rect info of an id of tileset
-SDL_Rect TileSetPlayer::GetTileRect(int id) const {
-	SDL_Rect rect;
-	rect.w = tilewidth;
-	rect.h = tileheight;
-	rect.x = margin + ((rect.w + spacing) * (id % columns));
-	rect.y = margin + ((rect.h + spacing) * (id / columns));
-	return rect;
-}
-
-//Return how many frames are in one animation
-uint Anim::FrameCount(pugi::xml_node& n) {
-	num_frames = 0;
-	pugi::xml_node node = n;
-	for (; node != NULL; node = node.next_sibling("frame")) {
-		num_frames++;
-	}
-
-	return num_frames;
-}
-

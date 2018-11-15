@@ -27,7 +27,7 @@ class Gladiator : public j1Entity
 {
 public:
 
-	Gladiator(int x, int y, p2SString tsx, int type);
+	Gladiator();
 	~Gladiator();
 
 	void Move(float dt);

@@ -1,7 +1,7 @@
 #ifndef __j1PLAYER_H__
 #define __j1PLAYER_H__
 
-#include "j1Module.h"	
+#include "j1Entity.h"
 #include "p2Point.h"
 #include "Animation.h"
 #include "p2List.h"
@@ -10,22 +10,6 @@
 
 
 struct SDL_Texture;
-
-struct TileSetPlayer {
-	SDL_Rect GetTileRect(int id) const;
-
-	p2SString name;
-	uint tilewidth = 0;
-	uint tileheight = 0;
-	uint spacing = 0;
-	uint margin = 0;
-	uint tilecount = 0;
-	uint columns = 0;
-	p2SString imagePath;
-	SDL_Texture* texture = nullptr;
-	uint width = 0;
-	uint height = 0;
-};
 
 enum PlayerState {
 	IDLE = 0,
@@ -52,21 +36,7 @@ struct COLLIDER_INFO {
 	COLLIDER_TYPE type;
 };
 
-struct Anim {
-	uint id = 0;
-	uint num_frames = 0;
-	SDL_Rect* frames = nullptr;
-	PlayerState  animType;
-	uint FrameCount(pugi::xml_node&);
-};
-
-struct PlayerInfo {
-	TileSetPlayer tileset; //will only use one for the player
-	Anim* animations = nullptr;
-	uint num_animations = 0;
-};
-
-class j1Player : public j1Module
+class j1Player : public j1Entity
 {	
 
 public:
@@ -75,7 +45,7 @@ public:
 
 	~j1Player();
 
-	void Init();
+	//void Init();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -113,8 +83,6 @@ private:
 	void SetCollidersPos();
 
 public:
-
-	PlayerInfo data;
 
 	PlayerState state = IDLE;
 

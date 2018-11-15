@@ -48,7 +48,7 @@ bool j1FadeToBlack::Update(float dt)
 				//Switch to level 2
 				num_level = 2;
 				SwitchingLevel(App->scene->lvl2.GetString());
-				App->player->position = App->map->queue[PLAYER].initialPos;
+				//App->player->position = App->map->queue[PLAYER].initialPos;
 				App->scene->stg = LEVEL_2;
 				App->render->camera = App->render->CameraInitPos();
 
@@ -58,7 +58,7 @@ bool j1FadeToBlack::Update(float dt)
 				//Switch to level 1
 				num_level = 1;
 				SwitchingLevel(App->scene->lvl1.GetString());
-				App->player->position = App->map->queue[PLAYER].initialPos;
+				//App->player->position = App->map->queue[PLAYER].initialPos;
 				App->scene->stg = LEVEL_1;
 				App->render->camera = App->render->CameraInitPos();
 
@@ -128,7 +128,7 @@ bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 	App->map->CleanUp();
 	App->map->Load(tmx_map);
 	App->map->AddCollidersMap();
-	App->map->InitialEntityPosition();
+	//App->map->InitialEntityPosition();
 	return ret;
 }
 

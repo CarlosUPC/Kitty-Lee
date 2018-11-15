@@ -18,10 +18,8 @@
 #include <cmath>
 
 
-j1Entity::j1Entity(int x, int y, p2SString tsx, int type) : position(x, y), enemyTSX(tsx)
-{
-
-}
+j1Entity::j1Entity(Types type) : type(type) 
+{}
 
 j1Entity::~j1Entity()
 {
@@ -36,15 +34,30 @@ const Collider* j1Entity::GetCollider() const
 
 void j1Entity::OnCollision(Collider* collider)
 {
-
-
 }
 
-bool j1Entity::LoadEnemy(const char* file) {
+bool j1Entity::Update(float dt) {
+	Move(dt);
+
+	Draw(dt);
+
+	return true;
+}
+
+void j1Entity::Draw(float dt) {
+	App->render->Blit(data.tileset.texture, position.x, position.y);
+}
+
+bool j1Entity::CleanUp()
+{
+	return false;
+}
+
+bool j1Entity::LoadEntityData(const char* file) {
 
 	bool ret = true;
 
-	pugi::xml_parse_result result = enemy_file.load_file(file);
+	pugi::xml_parse_result result = entity_file.load_file(file);
 
 	if (result == NULL)
 	{
@@ -53,7 +66,7 @@ bool j1Entity::LoadEnemy(const char* file) {
 	}
 
 	//fill tileset info
-	pugi::xml_node node = enemy_file.child("tileset");
+	pugi::xml_node node = entity_file.child("tileset");
 
 	data.tileset.name.create(node.attribute("name").as_string());
 	data.tileset.tilewidth = node.attribute("tilewidth").as_uint();
@@ -75,10 +88,10 @@ bool j1Entity::LoadEnemy(const char* file) {
 	}
 
 	//reserve memory for all animations
-	data.animations = new EnemyAnim[data.num_animations];
+	data.animations = new EntityAnim[data.num_animations];
 
 	//count how many frames for each animation, assign memory for those frames and set id frame start
-	node = enemy_file.child("tileset").child("tile");
+	node = entity_file.child("tileset").child("tile");
 	for (uint i = 0; i < data.num_animations; ++i) {
 		data.animations[i].FrameCount(node.child("animation").child("frame"));
 		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
@@ -87,7 +100,7 @@ bool j1Entity::LoadEnemy(const char* file) {
 	}
 
 	//fill frame array with current information
-	node = enemy_file.child("tileset").child("tile");
+	node = entity_file.child("tileset").child("tile");
 	pugi::xml_node node_frame;
 	for (uint i = 0; i < data.num_animations; ++i) {
 		node_frame = node.child("animation").child("frame");
@@ -108,13 +121,13 @@ bool j1Entity::LoadEnemy(const char* file) {
 	}
 
 	//Load data
-	node = enemy_file.child("tileset").child("properties").child("property");
+	node = entity_file.child("tileset").child("properties").child("property");
 	p2SString nameIdentificator;
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 
 		if (nameIdentificator == "AnimationSpeed")
-			e_animationSpeed = node.attribute("value").as_float();
+			animationSpeed = node.attribute("value").as_float();
 
 		node = node.next_sibling();
 	}
@@ -123,22 +136,22 @@ bool j1Entity::LoadEnemy(const char* file) {
 	for (uint i = 0; i < data.num_animations; ++i) {
 		switch (data.animations[i].id) {
 		case 0:
-			data.animations[i].animType = EnemyState::E_IDLE;
+			data.animations[i].animType = EntityState::IDLE;
 			break;
 		case 15:
-			data.animations[i].animType = EnemyState::E_WALKING;
+			data.animations[i].animType = EntityState::WALKING;
 			break;
 		case 16:
-			data.animations[i].animType = EnemyState::E_HIT;
+			data.animations[i].animType = EntityState::HIT;
 			break;
 		case 24:
-			data.animations[i].animType = EnemyState::E_DETECTING;
+			data.animations[i].animType = EntityState::DETECTING;
 			break;
 		case 32:
-			data.animations[i].animType = EnemyState::E_DEAD;
+			data.animations[i].animType = EntityState::DEAD;
 			break;
 		default:
-			data.animations[i].animType = EnemyState::E_UNKNOWN;
+			data.animations[i].animType = EntityState::UNKNOWN;
 			break;
 		}
 	}
@@ -146,49 +159,49 @@ bool j1Entity::LoadEnemy(const char* file) {
 	return ret;
 }
 
-void j1Entity::PushBack() {
-
-	for (uint i = 0; i < data.num_animations; ++i) {
-		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
-			switch (data.animations[i].animType) {
-
-			case E_IDLE:
-				e_anim_idle.PushBack(data.animations[i].frames[j]);
-				break;
-			case E_WALKING:
-				e_anim_walking.PushBack(data.animations[i].frames[j]);
-				break;
-			case E_HIT:
-				e_anim_hit.PushBack(data.animations[i].frames[j]);
-				break;
-			case E_DETECTING:
-				e_anim_detecting.PushBack(data.animations[i].frames[j]);
-				break;
-			case E_DEAD:
-				e_anim_death.PushBack(data.animations[i].frames[j]);
-				break;
-			default:
-				break;
-			}
-		}
-	}
-
-	//deleting player animation data already loaded in its corresponding animation variables
-	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
-		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
-			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
-			data.animations[i].frames = nullptr;
-		}
-	}
-	if (data.animations != nullptr) {
-		delete[] data.animations;
-		data.animations = nullptr;
-	}
-}
+//void j1Entity::PushBack() {
+//
+//	for (uint i = 0; i < data.num_animations; ++i) {
+//		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+//			switch (data.animations[i].animType) {
+//
+//			case EntityState::IDLE:
+//				anim_idle.PushBack(data.animations[i].frames[j]);
+//				break;
+//			case EntityState::WALKING:
+//				anim_walking.PushBack(data.animations[i].frames[j]);
+//				break;
+//			case EntityState::HIT:
+//				anim_hit.PushBack(data.animations[i].frames[j]);
+//				break;
+//			case EntityState::DETECTING:
+//				anim_detecting.PushBack(data.animations[i].frames[j]);
+//				break;
+//			case EntityState::DEAD:
+//				anim_death.PushBack(data.animations[i].frames[j]);
+//				break;
+//			default:
+//				break;
+//			}
+//		}
+//	}
+//
+//	//deleting player animation data already loaded in its corresponding animation variables
+//	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+//		if (data.animations[i].frames != nullptr) {		//is in PushBack() because when load all animation in its
+//			delete[] data.animations[i].frames;			//corresponding variables, that data is useless
+//			data.animations[i].frames = nullptr;
+//		}
+//	}
+//	if (data.animations != nullptr) {
+//		delete[] data.animations;
+//		data.animations = nullptr;
+//	}
+//}
 
 //Functions to help loading data in xml-------------------------------------
 //Get the rect info of an id of tileset
-SDL_Rect TileSetEnemy::GetTileRect(int id) const {
+SDL_Rect TileSetEntity::GetTileRect(int id) const {
 	SDL_Rect rect;
 	rect.w = tilewidth;
 	rect.h = tileheight;
@@ -198,7 +211,7 @@ SDL_Rect TileSetEnemy::GetTileRect(int id) const {
 }
 
 //Return how many frames are in one animation
-uint EnemyAnim::FrameCount(pugi::xml_node& n) {
+uint EntityAnim::FrameCount(pugi::xml_node& n) {
 	num_frames = 0;
 	pugi::xml_node node = n;
 	for (; node != NULL; node = node.next_sibling("frame")) {
@@ -207,8 +220,6 @@ uint EnemyAnim::FrameCount(pugi::xml_node& n) {
 
 	return num_frames;
 }
-
-
 
 /*
 void Enemy::DeadAnim()

@@ -38,18 +38,25 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
-	App->map->InitialEntityPosition();
+	p2List_item<ColliderObject*>* position = App->map->data.colliders.start;
+	for (; position; position = position->next) {
+		if (position->data->name == "Gladiator")
+			App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
+		else if (position->data->name == "Player")
+			App->entities->CreateEntity(j1Entity::Types::PLAYER);
+	}
+	//App->map->InitialEntityPosition();
 
-	App->entities->AddEnemy(GLADIATOR, App->map->queue[GLADIATOR].initialPos.x, App->map->queue[GLADIATOR].initialPos.y, App->entities->tsx1);
+	//App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
 
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
 
-		RELEASE_ARRAY(data);
+	RELEASE_ARRAY(data);
 
-		debug_tex = App->tex->Load("maps/path.png");
+	debug_tex = App->tex->Load("maps/path.png");
 
 	App->audio->PlayMusic(App->map->data.musicEnvironment);
 
@@ -103,7 +110,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
-			App->player->position = App->map->queue[PLAYER].initialPos;
+			//App->player->position = App->map->queue[PLAYER].initialPos;
 			App->player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}
@@ -111,7 +118,7 @@ bool j1Scene::Update(float dt)
 
 	//F2 - Start from the beginning of the current level
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
-		App->player->position = App->map->queue[PLAYER].initialPos;
+		//App->player->position = App->map->queue[PLAYER].initialPos;
 		App->player->speed.SetToZero();
 		App->render->camera = App->render->CameraInitPos();
 		}

@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1Player.h"
 
 struct SDL_Texture;
 
@@ -55,6 +56,7 @@ private:
 	uint win_width;
 	uint win_height;
 	SDL_Texture* debug_tex;
+	j1Player* player;
 
 };
 

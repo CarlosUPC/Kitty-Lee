@@ -40,11 +40,14 @@ bool j1Scene::Start()
 	App->map->Load(lvl1.GetString());
 	p2List_item<ColliderObject*>* position = App->map->data.colliders.start;
 	j1Entity* ent = nullptr;
+
 	for (; position; position = position->next) {
 		if (position->data->name == "Gladiator")
 			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
-		else if (position->data->name == "Player")
+		else if (position->data->name == "Player") {
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER);
+			player = (j1Player*)ent;
+		}
 		if (ent != nullptr) {
 			ent->position.create(position->data->coll_x, position->data->coll_y);
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
@@ -185,16 +188,16 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	int offsetPlayerPositionX = App->player->colliderPlayer.width - App->player->data.tileset.tilewidth;
-	int offsetPlayerPositionY = App->player->colliderPlayer.height - App->player->data.tileset.tileheight;
-
-	if ((cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0 &&
-		(cameraOffset.x + App->player->position.x - offsetPlayerPositionX) * App->win->GetScale() < App->map->data.width*App->map->data.tile_width*App->win->GetScale()) {
-		App->render->camera.x = (cameraOffset.x - App->player->position.x + offsetPlayerPositionX) * App->win->GetScale();
+	int offsetPlayerPositionX = player->collider.width - player->data.tileset.tilewidth;
+	int offsetPlayerPositionY = player->collider.height - player->data.tileset.tileheight;
+	
+	if ((cameraOffset.x - player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0 &&
+		(cameraOffset.x + player->position.x - offsetPlayerPositionX) * App->win->GetScale() < App->map->data.width*App->map->data.tile_width*App->win->GetScale()) {
+		App->render->camera.x = (cameraOffset.x - player->position.x + offsetPlayerPositionX) * App->win->GetScale();
 	}
-	if ((cameraOffset.y - App->player->position.y + offsetPlayerPositionY) * App->win->GetScale() < 0 &&
-		(cameraOffset.y + App->player->position.y - offsetPlayerPositionY) * App->win->GetScale() < App->map->data.height*App->map->data.tile_height*App->win->GetScale()) {
-		App->render->camera.y = (cameraOffset.y - App->player->position.y + offsetPlayerPositionY) * App->win->GetScale();
+	if ((cameraOffset.y - player->position.y + offsetPlayerPositionY) * App->win->GetScale() < 0 &&
+		(cameraOffset.y + player->position.y - offsetPlayerPositionY) * App->win->GetScale() < App->map->data.height*App->map->data.tile_height*App->win->GetScale()) {
+		App->render->camera.y = (cameraOffset.y - player->position.y + offsetPlayerPositionY) * App->win->GetScale();
 	}
 	
 

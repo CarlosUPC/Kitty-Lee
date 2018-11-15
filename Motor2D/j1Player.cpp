@@ -15,7 +15,9 @@
 #include "j1EntityManager.h"
 
 
-j1Player::j1Player() : j1Entity(Types::PLAYER) {}
+j1Player::j1Player() : j1Entity(Types::PLAYER) {
+	LoadEntityData("player.tsx");
+}
 
 
 
@@ -35,7 +37,7 @@ bool j1Player::Awake(pugi::xml_node& node)
 	state = IDLE;
 	
 	// Load animations
-	PushBack();
+	//PushBack();
 
 	return ret;
 }
@@ -70,7 +72,7 @@ bool j1Player::PreUpdate()
 }
 
 // Called each loop iteration
-bool j1Player::Update(float dt)
+/*bool j1Player::Update(float dt)
 {
 	Movement(dt);
 
@@ -90,10 +92,10 @@ bool j1Player::Update(float dt)
 
 	CheckState();
 
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
+	//App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 
 	return true;
-}
+}*/
 
 // Called each loop iteration
 bool j1Player::PostUpdate()
@@ -136,8 +138,8 @@ void j1Player::Movement(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
-	if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
-		speed.y += App->map->data.properties.Get("gravity");
+	/*if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
+		speed.y += App->map->data.properties.Get("gravity");*/
 
 
 

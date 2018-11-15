@@ -45,7 +45,7 @@ bool j1Entity::Update(float dt) {
 }
 
 void j1Entity::Draw(float dt) {
-	App->render->Blit(data.tileset.texture, position.x, position.y);
+	App->render->Blit(data.tileset.texture, 0, 0);
 }
 
 bool j1Entity::CleanUp()

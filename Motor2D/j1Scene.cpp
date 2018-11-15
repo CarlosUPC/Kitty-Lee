@@ -39,15 +39,17 @@ bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
 	p2List_item<ColliderObject*>* position = App->map->data.colliders.start;
+	j1Entity* ent = nullptr;
 	for (; position; position = position->next) {
 		if (position->data->name == "Gladiator")
-			App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
+			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
 		else if (position->data->name == "Player")
-			App->entities->CreateEntity(j1Entity::Types::PLAYER);
+			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER);
+		if (ent != nullptr) {
+			ent->position.create(position->data->coll_x, position->data->coll_y);
+			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
+		}
 	}
-	//App->map->InitialEntityPosition();
-
-	//App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
 
 	int w, h;
 	uchar* data = NULL;
@@ -110,7 +112,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
-			//App->player->position = App->map->queue[PLAYER].initialPos;
+			App->player->position.SetToZero();
 			App->player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}

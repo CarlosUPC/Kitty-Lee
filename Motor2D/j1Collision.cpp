@@ -132,6 +132,18 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_WIN][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
 
+	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER_UP] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER_DOWN] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER_LEFT] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER_RIGHT] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_GHOST] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_SCENE] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_WIN] = false;
+
 
 }
 // Destructor

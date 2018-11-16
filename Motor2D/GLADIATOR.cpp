@@ -10,7 +10,6 @@
 
 Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 {
-
 	//Load Enemy data
 	LoadEntityData("gladiator2.tsx");
 
@@ -20,10 +19,15 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
 
+
+	//Set Collider & Bouncers
+	collider.collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
+
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	playerPathfinding = App->collider->AddCollider({ (int)App->player->position.x, (int)App->player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	
-	pState = PathState::G_DEFAULT_PATH;
+	//Enemy Path
+	entityPath = nullptr;
 
 }
 
@@ -210,7 +214,9 @@ void Gladiator::DefaultPath(float dt) {
 
 void Gladiator::CreatePathfinding(iPoint destination) {
 
-	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)position.x, (int)position.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
+	fPoint relativePos = position;
+
+	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
 	entityPath = App->pathfinding->GetLastPath();
 	index = 0;
 
@@ -250,11 +256,15 @@ void Gladiator::TrackingPathfinding(float dt) {
 				fplayerPos.x = playerPos.x;
 				fplayerPos.y = playerPos.y;
 
-				gState = GladiatorState::G_IDLE;
+				
 
-				if (position.DistanceTo(fplayerPos) <= 10) {
+				if (position.DistanceTo(App->player->position) <= 50) {
 					gState = GladiatorState::G_IDLE;
 					
+				}
+				else {
+					create_chase_path = true;
+					do_chase_path = false;
 				}
 
 			}

@@ -17,6 +17,8 @@
 
 #include "j1EntityManager.h"
 
+#include "Brofiler\Brofiler.h"
+
 #include <cmath>
 
 
@@ -39,6 +41,7 @@ void j1Entity::OnCollision(Collider* collider)
 }
 
 bool j1Entity::Update(float dt) {
+	BROFILER_CATEGORY("UpdateEntity", Profiler::Color::Red);
 	Move(dt);
 
 	Draw(dt);

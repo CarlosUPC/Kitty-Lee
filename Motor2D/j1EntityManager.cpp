@@ -10,6 +10,8 @@
 #include "j1Player.h"
 #include "GLADIATOR.h"
 
+#include "Brofiler\Brofiler.h"
+
 //Include all enemies
 
 #define SPAWN_MARGIN 50
@@ -51,6 +53,7 @@ bool j1EntityManager::Start()
 
 bool j1EntityManager::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdateEntityManager", Profiler::Color::Yellow);
 	// check camera position to decide what to spawn
 	//for (uint i = 0; i < MAX_ENEMIES; ++i)
 	//{
@@ -71,6 +74,7 @@ bool j1EntityManager::PreUpdate()
 // Called before render is available
 bool j1EntityManager::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateEntityManager", Profiler::Color::Red);
 	accumulated_time += dt;
 	if (accumulated_time >= update_ms_cycle)
 		do_logic = true;
@@ -116,6 +120,7 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdateEntityManager", Profiler::Color::Green);
 	// check camera position to decide what to despawn
 	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{

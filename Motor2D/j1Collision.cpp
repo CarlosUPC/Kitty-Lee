@@ -5,6 +5,8 @@
 #include "j1Collision.h"
 #include "j1Window.h"
 
+#include "Brofiler\Brofiler.h"
+
 
 j1Colliders::j1Colliders() : j1Module()
 {
@@ -161,6 +163,7 @@ bool j1Colliders::Awake(pugi::xml_node& node)
 }
 bool j1Colliders::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdateCollision", Profiler::Color::Yellow);
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -175,6 +178,8 @@ bool j1Colliders::PreUpdate()
 // Called before render is available
 bool j1Colliders::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateCollision", Profiler::Color::Red);
+
 	Collider* c1;
 	Collider* c2;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)

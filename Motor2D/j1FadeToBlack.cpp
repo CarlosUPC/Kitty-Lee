@@ -13,6 +13,8 @@
 #include "p2Log.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler\Brofiler.h"
+
 
 j1FadeToBlack::j1FadeToBlack()
 {
@@ -31,6 +33,7 @@ bool j1FadeToBlack::Start()
 
 bool j1FadeToBlack::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateFade", Profiler::Color::Red);
 	if (current_step == fade_step::none)
 		return true;
 

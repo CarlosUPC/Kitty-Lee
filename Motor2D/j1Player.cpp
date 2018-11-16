@@ -14,6 +14,7 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 
+#include "Brofiler\Brofiler.h"
 
 j1Player::j1Player() : j1Entity(Types::PLAYER) {
 
@@ -48,6 +49,8 @@ bool j1Player::Start()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::Red);
+
 	Movement(dt);
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {

@@ -13,6 +13,8 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
+#include "Brofiler\Brofiler.h"
+
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -79,6 +81,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	BROFILER_CATEGORY("PreUpdateScene", Profiler::Color::Yellow);
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -109,6 +112,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateScene", Profiler::Color::Red);
 	//----------------------DEBUG KEYS-------------------------//
 	
 
@@ -187,6 +191,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+	BROFILER_CATEGORY("PostUpdateScene", Profiler::Color::Green);
 	bool ret = true;
 
 	int offsetPlayerPositionX = player->collider.width - player->data.tileset.tilewidth;

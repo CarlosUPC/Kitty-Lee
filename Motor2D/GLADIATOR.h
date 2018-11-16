@@ -43,6 +43,7 @@ public:
 
 private:
 
+	void PushBack();
 	void SetAnimationsSpeed(float dt, float speed);
 	void StatesMachine();
 	void DefaultPath(float dt);
@@ -53,7 +54,6 @@ private:
 	
 	
 private:
-	GladiatorAnims gAnim;
 	GladiatorState gState;
 	PathState pState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
@@ -61,6 +61,11 @@ private:
 
 	iPoint gSize;
 
+	Animation anim_idle;
+	Animation anim_walking;
+	Animation anim_hit;
+	Animation anim_detecting;
+	Animation anim_dead;
 
 	bool pathfinding = false;
 

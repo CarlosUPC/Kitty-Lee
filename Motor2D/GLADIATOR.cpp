@@ -12,39 +12,13 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 {
 
 	//Load Enemy data
-	/*LoadEntityData(tsx.GetString());
+	LoadEntityData("gladiator2.tsx");
 
-	//Load Enemy Anims
-	PushBack();
-
-	//Load Enemy sprite
-	sprite = App->tex->Load(data.tileset.imagePath.GetString());;
-
-	//Set Gladiator Anims
-	gAnim.g_idle = e_anim_idle;
-	gAnim.g_walking = e_anim_walking;
-	gAnim.g_hit = e_anim_hit;
-	gAnim.g_detecting = e_anim_detecting;
-	gAnim.g_dead = e_anim_death;
-
-	//Load Collider Size
-	gSize.x = data.tileset.tilewidth;
-	gSize.y = data.tileset.tileheight;
-
-	//Set Gladiator State
-	gState = GladiatorState::G_IDLE;
-
-	//Set Default Anim & Anim Speed
-	e_animation = &gAnim.g_idle;
-	speedAnim = e_animationSpeed;
-
-	//Set Collider
-	collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
-	
-	//create_dpath = true;
 	entityPath = nullptr;
 
-	//original_pos = { (float)x,(float)y };*/
+	gState = G_IDLE;
+	current_animation = &anim_idle;
+	current_animation->speed = animationSpeed;
 
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	playerPathfinding = App->collider->AddCollider({ (int)App->player->position.x, (int)App->player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
@@ -60,7 +34,7 @@ Gladiator::~Gladiator()
 
 void Gladiator::Move(float dt)
 {
-	/*SetAnimationsSpeed(dt, speedAnim);
+	SetAnimationsSpeed(dt, speedAnim);
 
 	if (!pathfinding)
 		DefaultPath(dt);
@@ -68,15 +42,15 @@ void Gladiator::Move(float dt)
 	if(DetectPlayer())
 		ChasePlayer(dt);
 
-	StatesMachine();*/
+	StatesMachine();
 	
 }
 
 void Gladiator::Draw(float dt)
 {
 
-	/*if (collider != nullptr)
-		collider->SetPos(position.x, position.y);
+	if (collider.collider != nullptr)
+		collider.collider->SetPos(position.x, position.y);
 
 	if (enemyPathfinding != nullptr)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
@@ -85,11 +59,10 @@ void Gladiator::Draw(float dt)
 		playerPathfinding->SetPos((int)App->player->position.x - 34, (int)App->player->position.y - 34);
 
 
-	if (e_animation != nullptr)
-	{
-		App->render->Blit(sprite, (int)position.x, (int)position.y, &(e_animation->GetCurrentFrame(1)), 1.0F, flip);
-	}*/
-	App->render->Blit(data.tileset.texture, position.x, position.y);
+
+		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame(dt),1.0F,flip);
+	
+	
 
 }
 
@@ -130,23 +103,49 @@ void Gladiator::Drop()
 
 }
 
+void Gladiator::PushBack()
+{
+	for (uint i = 0; i < data.num_animations; ++i) {
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			switch (data.animations[i].animType) {
+			case EntityState::IDLE:
+				anim_idle.PushBack(data.animations[i].frames[j]);
+				break;
+			case EntityState::WALKING:
+				anim_walking.PushBack(data.animations[i].frames[j]);
+				break;
+			case EntityState::HIT:
+				anim_hit.PushBack(data.animations[i].frames[j]);
+				break;
+			case EntityState::DETECTING:
+				anim_detecting.PushBack(data.animations[i].frames[j]);
+				break;
+			case EntityState::DEAD:
+				anim_dead.PushBack(data.animations[i].frames[j]);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
 void Gladiator::SetAnimationsSpeed(float dt, float speed) {
 
-	gAnim.g_idle.speed = speed;
-	gAnim.g_walking.speed = speed;
-	gAnim.g_hit.speed = speed;
-	gAnim.g_detecting.speed = speed;
-	gAnim.g_dead.speed = speed;
+	//gAnim.g_idle.speed = speed;
+	//gAnim.g_walking.speed = speed;
+	//gAnim.g_hit.speed = speed;
+	//gAnim.g_detecting.speed = speed;
+	//gAnim.g_dead.speed = speed;
 
 }
 
 void Gladiator::StatesMachine() {
 
-	/*
 	switch (gState) {
 
 	case GladiatorState::G_IDLE:
-		e_animation = &gAnim.g_idle;
+		current_animation = &anim_idle;
 
 		if (position.x > lastPosition.x) {
 			gState = GladiatorState::G_WALKING;
@@ -162,7 +161,7 @@ void Gladiator::StatesMachine() {
 		break;
 
 	case GladiatorState::G_WALKING:
-		e_animation = &gAnim.g_walking;
+		current_animation = &anim_walking;
 
 		if (position.x > lastPosition.x) {
 			gState = GladiatorState::G_WALKING;
@@ -189,11 +188,11 @@ void Gladiator::StatesMachine() {
 
 	}
 
-	lastPosition = position;*/
+	lastPosition = position;
 }
 
 void Gladiator::DefaultPath(float dt) {
-	/*
+	
 	if (create_dpath) {
 		iPoint to_go;
 		to_go.x = (int)position.x - 50;
@@ -206,7 +205,7 @@ void Gladiator::DefaultPath(float dt) {
 	
 	if (do_dpath) {
 		TrackingPathfinding(dt);
-	}*/
+	}
 }
 
 void Gladiator::CreatePathfinding(iPoint destination) {

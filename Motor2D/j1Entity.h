@@ -96,7 +96,7 @@ public:
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void LoadCollider(pugi::xml_node&);
 	virtual void IdAnimToEnum();
-	virtual void Pushback() {};
+	virtual void PushBack() {};
 
 	virtual bool Start() { return true; }
 	virtual bool Update(float dt);

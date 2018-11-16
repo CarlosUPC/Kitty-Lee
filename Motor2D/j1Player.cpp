@@ -16,6 +16,9 @@
 
 
 j1Player::j1Player() : j1Entity(Types::PLAYER) {
+
+	LoadEntityData("player.tsx");
+
 }
 
 
@@ -26,7 +29,6 @@ j1Player::~j1Player()
 
 bool j1Player::Start()
 {
-	LoadEntityData("player.tsx");
 
 	state = IDLE;
 
@@ -44,13 +46,6 @@ bool j1Player::Start()
 	return true;
 }
 
-// Called each loop iteration
-//bool j1Player::PreUpdate()
-//{
-//	return true;
-//}
-
-// Called each loop iteration
 bool j1Player::Update(float dt)
 {
 	Movement(dt);
@@ -71,16 +66,8 @@ bool j1Player::Update(float dt)
 
 	CheckState();
 
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
-
 	return true;
 }
-
-// Called each loop iteration
-//bool j1Player::PostUpdate()
-//{	
-//	return true;
-//}
 
 // Called before quitting
 bool j1Player::CleanUp()
@@ -346,6 +333,11 @@ void j1Player::LoadCollider(pugi::xml_node &node)
 
 		node = node.next_sibling();
 	}
+}
+
+void j1Player::Draw(float dt)
+{
+	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 }
 
 // Load / Save

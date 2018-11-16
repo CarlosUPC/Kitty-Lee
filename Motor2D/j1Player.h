@@ -74,6 +74,7 @@ private:
 	void IdAnimToEnum();
 	void LoadProperties(pugi::xml_node&);
 	void LoadCollider(pugi::xml_node&);
+	void Draw(float dt);
 
 public:
 

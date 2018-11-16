@@ -103,6 +103,8 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 
 	for (int i = 0; i < entities.Count(); ++i) {
 		entities[i]->Update(dt);
+		entities[i]->Move(dt);
+		entities[i]->Draw(dt);
 
 		if (do_logic) {
 			entities[i]->CreatePath();
@@ -166,7 +168,12 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type)
 
 void j1EntityManager::DestroyEntity(j1Entity * entity)
 {
-	entities.Pop(entity);
+	if (entity != nullptr) {
+		entity->CleanUp();
+		entities.Pop(entity);
+		delete entity;
+		entity = nullptr;
+	}
 }
 
 //void j1EntityManager::SpawnEnemy(const EntityData& info)

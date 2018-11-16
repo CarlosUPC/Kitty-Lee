@@ -143,7 +143,7 @@ bool j1Entity::LoadEntityData(const char* file) {
 	//Convert id animations to enum
 	IdAnimToEnum();
 
-	Pushback();
+	PushBack();
 
 	DeleteAnimation();
 

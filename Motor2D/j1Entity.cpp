@@ -15,6 +15,8 @@
 #include "j1Input.h"
 #include "j1FadeToBlack.h"
 
+#include "j1EntityManager.h"
+
 #include <cmath>
 
 
@@ -66,6 +68,26 @@ void j1Entity::DeleteAnimation()
 		delete[] data.animations;
 		data.animations = nullptr;
 	}
+}
+
+j1Entity * j1Entity::CloserEntity(j1Entity::Types type)
+{
+	j1Entity* ent = nullptr;
+	fPoint position;
+	for (int i = 0; i < App->entities->entities.Count(); ++i) {
+		if (i == 0) {
+			ent = App->entities->entities[i];
+			position = App->entities->entities[i]->position;
+		}
+		else if (App->entities->entities[i]->position.x < position.x) {
+			ent = App->entities->entities[i];
+			position = App->entities->entities[i]->position;
+		}
+	}
+	
+
+
+	return ent;
 }
 
 bool j1Entity::LoadEntityData(const char* file) {

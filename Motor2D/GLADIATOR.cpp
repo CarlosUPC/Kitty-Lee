@@ -24,7 +24,7 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	collider.collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
 
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
-	playerPathfinding = App->collider->AddCollider({ (int)App->player->position.x, (int)App->player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
+	playerPathfinding = App->collider->AddCollider({ (int)CloserEntity(Types::PLAYER)->position.x, (int)CloserEntity(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
 	
 	//Enemy Path
 	entityPath = nullptr;
@@ -60,9 +60,7 @@ void Gladiator::Draw(float dt)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
 	
 	if (playerPathfinding != nullptr)
-		playerPathfinding->SetPos((int)App->player->position.x - 34, (int)App->player->position.y - 34);
-
-
+		playerPathfinding->SetPos(CloserEntity(Types::PLAYER)->position.x - 34, CloserEntity(Types::PLAYER)->position.y - 34);
 
 		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame(dt),1.0F,flip);
 	
@@ -258,7 +256,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 				
 
-				if (position.DistanceTo(App->player->position) <= 50) {
+				if (position.DistanceTo(CloserEntity(Types::PLAYER)->position) <= 50) {
 					gState = GladiatorState::G_IDLE;
 					
 				}
@@ -278,7 +276,7 @@ bool Gladiator::DetectPlayer() {
 
 	bool detected = false;
 	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
-	SDL_Rect player_pos = { (int)App->player->position.x, (int)App->player->position.y, 100, 100 };
+	SDL_Rect player_pos = { CloserEntity(Types::PLAYER)->position.x, CloserEntity(Types::PLAYER)->position.y, 100, 100 };
 	
 	
 	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
@@ -304,8 +302,8 @@ void Gladiator::ChasePlayer(float dt) {
 	if (create_chase_path) {
 		
 		
-		playerPos.x = (int)App->player->position.x;
-		playerPos.y = (int)App->player->position.y;
+		playerPos.x = CloserEntity(Types::PLAYER)->position.x;
+		playerPos.y = CloserEntity(Types::PLAYER)->position.y;
 
 		
 

@@ -16,7 +16,6 @@ class j1Audio;
 class j1Scene;
 class j1Colliders;
 class j1Map;
-class j1Player;
 class j1FadeToBlack;
 class j1EntityManager;
 class j1PathFinding;
@@ -91,7 +90,6 @@ public:
 	j1Scene*			scene;
 	j1Colliders*		collider;
 	j1Map*				map;
-	j1Player*			player;
 	j1FadeToBlack*      fade;
 	j1EntityManager*	entities;
 	j1PathFinding*		pathfinding;

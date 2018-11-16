@@ -176,6 +176,8 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 	}
 }
 
+
+
 //void j1EntityManager::SpawnEnemy(const EntityData& info)
 //{
 //	// find room for the new enemy

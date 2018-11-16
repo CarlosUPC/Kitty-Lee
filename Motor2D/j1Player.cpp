@@ -360,7 +360,7 @@ bool j1Player::Load(pugi::xml_node& data)
 		position.y = data.child("player").attribute("y").as_float();
 	}
 
-	App->player->speed.SetToZero();
+	speed.SetToZero();
 
 	return true;
 

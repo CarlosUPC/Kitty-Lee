@@ -97,7 +97,7 @@ private:
 	fPoint initialPos;
 
 	
-	float cooldown = 30.0f;
+	float cooldown = 2.0f;
 	
 };
 

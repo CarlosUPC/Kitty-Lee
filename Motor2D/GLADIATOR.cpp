@@ -207,7 +207,7 @@ void Gladiator::StatesMachine() {
 		if (anim_hit.Finished()) {
 			anim_hit.reset();
 		
-			cooldown = 100.0f;
+			cooldown = 3.0f;
 			gState = GladiatorState::G_IDLE;
 		}
 
@@ -294,9 +294,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 
 				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
-
 					EnemyHit(dt);	
-					gState = GladiatorState::G_IDLE;
 				}
 
 				else {

@@ -30,29 +30,9 @@ struct ColliderObject {
 
 struct Properties
 {
-	struct Property
-	{
-		p2SString name;
-		float value;
-	};
-
-	~Properties()
-	{
-		p2List_item<Property*>* item;
-		item = list.start;
-
-		while (item != NULL)
-		{
-			RELEASE(item->data);
-			item = item->next;
-		}
-
-		list.clear();
-	}
-
-	float Get(const char* name, int default_value = 0) const;
-
-	p2List<Property*>	list;
+	float gravity;
+	float maxAccelerationY;
+	int Navigation;
 };
 
 struct MapLayer {
@@ -153,7 +133,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
-	void LoadProperties(pugi::xml_node & properties_node, Properties & properties);
+	void LoadProperties(pugi::xml_node & properties_node);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

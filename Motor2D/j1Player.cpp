@@ -110,8 +110,8 @@ void j1Player::Movement(float dt) {
 	}
 
 	
-	if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
-		speed.y += App->map->data.properties.Get("gravity");
+	if (speed.y < App->map->data.properties.maxAccelerationY)
+		speed.y += App->map->data.properties.gravity;
 	
 	
 	
@@ -492,7 +492,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_FLOOR:
 		if (c1 == colliderPlayer_down.collider) {
 			speed.y = 0.0f;
-			speed.y -= App->map->data.properties.Get("gravity");
+			speed.y -= App->map->data.properties.gravity;
 			if (air)
 				air = false;
 			if (c1->rect.y >= c2->rect.y)
@@ -539,7 +539,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1 == colliderPlayer_down.collider) {
 			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
 				speed.y = 0.0f;
-				speed.y -= App->map->data.properties.Get("gravity");
+				speed.y -= App->map->data.properties.gravity;
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)

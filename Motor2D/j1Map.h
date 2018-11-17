@@ -32,7 +32,7 @@ struct Properties
 {
 	float gravity;
 	float maxAccelerationY;
-	int Navigation;
+	bool Navigation;
 };
 
 struct MapLayer {
@@ -133,7 +133,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
-	void LoadProperties(pugi::xml_node & properties_node);
+	void LoadProperties(pugi::xml_node & properties_node, MapLayer* layer = nullptr);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

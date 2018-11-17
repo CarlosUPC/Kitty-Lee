@@ -380,7 +380,7 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
-void j1Map::LoadProperties(pugi::xml_node& properties_node) {
+void j1Map::LoadProperties(pugi::xml_node& properties_node, MapLayer* layer) {
 
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
 		p2SString prop = properties_node.attribute("name").as_string();
@@ -392,7 +392,7 @@ void j1Map::LoadProperties(pugi::xml_node& properties_node) {
 		else if (prop == "maxAccelerationY")
 			data.properties.maxAccelerationY = properties_node.attribute("value").as_float();
 		else if (prop == "Navigation")
-			data.properties.Navigation = properties_node.attribute("value").as_float();
+			layer->properties.Navigation = properties_node.attribute("value").as_bool();
 		
 	}
 }
@@ -473,7 +473,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load properties of layer
 	pugi::xml_node n_property = node.child("properties");
-	LoadProperties(n_property);
+	LoadProperties(n_property, layer);
 	
 	layer->tiles = new uint[layer->width*layer->height];
 

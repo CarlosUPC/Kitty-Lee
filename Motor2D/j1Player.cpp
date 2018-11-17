@@ -75,7 +75,15 @@ bool j1Player::Update(float dt)
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	return App->tex->UnLoad(data.tileset.texture);
+	bool ret = false;
+	ret = App->tex->UnLoad(data.tileset.texture);
+	collider.collider->to_delete = true;
+	colliderPlayer_down.collider->to_delete = true;
+	colliderPlayer_up.collider->to_delete = true;
+	colliderPlayer_right.collider->to_delete = true;
+	colliderPlayer_left.collider->to_delete = true;
+
+	return ret;
 }
 
 void j1Player::Move(float dt) {

@@ -191,6 +191,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	App->tex->UnLoad(debug_tex);
 
 	return true;
 }

@@ -10,9 +10,9 @@
 	</scene>
 	<pathfinding />
 	<:anonymous />
-	<entities />
 	<colliders />
+	<entities />
 	<renderer>
-		<camera x="0" y="-390" />
+		<camera x="-3997" y="0" />
 	</renderer>
 </game_state>

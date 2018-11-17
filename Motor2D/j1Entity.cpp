@@ -55,6 +55,8 @@ void j1Entity::Draw() {
 
 bool j1Entity::CleanUp()
 {
+	collider.collider->to_delete = true;
+	App->tex->UnLoad(data.tileset.texture);
 	return false;
 }
 

@@ -11,7 +11,10 @@
 	<pathfinding />
 	<:anonymous />
 	<colliders />
-	<entities />
+	<player>		
+		<player x="80" y="256" />	
+	</player>	
+	<enemies />
 	<renderer>
 		<camera x="0" y="-243" />
 	</renderer>

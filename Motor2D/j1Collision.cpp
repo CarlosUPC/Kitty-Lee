@@ -264,7 +264,7 @@ void j1Colliders::DebugDraw()
 				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
 				break;
 			case COLLIDER_ENEMY:
-				App->render->DrawQuad(colliders[i]->rect, 255, 100, 100);
+				App->render->DrawQuad(colliders[i]->rect, 255, 100, 100, alpha);
 				break;
 			default: //white
 				App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);

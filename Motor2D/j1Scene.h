@@ -26,6 +26,8 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	void CreateMapEntities();
+
 	// Called before all Updates
 	bool PreUpdate();
 

@@ -112,15 +112,12 @@ void j1Player::Move(float dt) {
 
  	//speed.y += App->map->data.properties.gravity * dt;
 	speed.y += App->map->data.properties.gravity * dt;
-	/*if (speed.y > App->map->data.properties.maxAccelerationY)
+	if (speed.y > App->map->data.properties.maxAccelerationY)
 		speed.y = App->map->data.properties.maxAccelerationY;
 	else if (speed.y < -App->map->data.properties.maxAccelerationY)
-		speed.y = -App->map->data.properties.maxAccelerationY;*/
+		speed.y = -App->map->data.properties.maxAccelerationY;
 	position += speed * dt;
 	SetCollidersPos();
-	LOG("dt %f", dt);
-	LOG("position: %f, %f", position.x, position.y);
-	LOG("speed: %f, %f", speed.x, speed.y);
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {

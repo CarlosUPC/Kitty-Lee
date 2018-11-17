@@ -128,10 +128,12 @@ bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 {
 	bool ret = true;
 	App->collider->EraseMapCollider();
+	App->entities->CleanUp();
 	App->map->CleanUp();
 	App->map->Load(tmx_map);
 	App->map->AddCollidersMap();
-	//App->map->InitialEntityPosition();
+	App->scene->CreateMapEntities();
+
 	return ret;
 }
 

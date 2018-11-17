@@ -43,6 +43,21 @@ bool j1Scene::Start()
 
 	App->map->AddCollidersMap();
 
+	CreateMapEntities();
+
+	debug_tex = App->tex->Load("maps/path.png");
+
+	win_width = App->win->screen_surface->w;
+	win_height = App->win->screen_surface->h;
+
+	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
+	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
+
+	return true;
+}
+
+void j1Scene::CreateMapEntities()
+{
 	int w, h;
 	uchar* data = NULL;
 	if (App->map->CreateWalkabilityMap(w, h, &data))
@@ -66,18 +81,6 @@ bool j1Scene::Start()
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 		}
 	}
-
-	debug_tex = App->tex->Load("maps/path.png");
-
-	//App->audio->PlayMusic(App->map->data.musicEnvironment);
-
-	win_width = App->win->screen_surface->w;
-	win_height = App->win->screen_surface->h;
-
-	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
-	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
-
-	return true;
 }
 
 // Called each loop iteration

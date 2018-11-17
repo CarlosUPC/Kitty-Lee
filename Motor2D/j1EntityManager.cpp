@@ -139,6 +139,7 @@ bool j1EntityManager::CleanUp()
 			RELEASE(entities[i]);
 		}
 	}
+	entities.Clear();
 
 	return true;
 }

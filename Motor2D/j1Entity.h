@@ -103,7 +103,7 @@ public:
 	virtual void Move(float dt) {}
 	virtual void Draw(float dt);
 	virtual void CreatePath() {}
-	virtual void OnCollision(Collider* collider);
+	virtual void OnCollision(Collider* collider1, Collider * collider2);
 	virtual bool CleanUp();
 	void DeleteAnimation();
 

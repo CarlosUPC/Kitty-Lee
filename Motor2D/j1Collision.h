@@ -4,6 +4,8 @@
 
 #include "j1Module.h"
 
+class j1Entity;
+
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
@@ -29,8 +31,8 @@ struct Collider
 	SDL_Rect rect;
 	bool to_delete = false;
 	COLLIDER_TYPE type;
-	j1Module* callback = nullptr;
-	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr) :
+	j1Entity* callback = nullptr;
+	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Entity* callback = nullptr) :
 		rect(rectangle),
 		type(type),
 		callback(callback)
@@ -52,7 +54,7 @@ public:
 	bool Update(float dt);
 	//update_status PostUpdate();
 	bool CleanUp();
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity * callback = nullptr);
 	bool EraseAllCollider(Collider* collider);
 	bool EraseMapCollider();
 	void DebugDraw();

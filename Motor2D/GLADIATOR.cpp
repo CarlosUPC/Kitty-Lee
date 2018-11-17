@@ -21,10 +21,10 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 
 
 	//Set Collider & Bouncers
-	collider.collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, (j1Module*)App->entities);
+	collider.collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, this);
 
-	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
-	playerPathfinding = App->collider->AddCollider({ (int)CloserEntity(Types::PLAYER)->position.x, (int)CloserEntity(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, (j1Module*)App->entities);
+	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
+	playerPathfinding = App->collider->AddCollider({ (int)CloserEntity(Types::PLAYER)->position.x, (int)CloserEntity(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
 	
 	//Enemy Path
 	entityPath = nullptr;
@@ -189,7 +189,6 @@ void Gladiator::StatesMachine() {
 		break;
 
 	}
-
 	lastPosition = position;
 }
 
@@ -226,16 +225,16 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 void Gladiator::TrackingPathfinding(float dt) {
 
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 2.0f, 1.0f };
+	fPoint speed = { 0.02f, 0.01f };
 
 	if ((int)position.x < forwardPos.x)
-		position.x += speed.x;
+		position.x += speed.x * dt;
 	else if ((int)position.x > forwardPos.x)
-		position.x -= speed.x;
+		position.x -= speed.x * dt;
 	if ((int)position.y < forwardPos.y)
-		position.y += speed.y;
+		position.y += speed.y * dt;
 	else if ((int)position.y > forwardPos.y)
-		position.y -= speed.y;
+		position.y -= speed.y * dt;
 
 	if ((int)position.x == forwardPos.x) {
 		

@@ -169,23 +169,23 @@ void j1Player::AddColliders() {
 	
 	actual_collider = &collider;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
 	actual_collider = &colliderPlayer_down;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
 	actual_collider = &colliderPlayer_up;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
 	actual_collider = &colliderPlayer_left;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
 	actual_collider = &colliderPlayer_right;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y,	actual_collider->width,	actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, App->entities);
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 
 }
 

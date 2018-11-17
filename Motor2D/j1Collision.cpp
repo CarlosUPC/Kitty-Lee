@@ -3,9 +3,10 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collision.h"
+#include "j1Entity.h"
 #include "j1Window.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Brofiler/Brofiler.h"
 
 
 j1Colliders::j1Colliders() : j1Module()
@@ -294,7 +295,7 @@ bool j1Colliders::CleanUp()
 	}
 	return true;
 }
-Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
+Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity * callback)
 {
 	Collider* ret = nullptr;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)

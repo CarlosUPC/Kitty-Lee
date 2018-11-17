@@ -319,6 +319,7 @@ bool Gladiator::DetectPlayer() {
 
 		if (pState == PathState::G_CHASE_PATH) {
 			back = true;
+			create_back_path = true;
 			detected = false;
 			create_chase_path = true;
 			pState = PathState::G_BACK_TO_DEFAULT_PATH;

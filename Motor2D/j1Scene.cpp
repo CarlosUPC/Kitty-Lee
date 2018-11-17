@@ -120,7 +120,7 @@ bool j1Scene::Update(float dt)
 	
 
 	//F1 - Start from the very first level
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || player->position.y > App->map->data.height*App->map->data.tile_height) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
 			player->position.create(80, 256);

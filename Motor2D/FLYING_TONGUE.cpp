@@ -20,7 +20,7 @@ FlyingTongue::FlyingTongue() : j1Entity(Types::GLADIATOR)
 
 
 	//Set Collider & Bouncers
-	collider.collider = App->collider->AddCollider({ 0, 0, gSize.x, gSize.y }, COLLIDER_ENEMY, this);
+	AddColliders();
 
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
 	playerPathfinding = App->collider->AddCollider({ (int)GetEntityPosition(Types::PLAYER)->position.x, (int)GetEntityPosition(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
@@ -40,13 +40,6 @@ void FlyingTongue::Move(float dt)
 {
 	SetAnimationsSpeed(animationSpeed);
 
-		if (!pathfinding) {}
-		//DefaultPath(dt);
-
-		//if (DetectPlayer()) {}
-		//ChasePlayer(dt);
-
-	//StatesMachine();
 
 }
 
@@ -140,4 +133,13 @@ void FlyingTongue::SetAnimationsSpeed(float speed) {
 	anim_detecting.speed = speed;
 	anim_dead.speed = speed;
 
+}
+
+void FlyingTongue::AddColliders() {
+	SDL_Rect r;
+	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
+
+	actual_collider = &collider;
+	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 }

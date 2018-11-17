@@ -5,6 +5,9 @@
  </properties>
  <image source="textures/enemies/FlyingTongue.png" width="512" height="256"/>
  <tile id="0">
+  <objectgroup draworder="index">
+   <object id="1" x="5" y="9" width="49" height="44"/>
+  </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>
    <frame tileid="1" duration="100"/>

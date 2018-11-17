@@ -179,7 +179,7 @@ void Gladiator::StatesMachine() {
 			flip = SDL_FLIP_NONE;
 			break;
 		}
-		
+
 		break;
 
 	case GladiatorState::G_WALKING:
@@ -202,10 +202,21 @@ void Gladiator::StatesMachine() {
 		break;
 
 	case GladiatorState::G_DETECTING:
+		current_animation = &anim_detecting;
 		break;
 	case GladiatorState::G_HIT:
+		current_animation = &anim_hit;
+
+		if (anim_hit.Finished()) {
+			anim_hit.reset();
+		
+			cooldown = 100.0f;
+			gState = GladiatorState::G_IDLE;
+		}
+
 		break;
 	case GladiatorState::G_DEAD:
+		current_animation = &anim_dead;
 		break;
 
 	}
@@ -287,9 +298,10 @@ void Gladiator::TrackingPathfinding(float dt) {
 				
 
 				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
-					gState = GladiatorState::G_IDLE;
-					
+					EnemyHit(dt);	
+			
 				}
+
 				else {
 					create_chase_path = true;
 					do_chase_path = false;
@@ -377,4 +389,15 @@ void Gladiator::BackToDefaultPath(float dt) {
 	if (do_back_path)
 		TrackingPathfinding(dt);
 
+}
+
+void Gladiator::EnemyHit(float dt) {
+
+	gState = GladiatorState::G_IDLE;
+	cooldown -= dt;
+
+	if (cooldown <= 0) {
+		gState = GladiatorState::G_HIT;
+	}
+			
 }

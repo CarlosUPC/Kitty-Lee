@@ -55,7 +55,7 @@ private:
 	bool DetectPlayer();
 	void ChasePlayer(float dt);
 	void BackToDefaultPath(float dt);
-	
+	void EnemyHit(float dt);
 	
 private:
 	GladiatorState gState;
@@ -94,6 +94,9 @@ private:
 
 	iPoint playerPos;
 	fPoint initialPos;
+
+	
+	float cooldown = 30.0f;
 	
 };
 

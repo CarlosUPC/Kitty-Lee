@@ -51,6 +51,8 @@ bool j1Scene::Start()
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER);
 			player = (j1Player*)ent;
 		}
+		else ent = nullptr;
+
 		if (ent != nullptr) {
 			ent->position.create(position->data->coll_x, position->data->coll_y);
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());

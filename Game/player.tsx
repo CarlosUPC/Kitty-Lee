@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.1" name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
-  <property name="animationSpeed" type="float" value="0.3"/>
+  <property name="animationSpeed" type="float" value="10"/>
   <property name="crashSound" value="audio/fx/jump_07.wav"/>
-  <property name="incrementSpeedX" type="float" value="1"/>
+  <property name="incrementSpeedX" type="float" value="25"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
-  <property name="jumpSpeed" type="float" value="-10"/>
-  <property name="maxSpeedX" type="float" value="5"/>
+  <property name="jumpSpeed" type="float" value="-800"/>
+  <property name="maxSpeedX" type="float" value="80"/>
   <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>
  <image source="textures/Player.png" width="1024" height="1024"/>

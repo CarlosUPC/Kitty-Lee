@@ -191,9 +191,9 @@ void j1Entity::LoadCollider(pugi::xml_node &node)
 	collider.height = node.attribute("height").as_uint();
 
 	p2SString colliderType = node.attribute("type").as_string();
-	if (colliderType == "Collider_enemy")
+	if (colliderType == "COLLIDER_ENEMY")
 		collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
-	else if(colliderType == "Collider_player")
+	else if(colliderType == "COLLIDER_PLAYER")
 		collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
 }
 

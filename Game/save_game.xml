@@ -11,11 +11,8 @@
 	<pathfinding />
 	<:anonymous />
 	<colliders />
-	<player>
-		<player x="80" y="256" />
-	</player>
-	<enemies />
+	<entities />
 	<renderer>
-		<camera x="0" y="-390" />
+		<camera x="0" y="-243" />
 	</renderer>
 </game_state>

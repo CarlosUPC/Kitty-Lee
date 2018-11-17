@@ -43,6 +43,7 @@ public:
 
 private:
 
+	void AddColliders();
 	void PushBack();
 	void SetAnimationsSpeed(float speed);
 	void StatesMachine();

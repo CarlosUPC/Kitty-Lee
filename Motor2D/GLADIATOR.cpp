@@ -13,8 +13,7 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	//Load Enemy data
 	LoadEntityData("gladiator2.tsx");
 
-	//entityPath = nullptr;
-
+	
 	gState = G_IDLE;
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
@@ -39,7 +38,7 @@ Gladiator::~Gladiator()
 
 void Gladiator::Move(float dt)
 {
-	SetAnimationsSpeed(dt, animationSpeed);
+	SetAnimationsSpeed(animationSpeed);
 
 	if (!pathfinding)
 		DefaultPath(dt);
@@ -133,7 +132,7 @@ void Gladiator::PushBack()
 	}
 }
 
-void Gladiator::SetAnimationsSpeed(float dt, float speed) {
+void Gladiator::SetAnimationsSpeed(float speed) {
 
 	anim_idle.speed = speed;
 	anim_walking.speed = speed;

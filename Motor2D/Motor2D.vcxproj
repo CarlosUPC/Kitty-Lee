@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FLYING_TONGUE.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="GLADIATOR.cpp" />
     <ClCompile Include="j1Collision.cpp" />
@@ -103,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="FLYING_TONGUE.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="GLADIATOR.h" />
     <ClInclude Include="j1Collision.h" />

@@ -43,6 +43,13 @@ bool j1Scene::Start()
 
 	App->map->AddCollidersMap();
 
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+		App->pathfinding->SetMap(w, h, data);
+
+	RELEASE_ARRAY(data);
+
 	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
 	j1Entity* ent = nullptr;
 
@@ -60,13 +67,6 @@ bool j1Scene::Start()
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 		}
 	}
-
-	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))
-		App->pathfinding->SetMap(w, h, data);
-
-	RELEASE_ARRAY(data);
 
 	debug_tex = App->tex->Load("maps/path.png");
 

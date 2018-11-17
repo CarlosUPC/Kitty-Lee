@@ -244,7 +244,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 }
 
 void Gladiator::TrackingPathfinding(float dt) {
-	iPoint forwardPos;// = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
 	fPoint speed = { 1.0f, 1.0f };
 
 	if ((int)position.x < forwardPos.x)

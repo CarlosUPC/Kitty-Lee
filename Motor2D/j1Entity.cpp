@@ -42,9 +42,9 @@ void j1Entity::OnCollision(Collider* collider)
 
 bool j1Entity::Update(float dt) {
 	BROFILER_CATEGORY("UpdateEntity", Profiler::Color::Red);
-	Move(dt);
+	//Move(dt);
 
-	Draw(dt);
+	//Draw(dt);
 
 	return true;
 }

@@ -13,7 +13,7 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	//Load Enemy data
 	LoadEntityData("gladiator2.tsx");
 
-	entityPath = nullptr;
+	//entityPath = nullptr;
 
 	gState = G_IDLE;
 	current_animation = &anim_idle;

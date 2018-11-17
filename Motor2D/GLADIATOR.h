@@ -3,6 +3,7 @@
 
 #include "j1Entity.h"
 #include "Path.h"
+#include "j1Player.h"
 
 class SDL_Texture;
 
@@ -61,6 +62,8 @@ private:
 	
 
 	iPoint gSize;
+
+	j1Player* player;
 
 	Animation anim_idle;
 	Animation anim_walking;

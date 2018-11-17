@@ -14,7 +14,7 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Brofiler/Brofiler.h"
 
 j1Player::j1Player() : j1Entity(Types::PLAYER) {
 
@@ -107,8 +107,8 @@ void j1Player::Movement(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
-	/*if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
-		speed.y += App->map->data.properties.Get("gravity");*/
+	if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
+		speed.y += App->map->data.properties.Get("gravity");
 
 
 

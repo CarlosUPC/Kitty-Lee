@@ -263,6 +263,9 @@ void j1Colliders::DebugDraw()
 			case COLLIDER_PLAYER_RIGHT: // orange
 				App->render->DrawQuad(colliders[i]->rect, 255, 144, 0, 150);
 				break;
+			case COLLIDER_ENEMY:
+				App->render->DrawQuad(colliders[i]->rect, 255, 100, 100);
+				break;
 			default: //white
 				App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 				break;

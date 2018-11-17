@@ -2,7 +2,7 @@
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="55">
  <properties>
   <property name="gravity" type="float" value="1"/>
-  <property name="maxAccelerationY" type="float" value="2"/>
+  <property name="maxAccelerationY" type="float" value="10"/>
   <property name="musicEnvironment" value="audio/music/Dungeon Theme.ogg"/>
  </properties>
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="575" columns="25">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.1" name="player" tilewidth="32" tileheight="32" spacing="32" margin="15" tilecount="256" columns="16">
  <properties>
-  <property name="animationSpeed" type="float" value="0.6"/>
+  <property name="animationSpeed" type="float" value="0.3"/>
   <property name="crashSound" value="audio/fx/jump_07.wav"/>
   <property name="incrementSpeedX" type="float" value="1"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>

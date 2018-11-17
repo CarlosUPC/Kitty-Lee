@@ -233,46 +233,49 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 void Gladiator::TrackingPathfinding(float dt) {
 
-	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 0.02f, 0.01f };
+	if (entityPath->At(index) != nullptr) {
 
-	if ((int)position.x < forwardPos.x)
-		position.x += speed.x * dt;
-	else if ((int)position.x > forwardPos.x)
-		position.x -= speed.x * dt;
-	if ((int)position.y < forwardPos.y)
-		position.y += speed.y * dt;
-	else if ((int)position.y > forwardPos.y)
-		position.y -= speed.y * dt;
+		iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+		fPoint speed = { 0.02f, 0.01f };
 
-	if ((int)position.x == forwardPos.x) {
-		
-		if (index < entityPathSize - 1 )
-			index++;
-		
-		else {
+		if ((int)position.x < forwardPos.x)
+			position.x += speed.x * dt;
+		else if ((int)position.x > forwardPos.x)
+			position.x -= speed.x * dt;
+		if ((int)position.y < forwardPos.y)
+			position.y += speed.y * dt;
+		else if ((int)position.y > forwardPos.y)
+			position.y -= speed.y * dt;
 
-			if (pState == PathState::G_DEFAULT_PATH) {
-				index = 0;
-				
-			}
-			else if (pState == PathState::G_CHASE_PATH) {
+		if ((int)position.x == forwardPos.x) {
 
-				fPoint fplayerPos;
-				fplayerPos.x = playerPos.x;
-				fplayerPos.y = playerPos.y;
+			if (index < entityPathSize - 1)
+				index++;
 
-				
+			else {
 
-				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
-					gState = GladiatorState::G_IDLE;
-					
+				if (pState == PathState::G_DEFAULT_PATH) {
+					index = 0;
+
 				}
-				else {
-					create_chase_path = true;
-					do_chase_path = false;
-				}
+				else if (pState == PathState::G_CHASE_PATH) {
 
+					fPoint fplayerPos;
+					fplayerPos.x = playerPos.x;
+					fplayerPos.y = playerPos.y;
+
+
+
+					if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
+						gState = GladiatorState::G_IDLE;
+
+					}
+					else {
+						create_chase_path = true;
+						do_chase_path = false;
+					}
+
+				}
 			}
 		}
 	}

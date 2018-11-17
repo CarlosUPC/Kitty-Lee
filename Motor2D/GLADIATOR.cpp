@@ -309,7 +309,7 @@ bool Gladiator::DetectPlayer() {
 	SDL_Rect player_pos = { GetEntityPosition(Types::PLAYER)->position.x, GetEntityPosition(Types::PLAYER)->position.y, 100, 100 };
 	
 	
-	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
+	if (SDL_HasIntersection(&enemy_pos, &player_pos) && !App->collider->god_mode) {
 		pathfinding = true;
 		detected = true;
 		pState = PathState::G_CHASE_PATH;

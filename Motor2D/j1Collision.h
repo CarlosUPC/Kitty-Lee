@@ -68,6 +68,8 @@ public:
 private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
+
+public:
 	bool god_mode = false;
 };
 #endif // __J1COLLIDERS_H__ 

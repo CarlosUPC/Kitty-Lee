@@ -28,9 +28,17 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	
 	//Enemy Path
 	entityPath = nullptr;
+	pState == PathState::G_DEFAULT_PATH;
 
+	
 }
 
+bool Gladiator::Start() {
+	
+	//initialPos = GetEntityPosition(Types::GLADIATOR)->position;
+	initialPos = {352, 272};
+	return true;
+}
 Gladiator::~Gladiator()
 {
 	
@@ -45,6 +53,9 @@ void Gladiator::Move(float dt)
 
 	if(DetectPlayer())
 		ChasePlayer(dt);
+
+	if (back)
+		BackToDefaultPath(dt);
 
 	StatesMachine();
 	
@@ -204,13 +215,14 @@ void Gladiator::StatesMachine() {
 void Gladiator::DefaultPath(float dt) {
 	
 	if (create_dpath) {
-		iPoint to_go;
-		to_go.x = (int)position.x - 50;
-		to_go.y = (int)position.y;
-		
-		CreatePathfinding(to_go);
-		do_dpath = true;
-		create_dpath = false;
+
+			iPoint to_go;
+			to_go.x = (int)position.x - 50;
+			to_go.y = (int)position.y;
+
+			CreatePathfinding(to_go);
+			do_dpath = true;
+			create_dpath = false;
 	}
 	
 	if (do_dpath) {
@@ -256,6 +268,16 @@ void Gladiator::TrackingPathfinding(float dt) {
 				index = 0;
 				
 			}
+
+			if (pState == PathState::G_BACK_TO_DEFAULT_PATH) {
+				index = 0;
+				pState = PathState::G_DEFAULT_PATH;
+				pathfinding = true;
+				create_dpath = true;
+				back = false;
+
+			}
+			
 			else if (pState == PathState::G_CHASE_PATH) {
 
 				fPoint fplayerPos;
@@ -294,10 +316,18 @@ bool Gladiator::DetectPlayer() {
 	}
 
 	else {
-		pathfinding = false;
-		detected = false;
-		create_chase_path = true;
-		pState = PathState::G_DEFAULT_PATH;
+
+		if (pState == PathState::G_CHASE_PATH) {
+			back = true;
+			detected = false;
+			create_chase_path = true;
+			pState = PathState::G_BACK_TO_DEFAULT_PATH;
+		}
+		else if(pState == PathState::G_DEFAULT_PATH) {
+			pathfinding = false;
+			detected = false;
+		
+		}
 	}
 
 	return detected;
@@ -322,6 +352,28 @@ void Gladiator::ChasePlayer(float dt) {
 	}
 
 	if (do_chase_path)
+		TrackingPathfinding(dt);
+
+}
+
+void Gladiator::BackToDefaultPath(float dt) {
+
+
+	if (create_back_path) {
+
+
+  		iPoint to_go;
+		to_go.x = (int)initialPos.x;
+		to_go.y = (int)initialPos.y;
+
+
+		CreatePathfinding(to_go);
+		create_back_path = false;
+		do_back_path = true;
+
+	}
+
+	if (do_back_path)
 		TrackingPathfinding(dt);
 
 }

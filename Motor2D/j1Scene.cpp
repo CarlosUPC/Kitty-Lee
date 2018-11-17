@@ -84,29 +84,6 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("PreUpdateScene", Profiler::Color::Yellow);
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p, TypePathDistance::MANHATTAN);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
-
 	CheckLevel();
 	return true;
 }
@@ -165,15 +142,8 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 
 	if (App->collider->debug) {
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
 
 		SDL_Rect path_rect = { 0,0,16,16 };
-
-		App->render->Blit(debug_tex, p.x, p.y, &path_rect);
 
 		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 

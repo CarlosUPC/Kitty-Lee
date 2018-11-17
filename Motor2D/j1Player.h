@@ -67,7 +67,7 @@ private:
 
 	void PushBack();
 	void AddColliders();
-	void Movement(float dt);
+	void Move(float dt);
 	void CheckState();
 	void ChangeState();
 	void SetCollidersPos();
@@ -76,11 +76,10 @@ private:
 	void LoadCollider(pugi::xml_node&);
 	void Draw(float dt);
 
-public:
+private:
 
 	PlayerState state = IDLE;
 
-	fPoint		speed;
 
 	float		maxSpeedX;
 	float		incrementSpeedX;
@@ -94,10 +93,6 @@ public:
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;
 	const char* crashingSound = nullptr;
-
-	pugi::xml_document	player_file;
-
-	float animationSpeed;
 
 	bool ghost = false;
 

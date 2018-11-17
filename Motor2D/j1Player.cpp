@@ -51,8 +51,6 @@ bool j1Player::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::Red);
 
-	Movement(dt);
-
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		App->collider->GhostMode(ghost);
 		ghost = !ghost;
@@ -80,16 +78,18 @@ bool j1Player::CleanUp()
 	return App->tex->UnLoad(data.tileset.texture);
 }
 
-void j1Player::Movement(float dt) {
+void j1Player::Move(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
-			App->audio->PlayFx(1, -1); //Walk fx
+			if (!air)
+				App->audio->PlayFx(1, -1); //Walk fx
 			
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeedX) {
 			speed.x -= incrementSpeedX;
-			App->audio->PlayFx(1, -1); //Walk fx
+			if (!air)
+				App->audio->PlayFx(1, -1); //Walk fx
 		
 	}
 
@@ -101,6 +101,7 @@ void j1Player::Movement(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT && App->collider->Check(colliderPlayer_down.collider,COLLIDER_PLATFORM)) {
 		if (!platformOverstep)
 			platformOverstep = true;
+		App->audio->StopFx(1); //Walk fx
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && air == false) {
@@ -109,22 +110,98 @@ void j1Player::Movement(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
-	
-	speed.y += App->map->data.properties.gravity * ceil(dt);
-	if (speed.y > App->map->data.properties.maxAccelerationY)
+ 	//speed.y += App->map->data.properties.gravity * dt;
+	speed.y += App->map->data.properties.gravity * dt;
+	/*if (speed.y > App->map->data.properties.maxAccelerationY)
 		speed.y = App->map->data.properties.maxAccelerationY;
 	else if (speed.y < -App->map->data.properties.maxAccelerationY)
-		speed.y = -App->map->data.properties.maxAccelerationY;
-		
-	speed.x = floor(speed.x);
-	speed.y = floor(speed.y);
+		speed.y = -App->map->data.properties.maxAccelerationY;*/
 	position += speed * dt;
-	LOG("speed: %f, %f", speed.x, speed.y);
+	SetCollidersPos();
+	LOG("dt %f", dt);
 	LOG("position: %f, %f", position.x, position.y);
-	/*position.x = floor(position.x);
-	position.y = floor(position.y);*/
-
+	LOG("speed: %f, %f", speed.x, speed.y);
 }
+
+void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
+	switch (c2->type) {
+	case COLLIDER_FLOOR:
+		if (c1 == colliderPlayer_down.collider) {
+			speed.y = 0.0f;
+			speed.y -= App->map->data.properties.gravity * dt;
+			if (air)
+				air = false;
+			if (c1->rect.y >= c2->rect.y)
+				position.y = c2->rect.y - collider.height - collider.offset.y;
+		}
+
+		 else if (c1 == colliderPlayer_up.collider) {
+			speed.y = 0.0f;
+			if (c2->rect.y + c2->rect.h >= c1->rect.y)
+				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
+		}
+		if (c1 == colliderPlayer_left.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			if (c2->rect.x + c2->rect.w >= c1->rect.x)
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x + 1;
+		}
+
+		else if (c1 == colliderPlayer_right.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			if (c2->rect.x <= c1->rect.x)
+				position.x = c2->rect.x - collider.width - collider.offset.x + 1;
+
+		}
+		break;
+	case COLLIDER_GHOST:
+		if (c1 == colliderPlayer_left.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			if (c2->rect.x + c2->rect.w >= c1->rect.x)
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
+		}
+
+		else if (c1 == colliderPlayer_right.collider) {
+			speed.x = 0.0f;
+			App->audio->StopFx(1);
+			if (c2->rect.x <= c1->rect.x)
+				position.x = c2->rect.x - collider.width - collider.offset.x;
+
+		}
+		break;
+	case COLLIDER_PLATFORM:
+		if (c1 == colliderPlayer_down.collider) {
+			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
+				speed.y = 0.0f;
+				speed.y -= App->map->data.properties.gravity * dt;
+				if (air)
+					air = false;
+				if (c1->rect.y >= c2->rect.y)
+					position.y = c2->rect.y - collider.height - collider.offset.y;
+			}
+			else if (c2->rect.y + c2->rect.h * 0.5f < c1->rect.y && platformOverstep) {
+				platformOverstep = false;
+			}
+		}
+		break;
+	case COLLIDER_DEATH:
+		App->LoadGame();
+		break;
+	case COLLIDER_SCENE:
+		if (!App->fade->IsFading())
+			App->fade->FadeToBlack();
+		break;
+	case COLLIDER_WIN:
+
+		break;
+	default:
+		break;
+	}
+	SetCollidersPos();
+}
+
 void j1Player::PushBack() {
 
 	for (uint i = 0; i < data.num_animations; ++i) {
@@ -492,83 +569,4 @@ void j1Player::ChangeState() {
 
 	current_animation->speed = animationSpeed;
 
-}
-
-void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
-	switch (c2->type) {
-	case COLLIDER_FLOOR:
-		if (c1 == colliderPlayer_down.collider) {
-			speed.y = 0.0f;
-			speed.y -= App->map->data.properties.gravity * ceil(dt);
-			if (air)
-				air = false;
-			if (c1->rect.y >= c2->rect.y)
-				position.y = c2->rect.y - collider.height - collider.offset.y;
-		}
-
-		if (c1 == colliderPlayer_up.collider) {
-			speed.y = 0.0f;
-			if (c2->rect.y + c2->rect.h >= c1->rect.y)
-				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
-		}
-		if (c1 == colliderPlayer_left.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x+1;
-		}
-
-		if (c1 == colliderPlayer_right.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x+1;
-
-		}
-		break;
-	case COLLIDER_GHOST:
-		if (c1 == colliderPlayer_left.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
-		}
-
-		else if (c1 == colliderPlayer_right.collider) {
-			speed.x = 0.0f;
-			App->audio->StopFx(1);
-			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x;
-
-		}
-		break;
-	case COLLIDER_PLATFORM:
-		if (c1 == colliderPlayer_down.collider) {
-			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
-				speed.y = 0.0f;
-				speed.y -= App->map->data.properties.gravity;
-				if (air)
-					air = false;
-				if (c1->rect.y >= c2->rect.y)
-					position.y = c2->rect.y - collider.height - collider.offset.y;
-			}
-			else if (c2->rect.y + c2->rect.h * 0.5f < c1->rect.y && platformOverstep) {
-				platformOverstep = false;
-			}
-		}
-		break;
-	case COLLIDER_DEATH:
-		App->LoadGame();
-		break;
-	case COLLIDER_SCENE:
-		if (!App->fade->IsFading())
-			App->fade->FadeToBlack();
-		break;
-	case COLLIDER_WIN:
-
-		break;
-	default:
-		break;
-	}
-	SetCollidersPos();
 }

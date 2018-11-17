@@ -126,6 +126,8 @@ public:
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 
 	pugi::xml_document	entity_file;
+
+	fPoint		speed;
 	
 	Animation* current_animation = nullptr;
 	float animationSpeed;

@@ -13,7 +13,7 @@
 #include "p2Log.h"
 #include "j1EntityManager.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Brofiler/Brofiler.h"
 
 
 j1FadeToBlack::j1FadeToBlack()

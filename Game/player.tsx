@@ -5,7 +5,7 @@
   <property name="crashSound" value="audio/fx/jump_07.wav"/>
   <property name="incrementSpeedX" type="float" value="25"/>
   <property name="jumpSound" value="audio/fx/jump_03.wav"/>
-  <property name="jumpSpeed" type="float" value="-800"/>
+  <property name="jumpSpeed" type="float" value="-150"/>
   <property name="maxSpeedX" type="float" value="80"/>
   <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>

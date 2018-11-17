@@ -106,8 +106,8 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 	bool ret = true;
 
 	for (int i = 0; i < entities.Count(); ++i) {
-		entities[i]->Update(dt);
 		entities[i]->Move(dt);
+		entities[i]->Update(dt);
 
 		if (do_logic) {
 			entities[i]->CreatePath();

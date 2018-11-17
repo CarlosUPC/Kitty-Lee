@@ -73,23 +73,17 @@ void j1Entity::DeleteAnimation()
 	}
 }
 
-j1Entity * j1Entity::CloserEntity(j1Entity::Types type)
+j1Entity * j1Entity::GetEntityPosition(j1Entity::Types type)
 {
 	j1Entity* ent = nullptr;
-	fPoint position;
+	
 	for (int i = 0; i < App->entities->entities.Count(); ++i) {
-		if (i == 0) {
+
+		if (i == (int)type) {
 			ent = App->entities->entities[i];
-			position = App->entities->entities[i]->position;
-		}
-		else if (App->entities->entities[i]->position.x < position.x) {
-			ent = App->entities->entities[i];
-			position = App->entities->entities[i]->position;
-		}
+		}	
 	}
 	
-
-
 	return ent;
 }
 

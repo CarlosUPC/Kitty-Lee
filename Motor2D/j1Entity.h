@@ -107,7 +107,7 @@ public:
 	virtual bool CleanUp();
 	void DeleteAnimation();
 
-	j1Entity* CloserEntity(j1Entity::Types type);
+	j1Entity* GetEntityPosition(j1Entity::Types type);
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};
 	//virtual void DeadAnim();

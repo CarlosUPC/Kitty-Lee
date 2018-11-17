@@ -21,9 +21,9 @@ Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
 	
 	//Set Collider & Bouncers
 	AddColliders();
-	
+	player = (j1Player*)GetEntityPosition(Types::PLAYER);
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
-	playerPathfinding = App->collider->AddCollider({ (int)GetEntityPosition(Types::PLAYER)->position.x, (int)GetEntityPosition(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
+	playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
 	
 	//Enemy Path
@@ -60,7 +60,7 @@ void Gladiator::Draw(float dt)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
 	
 	if (playerPathfinding != nullptr)
-		playerPathfinding->SetPos(GetEntityPosition(Types::PLAYER)->position.x - 34, GetEntityPosition(Types::PLAYER)->position.y - 34);
+		playerPathfinding->SetPos(player->position.x - 34, player->position.y - 34);
 
 		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame(dt),1.0F,flip);
 	
@@ -232,50 +232,46 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 }
 
 void Gladiator::TrackingPathfinding(float dt) {
+	iPoint forwardPos;// = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+	fPoint speed = { 1.0f, 1.0f };
 
-	if (entityPath->At(index) != nullptr) {
+	if ((int)position.x < forwardPos.x)
+		position.x += speed.x * dt;
+	else if ((int)position.x > forwardPos.x)
+		position.x -= speed.x * dt;
+	if ((int)position.y < forwardPos.y)
+		position.y += speed.y * dt;
+	else if ((int)position.y > forwardPos.y)
+		position.y -= speed.y * dt;
 
-		iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-		fPoint speed = { 0.02f, 0.01f };
+	if ((int)position.x == forwardPos.x) {
 
-		if ((int)position.x < forwardPos.x)
-			position.x += speed.x * dt;
-		else if ((int)position.x > forwardPos.x)
-			position.x -= speed.x * dt;
-		if ((int)position.y < forwardPos.y)
-			position.y += speed.y * dt;
-		else if ((int)position.y > forwardPos.y)
-			position.y -= speed.y * dt;
+		if (index < entityPathSize - 1)
+			index++;
 
-		if ((int)position.x == forwardPos.x) {
+		else {
 
-			if (index < entityPathSize - 1)
-				index++;
+			if (pState == PathState::G_DEFAULT_PATH) {
+				index = 0;
 
-			else {
+			}
+			else if (pState == PathState::G_CHASE_PATH) {
 
-				if (pState == PathState::G_DEFAULT_PATH) {
-					index = 0;
-
-				}
-				else if (pState == PathState::G_CHASE_PATH) {
-
-					fPoint fplayerPos;
-					fplayerPos.x = playerPos.x;
-					fplayerPos.y = playerPos.y;
+				fPoint fplayerPos;
+				fplayerPos.x = playerPos.x;
+				fplayerPos.y = playerPos.y;
 
 
 
-					if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
-						gState = GladiatorState::G_IDLE;
-
-					}
-					else {
-						create_chase_path = true;
-						do_chase_path = false;
-					}
+				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
+					gState = GladiatorState::G_IDLE;
 
 				}
+				else {
+					create_chase_path = true;
+					do_chase_path = false;
+				}
+
 			}
 		}
 	}
@@ -287,7 +283,7 @@ bool Gladiator::DetectPlayer() {
 
 	bool detected = false;
 	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
-	SDL_Rect player_pos = { GetEntityPosition(Types::PLAYER)->position.x, GetEntityPosition(Types::PLAYER)->position.y, 100, 100 };
+	SDL_Rect player_pos = { player->position.x, player->position.y, 100, 100 };
 	
 	
 	if (SDL_HasIntersection(&enemy_pos, &player_pos)) {
@@ -313,8 +309,8 @@ void Gladiator::ChasePlayer(float dt) {
 	if (create_chase_path) {
 		
 		
-		playerPos.x = GetEntityPosition(Types::PLAYER)->position.x;
-		playerPos.y = GetEntityPosition(Types::PLAYER)->position.y;
+		playerPos.x = player->position.x;
+		playerPos.y = player->position.y;
 
 		
 

@@ -41,7 +41,9 @@ bool j1Scene::Start()
 {
 	App->map->Load(lvl1.GetString());
 
-	p2List_item<ColliderObject*>* position = App->map->data.colliders.start;
+	App->map->AddCollidersMap();
+
+	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
 	j1Entity* ent = nullptr;
 
 	for (; position; position = position->next) {
@@ -76,7 +78,6 @@ bool j1Scene::Start()
 	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
 	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
 
-	App->map->AddCollidersMap();
 	return true;
 }
 
@@ -122,7 +123,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
-			player->position.SetToZero();
+			player->position.create(80, 256);
 			player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}

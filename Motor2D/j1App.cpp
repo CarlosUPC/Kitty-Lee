@@ -48,8 +48,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(fade);
-	AddModule(collider);
 	AddModule(entities);
+	AddModule(collider);
 	
 	// render last to swap buffer
 	AddModule(render);
@@ -233,6 +233,7 @@ void j1App::FinishUpdate()
 
 	if (1000/ framerate_cap >= last_frame_ms)
 		SDL_Delay(1000 / framerate_cap - last_frame_ms);
+	
 }
 
 // Call modules before each loop iteration

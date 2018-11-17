@@ -294,13 +294,9 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 
 				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
-<<<<<<< HEAD
-					EnemyHit(dt);	
-			
-=======
-					gState = GladiatorState::G_IDLE;
 
->>>>>>> 1e31da0e181620aa09ebc04655f5994e58868fea
+					EnemyHit(dt);	
+					gState = GladiatorState::G_IDLE;
 				}
 
 				else {

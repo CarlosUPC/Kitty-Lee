@@ -30,9 +30,6 @@
     </ClCompile>
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Collision.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="FLYING_TONGUE.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Player.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,9 +111,6 @@
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1App.h" />
-    <ClInclude Include="j1Player.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -145,6 +142,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="FLYING_TONGUE.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Player.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

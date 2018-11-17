@@ -81,6 +81,7 @@ public:
 	PlayerState state = IDLE;
 
 	fPoint		speed;
+	fPoint		acceleration;
 
 	float		maxSpeedX;
 	float		incrementSpeedX;

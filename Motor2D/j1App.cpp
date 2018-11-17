@@ -100,7 +100,7 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
-		framerate_cap = app_config.attribute("framerate_cap").as_uint();
+		framerate_cap = 1000 / app_config.attribute("framerate_cap").as_uint();
 	}
 
 	if(ret == true)
@@ -186,7 +186,7 @@ void j1App::PrepareUpdate()
 
 	frame_count++;
 	last_sec_frame_count++;
-	dt = frame_time.Read();
+	dt = frame_time.ReadSec();
 	frame_time.Start();
 }
 
@@ -228,8 +228,8 @@ void j1App::FinishUpdate()
 	App->win->SetTitle(title);
 
 	if (cap_framerate) {
-		if (1000 / framerate_cap >= last_frame_ms)
-			SDL_Delay(1000 / framerate_cap - last_frame_ms);
+		if (framerate_cap >= last_frame_ms)
+			SDL_Delay(framerate_cap - last_frame_ms);
 	}
 	
 }

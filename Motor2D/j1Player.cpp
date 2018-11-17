@@ -40,6 +40,8 @@ bool j1Player::Start()
 
 	AddColliders();
 
+	acceleration.y = 1;
+
 	App->audio->LoadFx(walkingSound);
 	App->audio->LoadFx(jumpingSound);
 	App->audio->LoadFx(crashingSound);
@@ -107,12 +109,14 @@ void j1Player::Movement(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
+	
 	if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
 		speed.y += App->map->data.properties.Get("gravity");
-
-
-
+	
+	
+	
 	position += speed * dt;
+
 }
 void j1Player::PushBack() {
 

@@ -47,6 +47,7 @@
   
   <enemies>
 	<enemy_1>gladiator2.tsx</enemy_1>
+	<enemy_2>Flying Tongue.tsx</enemy_2>
   </enemies>
 
 </config>

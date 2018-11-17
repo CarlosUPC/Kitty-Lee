@@ -1,5 +1,5 @@
-#ifndef __GLADIATOR_H__
-#define __GLADIATOR_H__
+#ifndef __FLYING_TONGUE_H__
+#define __FLYING_TONGUE_H__
 
 #include "j1Entity.h"
 #include "Path.h"
@@ -11,7 +11,7 @@ enum PathState {
 	G_CHASE_PATH
 };
 
-enum GladiatorState {
+enum FlyingTongueState {
 	G_IDLE,
 	G_WALKING,
 	G_HIT,
@@ -19,7 +19,7 @@ enum GladiatorState {
 	G_DEAD
 };
 
-struct  GladiatorAnims {
+struct  FlyingTongueAnims {
 	Animation g_idle;
 	Animation g_walking;
 	Animation g_hit;
@@ -28,12 +28,12 @@ struct  GladiatorAnims {
 
 };
 
-class Gladiator : public j1Entity
+class FlyingTongue : public j1Entity
 {
 public:
 
-	Gladiator();
-	~Gladiator();
+	FlyingTongue();
+	~FlyingTongue();
 
 	void Move(float dt);
 	void Draw(float dt);
@@ -51,13 +51,13 @@ private:
 	void TrackingPathfinding(float dt);
 	bool DetectPlayer();
 	void ChasePlayer(float dt);
-	
-	
+
+
 private:
-	GladiatorState gState;
+	FlyingTongueState gState;
 	PathState pState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
-	
+
 
 	iPoint gSize;
 
@@ -69,22 +69,14 @@ private:
 
 	bool pathfinding = false;
 
-	bool create_dpath = true;
-	bool do_dpath = false;
-
-	bool create_chase_path = true;
-	bool do_chase_path = false;
-
-	int dest = 0;
-	int index = 0;
-
-	fPoint lastPosition = {128, 256};
+	fPoint lastPosition = { 128, 256 };
 
 	Collider* playerPathfinding;
 	Collider* enemyPathfinding;
 
 	iPoint playerPos;
-	
+
 };
 
 #endif // !__GLADIATOR_H__
+

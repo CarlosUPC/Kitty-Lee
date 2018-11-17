@@ -33,7 +33,7 @@ public:
 	j1Entity* CreateEntity(j1Entity::Types type);
 	void DestroyEntity(j1Entity* entity);
 
-	j1Entity* CloserEntity(j1Entity::Types type);
+	
 
 public:
 	p2DynArray<j1Entity*> entities;

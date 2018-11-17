@@ -43,30 +43,29 @@ bool j1Scene::Start()
 
 	App->map->AddCollidersMap();
 
-	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
-	j1Entity* ent = nullptr;
-
-	for (; position; position = position->next) {
-		if (position->data->name == "Gladiator")
-			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR);
-		else if (position->data->name == "Player") {
-			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER);
-			player = (j1Player*)ent;
-		}
-		else ent = nullptr;
-
-		if (ent != nullptr) {
-			ent->position.create(position->data->coll_x, position->data->coll_y);
-			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
-		}
-	}
-
 	int w, h;
 	uchar* data = NULL;
 	if (App->map->CreateWalkabilityMap(w, h, &data))
 		App->pathfinding->SetMap(w, h, data);
 
 	RELEASE_ARRAY(data);
+
+	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
+	j1Entity* ent = nullptr;
+
+	for (; position; position = position->next) {
+		if (position->data->name == "Gladiator")
+			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR, position->data->coll_x, position->data->coll_y);
+		else if (position->data->name == "Player") {
+			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
+			player = (j1Player*)ent;
+		}
+		else ent = nullptr;
+
+		if (ent != nullptr) {
+			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
+		}
+	}
 
 	debug_tex = App->tex->Load("maps/path.png");
 
@@ -123,17 +122,16 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (!isLevel1) App->fade->FadeToBlack();
 		else {
-			player->position.create(80, 256);
 			player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}
 	}
 
 	//F2 - Start from the beginning of the current level
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
-		//App->player->position = App->map->queue[PLAYER].initialPos;
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || player->position.y > App->map->data.height*App->map->data.tile_height){
+		player->position = player->spawn_position;
 		player->speed.SetToZero();
-		App->render->camera = App->render->CameraInitPos();
+		//App->render->camera = App->render->CameraInitPos();
 		}
 	
 	//F3 - Increase music volume

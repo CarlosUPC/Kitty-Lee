@@ -87,7 +87,7 @@ public:
 
 public:
 
-	j1Entity(Types type);
+	j1Entity(Types type, int x, int y);
 	virtual ~j1Entity();
 
 	const Collider* GetCollider() const;
@@ -101,9 +101,9 @@ public:
 	virtual bool Start() { return true; }
 	virtual bool Update(float dt);
 	virtual void Move(float dt) {}
-	virtual void Draw(float dt);
+	virtual void Draw();
 	virtual void CreatePath() {}
-	virtual void OnCollision(Collider* collider1, Collider * collider2);
+	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt);
 	virtual bool CleanUp();
 	void DeleteAnimation();
 
@@ -115,12 +115,15 @@ public:
 	
 
 	fPoint position;
+	fPoint spawn_position;
 
 	Types type;
 
 	COLLIDER_INFO collider;
 
 	EntityInfo data;
+
+	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 
 	pugi::xml_document	entity_file;
 	

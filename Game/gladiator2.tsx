@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="gladiator" tilewidth="32" tileheight="32" tilecount="40" columns="8">
+<tileset version="1.2" tiledversion="1.2.1" name="gladiator" tilewidth="32" tileheight="32" tilecount="40" columns="8">
  <properties>
-  <property name="AnimationSpeed" type="float" value="0.6"/>
+  <property name="AnimationSpeed" type="float" value="15"/>
  </properties>
  <image source="textures/enemies/Gladiator.png" width="256" height="160"/>
  <tile id="0">

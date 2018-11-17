@@ -30,7 +30,7 @@ public:
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
-	j1Entity* CreateEntity(j1Entity::Types type);
+	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
 	void DestroyEntity(j1Entity* entity);
 
 	

@@ -200,10 +200,10 @@ bool j1Colliders::Update(float dt)
 			{
 				if (c1->to_delete == false && c2->to_delete != true) {
 					if (matrix[c1->type][c2->type] && c1->callback)
-						c1->callback->OnCollision(c1, c2);
+						c1->callback->OnCollision(c1, c2, dt);
 					if (c1->to_delete == false) {
 						if (matrix[c2->type][c1->type] && c2->callback)
-							c2->callback->OnCollision(c2, c1);
+							c2->callback->OnCollision(c2, c1, dt);
 					}
 				}
 			}

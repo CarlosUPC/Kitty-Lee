@@ -16,7 +16,7 @@
 
 #include "Brofiler/Brofiler.h"
 
-j1Player::j1Player() : j1Entity(Types::PLAYER) {
+j1Player::j1Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
 
 	LoadEntityData("player.tsx");
 
@@ -39,8 +39,6 @@ bool j1Player::Start()
 	speed.SetToZero();
 
 	AddColliders();
-
-	acceleration.y = 1;
 
 	App->audio->LoadFx(walkingSound);
 	App->audio->LoadFx(jumpingSound);
@@ -70,6 +68,8 @@ bool j1Player::Update(float dt)
 	SetCollidersPos();
 
 	CheckState();
+
+	current_animation->GetCurrentFrame(dt);
 
 	return true;
 }
@@ -110,12 +110,19 @@ void j1Player::Movement(float dt) {
 	}
 
 	
-	if (speed.y < App->map->data.properties.Get("maxAccelerationY"))
-		speed.y += App->map->data.properties.Get("gravity");
-	
-	
-	
+	speed.y += App->map->data.properties.gravity * ceil(dt);
+	if (speed.y > App->map->data.properties.maxAccelerationY)
+		speed.y = App->map->data.properties.maxAccelerationY;
+	else if (speed.y < -App->map->data.properties.maxAccelerationY)
+		speed.y = -App->map->data.properties.maxAccelerationY;
+		
+	speed.x = floor(speed.x);
+	speed.y = floor(speed.y);
 	position += speed * dt;
+	LOG("speed: %f, %f", speed.x, speed.y);
+	LOG("position: %f, %f", position.x, position.y);
+	/*position.x = floor(position.x);
+	position.y = floor(position.y);*/
 
 }
 void j1Player::PushBack() {
@@ -487,35 +494,35 @@ void j1Player::ChangeState() {
 
 }
 
-void j1Player::OnCollision(Collider* c1, Collider* c2) {
+void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	switch (c2->type) {
 	case COLLIDER_FLOOR:
 		if (c1 == colliderPlayer_down.collider) {
 			speed.y = 0.0f;
-			speed.y -= App->map->data.properties.Get("gravity");
+			speed.y -= App->map->data.properties.gravity * ceil(dt);
 			if (air)
 				air = false;
 			if (c1->rect.y >= c2->rect.y)
 				position.y = c2->rect.y - collider.height - collider.offset.y;
 		}
 
-		else if (c1 == colliderPlayer_up.collider) {
+		if (c1 == colliderPlayer_up.collider) {
 			speed.y = 0.0f;
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
 				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
 		}
-		else if (c1 == colliderPlayer_left.collider) {
+		if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x+1;
 		}
 
-		else if (c1 == colliderPlayer_right.collider) {
+		if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x;
+				position.x = c2->rect.x - collider.width - collider.offset.x+1;
 
 		}
 		break;
@@ -539,7 +546,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c1 == colliderPlayer_down.collider) {
 			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
 				speed.y = 0.0f;
-				speed.y -= App->map->data.properties.Get("gravity");
+				speed.y -= App->map->data.properties.gravity;
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)
@@ -563,4 +570,5 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	default:
 		break;
 	}
+	SetCollidersPos();
 }

@@ -22,7 +22,7 @@
 #include <cmath>
 
 
-j1Entity::j1Entity(Types type) : type(type) 
+j1Entity::j1Entity(Types type, int PositionX, int PositionY) : type(type), spawn_position(PositionX,PositionY), position(PositionX,PositionY)
 {}
 
 j1Entity::~j1Entity()
@@ -36,22 +36,21 @@ const Collider* j1Entity::GetCollider() const
 	return collider.collider;
 }
 
-void j1Entity::OnCollision(Collider* c1, Collider * c2)
+void j1Entity::OnCollision(Collider* c1, Collider * c2, float dt)
 {
 }
 
 bool j1Entity::Update(float dt) {
 	BROFILER_CATEGORY("UpdateEntity", Profiler::Color::Red);
 
-	//Move(dt);
-
-	//Draw(dt);
-
 	return true;
 }
 
-void j1Entity::Draw(float dt) {
-	App->render->Blit(data.tileset.texture, position.x, position.y);
+void j1Entity::Draw() {
+	if (current_animation != nullptr)
+		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->frames[current_animation->GetNumCurrentFrame()], 1.0F, flip);
+	else
+		App->render->Blit(data.tileset.texture, position.x, position.y);
 }
 
 bool j1Entity::CleanUp()

@@ -3,6 +3,7 @@
 
 #include "j1Entity.h"
 #include "Path.h"
+#include "j1Player.h"
 
 class SDL_Texture;
 
@@ -33,12 +34,12 @@ class Gladiator : public j1Entity
 {
 public:
 
-	Gladiator();
+	Gladiator(int x, int y);
 	~Gladiator();
 
 	bool Start();
+	bool Update(float dt);
 	void Move(float dt);
-	void Draw(float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
 	void Drop();
@@ -59,11 +60,11 @@ private:
 	
 private:
 	GladiatorState gState;
-	PathState pState;
-	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
-	
+	PathState pState;	
 
 	iPoint gSize;
+
+	j1Player* player;
 
 	Animation anim_idle;
 	Animation anim_walking;

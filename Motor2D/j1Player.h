@@ -33,7 +33,7 @@ class j1Player : public j1Entity
 
 public:
 
-	j1Player();
+	j1Player(int x, int y);
 
 	~j1Player();
 
@@ -61,7 +61,7 @@ public:
 
 	bool Save(pugi::xml_node&) const;
 
-	void OnCollision(Collider*, Collider*);
+	void OnCollision(Collider*, Collider*, float dt);
 
 private:
 
@@ -81,7 +81,6 @@ public:
 	PlayerState state = IDLE;
 
 	fPoint		speed;
-	fPoint		acceleration;
 
 	float		maxSpeedX;
 	float		incrementSpeedX;
@@ -98,9 +97,6 @@ public:
 
 	pugi::xml_document	player_file;
 
-	SDL_RendererFlip flip = (SDL_RendererFlip) SDL_FLIP_NONE;
-
-	Animation* current_animation = nullptr;
 	float animationSpeed;
 
 	bool ghost = false;

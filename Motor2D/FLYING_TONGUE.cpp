@@ -8,7 +8,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 
-FlyingTongue::FlyingTongue() : j1Entity(Types::GLADIATOR)
+FlyingTongue::FlyingTongue(int x, int y) : j1Entity(Types::GLADIATOR, x, y)
 {
 	//Load Enemy data
 	LoadEntityData("Flying Tongue.tsx");

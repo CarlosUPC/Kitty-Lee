@@ -108,7 +108,6 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 	for (int i = 0; i < entities.Count(); ++i) {
 		entities[i]->Update(dt);
 		entities[i]->Move(dt);
-		entities[i]->Draw(dt);
 
 		if (do_logic) {
 			entities[i]->CreatePath();
@@ -121,20 +120,9 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 bool j1EntityManager::PostUpdate()
 {
 	BROFILER_CATEGORY("PostUpdateEntityManager", Profiler::Color::Green);
-	// check camera position to decide what to despawn
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (entities[i] != nullptr)
-		{
-			if (entities[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
-			{
-				LOG("DeSpawning enemy at %d", entities[i]->position.x * SCREEN_SIZE);
-				entities[i]->CleanUp();
-				entities.Pop(entities[i]);
-				RELEASE(entities[i]);
-			}
-		}
-	}*/
+
+	for (int i = 0; i < entities.Count(); ++i)
+		entities[i]->Draw();
 
 	return true;
 }
@@ -155,13 +143,13 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type)
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
 {
 	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
-		case j1Entity::Types::GLADIATOR: ret = new Gladiator(); break;
-		case j1Entity::Types::PLAYER: ret = new j1Player(); break;
+		case j1Entity::Types::GLADIATOR: ret = new Gladiator(PositionX, PositionY); break;
+		case j1Entity::Types::PLAYER: ret = new j1Player(PositionX, PositionY); break;
 	}
 	if (ret != nullptr) {
 		entities.PushBack(ret);

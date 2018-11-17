@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="125" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="118">
  <properties>
-  <property name="gravity" type="float" value="80"/>
-  <property name="maxAccelerationY" type="float" value="450"/>
+  <property name="gravity" type="float" value="280"/>
+  <property name="maxAccelerationY" type="float" value="400"/>
   <property name="musicEnvironment" value="audio/music/Grasslands_Theme.ogg"/>
  </properties>
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" tilecount="575" columns="25">

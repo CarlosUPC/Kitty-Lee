@@ -187,6 +187,7 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 	dt = frame_time.ReadSec();
+	LOG("dt: %f", dt);
 	frame_time.Start();
 }
 
@@ -276,7 +277,7 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(ceil(dt));
+		ret = item->data->Update(dt);
 	}
 
 	return ret;

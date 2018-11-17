@@ -36,7 +36,7 @@ const Collider* j1Entity::GetCollider() const
 	return collider.collider;
 }
 
-void j1Entity::OnCollision(Collider* c1, Collider * c2)
+void j1Entity::OnCollision(Collider* c1, Collider * c2, float dt)
 {
 }
 

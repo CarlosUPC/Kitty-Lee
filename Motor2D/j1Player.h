@@ -61,7 +61,7 @@ public:
 
 	bool Save(pugi::xml_node&) const;
 
-	void OnCollision(Collider*, Collider*);
+	void OnCollision(Collider*, Collider*, float dt);
 
 private:
 
@@ -81,7 +81,6 @@ public:
 	PlayerState state = IDLE;
 
 	fPoint		speed;
-	fPoint		acceleration;
 
 	float		maxSpeedX;
 	float		incrementSpeedX;

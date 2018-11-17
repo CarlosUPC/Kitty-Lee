@@ -9,7 +9,8 @@ class SDL_Texture;
 
 enum PathState {
 	G_DEFAULT_PATH,
-	G_CHASE_PATH
+	G_CHASE_PATH,
+	G_BACK_TO_DEFAULT_PATH
 };
 
 enum GladiatorState {
@@ -36,6 +37,7 @@ public:
 	Gladiator();
 	~Gladiator();
 
+	bool Start();
 	void Move(float dt);
 	void Draw(float dt);
 	void IdAnimToEnum();
@@ -53,6 +55,7 @@ private:
 	void TrackingPathfinding(float dt);
 	bool DetectPlayer();
 	void ChasePlayer(float dt);
+	void BackToDefaultPath(float dt);
 	
 	
 private:
@@ -79,6 +82,11 @@ private:
 	bool create_chase_path = true;
 	bool do_chase_path = false;
 
+	bool back = false;
+
+	bool create_back_path = true;
+	bool do_back_path = false;
+
 	int dest = 0;
 	int index = 0;
 
@@ -88,6 +96,7 @@ private:
 	Collider* enemyPathfinding;
 
 	iPoint playerPos;
+	fPoint initialPos;
 	
 };
 

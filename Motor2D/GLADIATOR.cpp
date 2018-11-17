@@ -8,7 +8,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 
-Gladiator::Gladiator() : j1Entity(Types::GLADIATOR)
+Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, PositionX, PositionY)
 {
 	//Load Enemy data
 	LoadEntityData("gladiator2.tsx");
@@ -39,6 +39,10 @@ bool Gladiator::Start() {
 	initialPos = {352, 272};
 	return true;
 }
+bool Gladiator::Update(float dt)
+{
+	return true;
+}
 Gladiator::~Gladiator()
 {
 	
@@ -58,25 +62,18 @@ void Gladiator::Move(float dt)
 		BackToDefaultPath(dt);
 
 	StatesMachine();
-	
-}
 
-void Gladiator::Draw(float dt)
-{
+	current_animation->GetCurrentFrame(dt);
 
 	if (collider.collider != nullptr)
 		collider.collider->SetPos(position.x, position.y);
 
 	if (enemyPathfinding != nullptr)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
-	
+
 	if (playerPathfinding != nullptr)
 		playerPathfinding->SetPos(player->position.x - 34, player->position.y - 34);
-
-		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame(dt),1.0F,flip);
 	
-	
-
 }
 
 void Gladiator::IdAnimToEnum()
@@ -245,7 +242,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 void Gladiator::TrackingPathfinding(float dt) {
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 30.0f, 1.0f };
+	fPoint speed = { 30.0f, 30.0f };
 
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;

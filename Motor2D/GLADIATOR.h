@@ -34,12 +34,12 @@ class Gladiator : public j1Entity
 {
 public:
 
-	Gladiator();
+	Gladiator(int x, int y);
 	~Gladiator();
 
 	bool Start();
+	bool Update(float dt);
 	void Move(float dt);
-	void Draw(float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
 	void Drop();
@@ -60,9 +60,7 @@ private:
 	
 private:
 	GladiatorState gState;
-	PathState pState;
-	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
-	
+	PathState pState;	
 
 	iPoint gSize;
 

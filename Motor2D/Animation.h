@@ -38,8 +38,8 @@ public:
 		return frames[(int)current_frame];
 	}
 
-	float GetNumCurrentFrame() {
-		return current_frame;
+	int GetNumCurrentFrame() {
+		return (int)current_frame;
 	}
 
 	bool Finished() const

@@ -32,7 +32,7 @@ class FlyingTongue : public j1Entity
 {
 public:
 
-	FlyingTongue();
+	FlyingTongue(int x, int y);
 	~FlyingTongue();
 
 	void Move(float dt);

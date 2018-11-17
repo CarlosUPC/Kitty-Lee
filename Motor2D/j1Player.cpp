@@ -16,7 +16,7 @@
 
 #include "Brofiler/Brofiler.h"
 
-j1Player::j1Player() : j1Entity(Types::PLAYER) {
+j1Player::j1Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
 
 	LoadEntityData("player.tsx");
 
@@ -68,6 +68,8 @@ bool j1Player::Update(float dt)
 	SetCollidersPos();
 
 	CheckState();
+
+	current_animation->GetCurrentFrame(dt);
 
 	return true;
 }

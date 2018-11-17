@@ -38,7 +38,7 @@ Gladiator::~Gladiator()
 
 void Gladiator::Move(float dt)
 {
-	SetAnimationsSpeed(dt, speedAnim);
+	SetAnimationsSpeed(dt, animationSpeed);
 
 	if (!pathfinding)
 		DefaultPath(dt);
@@ -134,12 +134,12 @@ void Gladiator::PushBack()
 
 void Gladiator::SetAnimationsSpeed(float dt, float speed) {
 
-	//gAnim.g_idle.speed = speed;
-	//gAnim.g_walking.speed = speed;
-	//gAnim.g_hit.speed = speed;
-	//gAnim.g_detecting.speed = speed;
-	//gAnim.g_dead.speed = speed;
-
+	anim_idle.speed = speed;
+	anim_walking.speed = speed;
+	anim_hit.speed = speed;;
+	anim_detecting.speed = speed;
+	anim_dead.speed = speed;
+	
 }
 
 void Gladiator::StatesMachine() {

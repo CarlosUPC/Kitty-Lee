@@ -57,7 +57,7 @@ private:
 	GladiatorState gState;
 	PathState pState;
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
-	float speedAnim;
+	
 
 	iPoint gSize;
 

@@ -181,12 +181,9 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F11) == j1KeyState::KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F11) == j1KeyState::KEY_DOWN)
 		cap_framerate = !cap_framerate;
-		if (cap_framerate)
-			framerate_cap = 30;
-		else framerate_cap = 60;
-	}
+
 	frame_count++;
 	last_sec_frame_count++;
 	dt = frame_time.Read();
@@ -219,20 +216,21 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	switch (cap_framerate) {
-	case true:
+	if (cap_framerate) {
 		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap ON | VSync OFF ",
-			frames_on_last_update, avg_fps, last_frame_ms);
-		break;
-	case false:
-		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap OFF | VSync OFF ",
-			frames_on_last_update, avg_fps, last_frame_ms);
-		break;
+								frames_on_last_update, avg_fps, last_frame_ms);
 	}
+	else {
+		sprintf_s(title, 256, "FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap OFF | VSync OFF ",
+								frames_on_last_update, avg_fps, last_frame_ms);
+	}
+
 	App->win->SetTitle(title);
 
-	if (1000/ framerate_cap >= last_frame_ms)
-		SDL_Delay(1000 / framerate_cap - last_frame_ms);
+	if (cap_framerate) {
+		if (1000 / framerate_cap >= last_frame_ms)
+			SDL_Delay(1000 / framerate_cap - last_frame_ms);
+	}
 	
 }
 

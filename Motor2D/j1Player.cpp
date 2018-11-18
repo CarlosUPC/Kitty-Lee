@@ -209,6 +209,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_DEATH:
 		App->LoadGame();
 		break;
+	case COLLIDER_ENEMY:
+		death = true;
+		state = DEAD;
+		ChangeState();
+		break;
 	case COLLIDER_SCENE:
 		if (!App->fade->IsFading())
 			App->fade->FadeToBlack();

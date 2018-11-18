@@ -16,19 +16,17 @@
 
 #include "Brofiler/Brofiler.h"
 
-j1Player::j1Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
+Player::Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
 
 	LoadEntityData("player.tsx");
 
 }
 
-
-
-j1Player::~j1Player()
+Player::~Player()
 {
 }
 
-bool j1Player::Start()
+bool Player::Start()
 {
 
 	state = IDLE;
@@ -47,7 +45,7 @@ bool j1Player::Start()
 	return true;
 }
 
-bool j1Player::Update(float dt)
+bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::Red);
 
@@ -72,7 +70,7 @@ bool j1Player::Update(float dt)
 }
 
 // Called before quitting
-bool j1Player::CleanUp()
+bool Player::CleanUp()
 {
 	bool ret = false;
 	ret = App->tex->UnLoad(data.tileset.texture);
@@ -85,7 +83,7 @@ bool j1Player::CleanUp()
 	return ret;
 }
 
-void j1Player::Move(float dt) {
+void Player::Move(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
 			if (!air)
@@ -141,7 +139,7 @@ void j1Player::Move(float dt) {
 	SetCollidersPos();
 }
 
-void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
+void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	switch (c2->type) {
 	case COLLIDER_FLOOR:
 		if (c1 == colliderPlayer_down.collider) {
@@ -229,7 +227,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	SetCollidersPos();
 }
 
-void j1Player::PushBack() {
+void Player::PushBack() {
 
 	for (uint i = 0; i < data.num_animations; ++i) {
 		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
@@ -278,7 +276,7 @@ void j1Player::PushBack() {
 	anim_death.loop = false;
 }
 
-void j1Player::AddColliders() {
+void Player::AddColliders() {
 	SDL_Rect r;
 	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
 	
@@ -304,7 +302,7 @@ void j1Player::AddColliders() {
 
 }
 
-void j1Player::SetCollidersPos() {
+void Player::SetCollidersPos() {
 	COLLIDER_INFO* actual_collider;
 	
 	actual_collider = &collider;
@@ -324,7 +322,7 @@ void j1Player::SetCollidersPos() {
 
 }
 
-void j1Player::IdAnimToEnum()
+void Player::IdAnimToEnum()
 {
 	for (uint i = 0; i < data.num_animations; ++i) {
 		switch (data.animations[i].id) {
@@ -374,7 +372,7 @@ void j1Player::IdAnimToEnum()
 	}
 }
 
-void j1Player::LoadProperties(pugi::xml_node &node)
+void Player::LoadProperties(pugi::xml_node &node)
 {
 	p2SString nameIdentificator;
 	while (node) {
@@ -406,7 +404,7 @@ void j1Player::LoadProperties(pugi::xml_node &node)
 	}
 }
 
-void j1Player::LoadCollider(pugi::xml_node &node)
+void Player::LoadCollider(pugi::xml_node &node)
 {
 	p2SString nameIdentificator;
 	while (node) {
@@ -453,12 +451,12 @@ void j1Player::LoadCollider(pugi::xml_node &node)
 	}
 }
 
-void j1Player::Draw(float dt)
+void Player::Draw(float dt)
 {
 	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 }
 
-void j1Player::CheckState() {
+void Player::CheckState() {
 	
 	PlayerState prevState = state;
 	switch (state) {
@@ -521,7 +519,7 @@ void j1Player::CheckState() {
 		flip = SDL_FLIP_HORIZONTAL;
 }
 
-void j1Player::ChangeState() {
+void Player::ChangeState() {
 
 	switch (state)
 	{

@@ -28,14 +28,14 @@ enum PlayerState {
 	UNKNOWN
 };
 
-class j1Player : public j1Entity
+class Player : public j1Entity
 {	
 
 public:
 
-	j1Player(int x, int y);
+	Player(int x, int y);
 
-	~j1Player();
+	~Player();
 
 	bool Start();
 	bool Update(float dt);

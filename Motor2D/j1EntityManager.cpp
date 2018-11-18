@@ -132,7 +132,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int
 	switch (type) {
 		case j1Entity::Types::GLADIATOR: ret = new Gladiator(PositionX, PositionY); break;
 		case j1Entity::Types::FLYING_TONGUE: ret = new FlyingTongue(PositionX, PositionY); break;
-		case j1Entity::Types::PLAYER: ret = new j1Player(PositionX, PositionY); break;
+		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY); break;
 	}
 	if (ret != nullptr) {
 		entities.PushBack(ret);

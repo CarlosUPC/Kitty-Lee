@@ -80,7 +80,7 @@ void j1Scene::CreateEntities()
 			ent = App->entities->CreateEntity(j1Entity::Types::FLYING_TONGUE, position->data->coll_x, position->data->coll_y);
 		else if (position->data->name == "Player") {
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
-			player = (j1Player*)ent;
+			player = (Player*)ent;
 		}
 		else ent = nullptr;
 
@@ -101,7 +101,7 @@ void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
 			ent->position.create(n.attribute("x").as_float(), n.attribute("y").as_float());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER)
-				player = (j1Player*)ent;
+				player = (Player*)ent;
 		}
 	}
 }

@@ -31,7 +31,7 @@ This is a small project made by two students of CITM - Terrassa of Design and De
   * F8 Switch between levels.
   * F9 To view colliders.
   * F10 God Mode.
-  * F11 Insta kill.
+  * F11 Cap on/off fps to 30.
 
 ## Built With
 
@@ -39,15 +39,21 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 * [Tiled](https://www.mapeditor.org/)
 * [SDL](https://www.libsdl.org/license.php)
 * [Pugi](https://pugixml.org/license.html)
+* Compatible with [Brofiler](http://www.brofiler.com/)
 
 ## Art/Music used
 
 * [Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
+* [Flying enemy](https://opengameart.org/content/flying-tongue-monster-sprite-sheet)
 * [Map Tileset](https://ansimuz.itch.io/sunny-land-pixel-game-art)
 * [Map objects](https://opengameart.org/content/a-platformer-in-the-forest)
 * [Music Scene](https://opengameart.org/content/platformer-game-music-pack)
 * [jump fx](https://opengameart.org/content/platformer-jumping-sounds)
 * [walk_fx](https://freesound.org/people/FxKid2/sounds/362609/)
+
+## Repository Link
+
+[Rpository](https://github.com/CarlosUPC/Kitty-Lee)
 
 ## Authors
 
@@ -55,6 +61,32 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 * **Christian Martínez de la Rosa** - [christt105](https://github.com/christt105)
 
 See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/graphs/contributors) who participated in this project.
+
+## Innovation
+### First Assignment
+* Created a system to load data animation provided directly from Tiled. All player information is in a xml edited with Tiled.
+* Created system to load parallax info from Tiled.
+* Load collision boxes from Tiled with its own type collision.
+* Created a mechanic that player can change to a ghost and be able to enter in rooms across specific walls. In ghost form, player oversteps platforms.
+* While pressing 'S' and spacebar on top of a platform, player will trespass that platform.
+* Save and Load functionallity in run time.
+### Second Assignment
+* Imported and remaked player load data to entity. Entity load common data and special data depending type of entity.
+* System to load all enemies you put on Tiled in each scene.
+
+## Members Task
+### Carlos Peña
+* Enemy gladiator (logic, pathfinding player)
+* Enemy flying tongue (logic, pathfinding player)
+### Christian Martínez
+* Entity Manager system
+* Apply dt system
+* Cap on/off fps
+* Adapt player movement to dt system
+* Make Entity father class
+* Adapt old player to new entity system
+* Adapted old player load data to all entities
+* Little changes adapting change scene/save & load/dead player with new entity manager
 
 ## License
 
@@ -81,12 +113,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## Innovation
-
-* Created a system to load data animation provided directly from Tiled. All player information is in a xml edited with Tiled.
-* Created system to load parallax info from Tiled.
-* Load collision boxes from Tiled with its own type collision.
-* Created a mechanic that player can change to a ghost and be able to enter in rooms across specific walls. In ghost form, player oversteps platforms.
-* While pressing 'S' and spacebar on top of a platform, player will trespass that platform.
-* Save and Load functionallity in run time.

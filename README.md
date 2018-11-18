@@ -46,7 +46,8 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 ## Art/Music used
 
 * [Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
-* [Flying enemy](https://opengameart.org/content/flying-tongue-monster-sprite-sheet)
+* [Gladiator Enemy](https://opengameart.org/content/pixel-art-gladiator-sprites)
+* [Flying Enemy](https://opengameart.org/content/flying-tongue-monster-sprite-sheet)
 * [Map Tileset](https://ansimuz.itch.io/sunny-land-pixel-game-art)
 * [Map objects](https://opengameart.org/content/a-platformer-in-the-forest)
 * [Music Scene](https://opengameart.org/content/platformer-game-music-pack)
@@ -78,8 +79,8 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 
 ## Members Task
 ### Carlos Peña
-* Enemy gladiator (logic, pathfinding player)
-* Enemy flying tongue (logic, pathfinding player)
+* Enemy gladiator (logic, pathfinding player, states & animations)
+* Enemy flying tongue (logic, pathfinding player, states & animations)
 ### Christian Martínez
 * Entity Manager system
 * Apply dt system

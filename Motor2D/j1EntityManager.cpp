@@ -7,7 +7,7 @@
 #include "j1Textures.h"
 #include "j1Scene.h"
 #include "j1Entity.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 #include "GLADIATOR.h"
 #include "FLYING_TONGUE.h"
 #include "Brofiler/Brofiler.h"

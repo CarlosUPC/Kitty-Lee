@@ -2,7 +2,7 @@
 #define __GLADIATOR_H__
 
 #include "j1Entity.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 
 struct SDL_Texture;
 

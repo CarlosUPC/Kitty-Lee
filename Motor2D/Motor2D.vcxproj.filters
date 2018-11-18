@@ -57,7 +57,7 @@
     <ClCompile Include="FLYING_TONGUE.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1Player.cpp">
+    <ClCompile Include="PLAYER.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,7 +141,7 @@
     <ClInclude Include="FLYING_TONGUE.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Player.h">
+    <ClInclude Include="PLAYER.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

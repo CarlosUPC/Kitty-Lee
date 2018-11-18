@@ -5,7 +5,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 #include "j1Audio.h"
 #include "j1Input.h"
 #include "SDL/include/SDL_render.h"

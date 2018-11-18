@@ -2,7 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 
 struct SDL_Texture;
 

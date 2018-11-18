@@ -90,10 +90,8 @@ void Gladiator::Move(float dt)
 void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	if(c1->type == COLLIDER_TYPE::COLLIDER_ENEMY && c2->type == COLLIDER_TYPE::COLLIDER_PLAYER){
-			stop = true;
-			create_dpath = true;
-			pathfinding = false;
-			pState = PathState::G_DEFAULT_PATH;
+		EnemyHit(dt);
+		stop = true;
 	}
 	
 	if (c1->type == COLLIDER_TYPE::COLLIDER_ENTITY_DOWN && c2->type == COLLIDER_TYPE::COLLIDER_FLOOR) {
@@ -128,11 +126,6 @@ void Gladiator::IdAnimToEnum()
 	}
 }
 
-void Gladiator::DeadAnim()
-{
-	/*animation = &dead;
-	position.y += 0.2f; */
-}
 
 void Gladiator::LoadCollider(pugi::xml_node& node)
 {
@@ -364,7 +357,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 			}
 
-			if (pState == PathState::G_BACK_TO_DEFAULT_PATH) {
+			else if (pState == PathState::G_BACK_TO_DEFAULT_PATH) {
 				index = 0;
 				pState = PathState::G_DEFAULT_PATH;
 				pathfinding = true;
@@ -422,7 +415,7 @@ bool Gladiator::DetectPlayer() {
 			pState = PathState::G_BACK_TO_DEFAULT_PATH;
 		}
 
-		else if(pState == PathState::G_DEFAULT_PATH) {
+		 if(pState == PathState::G_DEFAULT_PATH) {
 			pathfinding = false;
 			detected = false;
 		

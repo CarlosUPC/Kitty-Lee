@@ -24,12 +24,18 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYIN
 
 	player = (j1Player*)GetEntityPosition(Types::PLAYER);
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
-	//playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
+	
 
 
 	//Enemy Path
 	entityPath = nullptr;
 	pState = PathStateTongue::F_DEFAULT_PATH;
+	stop = false;
+}
+
+bool FlyingTongue::Update(float dt)
+{
+	return true;
 }
 
 FlyingTongue::~FlyingTongue()
@@ -41,14 +47,17 @@ void FlyingTongue::Move(float dt)
 {
 	SetAnimationsSpeed(animationSpeed);
 
-	if (!pathfinding)
-		DefaultPath(dt);
+	if(!stop) {
+		if (!pathfinding)
+			DefaultPath(dt);
 
-	if (DetectPlayer())
-		ChasePlayer(dt);
+		if (DetectPlayer())
+			ChasePlayer(dt);
 
-	if (back)
-		BackToDefaultPath(dt);
+		if (back)
+			BackToDefaultPath(dt);
+
+	}
 
 	StatesMachine();
 
@@ -64,17 +73,16 @@ void FlyingTongue::Move(float dt)
 
 }
 
-bool FlyingTongue::Update(float dt)
-{
-	return true;
-}
+void FlyingTongue::OnCollision(Collider* c1, Collider* c2, float dt) {
 
-//void FlyingTongue::Draw(float dt)
-//{
-//
-//
-//	App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
-//}
+	switch (c2->type) {
+
+	case COLLIDER_PLAYER:
+		EnemyHit(dt);
+		stop = true;
+		break;
+	}
+}
 
 void FlyingTongue::IdAnimToEnum()
 {
@@ -96,11 +104,6 @@ void FlyingTongue::IdAnimToEnum()
 	}
 }
 
-void FlyingTongue::DeadAnim()
-{
-	/*animation = &dead;
-	position.y += 0.2f; */
-}
 
 bool FlyingTongue::CleanUp()
 {
@@ -113,11 +116,6 @@ bool FlyingTongue::CleanUp()
 	player = nullptr;
 
 	return ret;
-}
-
-void FlyingTongue::Drop()
-{
-
 }
 
 void FlyingTongue::PushBack()
@@ -230,7 +228,7 @@ void FlyingTongue::DefaultPath(float dt) {
 		to_go.y = (int)position.y;
 
 		CreatePathfinding(to_go);
-		do_dpath = true;
+		//do_dpath = true;
 		create_dpath = false;
 	}
 
@@ -245,10 +243,29 @@ void FlyingTongue::CreatePathfinding(iPoint destination) {
 	fPoint relativePos = position;
 
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
-	entityPath = App->pathfinding->GetLastPath();
-	index = 0;
+	
+	if (dest > 0) {
+		entityPath = App->pathfinding->GetLastPath();
+		index = 0;
 
-	entityPathSize = entityPath->Count();
+		entityPathSize = entityPath->Count();
+
+		if (pState == PathStateTongue::F_DEFAULT_PATH)
+			do_dpath = true;
+		else if (pState == PathStateTongue::F_CHASE_PATH)
+			do_chase_path = true;
+		else if (pState == PathStateTongue::F_BACK_TO_DEFAULT_PATH)
+			do_back_path = true;
+	}
+	else {
+
+		if (pState == PathStateTongue::F_DEFAULT_PATH)
+			do_dpath = false;
+		else if (pState == PathStateTongue::F_CHASE_PATH)
+			do_chase_path = false;
+		else if (pState == PathStateTongue::F_BACK_TO_DEFAULT_PATH)
+			do_back_path = false;
+	}
 
 }
 
@@ -260,9 +277,7 @@ void FlyingTongue::TrackingPathfinding(float dt) {
 
 	speed = { 30.0f, 30.0f };
 
-	//speed = { 30.0F, 30.0F };
-
-
+	
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;
 	else if ((int)position.x > forwardPos.x)
@@ -363,7 +378,7 @@ void FlyingTongue::ChasePlayer(float dt) {
 
 		CreatePathfinding(playerPos);
 		create_chase_path = false;
-		do_chase_path = true;
+		//do_chase_path = true;
 
 	}
 
@@ -385,7 +400,7 @@ void FlyingTongue::BackToDefaultPath(float dt) {
 
 		CreatePathfinding(to_go);
 		create_back_path = false;
-		do_back_path = true;
+		//do_back_path = true;
 
 	}
 

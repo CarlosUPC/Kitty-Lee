@@ -10,12 +10,7 @@
 #include "j1Player.h"
 #include "GLADIATOR.h"
 
-#include "Brofiler\Brofiler.h"
-
-//Include all enemies
-
-#define SPAWN_MARGIN 50
-#define SCREEN_SIZE 1
+#include "Brofiler/Brofiler.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -51,25 +46,12 @@ bool j1EntityManager::Start()
 	return true;
 }
 
-bool j1EntityManager::PreUpdate()
-{
-	BROFILER_CATEGORY("PreUpdateEntityManager", Profiler::Color::Yellow);
-	// check camera position to decide what to spawn
-	//for (uint i = 0; i < MAX_ENEMIES; ++i)
-	//{
-	//	if (queue[i].type != j1Entity::Types::UNKNOWN)
-	//	{
-	//		if (queue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN) 
-	//		{
-	//			//SpawnEnemy(queue[i]);
-	//			queue[i].type = j1Entity::Types::UNKNOWN;
-	//			LOG("Spawning enemy at %d", queue[i].x * SCREEN_SIZE);
-	//		}
-	//	}
-	//}
-
-	return true;
-}
+//bool j1EntityManager::PreUpdate()
+//{
+//	BROFILER_CATEGORY("PreUpdateEntityManager", Profiler::Color::Yellow);
+//
+//	return true;
+//}
 
 // Called before render is available
 bool j1EntityManager::Update(float dt)
@@ -80,25 +62,10 @@ bool j1EntityManager::Update(float dt)
 		do_logic = true;
 	UpdateAll(dt, do_logic);
 	if (do_logic == true) {
-		accumulated_time = 0.0f;
+		accumulated_time = update_ms_cycle - accumulated_time;
 		do_logic = false;
 	}
 	return true;
-	/*for (uint i = 0; i < MAX_ENEMIES; ++i) {
-		if (entities[i] != nullptr)
-		{
-			entities[i]->Move(dt);
-		}
-	}
-
-	for (uint i = 0; i < MAX_ENEMIES;++i) {
-		if (entities[i] != nullptr)
-		{
-			entities[i]->Draw(dt);
-		}
-	}
-
-	return true;*/
 }
 
 bool j1EntityManager::UpdateAll(float dt, bool do_logic)
@@ -168,28 +135,4 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 		delete entity;
 		entity = nullptr;
 	}
-}
-
-
-
-//void j1EntityManager::SpawnEnemy(const EntityData& info)
-//{
-//	// find room for the new enemy
-//	uint i = 0;
-//	for (; entities[i] != nullptr && i < MAX_ENEMIES; ++i);
-//
-//	if (i != MAX_ENEMIES)
-//	{
-//		switch (info.type)
-//		{
-//		case j1Entity::Types::GLADIATOR:
-//			entities[i] = new Gladiator();
-//			break;
-//		}
-//	}
-//}
-
-void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
-{
-
 }

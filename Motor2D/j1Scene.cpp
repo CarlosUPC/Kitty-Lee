@@ -13,7 +13,7 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -50,8 +50,8 @@ bool j1Scene::Start()
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
-	cameraOffset.x = win_width * 0.5f / App->win->GetScale() - App->render->camera.x;
-	cameraOffset.y = win_height * 0.5f / App->win->GetScale() - App->render->camera.y;
+	cameraOffset.x = (int)(win_width * 0.5f / App->win->GetScale() - App->render->camera.x);
+	cameraOffset.y = (int)(win_height * 0.5f / App->win->GetScale() - App->render->camera.y);
 
 	return true;
 }
@@ -111,8 +111,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || player->position.y > App->map->data.height*App->map->data.tile_height){
 		player->position = player->spawn_position;
 		player->speed.SetToZero();
-		//App->render->camera = App->render->CameraInitPos();
-		}
+	}
 	
 	//F3 - Increase music volume
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -157,8 +156,6 @@ bool j1Scene::Update(float dt)
 		}
 	}
 	
-	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-
 	return true;
 }
 
@@ -173,11 +170,11 @@ bool j1Scene::PostUpdate()
 	
 	if ((cameraOffset.x - player->position.x + offsetPlayerPositionX) * App->win->GetScale() < 0 &&
 		(cameraOffset.x + player->position.x - offsetPlayerPositionX) * App->win->GetScale() < App->map->data.width*App->map->data.tile_width*App->win->GetScale()) {
-		App->render->camera.x = (cameraOffset.x - player->position.x + offsetPlayerPositionX) * App->win->GetScale();
+		App->render->camera.x = (cameraOffset.x - (int)player->position.x + offsetPlayerPositionX) * App->win->GetScale();
 	}
 	if ((cameraOffset.y - player->position.y + offsetPlayerPositionY) * App->win->GetScale() < 0 &&
 		(cameraOffset.y + player->position.y - offsetPlayerPositionY) * App->win->GetScale() < App->map->data.height*App->map->data.tile_height*App->win->GetScale()) {
-		App->render->camera.y = (cameraOffset.y - player->position.y + offsetPlayerPositionY) * App->win->GetScale();
+		App->render->camera.y = (cameraOffset.y - (int)player->position.y + offsetPlayerPositionY) * App->win->GetScale();
 	}
 	
 

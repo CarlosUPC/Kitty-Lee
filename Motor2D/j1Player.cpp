@@ -118,12 +118,12 @@ void j1Player::Move(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
- 	//speed.y += App->map->data.properties.gravity * dt;
 	speed.y += App->map->data.properties.gravity * dt;
 	if (speed.y > App->map->data.properties.maxAccelerationY)
 		speed.y = App->map->data.properties.maxAccelerationY;
 	else if (speed.y < -App->map->data.properties.maxAccelerationY)
 		speed.y = -App->map->data.properties.maxAccelerationY;
+
 	position += speed * dt;
 	SetCollidersPos();
 }
@@ -445,8 +445,8 @@ bool j1Player::Load(pugi::xml_node& data)
 		if(App->fade->level1==false)
 			App->fade->SwitchingLevel(App->scene->lvl1.GetString());
 
-		position.x = data.child("player").attribute("x").as_int();
-		position.y = data.child("player").attribute("y").as_int();
+		position.x = data.child("player").attribute("x").as_float();
+		position.y = data.child("player").attribute("y").as_float();
 	}
 
 	if (App->fade->num_level == 2) {

@@ -5,7 +5,7 @@
 #include "j1Entity.h"
 #include "p2DynArray.h"
 
-#define MAX_ENEMIES 10
+#define MAX_ENEMIES 15
 
 struct EntityData
 {
@@ -23,12 +23,10 @@ public:
 	
 	bool Awake(pugi::xml_node&);
 	bool Start();
-	bool PreUpdate();
 	bool Update(float dt);
 	bool UpdateAll(float dt, bool do_logic);
 	bool PostUpdate();
 	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
 
 	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
 	void DestroyEntity(j1Entity* entity);

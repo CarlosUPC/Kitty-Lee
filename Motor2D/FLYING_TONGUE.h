@@ -2,7 +2,6 @@
 #define __FLYING_TONGUE_H__
 
 #include "j1Entity.h"
-#include "Path.h"
 
 class SDL_Texture;
 

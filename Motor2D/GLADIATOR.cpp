@@ -28,15 +28,13 @@ Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, 
 	
 	//Enemy Path
 	entityPath = nullptr;
-	pState == PathState::G_DEFAULT_PATH;
+	pState = PathState::G_DEFAULT_PATH;
 
 	
 }
 
 bool Gladiator::Start() {
 	
-	//initialPos = GetEntityPosition(Types::GLADIATOR)->position;
-	initialPos = {352, 272};
 	return true;
 }
 bool Gladiator::Update(float dt)
@@ -66,13 +64,13 @@ void Gladiator::Move(float dt)
 	current_animation->GetCurrentFrame(dt);
 
 	if (collider.collider != nullptr)
-		collider.collider->SetPos(position.x, position.y);
+		collider.collider->SetPos((int)position.x, (int)position.y);
 
 	if (enemyPathfinding != nullptr)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
 
 	if (playerPathfinding != nullptr)
-		playerPathfinding->SetPos(player->position.x - 34, player->position.y - 34);
+		playerPathfinding->SetPos((int)player->position.x - 34, (int)player->position.y - 34);
 	
 }
 
@@ -108,9 +106,18 @@ void Gladiator::DeadAnim()
 	position.y += 0.2f; */
 }
 
-void Gladiator::Drop()
+bool Gladiator::CleanUp()
 {
+	bool ret = false;
 
+	ret = App->tex->UnLoad(data.tileset.texture);
+	collider.collider->to_delete = true;
+	playerPathfinding->to_delete = true;
+	enemyPathfinding->to_delete = true;
+	current_animation = nullptr;
+	player = nullptr;
+	
+	return ret;
 }
 
 void Gladiator::PushBack()
@@ -144,7 +151,7 @@ void Gladiator::SetAnimationsSpeed(float speed) {
 
 	anim_idle.speed = speed;
 	anim_walking.speed = speed;
-	anim_hit.speed = speed;;
+	anim_hit.speed = speed;
 	anim_detecting.speed = speed;
 	anim_dead.speed = speed;
 	
@@ -193,7 +200,7 @@ void Gladiator::StatesMachine() {
 			break;
 		}
 		
-		if (!position.x > lastPosition.x && !position.x < lastPosition.x) 
+		if (!(position.x < lastPosition.x) && !(position.x > lastPosition.x)) 
 			gState = GladiatorState::G_IDLE;
 			
 		break;
@@ -207,7 +214,7 @@ void Gladiator::StatesMachine() {
 		if (anim_hit.Finished()) {
 			anim_hit.reset();
 		
-			cooldown = 3.0f;
+			cooldown = 3.0F;
 			gState = GladiatorState::G_IDLE;
 		}
 
@@ -215,7 +222,9 @@ void Gladiator::StatesMachine() {
 	case GladiatorState::G_DEAD:
 		current_animation = &anim_dead;
 		break;
-
+	default:
+		gState = GladiatorState::G_IDLE;
+		break;
 	}
 	lastPosition = position;
 }
@@ -253,7 +262,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 void Gladiator::TrackingPathfinding(float dt) {
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 30.0f, 30.0f };
+	speed = { 30.0F, 30.0F };
 
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;
@@ -266,7 +275,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 	if ((int)position.x == forwardPos.x) {
 
-		if (index < entityPathSize - 1)
+		if ((uint)index < entityPathSize - 1)
 			index++;
 
 		else {
@@ -288,8 +297,8 @@ void Gladiator::TrackingPathfinding(float dt) {
 			else if (pState == PathState::G_CHASE_PATH) {
 
 				fPoint fplayerPos;
-				fplayerPos.x = playerPos.x;
-				fplayerPos.y = playerPos.y;
+				fplayerPos.x = (float)playerPos.x;
+				fplayerPos.y = (float)playerPos.y;
 
 
 
@@ -313,7 +322,7 @@ bool Gladiator::DetectPlayer() {
 
 	bool detected = false;
 	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
-	SDL_Rect player_pos = { player->position.x, player->position.y, 100, 100 };
+	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 100, 100 };
 	
 	
 	if (SDL_HasIntersection(&enemy_pos, &player_pos) && !App->collider->god_mode) {
@@ -348,8 +357,8 @@ void Gladiator::ChasePlayer(float dt) {
 	if (create_chase_path) {
 		
 		
-		playerPos.x = player->position.x;
-		playerPos.y = player->position.y;
+		playerPos.x = (int)player->position.x;
+		playerPos.y = (int)player->position.y;
 
 		
 
@@ -371,8 +380,8 @@ void Gladiator::BackToDefaultPath(float dt) {
 
 
   		iPoint to_go;
-		to_go.x = (int)initialPos.x;
-		to_go.y = (int)initialPos.y;
+		to_go.x = (int)spawn_position.x;
+		to_go.y = (int)spawn_position.y;
 
 
 		CreatePathfinding(to_go);

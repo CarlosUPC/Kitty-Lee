@@ -129,7 +129,6 @@
     <ClInclude Include="j1Window.h" />
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="j1Player.h" />
-    <ClInclude Include="Path.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
   </ItemGroup>

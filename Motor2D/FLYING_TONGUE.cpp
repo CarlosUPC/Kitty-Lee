@@ -320,7 +320,7 @@ bool FlyingTongue::DetectPlayer() {
 	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 100, 100 };
 
 
-	if (SDL_HasIntersection(&enemy_pos, &player_pos) && !App->collider->god_mode) {
+	if (SDL_HasIntersection(&enemy_pos, &player_pos) && player->GetGodMode() == false) {
 		pathfinding = true;
 		detected = true;
 		pState = PathStateTongue::F_CHASE_PATH;

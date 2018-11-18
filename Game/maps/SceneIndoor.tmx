@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="55">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="58" height="25" tilewidth="16" tileheight="16" infinite="0" nextobjectid="56">
  <properties>
   <property name="gravity" type="float" value="250"/>
   <property name="maxAccelerationY" type="float" value="1000"/>
@@ -17,7 +17,7 @@
  <tileset firstgid="1072" name="path" tilewidth="16" tileheight="16" tilecount="2" columns="2">
   <image source="path.png" width="32" height="16"/>
  </tileset>
- <layer id="1" name="sky" width="58" height="25">
+ <layer name="sky" width="58" height="25">
   <data>
    <tile/>
    <tile/>
@@ -1471,7 +1471,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="bg" width="58" height="25">
+ <layer name="bg" width="58" height="25">
   <data>
    <tile gid="79"/>
    <tile gid="79"/>
@@ -2925,7 +2925,7 @@
    <tile gid="243"/>
   </data>
  </layer>
- <layer id="3" name="objects" width="58" height="25">
+ <layer name="objects" width="58" height="25">
   <data>
    <tile/>
    <tile/>
@@ -4379,7 +4379,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="4" name="pathfinding" width="58" height="25" visible="0">
+ <layer name="pathfinding" width="58" height="25" visible="0">
   <properties>
    <property name="Navigation" type="bool" value="true"/>
   </properties>
@@ -5836,16 +5836,17 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="5" name="Player Position">
+ <objectgroup name="Player Position">
   <properties>
    <property name="type" value="COLLIDER_NONE"/>
   </properties>
   <object id="1" name="Player" x="96" y="256" width="1" height="1"/>
  </objectgroup>
- <objectgroup id="6" name="Enemy Position">
+ <objectgroup name="Enemy Position">
   <object id="54" name="Gladiator" x="352" y="272" width="1" height="1"/>
+  <object id="55" name="Flying Tongue" x="256" y="223" width="1" height="1"/>
  </objectgroup>
- <objectgroup id="7" name="Colliders">
+ <objectgroup name="Colliders">
   <properties>
    <property name="type" value="COLLIDER_FLOOR"/>
   </properties>
@@ -5890,13 +5891,13 @@
   <object id="51" x="928" y="304" width="16" height="48"/>
   <object id="52" x="912" y="288" width="32" height="16"/>
  </objectgroup>
- <objectgroup id="8" name="collider Ghost">
+ <objectgroup name="collider Ghost">
   <properties>
    <property name="type" value="COLLIDER_GHOST"/>
   </properties>
   <object id="8" x="288" y="320" width="16" height="48"/>
  </objectgroup>
- <objectgroup id="9" name="platforms">
+ <objectgroup name="platforms">
   <properties>
    <property name="type" value="COLLIDER_PLATFORM"/>
   </properties>
@@ -5905,7 +5906,7 @@
   <object id="48" x="736" y="352" width="48" height="16"/>
   <object id="49" x="240" y="272" width="48" height="16"/>
  </objectgroup>
- <objectgroup id="10" name="Scene">
+ <objectgroup name="Scene">
   <properties>
    <property name="type" value="COLLIDER_SCENE"/>
   </properties>

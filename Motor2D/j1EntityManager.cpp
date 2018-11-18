@@ -127,7 +127,7 @@ bool j1EntityManager::Load(pugi::xml_node & node)
 
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
 {
-	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
+	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)3, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
 		case j1Entity::Types::GLADIATOR: ret = new Gladiator(PositionX, PositionY); break;

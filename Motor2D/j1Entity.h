@@ -82,6 +82,7 @@ public:
 	{
 		PLAYER,
 		GLADIATOR,
+		FLYING_TONGUE,
 		UNKNOWN
 	};
 

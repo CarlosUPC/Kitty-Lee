@@ -1,5 +1,12 @@
 # Changelog
 
+# Changelog
+
+## [0.3.2] - 2018-11-18
+### Added
+
+- Some sounds effect on enemy attacks
+
 ## [0.3.1] - 2018-11-18
 ### Added
 

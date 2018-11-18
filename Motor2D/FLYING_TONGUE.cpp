@@ -321,8 +321,8 @@ void FlyingTongue::TrackingPathfinding(float dt) {
 bool FlyingTongue::DetectPlayer() {
 
 	bool detected = false;
-	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
-	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 100, 100 };
+	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 5, 5 };
+	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 5, 5 };
 
 
 	if (SDL_HasIntersection(&enemy_pos, &player_pos) && player->GetGodMode() == false) {

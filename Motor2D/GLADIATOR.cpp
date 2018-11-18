@@ -72,16 +72,16 @@ void Gladiator::Move(float dt)
 	if (playerPathfinding != nullptr)
 		playerPathfinding->SetPos((int)player->position.x - 34, (int)player->position.y - 34);
 	
-	position.y += speed.y * dt;
+	
 }
 
 void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	switch (c2->type) {
 
-		case COLLIDER_FLOOR:
-
-			//position.y = c1->rect.y - c2->rect.h;
+		case COLLIDER_PLAYER:
+			back = true;
+			//pathfinding = false;
 			break;
 	}
 
@@ -248,9 +248,9 @@ void Gladiator::DefaultPath(float dt) {
 			iPoint to_go;
 			to_go.x = (int)position.x - 50;
 			to_go.y = (int)position.y;
-
+		
 			CreatePathfinding(to_go);
-			do_dpath = true;
+			//do_dpath = true;
 			create_dpath = false;
 	}
 	
@@ -265,12 +265,30 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 	fPoint relativePos = position;
 
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
-	entityPath = App->pathfinding->GetLastPath();
-	index = 0;
-
-	entityPathSize = entityPath->Count();
-
 	
+	if (dest > 0) {
+		entityPath = App->pathfinding->GetLastPath();
+		index = 0;
+
+		entityPathSize = entityPath->Count();
+
+		if (pState == PathState::G_DEFAULT_PATH)
+			do_dpath = true;
+		else if (pState == PathState::G_CHASE_PATH)
+			do_chase_path = true;
+		else if (pState == PathState::G_BACK_TO_DEFAULT_PATH)
+			do_back_path = true;
+	}
+	else {
+
+		if (pState == PathState::G_DEFAULT_PATH)
+			do_dpath = false;
+		else if (pState == PathState::G_CHASE_PATH)
+			do_chase_path = false;
+		else if (pState == PathState::G_BACK_TO_DEFAULT_PATH)
+			do_back_path = false;
+	}
+
 }
 
 void Gladiator::TrackingPathfinding(float dt) {
@@ -278,7 +296,6 @@ void Gladiator::TrackingPathfinding(float dt) {
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
 
 	speed = { 30.0F, 30.0F };
-
 
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;
@@ -323,6 +340,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 				}
 
 				else {
+
 					create_chase_path = true;
 					do_chase_path = false;
 				}
@@ -380,7 +398,7 @@ void Gladiator::ChasePlayer(float dt) {
 
 		CreatePathfinding(playerPos);
 		create_chase_path = false;
-		do_chase_path = true;
+		//do_chase_path = true;
 
 	}
 
@@ -402,7 +420,7 @@ void Gladiator::BackToDefaultPath(float dt) {
 
 		CreatePathfinding(to_go);
 		create_back_path = false;
-		do_back_path = true;
+		//do_back_path = true;
 
 	}
 

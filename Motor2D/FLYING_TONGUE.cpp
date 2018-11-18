@@ -28,7 +28,7 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYIN
 
 
 	//Enemy Path
-	entityPath = nullptr;
+	entityPath.Clear();
 	pState = PathStateTongue::F_DEFAULT_PATH;
 	stop = false;
 }
@@ -248,10 +248,14 @@ void FlyingTongue::CreatePathfinding(iPoint destination) {
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
 	
 	if (dest > 0) {
-		entityPath = App->pathfinding->GetLastPath();
+		entityPath.Clear();
+		entityPathSize = App->pathfinding->GetLastPath()->Count();
+		for (uint i = 0; i < entityPathSize; ++i) {
+			entityPath.PushBack(*App->pathfinding->GetLastPath()->At(i));
+		}
 		index = 0;
 
-		entityPathSize = entityPath->Count();
+		
 
 		if (pState == PathStateTongue::F_DEFAULT_PATH)
 			do_dpath = true;
@@ -276,7 +280,7 @@ void FlyingTongue::TrackingPathfinding(float dt) {
 
 
 
-	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+	iPoint forwardPos = App->map->MapToWorld(entityPath.At(index)->x, entityPath.At(index)->y);
 
 	speed = { 30.0f, 30.0f };
 

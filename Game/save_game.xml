@@ -6,16 +6,20 @@
 	<audio />
 	<map />
 	<scene>
-		<levels level="1" />
+		<levels level="2" />
 	</scene>
 	<pathfinding />
 	<:anonymous />
 	<colliders />
 	<entities>
-		<entity x="96" y="256" spawn_x="96" spawn_y="256" type="0" />
-		<entity x="665" y="352" spawn_x="688" spawn_y="352" type="1" />
+		<entity x="1325" y="235" spawn_x="32" spawn_y="112" type="0" />
+		<entity x="316" y="160" spawn_x="368" spawn_y="160" type="2" />
+		<entity x="584" y="416" spawn_x="615" spawn_y="416" type="1" />
+		<entity x="794" y="304" spawn_x="841" spawn_y="319" type="2" />
+		<entity x="1569" y="48" spawn_x="1600" spawn_y="48" type="1" />
+		<entity x="1825" y="208" spawn_x="1856" spawn_y="220" type="2" />
 	</entities>
 	<renderer>
-		<camera x="0" y="-390" />
+		<camera x="-3519" y="-327" />
 	</renderer>
 </game_state>

@@ -179,14 +179,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x + 1;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x;
+				position.x = c2->rect.x - collider.width - collider.offset.x + 1;
 
 		}
 		break;
@@ -210,9 +210,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		App->LoadGame();
 		break;
 	case COLLIDER_ENEMY:
-		death = true;
-		state = DEAD;
-		ChangeState();
+		if (!death) {
+			death = true;
+			state = DEAD;
+			ChangeState();
+		}
 		break;
 	case COLLIDER_SCENE:
 		if (!App->fade->IsFading())

@@ -7,7 +7,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"

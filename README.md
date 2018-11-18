@@ -79,10 +79,15 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 
 ## Members Task
 ### Carlos Peña
-* Enemy gladiator (logic, pathfinding player, states & animations)
-* Enemy flying tongue (logic, pathfinding player, states & animations)
+* Implementation of all enemy data as tsx files from Tiled
+* Enemy data loading from tsx files into entity modules
+* Creation of Entity Manager System
+* Enemy gladiator (logic, pathfinding system, states & animations)
+* Enemy flying tongue (logic, pathfinding system, states & animations)
+* Brofiler addition
+
 ### Christian Martínez
-* Entity Manager system
+* Development of Entity Manager system
 * Apply dt system
 * Cap on/off fps
 * Adapt player movement to dt system
@@ -90,6 +95,7 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 * Adapt old player to new entity system
 * Adapted old player load data to all entities
 * Little changes adapting change scene/save & load/dead player with new entity manager
+* God mode functionality (player can fly around)
 
 ## License
 

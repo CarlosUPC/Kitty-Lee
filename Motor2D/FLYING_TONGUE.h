@@ -2,7 +2,7 @@
 #define __FLYING_TONGUE_H__
 
 #include "j1Entity.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 class SDL_Texture;
 
 enum PathStateTongue {

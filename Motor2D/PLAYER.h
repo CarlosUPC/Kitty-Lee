@@ -1,5 +1,5 @@
-#ifndef __j1PLAYER_H__
-#define __j1PLAYER_H__
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
 
 #include "j1Entity.h"
 #include "p2Point.h"

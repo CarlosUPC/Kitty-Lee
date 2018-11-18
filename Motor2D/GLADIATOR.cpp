@@ -4,7 +4,7 @@
 #include "j1Collision.h"
 #include "p2Point.h"
 #include "j1Render.h"
-#include "j1Player.h"
+#include "PLAYER.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 
@@ -161,6 +161,7 @@ bool Gladiator::CleanUp()
 	collider.collider->to_delete = true;
 	playerPathfinding->to_delete = true;
 	enemyPathfinding->to_delete = true;
+	collider_ground.collider->to_delete = true;
 	current_animation = nullptr;
 	player = nullptr;
 	

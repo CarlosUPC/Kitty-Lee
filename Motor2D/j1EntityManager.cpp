@@ -46,13 +46,6 @@ bool j1EntityManager::Start()
 	return true;
 }
 
-//bool j1EntityManager::PreUpdate()
-//{
-//	BROFILER_CATEGORY("PreUpdateEntityManager", Profiler::Color::Yellow);
-//
-//	return true;
-//}
-
 // Called before render is available
 bool j1EntityManager::Update(float dt)
 {
@@ -127,7 +120,7 @@ bool j1EntityManager::Load(pugi::xml_node & node)
 	bool ret = false;
 	LOG("Loading all entities...");
 
-	CleanUp();
+	ret = CleanUp();
 	App->scene->CreateEntitiesFromXML(node);
 	return ret;
 }

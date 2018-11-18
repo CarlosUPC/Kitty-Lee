@@ -437,27 +437,6 @@ void j1Player::Draw(float dt)
 	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 }
 
-// Load / Save
-bool j1Player::Load(pugi::xml_node& data)
-{
-	
-	position.x = data.attribute("x").as_float();
-	position.y = data.attribute("y").as_float();
-
-	return true;
-
-}
-bool j1Player::Save(pugi::xml_node& data) const
-{
-	pugi::xml_node player_node = data.append_child("entity");
-
-	player_node.append_attribute("x") = (int)position.x;
-	player_node.append_attribute("y") = (int)position.y;
-	player_node.append_attribute("type") = (int)type;
-
-	return true;
-}
-
 void j1Player::CheckState() {
 	
 	PlayerState prevState = state;

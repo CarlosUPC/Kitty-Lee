@@ -42,10 +42,7 @@ public:
 	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
-	bool CleanUp();
-
-	bool Save(pugi::xml_node&) const;
-	
+	bool CleanUp();	
 
 private:
 

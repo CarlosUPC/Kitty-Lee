@@ -132,17 +132,6 @@ bool Gladiator::CleanUp()
 	return ret;
 }
 
-bool Gladiator::Save(pugi::xml_node &node) const
-{
-	pugi::xml_node g_node = node.append_child("entity");
-
-	g_node.append_attribute("x") = (int)position.x;
-	g_node.append_attribute("y") = (int)position.y;
-	g_node.append_attribute("type") = (int)type;
-
-	return true;
-}
-
 void Gladiator::PushBack()
 {
 	for (uint i = 0; i < data.num_animations; ++i) {

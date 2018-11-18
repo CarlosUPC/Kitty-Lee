@@ -84,6 +84,7 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 * Creation of Entity Manager System
 * Enemy gladiator (logic, pathfinding system, states & animations)
 * Enemy flying tongue (logic, pathfinding system, states & animations)
+* Sound Effects on enemy attacks
 * Brofiler addition
 
 ### Christian Martínez

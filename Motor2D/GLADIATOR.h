@@ -22,7 +22,7 @@ private:
 
 	void AddColliders();
 	
-private:	
+private:
 
 	iPoint gSize;
 

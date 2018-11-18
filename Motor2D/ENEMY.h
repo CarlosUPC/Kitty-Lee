@@ -50,8 +50,6 @@ public:
 	PathState	path_state;
 	State		state;
 
-	const char* AttackSound = nullptr;
-
 	Player* player;
 
 	bool pathfinding = false;

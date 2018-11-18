@@ -120,6 +120,8 @@ public:
 
 	Types type;
 
+	const char* AttackSound = nullptr;
+
 	COLLIDER_INFO collider;
 
 	EntityInfo data;

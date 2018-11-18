@@ -32,6 +32,8 @@ This is a small project made by two students of CITM - Terrassa of Design and De
   * F9 To view colliders.
   * F10 God Mode.
   * F11 Cap on/off fps to 30.
+  * W in God Mode to move up.
+  * S in God Mode to move down.
 
 ## Built With
 

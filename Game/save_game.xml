@@ -12,11 +12,10 @@
 	<:anonymous />
 	<colliders />
 	<entities>
-		<entity x="179" y="272" spawn_x="96" spawn_y="256" type="0" />
-		<entity x="288" y="272" spawn_x="352" spawn_y="272" type="1" />
-		<entity x="288" y="272" spawn_x="256" spawn_y="223" type="2" />
+		<entity x="175" y="272" spawn_x="96" spawn_y="256" type="0" />
+		<entity x="629" y="352" spawn_x="688" spawn_y="352" type="1" />
 	</entities>
 	<renderer>
-		<camera x="-81" y="-426" />
+		<camera x="-69" y="-429" />
 	</renderer>
 </game_state>

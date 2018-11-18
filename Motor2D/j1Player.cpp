@@ -501,10 +501,10 @@ void j1Player::CheckState() {
 	case DEAD:
 		if (current_animation->Finished() && current_animation == &anim_death) {
 			state = IDLE;
-			//App->LoadGame();
-			App->entities->CleanUp();
+			App->LoadGame();
+			/*App->entities->CleanUp();
 			App->scene->CreateEntities();
-			App->render->CameraInitPos();
+			App->render->CameraInitPos();*/
 		}
 		speed.x = 0.0F;
 		break;

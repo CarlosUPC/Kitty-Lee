@@ -161,6 +161,7 @@ bool Gladiator::CleanUp()
 	collider.collider->to_delete = true;
 	playerPathfinding->to_delete = true;
 	enemyPathfinding->to_delete = true;
+	collider_ground.collider->to_delete = true;
 	current_animation = nullptr;
 	player = nullptr;
 	

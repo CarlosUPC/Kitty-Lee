@@ -213,7 +213,7 @@ bool j1Colliders::Update(float dt)
 						c1->callback->OnCollision(c1, c2, dt);
 					if (c1->to_delete == false) {
 						if (matrix[c2->type][c1->type] && c2->callback)
-							c2->callback->OnCollision(c2, c1, dt);
+ 							c2->callback->OnCollision(c2, c1, dt);
 					}
 				}
 			}

@@ -126,9 +126,6 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Path.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="GLADIATOR.h">
       <Filter>Entities</Filter>
     </ClInclude>

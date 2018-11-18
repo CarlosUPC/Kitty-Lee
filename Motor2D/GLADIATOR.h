@@ -2,10 +2,9 @@
 #define __GLADIATOR_H__
 
 #include "j1Entity.h"
-#include "Path.h"
 #include "j1Player.h"
 
-class SDL_Texture;
+struct SDL_Texture;
 
 enum PathState {
 	G_DEFAULT_PATH,
@@ -43,7 +42,7 @@ public:
 	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
-	void Drop();
+	bool CleanUp();
 
 private:
 
@@ -60,6 +59,7 @@ private:
 	void EnemyHit(float dt);
 	
 private:
+
 	GladiatorState gState;
 	PathState pState;	
 
@@ -95,8 +95,6 @@ private:
 	Collider* enemyPathfinding;
 
 	iPoint playerPos;
-	fPoint initialPos;
-
 	
 	float cooldown = 2.0f;
 	

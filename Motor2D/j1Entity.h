@@ -103,7 +103,7 @@ public:
 	virtual void Move(float dt) {}
 	virtual void Draw();
 	virtual void CreatePath() {}
-	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt);
+	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
 	void DeleteAnimation();
 
@@ -134,7 +134,5 @@ public:
 
 	const p2DynArray<iPoint>* entityPath;
 	uint entityPathSize = 0;
-
-	//void PushBack();
 };
 #endif // __ENTITY_H__

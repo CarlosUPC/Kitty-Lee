@@ -36,10 +36,6 @@ const Collider* j1Entity::GetCollider() const
 	return collider.collider;
 }
 
-void j1Entity::OnCollision(Collider* c1, Collider * c2, float dt)
-{
-}
-
 bool j1Entity::Update(float dt) {
 	BROFILER_CATEGORY("UpdateEntity", Profiler::Color::Red);
 
@@ -55,9 +51,13 @@ void j1Entity::Draw() {
 
 bool j1Entity::CleanUp()
 {
+	bool ret = false;
+
+	ret = App->tex->UnLoad(data.tileset.texture);
 	collider.collider->to_delete = true;
-	App->tex->UnLoad(data.tileset.texture);
-	return false;
+	current_animation = nullptr;
+
+	return ret;
 }
 
 void j1Entity::DeleteAnimation()

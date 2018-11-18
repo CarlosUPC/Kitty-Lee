@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.1] - 2018-11-18
+### Added
+
+- Enemies now have his own pathfinding.
+- Some sounds effect to enemies.
+- More enemies in scenes.
+
+### Changed
+
+- Gladiator enemy behaviour improved.
+
+### Fixed
+
+- Game crashes because a collider doesn't remove.
+- Enemies now can attack player.
+
 ## [0.3.0] - 2018-11-18
 ### Added
 

@@ -118,7 +118,7 @@ void j1Player::Move(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
- 	//speed.y += App->map->data.properties.gravity * dt;
+
 	speed.y += App->map->data.properties.gravity * dt;
 	if (speed.y > App->map->data.properties.maxAccelerationY)
 		speed.y = App->map->data.properties.maxAccelerationY;

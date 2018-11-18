@@ -74,8 +74,22 @@ void Gladiator::Move(float dt)
 	if (playerPathfinding != nullptr)
 		playerPathfinding->SetPos(player->position.x - 34, player->position.y - 34);
 	
+	position.y += speed.y * dt;
 }
 
+void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
+
+	switch (c2->type) {
+
+	case COLLIDER_FLOOR:
+		if (c1 == collider.collider) {
+
+			position.y -= speed.y * dt;
+			
+		}
+	}
+
+}
 void Gladiator::IdAnimToEnum()
 {
 	for (uint i = 0; i < data.num_animations; ++i) {
@@ -239,6 +253,7 @@ void Gladiator::DefaultPath(float dt) {
 }
 
 void Gladiator::CreatePathfinding(iPoint destination) {
+	
 
 	fPoint relativePos = position;
 
@@ -252,8 +267,11 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 }
 
 void Gladiator::TrackingPathfinding(float dt) {
+
+	
+
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-	fPoint speed = { 30.0f, 30.0f };
+	speed = { 30.0f, 30.0f };
 
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;

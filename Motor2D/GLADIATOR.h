@@ -40,6 +40,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	void Move(float dt);
+	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
 	void Drop();
@@ -89,7 +90,7 @@ private:
 	int index = 0;
 
 	fPoint lastPosition = {128, 256};
-
+	fPoint speed = { 30.0f, 30.0f };
 	Collider* playerPathfinding;
 	Collider* enemyPathfinding;
 

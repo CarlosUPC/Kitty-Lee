@@ -2,6 +2,7 @@
 <tileset name="Flying Tongue" tilewidth="64" tileheight="64" tilecount="32" columns="8">
  <properties>
   <property name="AnimationSpeed" type="float" value="15"/>
+  <property name="attackSound" value="audio/fx/bite_effect.wav"/>
  </properties>
  <image source="textures/enemies/FlyingTongue.png" width="512" height="256"/>
  <tile id="0">

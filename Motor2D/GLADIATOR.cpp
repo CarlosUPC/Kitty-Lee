@@ -126,7 +126,6 @@ void Gladiator::IdAnimToEnum()
 	}
 }
 
-
 void Gladiator::LoadCollider(pugi::xml_node& node)
 {
 	p2SString nameIdentificator;

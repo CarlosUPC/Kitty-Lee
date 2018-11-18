@@ -6,6 +6,7 @@
 
 struct SDL_Texture;
 
+
 enum PathState {
 	G_DEFAULT_PATH,
 	G_CHASE_PATH,
@@ -63,6 +64,7 @@ private:
 	GladiatorState gState;
 	PathState pState;	
 
+
 	iPoint gSize;
 
 	j1Player* player;
@@ -97,6 +99,9 @@ private:
 	iPoint playerPos;
 	
 	float cooldown = 2.0f;
+
+public:
+	bool stop = false;
 	
 };
 

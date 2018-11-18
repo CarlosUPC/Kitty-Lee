@@ -29,7 +29,8 @@ Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, 
 	//Enemy Path
 	entityPath = nullptr;
 	pState = PathState::G_DEFAULT_PATH;
-
+	stop = false;
+	
 	
 }
 
@@ -50,15 +51,20 @@ void Gladiator::Move(float dt)
 {
 	SetAnimationsSpeed(animationSpeed);
 
-	if (!pathfinding)
-		DefaultPath(dt);
+	if (!stop) {
+		
 
-	if(DetectPlayer())
-		ChasePlayer(dt);
+		if (!pathfinding)
+			DefaultPath(dt);
 
-	if (back)
-		BackToDefaultPath(dt);
+		if (DetectPlayer())
+			ChasePlayer(dt);
 
+		if (back)
+			BackToDefaultPath(dt);
+
+		
+	}
 	StatesMachine();
 
 	current_animation->GetCurrentFrame(dt);
@@ -80,12 +86,18 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 	switch (c2->type) {
 
 		case COLLIDER_PLAYER:
-			back = true;
-			//pathfinding = false;
+			
+			stop = true;
+		
+			create_dpath = true;
+			pathfinding = false;
+			pState = PathState::G_DEFAULT_PATH;
+			
 			break;
 	}
 
-}
+}		
+
 void Gladiator::IdAnimToEnum()
 {
 	for (uint i = 0; i < data.num_animations; ++i) {
@@ -246,8 +258,8 @@ void Gladiator::DefaultPath(float dt) {
 	if (create_dpath) {
 
 			iPoint to_go;
-			to_go.x = (int)position.x - 50;
-			to_go.y = (int)position.y;
+			to_go.x = (int)spawn_position.x - 50;
+			to_go.y = (int)spawn_position.y;
 		
 			CreatePathfinding(to_go);
 			//do_dpath = true;
@@ -261,9 +273,9 @@ void Gladiator::DefaultPath(float dt) {
 
 void Gladiator::CreatePathfinding(iPoint destination) {
 	
-
 	fPoint relativePos = position;
 
+	
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
 	
 	if (dest > 0) {
@@ -360,9 +372,10 @@ bool Gladiator::DetectPlayer() {
 	
 	
 	if (SDL_HasIntersection(&enemy_pos, &player_pos) && player->GetGodMode() == false) {
-		pathfinding = true;
-		detected = true;
-		pState = PathState::G_CHASE_PATH;
+
+			pathfinding = true;
+			detected = true;
+			pState = PathState::G_CHASE_PATH;
 	}
 
 	else {
@@ -374,6 +387,7 @@ bool Gladiator::DetectPlayer() {
 			create_chase_path = true;
 			pState = PathState::G_BACK_TO_DEFAULT_PATH;
 		}
+
 		else if(pState == PathState::G_DEFAULT_PATH) {
 			pathfinding = false;
 			detected = false;

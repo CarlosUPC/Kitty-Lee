@@ -50,14 +50,14 @@ void j1Map::Draw()
 
 	while (layer) {
 		if (layer->data->visible)
-			for (uint i = camera.y*layer->data->speed; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
-				for (uint j = camera.x*layer->data->speed; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
+			for (uint i = camera.y*layer->data->properties.speed; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+				for (uint j = camera.x*layer->data->properties.speed; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
 
 					id = layer->data->Get(j, i);
 					if (id != 0) {
 						TileSet* tileset = GetTilesetFromTileId(id);
 						if (tileset != nullptr)
-							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id), layer->data->speed);
+							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id), layer->data->properties.speed);
 					}
 				}
 			}
@@ -163,6 +163,7 @@ bool j1Map::CleanUp()
 
 	while(item != NULL)
 	{
+		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -385,14 +386,16 @@ void j1Map::LoadProperties(pugi::xml_node& properties_node, MapLayer* layer) {
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
 		p2SString prop = properties_node.attribute("name").as_string();
 
-		if(prop == "musicEnvironment")
+		if (prop == "musicEnvironment")
 			data.musicEnvironment = properties_node.attribute("value").as_string();
-		else if(prop == "gravity")
+		else if (prop == "gravity")
 			data.properties.gravity = properties_node.attribute("value").as_float();
 		else if (prop == "maxAccelerationY")
 			data.properties.maxAccelerationY = properties_node.attribute("value").as_float();
 		else if (prop == "Navigation")
 			layer->properties.Navigation = properties_node.attribute("value").as_bool();
+		else if (prop == "speed")
+			layer->properties.speed = properties_node.attribute("value").as_float();
 		
 	}
 }

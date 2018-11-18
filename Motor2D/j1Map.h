@@ -32,6 +32,7 @@ struct Properties
 {
 	float gravity;
 	float maxAccelerationY;
+	float speed = 1.0F;
 	bool Navigation;
 };
 
@@ -40,7 +41,6 @@ struct MapLayer {
 	uint		width = 0;
 	uint		height = 0;
 	uint*		tiles = nullptr;
-	float		speed = 1.0f;
 	bool		visible = true;
 	Properties	properties;
 

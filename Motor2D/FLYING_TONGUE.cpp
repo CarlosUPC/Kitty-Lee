@@ -6,13 +6,14 @@
 #include "PLAYER.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
+#include "j1Audio.h"
 #include "FLYING_TONGUE.h"
 
 FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYING_TONGUE, PositionX, PositionY)
 {
 	//Load Enemy data
 	LoadEntityData("Flying Tongue.tsx");
-
+	//LoadProperties();
 
 	fState = F_IDLE;
 	current_animation = &anim_idle;
@@ -26,6 +27,8 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYIN
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
 	playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
+	//Load Sound Effects
+	App->audio->LoadFx(AttackSound);
 
 	//Enemy Path
 	entityPath.Clear();
@@ -81,6 +84,7 @@ void FlyingTongue::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	case COLLIDER_PLAYER:
 		EnemyHit(dt);
+		App->audio->PlayFx(8);
 		stop = true;
 		break;
 	}

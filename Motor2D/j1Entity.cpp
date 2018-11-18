@@ -193,6 +193,8 @@ void j1Entity::LoadProperties(pugi::xml_node & node)
 		if (nameIdentificator == "AnimationSpeed")
 			animationSpeed = node.attribute("value").as_float();
 
+		else if (nameIdentificator == "attackSound")
+			AttackSound = node.attribute("value").as_string();
 		node = node.next_sibling();
 	}
 }

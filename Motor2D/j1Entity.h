@@ -130,7 +130,7 @@ public:
 	
 	Animation* current_animation = nullptr;
 	float animationSpeed;
-
+	const char* AttackSound = nullptr;
 	p2DynArray<iPoint> entityPath;
 	uint entityPathSize = 0;
 };

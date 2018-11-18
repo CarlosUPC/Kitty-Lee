@@ -7,6 +7,7 @@
 #include "PLAYER.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
+#include "j1Audio.h"
 
 Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, PositionX, PositionY)
 {
@@ -25,6 +26,8 @@ Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, 
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
 	playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
+	//Load Sound Effects
+	App->audio->LoadFx(AttackSound);
 	
 	//Enemy Path
 	entityPath.Clear();
@@ -91,6 +94,7 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	if(c1->type == COLLIDER_TYPE::COLLIDER_ENEMY && c2->type == COLLIDER_TYPE::COLLIDER_PLAYER){
 		EnemyHit(dt);
+		App->audio->PlayFx(4);
 		stop = true;
 	}
 	
@@ -261,7 +265,6 @@ void Gladiator::StatesMachine() {
 		break;
 	case GladiatorState::G_HIT:
 		current_animation = &anim_hit;
-
 		if (anim_hit.Finished()) {
 			anim_hit.reset();
 		

@@ -55,7 +55,7 @@ void FlyingTongue::Move(float dt)
 	current_animation->GetCurrentFrame(dt);
 
 	if (collider.collider != nullptr)
-		collider.collider->SetPos((int)position.x, (int)position.y);
+		collider.collider->SetPos((int)position.x + collider.offset.x, (int)position.y + collider.offset.y);
 
 	if (enemyPathfinding != nullptr)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);

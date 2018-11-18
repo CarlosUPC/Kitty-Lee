@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="125" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="119">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="125" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="120">
  <properties>
   <property name="gravity" type="float" value="250"/>
   <property name="maxAccelerationY" type="float" value="1000"/>
@@ -11385,5 +11385,6 @@
  </objectgroup>
  <objectgroup id="11" name="Enemy Position">
   <object id="118" name="Gladiator" x="352" y="208" width="1" height="1"/>
+  <object id="119" name="Flying Tongue" x="192" y="80" width="1" height="1"/>
  </objectgroup>
 </map>

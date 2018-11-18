@@ -43,6 +43,7 @@ public:
 	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
 	void DeadAnim();
+	void LoadCollider(pugi::xml_node&);
 	bool CleanUp();	
 
 private:
@@ -84,6 +85,8 @@ private:
 	bool do_chase_path = false;
 
 	bool back = false;
+	COLLIDER_INFO collider_ground;
+	bool grounded = true;
 
 	bool create_back_path = true;
 	bool do_back_path = false;

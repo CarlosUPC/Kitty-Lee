@@ -425,7 +425,7 @@ void j1Player::LoadCollider(pugi::xml_node &node)
 			colliderPlayer_down.offset.y = node.attribute("y").as_int();
 			colliderPlayer_down.width = node.attribute("width").as_uint();
 			colliderPlayer_down.height = node.attribute("height").as_uint();
-			colliderPlayer_down.type = COLLIDER_TYPE::COLLIDER_PLAYER_DOWN;
+			colliderPlayer_down.type = COLLIDER_TYPE::COLLIDER_ENTITY_DOWN;
 		}
 		else if (nameIdentificator == "ColliderLeft") {
 			colliderPlayer_left.offset.x = node.attribute("x").as_int();

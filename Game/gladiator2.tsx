@@ -7,6 +7,7 @@
  <tile id="0">
   <objectgroup draworder="index">
    <object id="1" name="Collider" type="COLLIDER_ENEMY" x="4" y="5" width="24" height="27"/>
+   <object id="2" name="ColliderGround" type="COLLIDER_PLAYER_DOWN" x="13" y="31" width="6" height="1"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>

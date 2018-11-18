@@ -53,6 +53,10 @@ void Gladiator::Move(float dt)
 
 	if (!stop) {
 		
+		if (!grounded) {
+
+			position.y += 5 * dt;
+		}
 
 		if (!pathfinding)
 			DefaultPath(dt);
@@ -62,15 +66,17 @@ void Gladiator::Move(float dt)
 
 		if (back)
 			BackToDefaultPath(dt);
-
 		
+		grounded = false;
 	}
 	StatesMachine();
 
 	current_animation->GetCurrentFrame(dt);
 
 	if (collider.collider != nullptr)
-		collider.collider->SetPos((int)position.x, (int)position.y);
+		collider.collider->SetPos((int)position.x + collider.offset.x, (int)position.y + collider.offset.y);
+	if (collider_ground.collider != nullptr)
+		collider_ground.collider->SetPos((int)position.x + collider_ground.offset.x, (int)position.y + collider_ground.offset.y);
 
 	if (enemyPathfinding != nullptr)
 		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
@@ -83,17 +89,15 @@ void Gladiator::Move(float dt)
 
 void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
-	switch (c2->type) {
-
-		case COLLIDER_PLAYER:
-			
+	if(c1->type == COLLIDER_TYPE::COLLIDER_ENEMY && c2->type == COLLIDER_TYPE::COLLIDER_PLAYER){
 			stop = true;
-		
 			create_dpath = true;
 			pathfinding = false;
 			pState = PathState::G_DEFAULT_PATH;
-			
-			break;
+	}
+	
+	if (c1->type == COLLIDER_TYPE::COLLIDER_ENTITY_DOWN && c2->type == COLLIDER_TYPE::COLLIDER_FLOOR) {
+		grounded = true;
 	}
 
 }		
@@ -128,6 +132,32 @@ void Gladiator::DeadAnim()
 {
 	/*animation = &dead;
 	position.y += 0.2f; */
+}
+
+void Gladiator::LoadCollider(pugi::xml_node& node)
+{
+	p2SString nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
+
+		if (nameIdentificator == "Collider") {
+			collider.offset.x = node.attribute("x").as_int();
+			collider.offset.y = node.attribute("y").as_int();
+			collider.width = node.attribute("width").as_uint();
+			collider.height = node.attribute("height").as_uint();
+			collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
+		}
+
+		else if (nameIdentificator == "ColliderGround") {
+			collider_ground.offset.x = node.attribute("x").as_int();
+			collider_ground.offset.y = node.attribute("y").as_int();
+			collider_ground.width = node.attribute("width").as_uint();
+			collider_ground.height = node.attribute("height").as_uint();
+			collider_ground.type = COLLIDER_TYPE::COLLIDER_ENTITY_DOWN;
+		}
+
+		node = node.next_sibling();
+	}
 }
 
 bool Gladiator::CleanUp()
@@ -186,6 +216,10 @@ void Gladiator::AddColliders() {
 	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
 
 	actual_collider = &collider;
+	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
+	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
+	
+	actual_collider = &collider_ground;
 	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
 	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
 }
@@ -307,7 +341,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
 
-	speed = { 30.0F, 30.0F };
+	speed = { 30.0F, 0.0F };
 
 	if ((int)position.x < forwardPos.x)
 		position.x += speed.x * dt;
@@ -347,7 +381,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 
 
-				if (position.DistanceTo(GetEntityPosition(Types::PLAYER)->position) <= 50) {
+				if (position.DistanceTo(player->position) <= 50) {
 					EnemyHit(dt);	
 				}
 
@@ -407,11 +441,10 @@ void Gladiator::ChasePlayer(float dt) {
 		
 		playerPos.x = (int)player->position.x;
 		playerPos.y = (int)player->position.y;
-
-		
-
-		CreatePathfinding(playerPos);
-		create_chase_path = false;
+		if (App->map->WorldToMap(playerPos.x, playerPos.y).y == App->map->WorldToMap(position.x, position.y).y) {
+			CreatePathfinding(playerPos);
+			create_chase_path = false;
+		}
 		//do_chase_path = true;
 
 	}

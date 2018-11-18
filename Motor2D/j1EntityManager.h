@@ -10,7 +10,6 @@
 struct EntityData
 {
 	j1Entity::Types type = j1Entity::Types::UNKNOWN;
-	int x, y, path_type;
 	p2SString tsx_file;
 };
 
@@ -34,14 +33,9 @@ public:
 	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
 	void DestroyEntity(j1Entity* entity);
 
-	
-
 public:
-	p2DynArray<j1Entity*> entities;
 
-	//void SpawnEnemy(const EntityData& info);
-	//SDL_Texture* sprites;
-	//SDL_Texture* gladiatorSprite = nullptr;	
+	p2DynArray<j1Entity*> entities;
 
 private:
 

@@ -112,14 +112,12 @@ public:
 	virtual bool Load(pugi::xml_node&);
 
 	j1Entity* GetEntityPosition(j1Entity::Types type);
-
-	//virtual void ExtraAnim(SDL_Texture* texture) {};
-	//virtual void DeadAnim();
-	//virtual void Drop();	
 	
+public:
 
 	fPoint position;
 	const fPoint spawn_position;
+	fPoint		speed;
 
 	Types type;
 
@@ -130,8 +128,6 @@ public:
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 
 	pugi::xml_document	entity_file;
-
-	fPoint		speed;
 	
 	Animation* current_animation = nullptr;
 	float animationSpeed;

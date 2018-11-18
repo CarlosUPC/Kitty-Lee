@@ -65,6 +65,8 @@ private:
 	GladiatorState gState;
 	PathState pState;	
 
+	const char* AttackSound = nullptr;
+	
 
 	iPoint gSize;
 

@@ -58,6 +58,9 @@ private:
 	FlyingTongueState fState;
 	PathStateTongue pState;
 
+	const char* AttackSound = nullptr;
+	
+
 	iPoint fSize;
 
 	j1Player* player;

@@ -42,7 +42,7 @@ public:
 	void Move(float dt);
 	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
-	void DeadAnim();
+	//void DeadAnim();
 	void LoadCollider(pugi::xml_node&);
 	bool CleanUp();	
 

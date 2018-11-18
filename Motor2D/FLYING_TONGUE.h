@@ -90,6 +90,7 @@ private:
 	float cooldown = 0.25f;
 
 	Collider* enemyPathfinding;
+	Collider* playerPathfinding;
 
 public:
 	bool stop = false;

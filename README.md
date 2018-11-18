@@ -53,7 +53,7 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 
 ## Repository Link
 
-[Rpository](https://github.com/CarlosUPC/Kitty-Lee)
+[Repository](https://github.com/CarlosUPC/Kitty-Lee)
 
 ## Authors
 

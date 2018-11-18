@@ -9,7 +9,7 @@
 #include "j1Entity.h"
 #include "j1Player.h"
 #include "GLADIATOR.h"
-
+#include "FLYING_TONGUE.h"
 #include "Brofiler/Brofiler.h"
 
 j1EntityManager::j1EntityManager()
@@ -131,6 +131,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int
 	j1Entity* ret = nullptr;
 	switch (type) {
 		case j1Entity::Types::GLADIATOR: ret = new Gladiator(PositionX, PositionY); break;
+		case j1Entity::Types::FLYING_TONGUE: ret = new FlyingTongue(PositionX, PositionY); break;
 		case j1Entity::Types::PLAYER: ret = new j1Player(PositionX, PositionY); break;
 	}
 	if (ret != nullptr) {

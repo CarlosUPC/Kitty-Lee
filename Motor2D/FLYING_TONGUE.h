@@ -33,7 +33,7 @@ public:
 
 	FlyingTongue(int x, int y);
 	~FlyingTongue();
-
+	bool Update(float dt);
 	void Move(float dt);
 	//void Draw(float dt);
 	void IdAnimToEnum();

@@ -118,7 +118,7 @@ public:
 	
 
 	fPoint position;
-	fPoint spawn_position;
+	const fPoint spawn_position;
 
 	Types type;
 

@@ -81,6 +81,9 @@ bool j1Entity::Save(pugi::xml_node &node) const
 
 	e_node.append_attribute("x") = (int)position.x;
 	e_node.append_attribute("y") = (int)position.y;
+	e_node.append_attribute("spawn_x") = (int)spawn_position.x;
+	e_node.append_attribute("spawn_y") = (int)spawn_position.y;
+	e_node.append_attribute("type") = (int)type;
 
 	return true;
 }

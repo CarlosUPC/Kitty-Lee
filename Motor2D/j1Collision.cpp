@@ -26,6 +26,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_FLOOR][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_WIN] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
 	
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = false;
@@ -38,6 +39,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER][COLLIDER_SCENE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_PLATFORM] = true;
@@ -50,6 +52,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_PLATFORM] = false;
@@ -62,6 +65,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_PLAYER_UP][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLAYER_UP][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_PLATFORM] = false;
@@ -74,6 +78,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_GHOST] = true;
 	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_PLATFORM] = false;
@@ -86,6 +91,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_GHOST] = true;
 	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_WIN] = false;
+	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_DEATH][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLATFORM] = false;
@@ -98,6 +104,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_DEATH][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WIN] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_SCENE][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_PLATFORM] = false;
@@ -110,6 +117,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_SCENE][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_SCENE][COLLIDER_WIN] = false;
+	matrix[COLLIDER_SCENE][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_GHOST][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_PLATFORM] = false;
@@ -122,6 +130,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_GHOST][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_GHOST][COLLIDER_WIN] = false;
+	matrix[COLLIDER_GHOST][COLLIDER_ENEMY] = true;
 
 	matrix[COLLIDER_WIN][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_WIN][COLLIDER_PLATFORM] = false;
@@ -134,6 +143,7 @@ j1Colliders::j1Colliders() : j1Module()
 	matrix[COLLIDER_WIN][COLLIDER_GHOST] = false;
 	matrix[COLLIDER_WIN][COLLIDER_SCENE] = false;
 	matrix[COLLIDER_WIN][COLLIDER_WIN] = false;
+	matrix[COLLIDER_WIN][COLLIDER_ENEMY] = false;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = true;
@@ -365,17 +375,9 @@ bool j1Colliders::Check(Collider* c1, COLLIDER_TYPE type) {
 	
 }
 
-void j1Colliders::GodMode() {
-
-	//Just a test for God mode debug key
+void j1Colliders::GodMode(const bool god_mode) {
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = god_mode;
-	matrix[COLLIDER_PLAYER_DOWN][COLLIDER_DEATH] = god_mode;
-	matrix[COLLIDER_PLAYER_UP][COLLIDER_DEATH] = god_mode;
-	matrix[COLLIDER_PLAYER_RIGHT][COLLIDER_DEATH] = god_mode;
-	matrix[COLLIDER_PLAYER_LEFT][COLLIDER_DEATH] = god_mode;
-	
-	god_mode = !god_mode;
-
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = god_mode;
 }
 
 void j1Colliders::GhostMode(const bool active) {

@@ -56,12 +56,11 @@ bool j1Player::Update(float dt)
 		ghost = !ghost;
 		ChangeState();
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
-		death = !death;
-		state = DEAD;
-		ChangeState();
-		
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		App->collider->GodMode(god_mode);
+		god_mode = !god_mode;
 	}
+
 	//Player collider update
 	SetCollidersPos();
 
@@ -90,20 +89,32 @@ void j1Player::Move(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
 			if (!air)
-				App->audio->PlayFx(1, -1); //Walk fx
+				App->audio->PlayFx(1); //Walk fx
 			
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeedX) {
 			speed.x -= incrementSpeedX;
 			if (!air)
-				App->audio->PlayFx(1, -1); //Walk fx
+				App->audio->PlayFx(1); //Walk fx
 		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
 		speed.x = 0.0f; 
 		App->audio->StopFx(1); //Walk fx
+	}
+
+	if (god_mode) {
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			speed.y -= incrementSpeedX;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			speed.y += incrementSpeedX;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_UP) {
+			speed.y = 0.0f;
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT && App->collider->Check(colliderPlayer_down.collider,COLLIDER_PLATFORM)) {
@@ -118,8 +129,9 @@ void j1Player::Move(float dt) {
 		App->audio->PlayFx(2); //Jump fx
 	}
 
-
-	speed.y += App->map->data.properties.gravity * dt;
+	if (!god_mode) {
+		speed.y += App->map->data.properties.gravity * dt;
+	}
 	if (speed.y > App->map->data.properties.maxAccelerationY)
 		speed.y = App->map->data.properties.maxAccelerationY;
 	else if (speed.y < -App->map->data.properties.maxAccelerationY)
@@ -134,7 +146,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_FLOOR:
 		if (c1 == colliderPlayer_down.collider) {
 			speed.y = 0.0f;
-			speed.y -= App->map->data.properties.gravity * dt;
+			if (!god_mode)
+				speed.y -= App->map->data.properties.gravity * dt;
 			if (air)
 				air = false;
 			if (c1->rect.y >= c2->rect.y)
@@ -181,7 +194,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		if (c1 == colliderPlayer_down.collider) {
 			if (speed.y >= 0 && c2->rect.y + c2->rect.h * 0.5f >= c1->rect.y && !platformOverstep && !ghost) {
 				speed.y = 0.0f;
-				speed.y -= App->map->data.properties.gravity * dt;
+				if (!god_mode)
+					speed.y -= App->map->data.properties.gravity * dt;
 				if (air)
 					air = false;
 				if (c1->rect.y >= c2->rect.y)
@@ -194,6 +208,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		break;
 	case COLLIDER_DEATH:
 		App->LoadGame();
+		break;
+	case COLLIDER_ENEMY:
+		death = true;
+		state = DEAD;
+		ChangeState();
 		break;
 	case COLLIDER_SCENE:
 		if (!App->fade->IsFading())

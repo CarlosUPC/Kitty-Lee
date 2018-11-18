@@ -41,6 +41,8 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	bool GetGodMode() { return god_mode; }
+
 	void OnCollision(Collider*, Collider*, float dt);
 
 private:
@@ -74,6 +76,7 @@ private:
 	const char* crashingSound = nullptr;
 
 	bool ghost = false;
+	bool god_mode = false;
 
 	Animation anim_idle;
 	Animation anim_walking;

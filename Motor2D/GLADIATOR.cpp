@@ -88,11 +88,6 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 		case COLLIDER_PLAYER:
 			EnemyHit(dt);
 			stop = true;
-		
-			/*create_dpath = true;
-			pathfinding = false;
-			pState = PathState::G_DEFAULT_PATH;*/
-			
 			break;
 	}
 
@@ -124,11 +119,6 @@ void Gladiator::IdAnimToEnum()
 	}
 }
 
-void Gladiator::DeadAnim()
-{
-	/*animation = &dead;
-	position.y += 0.2f; */
-}
 
 bool Gladiator::CleanUp()
 {

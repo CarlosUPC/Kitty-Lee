@@ -35,12 +35,10 @@ public:
 	~FlyingTongue();
 	bool Update(float dt);
 	void Move(float dt);
-	//void Draw(float dt);
+	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
-	void DeadAnim();
-	void Drop();
 	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2, float dt) {}
+	
 
 private:
 
@@ -89,9 +87,12 @@ private:
 
 	iPoint playerPos;
 
-	float cooldown = 2.0f;
+	float cooldown = 0.25f;
 
 	Collider* enemyPathfinding;
+
+public:
+	bool stop = false;
 };
 
 #endif // !__GLADIATOR_H__

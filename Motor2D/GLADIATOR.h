@@ -98,7 +98,7 @@ private:
 
 	iPoint playerPos;
 	
-	float cooldown = 2.0f;
+	float cooldown = 0.25f;
 
 public:
 	bool stop = false;

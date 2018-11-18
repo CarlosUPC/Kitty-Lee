@@ -86,12 +86,12 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 	switch (c2->type) {
 
 		case COLLIDER_PLAYER:
-			
+			EnemyHit(dt);
 			stop = true;
 		
-			create_dpath = true;
+			/*create_dpath = true;
 			pathfinding = false;
-			pState = PathState::G_DEFAULT_PATH;
+			pState = PathState::G_DEFAULT_PATH;*/
 			
 			break;
 	}
@@ -330,7 +330,7 @@ void Gladiator::TrackingPathfinding(float dt) {
 
 			}
 
-			if (pState == PathState::G_BACK_TO_DEFAULT_PATH) {
+			else if (pState == PathState::G_BACK_TO_DEFAULT_PATH) {
 				index = 0;
 				pState = PathState::G_DEFAULT_PATH;
 				pathfinding = true;
@@ -388,7 +388,7 @@ bool Gladiator::DetectPlayer() {
 			pState = PathState::G_BACK_TO_DEFAULT_PATH;
 		}
 
-		else if(pState == PathState::G_DEFAULT_PATH) {
+		 if(pState == PathState::G_DEFAULT_PATH) {
 			pathfinding = false;
 			detected = false;
 		

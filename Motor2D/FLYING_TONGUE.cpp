@@ -24,7 +24,7 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYIN
 
 	player = (j1Player*)GetEntityPosition(Types::PLAYER);
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
-	
+	playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
 
 	//Enemy Path
@@ -64,11 +64,13 @@ void FlyingTongue::Move(float dt)
 	current_animation->GetCurrentFrame(dt);
 
 	if (collider.collider != nullptr)
-		collider.collider->SetPos((int)position.x, (int)position.y);
+		collider.collider->SetPos((int)position.x + 4, (int)position.y + 4);
 
 	if (enemyPathfinding != nullptr)
-		enemyPathfinding->SetPos((int)position.x - 34, (int)position.y - 34);
+		enemyPathfinding->SetPos((int)position.x - 24, (int)position.y - 24);
 
+	if (playerPathfinding != nullptr)
+		playerPathfinding->SetPos((int)player->position.x - 34, (int)player->position.y - 34);
 
 
 }
@@ -112,6 +114,7 @@ bool FlyingTongue::CleanUp()
 	ret = App->tex->UnLoad(data.tileset.texture);
 	collider.collider->to_delete = true;
 	enemyPathfinding->to_delete = true;
+	playerPathfinding->to_delete = true;
 	current_animation = nullptr;
 	player = nullptr;
 
@@ -335,8 +338,8 @@ void FlyingTongue::TrackingPathfinding(float dt) {
 bool FlyingTongue::DetectPlayer() {
 
 	bool detected = false;
-	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 5, 5 };
-	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 5, 5 };
+	SDL_Rect enemy_pos = { (int)position.x, (int)position.y, 100, 100 };
+	SDL_Rect player_pos = { (int)player->position.x, (int)player->position.y, 100, 100 };
 
 
 	if (SDL_HasIntersection(&enemy_pos, &player_pos) && player->GetGodMode() == false) {

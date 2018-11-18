@@ -131,7 +131,7 @@ public:
 	Animation* current_animation = nullptr;
 	float animationSpeed;
 
-	const p2DynArray<iPoint>* entityPath;
+	p2DynArray<iPoint> entityPath;
 	uint entityPathSize = 0;
 };
 #endif // __ENTITY_H__

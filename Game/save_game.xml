@@ -13,12 +13,7 @@
 	<colliders />
 	<entities>
 		<entity x="96" y="256" spawn_x="96" spawn_y="256" type="0" />
-
-		<entity x="297" y="272" spawn_x="352" spawn_y="272" type="1" />
-		<entity x="256" y="223" spawn_x="256" spawn_y="223" type="2" />
-
-		<entity x="665" y="352" spawn_x="688" spawn_y="352" type="1" />
-
+		<entity x="673" y="352" spawn_x="688" spawn_y="352" type="1" />
 	</entities>
 	<renderer>
 		<camera x="0" y="-390" />

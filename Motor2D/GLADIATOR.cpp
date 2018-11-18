@@ -27,7 +27,7 @@ Gladiator::Gladiator(int PositionX, int PositionY) : j1Entity(Types::GLADIATOR, 
 
 	
 	//Enemy Path
-	entityPath = nullptr;
+	entityPath.Clear();
 	pState = PathState::G_DEFAULT_PATH;
 	stop = false;
 	
@@ -306,10 +306,12 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 	dest = App->pathfinding->CreatePath(App->map->WorldToMap((int)relativePos.x, (int)relativePos.y), App->map->WorldToMap(destination.x, destination.y), TypePathDistance::MANHATTAN);
 	
 	if (dest > 0) {
-		entityPath = App->pathfinding->GetLastPath();
+		entityPath.Clear();
+		entityPathSize = App->pathfinding->GetLastPath()->Count();
+		for (uint i = 0; i < entityPathSize; ++i) {
+			entityPath.PushBack(*App->pathfinding->GetLastPath()->At(i));
+		}
 		index = 0;
-
-		entityPathSize = entityPath->Count();
 
 		if (pState == PathState::G_DEFAULT_PATH)
 			do_dpath = true;
@@ -332,7 +334,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 void Gladiator::TrackingPathfinding(float dt) {
 
-	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
+	iPoint forwardPos = App->map->MapToWorld(entityPath.At(index)->x, entityPath.At(index)->y);
 
 	speed = { 30.0F, 0.0F };
 

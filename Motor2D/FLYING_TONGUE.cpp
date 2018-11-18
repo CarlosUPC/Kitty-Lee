@@ -24,7 +24,7 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : j1Entity(Types::FLYIN
 
 	player = (j1Player*)GetEntityPosition(Types::PLAYER);
 	enemyPathfinding = App->collider->AddCollider({ (int)position.x,(int)position.y, 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE, this);
-	//playerPathfinding = App->collider->AddCollider({ (int)GetEntityPosition(Types::PLAYER)->position.x, (int)GetEntityPosition(Types::PLAYER)->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
+	//playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
 
 	//Enemy Path
@@ -85,7 +85,6 @@ void FlyingTongue::IdAnimToEnum()
 			break;
 		case 8:
 			data.animations[i].animType = EntityState::HIT;
-			break;
 			break;
 		case 16:
 			data.animations[i].animType = EntityState::DEAD;

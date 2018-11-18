@@ -106,7 +106,6 @@ public:
 	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
-	void DeleteAnimation();
 
 	virtual bool Save(pugi::xml_node&) const;
 	virtual bool Load(pugi::xml_node&);

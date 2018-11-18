@@ -40,6 +40,7 @@ public:
 	void DeadAnim();
 	void Drop();
 	bool CleanUp();
+	void OnCollision(Collider* c1, Collider* c2, float dt) {}
 
 private:
 
@@ -85,8 +86,6 @@ private:
 
 	fPoint lastPosition = { 800, 272 };
 	fPoint speed = { 30.0f, 30.0f };
-
-
 
 	iPoint playerPos;
 

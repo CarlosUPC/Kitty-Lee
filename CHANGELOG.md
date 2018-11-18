@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.3.0] - 2018-11-18
+### Added
+
+- Enemies:
+	- Flying.
+	- Terrestrial.
+- Path Finding module.
+- Path Finding attached to enemies in order to go to player's position.
+- Entity system.
+- System load of entities with tsx files.
+- Scene place entities automatically after load map.
+- In God Mode now can fly.
+
+### Changed
+
+- Movement system with delta time between frames to move at same speed in all machines.
+- Player now is a entity
+- Save and Load game system is improved.
+
+### Fixed
+
+- Game crashes when enemy doesn't be able to go to player's position with pathfinding.
+
 ## [0.2.1] - 2018-10-14
 ### Added
 

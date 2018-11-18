@@ -107,6 +107,9 @@ public:
 	virtual bool CleanUp();
 	void DeleteAnimation();
 
+	virtual bool Save(pugi::xml_node&) const;
+	virtual bool Load(pugi::xml_node&);
+
 	j1Entity* GetEntityPosition(j1Entity::Types type);
 
 	//virtual void ExtraAnim(SDL_Texture* texture) {};

@@ -44,6 +44,9 @@ public:
 	void DeadAnim();
 	bool CleanUp();
 
+	bool Save(pugi::xml_node&) const;
+	
+
 private:
 
 	void AddColliders();

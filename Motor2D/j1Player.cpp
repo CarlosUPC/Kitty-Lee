@@ -441,33 +441,19 @@ void j1Player::Draw(float dt)
 bool j1Player::Load(pugi::xml_node& data)
 {
 	
-
-	if (App->fade->num_level == 1) {
-		if(App->fade->level1==false)
-			App->fade->SwitchingLevel(App->scene->lvl1.GetString());
-
-		position.x = data.child("player").attribute("x").as_float();
-		position.y = data.child("player").attribute("y").as_float();
-	}
-
-	if (App->fade->num_level == 2) {
-		App->scene->stg = LEVEL_2;
-		App->fade->SwitchingLevel(App->scene->lvl2.GetString());
-		position.x = data.child("player").attribute("x").as_float();
-		position.y = data.child("player").attribute("y").as_float();
-	}
-
-	speed.SetToZero();
+	position.x = data.attribute("x").as_float();
+	position.y = data.attribute("y").as_float();
 
 	return true;
 
 }
 bool j1Player::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node player_node = data.append_child("player");
+	pugi::xml_node player_node = data.append_child("entity");
 
-	player_node.append_attribute("x") = position.x;
-	player_node.append_attribute("y") = position.y;
+	player_node.append_attribute("x") = (int)position.x;
+	player_node.append_attribute("y") = (int)position.y;
+	player_node.append_attribute("type") = (int)type;
 
 	return true;
 }

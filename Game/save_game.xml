@@ -6,13 +6,15 @@
 	<audio />
 	<map />
 	<scene>
-		<levels level="1" />
+		<levels level="2" />
 	</scene>
 	<pathfinding />
 	<:anonymous />
 	<colliders />
-	<entities />
+	<entities>
+		<entity x="32" y="112" type="0" />
+	</entities>
 	<renderer>
-		<camera x="-3997" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

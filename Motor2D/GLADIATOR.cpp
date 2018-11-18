@@ -79,12 +79,10 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	switch (c2->type) {
 
-	case COLLIDER_FLOOR:
-		if (c1 == collider.collider) {
+		case COLLIDER_FLOOR:
 
-			position.y -= speed.y * dt;
-			
-		}
+			//position.y = c1->rect.y - c2->rect.h;
+			break;
 	}
 
 }
@@ -132,6 +130,17 @@ bool Gladiator::CleanUp()
 	player = nullptr;
 	
 	return ret;
+}
+
+bool Gladiator::Save(pugi::xml_node &node) const
+{
+	pugi::xml_node g_node = node.append_child("entity");
+
+	g_node.append_attribute("x") = (int)position.x;
+	g_node.append_attribute("y") = (int)position.y;
+	g_node.append_attribute("type") = (int)type;
+
+	return true;
 }
 
 void Gladiator::PushBack()
@@ -277,11 +286,7 @@ void Gladiator::CreatePathfinding(iPoint destination) {
 
 void Gladiator::TrackingPathfinding(float dt) {
 
-	
-
 	iPoint forwardPos = App->map->MapToWorld(entityPath->At(index)->x, entityPath->At(index)->y);
-
-	speed = { 30.0f, 30.0f };
 
 	speed = { 30.0F, 30.0F };
 

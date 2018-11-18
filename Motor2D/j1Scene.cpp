@@ -43,7 +43,9 @@ bool j1Scene::Start()
 
 	App->map->AddCollidersMap();
 
-	CreateMapEntities();
+	SetWalkabilityMap();
+
+	CreateEntities();
 
 	debug_tex = App->tex->Load("maps/path.png");
 
@@ -56,7 +58,7 @@ bool j1Scene::Start()
 	return true;
 }
 
-void j1Scene::CreateMapEntities()
+void j1Scene::SetWalkabilityMap()
 {
 	int w, h;
 	uchar* data = NULL;
@@ -64,7 +66,10 @@ void j1Scene::CreateMapEntities()
 		App->pathfinding->SetMap(w, h, data);
 
 	RELEASE_ARRAY(data);
+}
 
+void j1Scene::CreateEntities()
+{
 	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
 	j1Entity* ent = nullptr;
 
@@ -79,6 +84,21 @@ void j1Scene::CreateMapEntities()
 
 		if (ent != nullptr) {
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
+			
+		}
+	}
+}
+
+void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
+{
+	j1Entity* ent = nullptr;
+
+	for (pugi::xml_node n = node.child("entity"); n; n = n.next_sibling()) {
+		ent = App->entities->CreateEntity((j1Entity::Types)n.attribute("type").as_int(), n.attribute("x").as_float(), n.attribute("y").as_float());
+		if (ent != nullptr) {
+			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
+			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER)
+				player = (j1Player*)ent;
 		}
 	}
 }
@@ -212,13 +232,24 @@ void j1Scene::CheckLevel()
 	}
 }
 
-
 bool j1Scene::Load(pugi::xml_node& data)
 {
+	bool ret = false;
 	App->fade->num_level = data.child("levels").attribute("level").as_int();
-	return true;
 
+	if (App->fade->num_level == 1 && !isLevel1) {
+		App->scene->stg = LEVEL_1;
+		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
+	}
+	else if (App->fade->num_level == 2 && isLevel1) {
+		App->scene->stg = LEVEL_2;
+		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
+	}
+	else ret = true;
+
+	return ret;
 }
+
 bool j1Scene::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node player_node = data.append_child("levels");
@@ -227,4 +258,3 @@ bool j1Scene::Save(pugi::xml_node& data) const
 	
 	return true;
 }
-

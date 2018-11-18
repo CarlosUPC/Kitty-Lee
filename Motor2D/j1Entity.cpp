@@ -75,6 +75,21 @@ void j1Entity::DeleteAnimation()
 	}
 }
 
+bool j1Entity::Save(pugi::xml_node &node) const
+{
+	pugi::xml_node e_node = node.append_child("entity");
+
+	e_node.append_attribute("x") = (int)position.x;
+	e_node.append_attribute("y") = (int)position.y;
+
+	return true;
+}
+
+bool j1Entity::Load(pugi::xml_node &)
+{
+	return true;
+}
+
 j1Entity * j1Entity::GetEntityPosition(j1Entity::Types type)
 {
 	j1Entity* ent = nullptr;

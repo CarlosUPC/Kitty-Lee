@@ -111,6 +111,27 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
+bool j1EntityManager::Save(pugi::xml_node & node) const
+{
+	bool ret = false;
+	LOG("Saving all entities...");
+
+	for (int i = 0; i < entities.Count(); ++i) {
+		ret = entities[i]->Save(node);
+	}
+	return ret;
+}
+
+bool j1EntityManager::Load(pugi::xml_node & node)
+{
+	bool ret = false;
+	LOG("Loading all entities...");
+
+	CleanUp();
+	App->scene->CreateEntitiesFromXML(node);
+	return ret;
+}
+
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
 {
 	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");

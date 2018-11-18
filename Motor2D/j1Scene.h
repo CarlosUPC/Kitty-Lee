@@ -26,7 +26,11 @@ public:
 	// Called before the first frame
 	bool Start();
 
-	void CreateMapEntities();
+	void SetWalkabilityMap();
+
+	void CreateEntities();
+
+	void CreateEntitiesFromXML(pugi::xml_node & node);
 
 	// Called before all Updates
 	bool PreUpdate();

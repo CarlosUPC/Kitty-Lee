@@ -27,6 +27,9 @@ public:
 	bool UpdateAll(float dt, bool do_logic);
 	bool PostUpdate();
 	bool CleanUp();
+	
+	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
 
 	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
 	void DestroyEntity(j1Entity* entity);

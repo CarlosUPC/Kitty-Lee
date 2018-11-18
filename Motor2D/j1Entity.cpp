@@ -60,21 +60,6 @@ bool j1Entity::CleanUp()
 	return ret;
 }
 
-void j1Entity::DeleteAnimation()
-{
-	//deleting entity animation data already loaded in its corresponding animation variables
-	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
-		if (data.animations[i].frames != nullptr) {			//is in PushBack() because when load all animation in its
-			delete[] data.animations[i].frames;				//corresponding variables, that data is useless
-			data.animations[i].frames = nullptr;
-		}
-	}
-	if (data.animations != nullptr) {
-		delete[] data.animations;
-		data.animations = nullptr;
-	}
-}
-
 bool j1Entity::Save(pugi::xml_node &node) const
 {
 	pugi::xml_node e_node = node.append_child("entity");
@@ -184,7 +169,17 @@ bool j1Entity::LoadEntityData(const char* file) {
 
 	PushBack();
 
-	DeleteAnimation();
+	//deleting entity animation data already loaded in its corresponding animation variables
+	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (data.animations[i].frames != nullptr) {			//is in PushBack() because when load all animation in its
+			delete[] data.animations[i].frames;				//corresponding variables, that data is useless
+			data.animations[i].frames = nullptr;
+		}
+	}
+	if (data.animations != nullptr) {
+		delete[] data.animations;
+		data.animations = nullptr;
+	}
 
 	return ret;
 }

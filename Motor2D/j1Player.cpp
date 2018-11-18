@@ -504,6 +504,7 @@ void j1Player::CheckState() {
 			//App->LoadGame();
 			App->entities->CleanUp();
 			App->scene->CreateEntities();
+			App->render->CameraInitPos();
 		}
 		speed.x = 0.0F;
 		break;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Flying Tongue" tilewidth="64" tileheight="64" tilecount="32" columns="8">
+<tileset version="1.2" tiledversion="1.2.1" name="Flying Tongue" tilewidth="64" tileheight="64" tilecount="32" columns="8">
  <properties>
   <property name="AnimationSpeed" type="float" value="15"/>
  </properties>
  <image source="textures/enemies/FlyingTongue.png" width="512" height="256"/>
  <tile id="0">
   <objectgroup draworder="index">
-   <object id="1" name="Collider" type="ENEMY_COLLIDER" x="5" y="9" width="49" height="44"/>
+   <object id="1" name="Collider" type="COLLIDER_ENEMY" x="5" y="9" width="49" height="44"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>

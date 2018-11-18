@@ -76,6 +76,8 @@ void j1Scene::CreateEntities()
 	for (; position; position = position->next) {
 		if (position->data->name == "Gladiator")
 			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR, position->data->coll_x, position->data->coll_y);
+		else if (position->data->name == "Flying Tongue")
+			ent = App->entities->CreateEntity(j1Entity::Types::FLYING_TONGUE, position->data->coll_x, position->data->coll_y);
 		else if (position->data->name == "Player") {
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
 			player = (j1Player*)ent;

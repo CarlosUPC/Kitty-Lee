@@ -64,6 +64,11 @@ void FlyingTongue::Move(float dt)
 
 }
 
+bool FlyingTongue::Update(float dt)
+{
+	return true;
+}
+
 //void FlyingTongue::Draw(float dt)
 //{
 //

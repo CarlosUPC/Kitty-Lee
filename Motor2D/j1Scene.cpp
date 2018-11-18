@@ -94,8 +94,9 @@ void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
 	j1Entity* ent = nullptr;
 
 	for (pugi::xml_node n = node.child("entity"); n; n = n.next_sibling()) {
-		ent = App->entities->CreateEntity((j1Entity::Types)n.attribute("type").as_int(), n.attribute("x").as_float(), n.attribute("y").as_float());
+		ent = App->entities->CreateEntity((j1Entity::Types)n.attribute("type").as_int(), n.attribute("spawn_x").as_float(), n.attribute("spawn_y").as_float());
 		if (ent != nullptr) {
+			ent->position.create(n.attribute("x").as_float(), n.attribute("y").as_float());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER)
 				player = (j1Player*)ent;
@@ -131,6 +132,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || player->position.y > App->map->data.height*App->map->data.tile_height){
 		player->position = player->spawn_position;
 		player->speed.SetToZero();
+		App->render->CameraInitPos();
 	}
 	
 	//F3 - Increase music volume
@@ -207,8 +209,9 @@ bool j1Scene::PostUpdate()
 // Called before quitting
 bool j1Scene::CleanUp()
 {
+	bool ret = false;
 	LOG("Freeing scene");
-	App->tex->UnLoad(debug_tex);
+	ret = App->tex->UnLoad(debug_tex);
 
 	return true;
 }

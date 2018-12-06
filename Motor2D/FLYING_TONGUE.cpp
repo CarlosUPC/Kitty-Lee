@@ -11,7 +11,7 @@
 FlyingTongue::FlyingTongue(int PositionX, int PositionY) : Enemy(Types::FLYING_TONGUE, PositionX, PositionY)
 {
 	//Load Enemy data
-	LoadEntityData("Flying Tongue.tsx");
+	LoadEntityData("Flying_Tongue.tsx");
 	//LoadProperties();
 
 	state = State::IDLE;

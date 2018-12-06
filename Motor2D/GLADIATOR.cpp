@@ -12,7 +12,7 @@
 Gladiator::Gladiator(int PositionX, int PositionY) : Enemy(Types::GLADIATOR, PositionX, PositionY)
 {
 	//Load Enemy data
-	LoadEntityData("gladiator2.tsx");
+	LoadEntityData("gladiator.tsx");
 
 	
 	state = State::IDLE;

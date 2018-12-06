@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="gladiator" tilewidth="32" tileheight="32" tilecount="40" columns="8">
+<tileset version="1.2" tiledversion="1.2.1" name="gladiator" tilewidth="32" tileheight="32" tilecount="40" columns="8">
  <properties>
   <property name="AnimationSpeed" type="float" value="15"/>
   <property name="attackSound" value="audio/fx/sword_effect.wav"/>
@@ -7,7 +7,7 @@
  <image source="textures/enemies/Gladiator.png" width="256" height="160"/>
  <tile id="0">
   <objectgroup draworder="index">
-   <object id="1" name="Collider" type="COLLIDER_ENEMY" x="4" y="5" width="24" height="27"/>
+   <object id="1" name="Collider" type="COLLIDER_ENEMY" x="9" y="10" width="13" height="22"/>
    <object id="2" name="ColliderGround" type="COLLIDER_PLAYER_DOWN" x="13" y="31" width="6" height="1"/>
   </objectgroup>
   <animation>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Flying Tongue" tilewidth="64" tileheight="64" tilecount="32" columns="8">
+<tileset version="1.2" tiledversion="1.2.1" name="Flying Tongue" tilewidth="64" tileheight="64" tilecount="24" columns="8">
  <properties>
   <property name="AnimationSpeed" type="float" value="15"/>
   <property name="attackSound" value="audio/fx/bite_effect.wav"/>
  </properties>
- <image source="textures/enemies/FlyingTongue.png" width="512" height="256"/>
+ <image source="textures/enemies/Flying_Tongue.png" width="512" height="192"/>
  <tile id="0">
   <objectgroup draworder="index">
-   <object id="1" name="Collider" type="COLLIDER_ENEMY" x="5" y="9" width="49" height="44"/>
+   <object id="1" name="Collider" type="COLLIDER_ENEMY" x="21" y="22" width="23" height="26"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>

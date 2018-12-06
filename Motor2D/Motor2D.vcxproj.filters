@@ -63,6 +63,12 @@
     <ClCompile Include="ENEMY.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -149,6 +155,12 @@
     </ClInclude>
     <ClInclude Include="ENEMY.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

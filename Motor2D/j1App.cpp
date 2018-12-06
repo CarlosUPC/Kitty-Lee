@@ -15,8 +15,10 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Brofiler/Brofiler.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,17 +28,19 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	frames = 0;
 	want_to_save = want_to_load = false;
 
-	input =			new j1Input();
-	win =			new j1Window();
-	render =		new j1Render();
-	tex =			new j1Textures();
-	audio =			new j1Audio();
-	scene =			new j1Scene();
-	collider =		new j1Colliders();
-	map =			new j1Map();
-	fade =			new j1FadeToBlack();
-	entities =		new j1EntityManager();
-	pathfinding =	new j1PathFinding();
+	input		= new j1Input();
+	win			= new j1Window();
+	render		= new j1Render();
+	tex			= new j1Textures();
+	audio		= new j1Audio();
+	scene		= new j1Scene();
+	collider	= new j1Colliders();
+	map			= new j1Map();
+	fade		= new j1FadeToBlack();
+	entities	= new j1EntityManager();
+	pathfinding	= new j1PathFinding();
+	fonts		= new j1Fonts();
+	gui			= new j1Gui();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +54,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fade);
 	AddModule(collider);
 	AddModule(entities);
+	AddModule(fonts);
+	AddModule(gui);
 	
 	
 	// render last to swap buffer

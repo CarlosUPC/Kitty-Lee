@@ -5,6 +5,8 @@
 #include "PLAYER.h"
 
 struct SDL_Texture;
+class Image;
+class Label;
 
 enum Stages {
 	LEVEL_1 = 0,
@@ -63,6 +65,9 @@ private:
 	uint win_height;
 	SDL_Texture* debug_tex;
 	Player* player;
+
+	Image* banner;
+	Label* text;
 
 };
 

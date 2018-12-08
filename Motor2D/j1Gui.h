@@ -49,7 +49,7 @@ class Label :public UI {
 public:
 	Label(fPoint pos, const char* path_font, const char* txt) :UI(pos) {
 		font = App->fonts->Load(path_font);
-		text = txt;
+		text.create(txt);
 	}
 	~Label() {}
 
@@ -85,6 +85,8 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
+	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
+	Label * CreateLabel(const fPoint & pos, const char * text, const char * font);
 
 	void Draw();
 	void CheckMouse(Button*);

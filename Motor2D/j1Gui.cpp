@@ -48,6 +48,10 @@ bool j1Gui::PreUpdate()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	p2List_item<UI*>* item = objects.start;
+	for (; item; item = item->next) {
+		item->data->Draw();
+	}
 	return true;
 }
 
@@ -55,6 +59,10 @@ bool j1Gui::PostUpdate()
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
+	p2List_item<UI*>* item;
+	for (item = objects.start; item; item = item->next) {
+		RELEASE(item->data);
+	}
 
 	return true;
 }
@@ -63,6 +71,22 @@ Button * j1Gui::CreateButton(const fPoint & pos, const SDL_Rect & idle, const SD
 {
 	Button* ret = nullptr;
 	ret = new Button(pos, idle, hover, push);
+	objects.add(ret);
+	return ret;
+}
+
+Image* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
+{
+	Image* ret = nullptr;
+	ret = new Image(pos, rect);
+	objects.add(ret);
+	return ret;
+}
+
+Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font)
+{
+	Label* ret = nullptr;
+	ret = new Label(pos, text, font);
 	objects.add(ret);
 	return ret;
 }

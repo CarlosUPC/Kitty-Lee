@@ -194,7 +194,6 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 	dt = frame_time.ReadSec();
-	LOG("dt: %f", dt);
 	frame_time.Start();
 }
 

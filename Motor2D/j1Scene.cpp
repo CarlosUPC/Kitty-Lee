@@ -12,6 +12,7 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1Gui.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -48,6 +49,9 @@ bool j1Scene::Start()
 	CreateEntities();
 
 	debug_tex = App->tex->Load("maps/path.png");
+
+	SDL_Rect r = { 0,0,100,100 };
+	App->gui->CreateImage(fPoint(0, 0), r);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

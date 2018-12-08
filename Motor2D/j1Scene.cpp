@@ -51,7 +51,7 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path.png");
 
 	SDL_Rect r = { 0,0,100,100 };
-	App->gui->CreateImage(fPoint(0, 0), r);
+	banner = App->gui->CreateImage(fPoint(0, 0), r);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
@@ -162,7 +162,7 @@ bool j1Scene::Update(float dt)
 		App->fade->FadeToBlack();
 
 	App->map->Draw();
-
+	
 	if (App->collider->debug) {
 
 		SDL_Rect path_rect = { 0,0,16,16 };

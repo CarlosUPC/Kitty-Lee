@@ -91,6 +91,15 @@ Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font
 	return ret;
 }
 
+bool j1Gui::DestroyUI(UI *ui)
+{
+	bool ret = false;
+	int index =	objects.find(ui);
+	if (index != -1)
+		ret = objects.del(objects.At(index));
+	return ret;
+}
+
 void j1Gui::Draw() {
 
 }

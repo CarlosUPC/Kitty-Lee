@@ -88,6 +88,8 @@ public:
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
 	Label * CreateLabel(const fPoint & pos, const char * text, const char * font);
 
+	bool DestroyUI(UI*);
+
 	void Draw();
 	void CheckMouse(Button*);
 	const SDL_Texture* GetAtlas() const;

@@ -47,14 +47,19 @@ public:
 
 class Label :public UI {
 public:
-	Label(fPoint pos, const char* path_font, const char* txt) :UI(pos) {
+	Label(fPoint pos, const char* txt, const char* path_font) :UI(pos) {
 		font = App->fonts->Load(path_font);
 		text.create(txt);
+		SDL_Color color = { 255, 255, 255, 255 };
+		texture = App->fonts->Print(text.GetString(), color, font);
 	}
 	~Label() {}
 
-	_TTF_Font* font;
-	p2SString text;
+	bool Draw();
+
+	_TTF_Font*		font;
+	SDL_Texture*	texture;
+	p2SString		text;
 };
 
 // ---------------------------------------------------

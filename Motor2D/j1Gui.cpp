@@ -162,3 +162,9 @@ bool Button::Draw()
 	}
 	return ret;
 }
+
+bool Label::Draw()
+{
+	App->render->Blit(texture, position.x, position.y, 0, 0.0f);
+	return false;
+}

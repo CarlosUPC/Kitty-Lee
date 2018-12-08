@@ -39,6 +39,10 @@
     <level_1>SceneIndoor.tmx</level_1>
 	<level_2>Scene1.tmx</level_2>
   </scene>
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
   
 
   <player>

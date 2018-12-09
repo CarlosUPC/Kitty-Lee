@@ -40,7 +40,8 @@ bool j1Gui::PreUpdate()
 {
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
-		CheckMouse((Button*)item->data);
+		if (item->data->type == UI::Type::BUTTON)
+			CheckMouse((Button*)item->data);
 	}
 	return true;
 }
@@ -98,10 +99,6 @@ bool j1Gui::DestroyUI(UI *ui)
 	if (index != -1)
 		ret = objects.del(objects.At(index));
 	return ret;
-}
-
-void j1Gui::Draw() {
-
 }
 
 void j1Gui::CheckMouse(Button *b)

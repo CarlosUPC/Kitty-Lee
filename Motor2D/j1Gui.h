@@ -14,8 +14,17 @@ public:
 	UI(const fPoint &pos) :position(pos) {}
 	~UI() {}
 
-	virtual bool Draw() { return true; }
+	enum class Type {
+		BUTTON,
+		IMAGE,
+		LABEL,
+
+		MAX
+	};
+
+	virtual bool Draw() { return false; };
 	fPoint position;
+	UI::Type type;
 };
 
 class Image :public UI {
@@ -88,7 +97,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
 	// Gui creation functions
 	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
@@ -96,7 +104,6 @@ public:
 
 	bool DestroyUI(UI*);
 
-	void Draw();
 	void CheckMouse(Button*);
 	const SDL_Texture* GetAtlas() const;
 

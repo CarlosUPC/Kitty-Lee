@@ -83,10 +83,10 @@ Image* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const char* font)
+Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const uint &size, const char* font)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos, text, font);
+	ret = new Label(pos, text, font, size);
 	objects.add(ret);
 	return ret;
 }

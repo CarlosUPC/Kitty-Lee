@@ -5,7 +5,7 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/open_sans/OpenSans-Regular.ttf"
-#define DEFAULT_FONT_SIZE 12
+#define DEFAULT_FONT_SIZE 24
 
 struct SDL_Texture;
 struct _TTF_Font;
@@ -26,7 +26,7 @@ public:
 	bool CleanUp();
 
 	// Load Font
-	_TTF_Font* const Load(const char* path, int size = 12);
+	_TTF_Font* const Load(const char* path, int size = DEFAULT_FONT_SIZE);
 
 	// Create a surface from text
 	SDL_Texture* Print(const char* text, SDL_Color color = {255, 255, 255, 255}, _TTF_Font* font = NULL);

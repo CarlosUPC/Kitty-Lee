@@ -47,8 +47,8 @@ public:
 
 class Label :public UI {
 public:
-	Label(fPoint pos, const char* txt, const char* path_font) :UI(pos) {
-		font = App->fonts->Load(path_font);
+	Label(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
+		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		SDL_Color color = { 255, 255, 255, 255 };
 		texture = App->fonts->Print(text.GetString(), color, font);
@@ -58,6 +58,7 @@ public:
 	bool Draw();
 
 	_TTF_Font*		font;
+	uint			size;
 	SDL_Texture*	texture;
 	p2SString		text;
 };
@@ -91,7 +92,7 @@ public:
 	// Gui creation functions
 	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
-	Label * CreateLabel(const fPoint & pos, const char * text, const char * font = DEFAULT_FONT);
+	Label * CreateLabel(const fPoint & pos, const char * text, const uint &size = DEFAULT_FONT_SIZE, const char * font = DEFAULT_FONT);
 
 	bool DestroyUI(UI*);
 

@@ -91,7 +91,7 @@ public:
 	// Gui creation functions
 	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
 	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
-	Label * CreateLabel(const fPoint & pos, const char * text, const char * font);
+	Label * CreateLabel(const fPoint & pos, const char * text, const char * font = DEFAULT_FONT);
 
 	bool DestroyUI(UI*);
 

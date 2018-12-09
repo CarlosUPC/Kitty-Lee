@@ -165,6 +165,6 @@ bool Button::Draw()
 
 bool Label::Draw()
 {
-	App->render->Blit(texture, position.x, position.y, 0, 0.0f);
+	App->render->Blit(texture, position.x, position.y, NULL, 0.0F, false);
 	return false;
 }

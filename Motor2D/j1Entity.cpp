@@ -44,7 +44,7 @@ bool j1Entity::Update(float dt) {
 
 void j1Entity::Draw() {
 	if (current_animation != nullptr)
-		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->frames[current_animation->GetNumCurrentFrame()], 1.0F, flip);
+		App->render->Blit(data.tileset.texture, position.x, position.y, &current_animation->frames[current_animation->GetNumCurrentFrame()], 1.0F, true, flip);
 	else
 		App->render->Blit(data.tileset.texture, position.x, position.y);
 }

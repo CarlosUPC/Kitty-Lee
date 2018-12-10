@@ -40,9 +40,14 @@ bool j1Gui::PreUpdate()
 {
 	p2List_item<UI*>* item = objects.start;
 	for (; item; item = item->next) {
-		if (item->data->type == UI::Type::BUTTON)
-			CheckMouse((Button*)item->data);
+		CheckMouse(item->data);
 	}
+	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
+		selected = Select();
+	else if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_UP && selected != nullptr)
+		selected = nullptr;
+	LOG("%i", selected);
+
 	return true;
 }
 
@@ -101,51 +106,50 @@ bool j1Gui::DestroyUI(UI *ui)
 	return ret;
 }
 
-void j1Gui::CheckMouse(Button *b)
+void j1Gui::CheckMouse(UI *b)
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	if (x > b->position.x&&x<b->position.x + b->idle.w &&
-		y>b->position.y&&y < b->position.y + b->idle.h) {
+	if (x > b->position.x&&x<b->position.x + b->width &&
+		y>b->position.y&&y < b->position.y + b->height) {
 		if(App->input->GetMouseButtonDown(1)) {
-			b->mouse = Mouse::PUSH;
-			LOG("PUSH");
+			b->mouse = UI::Mouse::PUSH;
+
 		}
 		else{
-		b->mouse = Mouse::ONHOVER;
-		LOG("ONHOVER");
+		b->mouse = UI::Mouse::ONHOVER;
 		}
-		
-		
+
+
 	}
-	else if(b->mouse != Mouse::IDLE) {
-		b->mouse = Mouse::IDLE;
-		LOG("IDLE");
+	else if(b->mouse != UI::Mouse::IDLE) {
+		b->mouse = UI::Mouse::IDLE;
+
 	}
-	
-	
+
+
 }
 
 void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
 
 	switch (action){
 	case MOUSE_ENTER:
-		
+
 		break;
 	case MOUSE_LEAVE:
-		
+
 		break;
 	case RIGHT_CLICK:
-		
+
 		break;
 	case LEFT_CLICK:
-		
+
 		break;
 	case RIGHT_CLICK_UP:
-		
+
 		break;
 	case LEFT_CLICK_UP:
-		
+
 		break;
 	case TAB:
 		break;
@@ -167,7 +171,7 @@ const SDL_Texture* j1Gui::GetAtlas() const
 bool Image::Draw()
 {
 	bool ret = false;
-	
+
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, 0.0F);
 
 	return ret;

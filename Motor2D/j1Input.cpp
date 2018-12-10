@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1Render.h"
 #include "SDL/include/SDL.h"
 
 #include "Brofiler\Brofiler.h"
@@ -156,4 +157,10 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::GetWorldMousePosition(int& x, int& y)
+{
+	x = App->render->ScreenToWorld(mouse_x, mouse_y).x;
+	y = App->render->ScreenToWorld(mouse_x, mouse_y).y;
 }

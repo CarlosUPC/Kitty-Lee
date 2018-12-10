@@ -9,6 +9,18 @@
 // TODO 1: Create your structure of classes
 struct _TTF_Font;
 
+enum Mouse_Event {
+	MOUSE_ENTER,
+	MOUSE_LEAVE,
+	RIGHT_CLICK,
+	LEFT_CLICK,
+	RIGHT_CLICK_UP,
+	LEFT_CLICK_UP,
+	TAB,
+	NONE
+};
+
+
 class UI {
 public:
 	UI(const fPoint &pos) :position(pos) {}
@@ -106,6 +118,8 @@ public:
 
 	void CheckMouse(Button*);
 	const SDL_Texture* GetAtlas() const;
+
+	void UI_Events(UIElement* element, Mouse_Event action);
 
 private:
 

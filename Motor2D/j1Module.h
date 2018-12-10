@@ -12,6 +12,9 @@
 class j1App;
 struct Collider;
 
+class UIElement;
+enum Mouse_Event;
+
 class j1Module
 {
 public:
@@ -74,6 +77,8 @@ public:
 	{
 
 	}
+
+	virtual void UI_Events(UIElement* element, Mouse_Event action) {}
 
 public:
 

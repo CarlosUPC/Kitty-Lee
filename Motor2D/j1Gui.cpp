@@ -126,6 +126,36 @@ void j1Gui::CheckMouse(Button *b)
 	
 }
 
+void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
+
+	switch (action){
+	case MOUSE_ENTER:
+		
+		break;
+	case MOUSE_LEAVE:
+		
+		break;
+	case RIGHT_CLICK:
+		
+		break;
+	case LEFT_CLICK:
+		
+		break;
+	case RIGHT_CLICK_UP:
+		
+		break;
+	case LEFT_CLICK_UP:
+		
+		break;
+	case TAB:
+		break;
+	case NONE:
+		break;
+	default:
+		break;
+	}
+}
+
 // const getter for atlas
 const SDL_Texture* j1Gui::GetAtlas() const
 {

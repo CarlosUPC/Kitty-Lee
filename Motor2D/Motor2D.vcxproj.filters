@@ -162,6 +162,9 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="UIElement.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -184,6 +187,9 @@
     </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{9c31cc54-d857-4fbd-bcd3-0a455531cf81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI_Elements">
+      <UniqueIdentifier>{cdbd131a-96c0-4cfd-bd44-95b7f88cee1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

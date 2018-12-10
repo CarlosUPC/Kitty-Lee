@@ -52,7 +52,10 @@ bool j1Scene::Start()
 
 	SDL_Rect r = { 0,0,100,100 };
 	banner = App->gui->CreateImage(fPoint(0, 0), r);
-	text = App->gui->CreateLabel(fPoint(0, 0), "hey buenas a todos aqui williyrex comentando",32);
+	text = App->gui->CreateLabel(fPoint(0, 0), "hey buenas a todos aqui williyrex comentando", 32);
+	SDL_Rect c = { 1619,892,22,24 };
+	coin = App->gui->CreateImage(fPoint(0, 0), c);
+
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

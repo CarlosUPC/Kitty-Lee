@@ -68,6 +68,7 @@ private:
 
 	Image* banner;
 	Label* text;
+	Image* coin;
 
 };
 

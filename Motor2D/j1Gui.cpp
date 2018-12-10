@@ -100,7 +100,7 @@ Label* j1Gui::CreateLabel(const fPoint & pos, const char* text, const uint &size
 bool j1Gui::DestroyUI(UI *ui)
 {
 	bool ret = false;
-	int index =	objects.find(ui);
+	int index = objects.find(ui);
 	if (index != -1)
 		ret = objects.del(objects.At(index));
 	return ret;
@@ -112,23 +112,33 @@ void j1Gui::CheckMouse(UI *b)
 	App->input->GetMousePosition(x, y);
 	if (x > b->position.x&&x<b->position.x + b->width &&
 		y>b->position.y&&y < b->position.y + b->height) {
-		if(App->input->GetMouseButtonDown(1)) {
+		if (App->input->GetMouseButtonDown(1)) {
 			b->mouse = UI::Mouse::PUSH;
 
 		}
-		else{
-		b->mouse = UI::Mouse::ONHOVER;
+		else {
+			b->mouse = UI::Mouse::ONHOVER;
 		}
 
 
 	}
-	else if(b->mouse != UI::Mouse::IDLE) {
+	else if (b->mouse != UI::Mouse::IDLE) {
 		b->mouse = UI::Mouse::IDLE;
 
 	}
 
 
 }
+
+UI* j1Gui::Select() const
+{
+	p2List_item<UI*>* item = objects.start;
+	for (; item; item = item->next) {
+		if (item->data->mouse == UI::Mouse::PUSH)
+			return  item->data;
+	}
+}
+
 
 void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
 

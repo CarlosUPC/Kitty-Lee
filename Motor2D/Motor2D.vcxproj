@@ -107,8 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="ENEMY.h" />
     <ClInclude Include="FLYING_TONGUE.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="GLADIATOR.h" />
     <ClInclude Include="j1Collision.h" />
@@ -121,6 +123,7 @@
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Timer.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
     <ClInclude Include="j1Input.h" />
@@ -138,6 +141,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml">

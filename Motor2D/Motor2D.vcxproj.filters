@@ -165,6 +165,18 @@
     <ClInclude Include="UIElement.h">
       <Filter>GUI_Elements</Filter>
     </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

@@ -141,19 +141,19 @@ bool j1Gui::DeleteAllUIElements() {
 
 UIElement* j1Gui::GetElemOnMouse(int x, int y)
 {
-	ui_elements.Flip();
+	//ui_elements.Flip();
 	for (int i = 0; i < ui_elements.Count(); i++) {
 		if (ui_elements[i] != nullptr && ui_elements[i]->interactable)
 		{
 			if ((x > ui_elements[i]->GetPosition().x && x < ui_elements[i]->GetPosition().x + ui_elements[i]->position.w) && (y > ui_elements[i]->GetPosition().y && y < ui_elements[i]->GetPosition().y + ui_elements[i]->position.h))
 			{
 				UIElement* tmp_element_to_return = ui_elements[i];
-				ui_elements.Flip();
+				//ui_elements.Flip();
 				return tmp_element_to_return;
 			}
 		}
 	}
-	ui_elements.Flip();
+	//ui_elements.Flip();
 	return nullptr;
 }
 
@@ -268,40 +268,22 @@ void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
 
 	switch (action){
 	case MOUSE_ENTER:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		
 		break;
 	case MOUSE_LEAVE:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->Standard();
-		}
+		
 		break;
 	case RIGHT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
+		
 		break;
 	case LEFT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
+		
 		break;
 	case RIGHT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		
 		break;
 	case LEFT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		
 		break;
 	case TAB:
 		break;

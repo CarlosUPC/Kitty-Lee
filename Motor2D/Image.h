@@ -19,7 +19,7 @@ public:
 
 	//--------------------Draw Function--------------------//
 	void InnerDraw() {
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false, false);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, 0.0F, false, SDL_FLIP_NONE, true);
 	}
 	//--------------------Draw Function--------------------//
 

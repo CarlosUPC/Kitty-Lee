@@ -100,19 +100,11 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
-	// Called each loop iteration
-	bool Update(float dt);
-
 	// Called after all Updates
 	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
-
-	// Gui creation functions
-	UIButton* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
-	UIImage * CreateImage(const fPoint & pos, const SDL_Rect & rect);
-	UILabel * CreateLabel(const fPoint & pos, const char * text, const uint &size = DEFAULT_FONT_SIZE, const char * font = DEFAULT_FONT);
 
 	bool DestroyUI(UI*);
 

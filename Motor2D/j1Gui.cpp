@@ -62,23 +62,18 @@ bool j1Gui::PreUpdate()
 	return true;
 }
 
-// Called after all Updates
-bool j1Gui::Update(float dt) {
-
-		for (int i = 0; i < ui_elements.Count(); i++)
-			if (ui_elements.At(i) != nullptr) ui_elements[i]->Draw();
-
-	return true;
-}
-
 bool j1Gui::PostUpdate()
 {
 	for (int i = ui_elements.Count() - 1; i >= 0; i--) {
-		if (ui_elements[i]->to_delete) {
-			
-			delete(ui_elements[i]);
-			ui_elements[i] = nullptr;
-			
+		if (ui_elements.At(i) != nullptr) {
+			if (ui_elements[i]->to_delete) {
+
+				delete(ui_elements[i]);
+				ui_elements[i] = nullptr;
+
+			}
+			else
+				ui_elements[i]->Draw();
 		}
 	}
 
@@ -194,29 +189,29 @@ UIElement * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, in
 }
 
 
-UIButton * j1Gui::CreateButton(const fPoint & pos, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push)
-{
-	UIButton* ret = nullptr;
-	ret = new UIButton(pos, idle, hover, push);
-	objects.add(ret);
-	return ret;
-}
-
-UIImage* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
-{
-	UIImage* ret = nullptr;
-	ret = new UIImage(pos, rect);
-	objects.add(ret);
-	return ret;
-}
-
-UILabel* j1Gui::CreateLabel(const fPoint & pos, const char* text, const uint &size, const char* font)
-{
-	UILabel* ret = nullptr;
-	ret = new UILabel(pos, text, font, size);
-	objects.add(ret);
-	return ret;
-}
+//UIButton * j1Gui::CreateButton(const fPoint & pos, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push)
+//{
+//	UIButton* ret = nullptr;
+//	ret = new UIButton(pos, idle, hover, push);
+//	objects.add(ret);
+//	return ret;
+//}
+//
+//UIImage* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
+//{
+//	UIImage* ret = nullptr;
+//	ret = new UIImage(pos, rect);
+//	objects.add(ret);
+//	return ret;
+//}
+//
+//UILabel* j1Gui::CreateLabel(const fPoint & pos, const char* text, const uint &size, const char* font)
+//{
+//	UILabel* ret = nullptr;
+//	ret = new UILabel(pos, text, font, size);
+//	objects.add(ret);
+//	return ret;
+//}
 
 bool j1Gui::DestroyUI(UI *ui)
 {

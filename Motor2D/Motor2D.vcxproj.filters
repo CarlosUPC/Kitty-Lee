@@ -72,6 +72,9 @@
     <ClCompile Include="UIElement.cpp">
       <Filter>GUI_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

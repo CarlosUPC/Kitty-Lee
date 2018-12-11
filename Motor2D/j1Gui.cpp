@@ -10,7 +10,7 @@
 #include "Image.h"
 #include "Label.h"
 #include "Button.h"
-#include "Window.h"
+
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -175,9 +175,6 @@ UIElement * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, in
 		break;
 	case IMAGE:
 		element = new Image(pos_x, pos_y, w, h, parent);
-		break;
-	case WINDOW:
-		element = new Window(pos_x, pos_y, w, h, parent);
 		break;
 	case SCROLLBAR:
 		

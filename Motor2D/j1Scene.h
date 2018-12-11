@@ -11,7 +11,7 @@ class UILabel;
 class Image;
 class Label;
 class Button;
-class Window;
+
 
 
 
@@ -78,7 +78,7 @@ private:
 	UILabel* text;
 	UIImage* coin;
 	
-	Window* window;
+	
 	Button* button;
 
 };

@@ -51,6 +51,7 @@ void UIElement::Update() {
 			}
 		}
 
+	
 	}
 
 	else {
@@ -70,15 +71,11 @@ void UIElement::Update() {
 		}
 	}
 
-
-	/*iPoint mouse;
-	App->input->GetMousePosition(mouse.x, mouse.y);*/
-
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
 		if (elem_triggered != nullptr && this->draggable) {
 
 			int x_motion = mouse.x - last_mouse.x, y_motion = mouse.y - last_mouse.y;
-			elem_triggered->SetPos(elem_triggered->GetLocalPosition().x + x_motion, elem_triggered->GetLocalPosition().y + y_motion);
+			elem_triggered->SetPos(elem_triggered->GetLocalPosition().x + x_motion*3, elem_triggered->GetLocalPosition().y + y_motion*3);
 		}
 	}
 	last_mouse = mouse;

@@ -174,9 +174,6 @@
     <ClInclude Include="Image.h">
       <Filter>GUI_Elements</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>GUI_Elements</Filter>
-    </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GUI_Elements</Filter>
     </ClInclude>

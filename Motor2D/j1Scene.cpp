@@ -17,7 +17,7 @@
 #include "Label.h"
 #include "Button.h"
 #include "j1Scene.h"
-#include "Window.h"
+
 
 #include "Brofiler/Brofiler.h"
 
@@ -61,11 +61,7 @@ bool j1Scene::Start()
 	SDL_Rect c = { 1619,892,22,24 };
 	coin = App->gui->CreateImage(fPoint(0, 0), c);*/
 	
-	
 
-	/*window = (Window*)App->gui->CreateUIElement(WINDOW, 30, 30, 421, 453, nullptr);
-	window->SetRect({ 32,542,421,453 });
-	window->AddListener(this);*/
 
 	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 218, 57, nullptr);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });

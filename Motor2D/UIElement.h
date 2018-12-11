@@ -160,18 +160,12 @@ public:
 	bool interactable = true;
 	bool draggable = true;
 	bool drawable = true;
-	bool visible = true;
-
-	bool mouse_on = false;
-	bool mouse_off = true;
-
+	
 	bool to_delete = false;
-
 	iPoint draw_offset = { 0,0 };
 
 	
 	Mouse_Event current_state = NONE;
-	Mouse_Event last_state = NONE;
 	iPoint last_mouse;
 	
 private:

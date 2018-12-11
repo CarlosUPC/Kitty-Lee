@@ -6,8 +6,10 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "p2Log.h"
+#include "j1Gui.h"
 
 class j1Module;
+
 
 enum UI_type {
 	CHECKBOX,
@@ -20,13 +22,30 @@ enum UI_type {
 	UNKNOW
 };
 
+enum Mouse_Event {
+	MOUSE_IDLE,
+	MOUSE_ENTER,
+	MOUSE_LEAVE,
+	RIGHT_CLICK_DOWN,
+	LEFT_CLICK_DOWN,
+	RIGHT_CLICK_UP,
+	LEFT_CLICK_UP,
+	TAB,
+	NONE
+};
+
 class UIElement {
 
 public:
 
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, int pos_x, int pos_y, UIElement* parent, bool interactable = true, int width = 0, int height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {}
+	UIElement(UI_type type, int pos_x, int pos_y, UIElement* parent, bool interactable = true, int width = 0, int height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
+	
+		current_state = MOUSE_IDLE;
+		
+
+	}
 	~UIElement() {}
 	//------------------------------Constructor Functions--------------------------------//
 
@@ -62,8 +81,8 @@ public:
 
 	virtual void InnerDraw() {}
 
-	virtual bool Update() { return true; }
-
+	virtual void Update();
+		
 	virtual void CleanUp() {}
 
 	virtual void Scroll(char dir, float percentage) {}
@@ -150,9 +169,14 @@ public:
 
 	iPoint draw_offset = { 0,0 };
 
+	
+	Mouse_Event current_state = NONE;
+	Mouse_Event last_state = NONE;
+	iPoint last_mouse;
+	
 private:
-
-	UI_type type;
+	UI_type type = UNKNOW;
+	
 	UIElement* parent = nullptr;
 	int priority = 0;
 

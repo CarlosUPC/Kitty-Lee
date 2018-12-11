@@ -78,7 +78,6 @@ private:
 	bool ghost = false;
 	bool god_mode = false;
 
-	Animation anim_idle;
 	Animation anim_walking;
 	Animation anim_jump;
 	Animation anim_fall;

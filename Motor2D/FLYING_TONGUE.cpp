@@ -20,7 +20,7 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : Enemy(Types::FLYING_T
 	speed = { 30.0f,30.0f };
 
 	//Set Collider & Bouncers
-	AddColliders();
+	AddColliders(this);
 
 	typepath = TypePathDistance::DISTANCE_TO;
 
@@ -90,12 +90,3 @@ bool FlyingTongue::CleanUp()
 	return ret;
 }
 
-void FlyingTongue::AddColliders() {
-	SDL_Rect r;
-	COLLIDER_INFO* actual_collider; //create a pointer to reduce volum of code in that function
-
-	actual_collider = &collider;
-	r = { (int)position.x + actual_collider->offset.x,	(int)position.y + actual_collider->offset.y, actual_collider->width, actual_collider->height };
-	actual_collider->collider = App->collider->AddCollider(r, actual_collider->type, this);
-
-}

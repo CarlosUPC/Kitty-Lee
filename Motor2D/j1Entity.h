@@ -83,6 +83,8 @@ public:
 		PLAYER,
 		GLADIATOR,
 		FLYING_TONGUE,
+		COIN,
+
 		UNKNOWN
 	};
 
@@ -98,6 +100,7 @@ public:
 	virtual void LoadCollider(pugi::xml_node&);
 	virtual void IdAnimToEnum();
 	virtual void PushBack() {};
+	virtual void AddColliders(j1Entity* c = nullptr);
 
 	virtual bool Start() { return true; }
 	virtual bool Update(float dt);
@@ -119,6 +122,8 @@ public:
 	fPoint		speed;
 
 	Types type;
+
+	Animation anim_idle;
 
 	const char* AttackSound = nullptr;
 

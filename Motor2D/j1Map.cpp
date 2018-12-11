@@ -497,7 +497,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	bool ret = true;
 	if (node_object.empty())	ret = false;
 
-	//Load Collider / Player data
+	//Load Collider / Entity data
 	obj->name = node_object.attribute("name").as_string();
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();
@@ -535,28 +535,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	}
 	return ret;
 }
-
-
-//void j1Map::InitialEntityPosition() {
-//
-//	
-//	p2List_item<ColliderObject*>* ente = data.colliders.start;
-//
-//	while (ente != NULL)
-//	{
-//		if (ente->data->name == "Player") {
-//			queue[ENTITY_TYPES::PLAYER].initialPos.x = ente->data->coll_x;
-//			queue[ENTITY_TYPES::PLAYER].initialPos.y = ente->data->coll_y;
-//		}
-//
-//		if (ente->data->name == "Gladiator") {
-//			queue[ENTITY_TYPES::GLADIATOR].initialPos.x = ente->data->coll_x;
-//			queue[ENTITY_TYPES::GLADIATOR].initialPos.y = ente->data->coll_y;
-//		}
-//		
-//		ente = ente->next;
-//	}
-//}
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {

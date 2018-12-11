@@ -10,6 +10,7 @@
 #include "PLAYER.h"
 #include "GLADIATOR.h"
 #include "FLYING_TONGUE.h"
+#include "COIN.h"
 #include "Brofiler/Brofiler.h"
 
 j1EntityManager::j1EntityManager()
@@ -127,12 +128,13 @@ bool j1EntityManager::Load(pugi::xml_node & node)
 
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
 {
-	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)3, "code needs update");
+	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)4, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
 		case j1Entity::Types::GLADIATOR: ret = new Gladiator(PositionX, PositionY); break;
 		case j1Entity::Types::FLYING_TONGUE: ret = new FlyingTongue(PositionX, PositionY); break;
 		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY); break;
+		case j1Entity::Types::COIN: ret = new Coin(PositionX, PositionY); break;
 	}
 	if (ret != nullptr) {
 		entities.PushBack(ret);

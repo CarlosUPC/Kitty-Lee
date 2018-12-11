@@ -14,11 +14,6 @@ public:
 	void OnCollision(Collider*, Collider*, float dt);
 	void IdAnimToEnum();
 	bool CleanUp();
-	
-
-private:
-
-	void AddColliders();
 
 private:
 

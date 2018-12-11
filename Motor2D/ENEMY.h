@@ -81,7 +81,6 @@ public:
 	p2DynArray<iPoint> entityPath;
 	uint entityPathSize = 0;
 
-	Animation anim_idle;
 	Animation anim_walking;
 	Animation anim_hit;
 	Animation anim_detecting;

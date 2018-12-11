@@ -63,7 +63,6 @@ bool Player::Update(float dt)
 	SetCollidersPos();
 
 	CheckState();
-
 	current_animation->GetCurrentFrame(dt);
 
 	return true;

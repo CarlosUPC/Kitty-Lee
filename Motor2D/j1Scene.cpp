@@ -55,14 +55,20 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	SDL_Rect r = { 0,0,100,100 };
+	/*SDL_Rect r = { 0,0,100,100 };
 	banner = App->gui->CreateImage(fPoint(0, 0), r);
 	text = App->gui->CreateLabel(fPoint(0, 0), "hey buenas a todos aqui williyrex comentando", 32);
 	SDL_Rect c = { 1619,892,22,24 };
-	coin = App->gui->CreateImage(fPoint(0, 0), c);
+	coin = App->gui->CreateImage(fPoint(0, 0), c);*/
 	
-	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 0, 0, nullptr);
-	button->SetRects({1297,1118,81,84 }, { 1298,1017,60,68 }, { 1378,1017,60,68 });
+	
+
+	window = (Window*)App->gui->CreateUIElement(WINDOW, 30, 30, 421, 453, nullptr);
+	window->SetRect({ 32,542,421,453 });
+	window->AddListener(this);
+
+	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 0, 0, window);
+	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->AddListener(this);
 
 	win_width = App->win->screen_surface->w;

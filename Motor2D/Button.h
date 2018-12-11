@@ -24,7 +24,7 @@ public:
 	{
 		if (image_rect.w == 0)
 			Standard();
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false);
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false, false);
 	}
 	//--------------------Draw Function--------------------//
 

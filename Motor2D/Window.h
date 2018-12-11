@@ -22,7 +22,7 @@ public:
 	void InnerDraw()
 	{
 		if (visible) {
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false);
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false, false);
 		}
 	}
 	//--------------------Draw Function--------------------//

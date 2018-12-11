@@ -76,7 +76,8 @@ private:
 	UIImage* banner;
 	UILabel* text;
 	UIImage* coin;
-
+	
+	Window* window;
 	Button* button;
 
 };

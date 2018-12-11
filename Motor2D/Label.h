@@ -23,7 +23,7 @@ public:
 			SDL_DestroyTexture(label_tex);
 		label_tex = App->fonts->Print(text.c_str());
 		SDL_QueryTexture(label_tex, NULL, NULL, &label_rect.w, &label_rect.h);
-		App->render->Blit(label_tex, draw_offset.x, draw_offset.y, &label_rect, false);
+		App->render->Blit(label_tex, draw_offset.x, draw_offset.y, &label_rect, false, false);
 
 		/*App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		App->render->Blit(text_texture, 0, 0, &texture_rect, false);*/

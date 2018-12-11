@@ -1,12 +1,11 @@
 #ifndef _UIELEMENT_
 #define _UIELEMENT_
 
-#include "SDL\include\SDL.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "p2Log.h"
 #include "j1Gui.h"
+#include "p2Log.h"
 
 class j1Module;
 

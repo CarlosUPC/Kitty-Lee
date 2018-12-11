@@ -189,7 +189,7 @@ UIElement * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, in
 	}
 
 	if (element != nullptr) {
-		element->AddListener(this);
+		//element->AddListener(this);
 		ui_elements.PushBack(element);
 	}
 

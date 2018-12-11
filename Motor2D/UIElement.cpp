@@ -46,7 +46,7 @@ void UIElement::Update() {
 	}
 
 
-	for (p2List_item<j1Module*>* module = elem_triggered->GetFirstListener(); module; module = module->next) {
+	for (p2List_item<j1Module*>* module = this->GetFirstListener(); module; module = module->next) {
 		module->data->UI_Events(this, current_state);
 	}
 

@@ -13,6 +13,11 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
+#include "Image.h"
+#include "Label.h"
+#include "Button.h"
+#include "j1Scene.h"
+#include "Window.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -55,7 +60,10 @@ bool j1Scene::Start()
 	text = App->gui->CreateLabel(fPoint(0, 0), "hey buenas a todos aqui williyrex comentando", 32);
 	SDL_Rect c = { 1619,892,22,24 };
 	coin = App->gui->CreateImage(fPoint(0, 0), c);
-
+	
+	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 0, 0, nullptr);
+	button->SetRects({1297,1118,81,84 }, { 1298,1017,60,68 }, { 1378,1017,60,68 });
+	button->AddListener(this);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

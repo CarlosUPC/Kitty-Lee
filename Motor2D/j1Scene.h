@@ -8,6 +8,13 @@ struct SDL_Texture;
 class UIImage;
 class UILabel;
 
+class Image;
+class Label;
+class Button;
+class Window;
+
+
+
 enum Stages {
 	LEVEL_1 = 0,
 	LEVEL_2
@@ -69,6 +76,8 @@ private:
 	UIImage* banner;
 	UILabel* text;
 	UIImage* coin;
+
+	Button* button;
 
 };
 

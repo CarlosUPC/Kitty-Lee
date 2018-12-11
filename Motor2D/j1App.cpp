@@ -17,6 +17,7 @@
 #include "j1Pathfinding.h"
 #include "j1Fonts.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding	= new j1PathFinding();
 	fonts		= new j1Fonts();
 	gui			= new j1Gui();
+	menu		= new j1MainMenu();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -56,7 +58,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(fonts);
 	AddModule(gui);
-	
+	AddModule(menu);
 	
 	// render last to swap buffer
 	AddModule(render);
@@ -138,6 +140,10 @@ bool j1App::Start()
 
 	while(item != NULL && ret == true)
 	{
+		if (item->data->active == false) {
+			item = item->next;
+			continue;
+		}
 		ret = item->data->Start();
 		item = item->next;
 	}

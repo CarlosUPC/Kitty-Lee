@@ -75,6 +75,9 @@
     <ClCompile Include="COIN.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -182,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="COIN.h">
       <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Scene2.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -115,6 +115,7 @@ private:
 
 	uint32				framerate_cap = 0;
 	bool				cap_framerate = true;
+	bool				pause = false;
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;

@@ -190,10 +190,15 @@ void j1App::PrepareUpdate()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F11) == j1KeyState::KEY_DOWN)
 		cap_framerate = !cap_framerate;
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == j1KeyState::KEY_DOWN)
+		pause = !pause;
 
 	frame_count++;
 	last_sec_frame_count++;
-	dt = frame_time.ReadSec();
+	if (!pause)
+		dt = frame_time.ReadSec();
+	else
+		dt = 0.0f;
 	frame_time.Start();
 }
 

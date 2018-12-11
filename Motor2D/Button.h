@@ -13,8 +13,8 @@ class Button : public Image {
 
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
-	Button(int x, int y, int w, int h, UI* parent) : Image(BUTTON, x, y, parent, true, w, h) {}
-	Button(UI_type type, int x, int y, int w, int h, UI* parent) : Image(type, x, y, parent, true, w, h) {}
+	Button(int x, int y, int w, int h, UIElement* parent) : Image(BUTTON, x, y, parent, true, w, h) {}
+	Button(UI_type type, int x, int y, int w, int h, UIElement* parent) : Image(type, x, y, parent, true, w, h) {}
 	~Button() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

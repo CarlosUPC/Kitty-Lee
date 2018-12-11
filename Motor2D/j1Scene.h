@@ -5,8 +5,8 @@
 #include "PLAYER.h"
 
 struct SDL_Texture;
-class Image;
-class Label;
+class UIImage;
+class UILabel;
 
 enum Stages {
 	LEVEL_1 = 0,
@@ -66,9 +66,9 @@ private:
 	SDL_Texture* debug_tex;
 	Player* player;
 
-	Image* banner;
-	Label* text;
-	Image* coin;
+	UIImage* banner;
+	UILabel* text;
+	UIImage* coin;
 
 };
 

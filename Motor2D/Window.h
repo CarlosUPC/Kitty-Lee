@@ -13,7 +13,7 @@ class Window : public Image {
 public:
 
 	//------------------------------Constructor & Destructor Function--------------------------------//
-	Window(int x, int y, int w, int h, UI* parent) : Image(WINDOW, x, y, parent, true, w, h) {}
+	Window(int x, int y, int w, int h, UIElement* parent) : Image(WINDOW, x, y, parent, true, w, h) {}
 	~Window() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

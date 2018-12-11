@@ -3,6 +3,9 @@
 
 #include "j1Module.h"
 #include "j1Fonts.h"
+#include "p2DynArray.h"
+#include "UIElement.h"
+
 
 #define CURSOR_WIDTH 2
 
@@ -48,19 +51,19 @@ public:
 	Mouse mouse = Mouse::IDLE;
 };
 
-class Image :public UI {
+class UIImage :public UI {
 public:
-	Image(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) { width = r.w; height = r.h; }
+	UIImage(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) { width = r.w; height = r.h; }
 
 	bool Draw();
 
 	SDL_Rect dimension;
 };
 
-class Button :public UI {
+class UIButton :public UI {
 public:
-	Button(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
-	~Button() {}
+	UIButton(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
+	~UIButton() {}
 
 	bool Draw();
 	
@@ -69,16 +72,16 @@ public:
 	SDL_Rect push;
 };
 
-class Label :public UI {
+class UILabel :public UI {
 public:
-	Label(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
+	UILabel(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
 		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		SDL_Color color = { 255, 255, 255, 255 };
 		texture = App->fonts->Print(text.GetString(), color, font);
 		App->fonts->CalcSize(txt, width, height, font);
 	}
-	~Label() {}
+	~UILabel() {}
 
 	bool Draw();
 
@@ -107,6 +110,9 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
+	// Called each loop iteration
+	bool Update(float dt);
+
 	// Called after all Updates
 	bool PostUpdate();
 
@@ -114,9 +120,9 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	Button* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
-	Image * CreateImage(const fPoint & pos, const SDL_Rect & rect);
-	Label * CreateLabel(const fPoint & pos, const char * text, const uint &size = DEFAULT_FONT_SIZE, const char * font = DEFAULT_FONT);
+	UIButton* CreateButton(const fPoint &pos, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push);
+	UIImage * CreateImage(const fPoint & pos, const SDL_Rect & rect);
+	UILabel * CreateLabel(const fPoint & pos, const char * text, const uint &size = DEFAULT_FONT_SIZE, const char * font = DEFAULT_FONT);
 
 	bool DestroyUI(UI*);
 
@@ -124,6 +130,11 @@ public:
 	UI* Select()const;
 	const SDL_Texture* GetAtlas() const;
 
+	//----------------------------------------------------------------------------------------
+	UIElement* CreateUIElement(UI_type type, int pos_x, int pos_y, int w = 0, int h = 0, UIElement* parent = nullptr);
+	bool DeleteUIElement(UIElement &element);
+	bool DeleteAllUIElements();
+	
 	void UI_Events(UIElement* element, Mouse_Event action);
 
 private:
@@ -131,7 +142,12 @@ private:
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
 	p2List<UI*> objects;
-	UI* selected = nullptr; 
+	UI* selected = nullptr;
+
+	//-------------------------------------------------------------------------
+	p2DynArray<UIElement*> ui_elements;
+
+	
 };
 
 #endif // __j1GUI_H__

@@ -72,6 +72,7 @@ public:
 		data[num_elements++] = element;
 	}
 
+	
 	bool Pop(VALUE& result)
 	{
 		if(num_elements > 0)

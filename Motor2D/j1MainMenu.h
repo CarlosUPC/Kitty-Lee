@@ -19,7 +19,7 @@ public:
 	virtual ~j1MainMenu();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& conf);
 
 	// Called before the first frame
 	bool Start();
@@ -45,6 +45,6 @@ public:
 
 
 private:
-
+	p2SString lvl0;
 };
 #endif // __j1MAINMENU_H__

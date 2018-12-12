@@ -31,9 +31,10 @@ j1MainMenu::~j1MainMenu()
 
 // Called before render is available
 
-bool j1MainMenu::Awake()
+bool j1MainMenu::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Scene");
+	lvl0.create(conf.child("level_0").child_value());
 	bool ret = true;
 
 	return ret;

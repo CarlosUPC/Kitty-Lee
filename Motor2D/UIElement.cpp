@@ -4,21 +4,20 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 #include "j1Textures.h"
+#include "j1Window.h"
 
 
 
 void UIElement::Update() {
 
-	/*int mouse_x = 0, mouse_y = 0;
-	App->input->GetWorldMousePosition(mouse_x, mouse_y);*/
-
-	iPoint mouse;
+	/*iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
 
-	UIElement* elem_triggered = nullptr;
-	elem_triggered = App->gui->GetElemOnMouse(mouse.x*3, mouse.y*3);
+	UIElement* elem_triggered = App->gui->GetElemOnMouse(mouse.x, mouse.y);
 
-	if (elem_triggered != nullptr && this == elem_triggered) {
+	if (elem_triggered != nullptr && this == elem_triggered) {*/
+	iPoint mouse;
+	App->input->GetMousePosition(mouse.x, mouse.y);
 
 		if (current_state != MOUSE_ENTER && current_state != LEFT_CLICK_DOWN && current_state != RIGHT_CLICK_DOWN) {
 			current_state = MOUSE_ENTER;
@@ -52,7 +51,7 @@ void UIElement::Update() {
 		}
 
 	
-	}
+	
 
 	else {
 
@@ -72,10 +71,10 @@ void UIElement::Update() {
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
-		if (elem_triggered != nullptr && this->draggable) {
+		if (draggable) {
 
 			int x_motion = mouse.x - last_mouse.x, y_motion = mouse.y - last_mouse.y;
-			elem_triggered->SetPos(elem_triggered->GetLocalPosition().x + x_motion*3, elem_triggered->GetLocalPosition().y + y_motion*3);
+			SetPos(GetLocalPosition().x + x_motion * App->win->GetScale(), GetLocalPosition().y + y_motion * App->win->GetScale());
 		}
 	}
 	last_mouse = mouse;

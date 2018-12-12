@@ -10,6 +10,7 @@
 #include "Image.h"
 #include "Label.h"
 #include "Button.h"
+#include "j1Window.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -43,9 +44,11 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-
-	for (int i = 0; i < ui_elements.Count(); i++)
-		if (ui_elements.At(i) != nullptr) ui_elements[i]->Update();
+	iPoint mouse;
+	App->input->GetMousePosition(mouse.x, mouse.y);
+	UIElement* element = GetElemOnMouse(mouse.x*App->win->GetScale(), mouse.y*App->win->GetScale());
+	if (element != nullptr)
+		element->Update();
 	
 	return true;
 }
@@ -107,19 +110,18 @@ bool j1Gui::DeleteAllUIElements() {
 
 UIElement* j1Gui::GetElemOnMouse(int x, int y)
 {
-	//ui_elements.Flip();
+	
 	for (int i = 0; i < ui_elements.Count(); i++) {
 		if (ui_elements[i] != nullptr && ui_elements[i]->interactable)
 		{
-			if ((x > ui_elements[i]->GetPosition().x && x < ui_elements[i]->GetPosition().x + ui_elements[i]->position.w) && (y > ui_elements[i]->GetPosition().y && y < ui_elements[i]->GetPosition().y + ui_elements[i]->position.h))
+			if ((x > ui_elements[i]->GetPosition().x && x < ui_elements[i]->GetPosition().x + ui_elements[i]->position.w) && 
+				(y > ui_elements[i]->GetPosition().y && y < ui_elements[i]->GetPosition().y + ui_elements[i]->position.h))
 			{
-				UIElement* tmp_element_to_return = ui_elements[i];
-				//ui_elements.Flip();
-				return tmp_element_to_return;
+				return ui_elements[i];
 			}
 		}
 	}
-	//ui_elements.Flip();
+	
 	return nullptr;
 }
 

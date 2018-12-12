@@ -22,10 +22,10 @@ public:
 	void InnerDraw()
 	{
 		switch (current_state) {
-		case Mouse_Event::MOUSE_IDLE:
+		case Mouse_Event::HOVER:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
 			break;
-		case Mouse_Event::LEFT_CLICK_DOWN:
+		case Mouse_Event::CLICKED:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
 			break;
 		default:

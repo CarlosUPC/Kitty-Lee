@@ -110,19 +110,24 @@ bool j1Gui::DeleteAllUIElements() {
 
 UIElement* j1Gui::GetElemOnMouse(int x, int y)
 {
-	
+	UIElement* ret = nullptr;
 	for (int i = 0; i < ui_elements.Count(); i++) {
 		if (ui_elements[i] != nullptr && ui_elements[i]->interactable)
 		{
 			if ((x > ui_elements[i]->GetPosition().x && x < ui_elements[i]->GetPosition().x + ui_elements[i]->position.w) && 
 				(y > ui_elements[i]->GetPosition().y && y < ui_elements[i]->GetPosition().y + ui_elements[i]->position.h))
 			{
-				return ui_elements[i];
+				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? ui_elements[i]->current_state = CLICKED : ui_elements[i]->current_state = HOVER;
+
+				ret = ui_elements[i];
+			}
+			else {
+				ui_elements[i]->current_state = NONE;
 			}
 		}
 	}
 	
-	return nullptr;
+	return ret;
 }
 
 Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent)
@@ -194,32 +199,6 @@ Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, 
 
 void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
 
-	switch (action){
-	case MOUSE_ENTER:
-		
-		break;
-	case MOUSE_LEAVE:
-		
-		break;
-	case RIGHT_CLICK_DOWN:
-		
-		break;
-	case LEFT_CLICK_DOWN:
-		
-		break;
-	case RIGHT_CLICK_UP:
-		
-		break;
-	case LEFT_CLICK_UP:
-		
-		break;
-	case TAB:
-		break;
-	case NONE:
-		break;
-	default:
-		break;
-	}
 }
 
 // const getter for atlas

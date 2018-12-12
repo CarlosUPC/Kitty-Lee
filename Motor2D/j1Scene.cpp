@@ -234,32 +234,7 @@ bool j1Scene::CleanUp()
 
 void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
 
-	switch (action) {
-	case MOUSE_ENTER:
-		element->current_state = Mouse_Event::MOUSE_IDLE;
-		break;
-	case MOUSE_LEAVE:
-		element->current_state = Mouse_Event::NONE;
-		break;
-	case RIGHT_CLICK_DOWN:
-		element->current_state = Mouse_Event::NONE;
-		break;
-	case LEFT_CLICK_DOWN:
-		element->current_state = Mouse_Event::LEFT_CLICK_DOWN;
-		break;
-	case RIGHT_CLICK_UP:
-		element->current_state = Mouse_Event::NONE;
-		break;
-	case LEFT_CLICK_UP:
-		element->current_state = Mouse_Event::MOUSE_IDLE;
-		break;
-	case TAB:
-		break;
-	case NONE:
-		break;
-	default:
-		break;
-	}
+	
 }
 
 void j1Scene::CheckLevel()

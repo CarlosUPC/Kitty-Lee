@@ -22,14 +22,9 @@ enum UI_type {
 };
 
 enum Mouse_Event {
-	MOUSE_IDLE,
-	MOUSE_ENTER,
-	MOUSE_LEAVE,
-	RIGHT_CLICK_DOWN,
-	LEFT_CLICK_DOWN,
-	RIGHT_CLICK_UP,
-	LEFT_CLICK_UP,
-	TAB,
+	HOVER,
+	CLICKED,
+
 	NONE
 };
 
@@ -40,7 +35,7 @@ public:
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
 	UIElement(UI_type type, const int &pos_x, const int &pos_y, const UIElement* parent, bool interactable = true, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
-		current_state = MOUSE_IDLE;
+		current_state = NONE;
 	}
 	~UIElement() {}
 	//------------------------------Constructor Functions--------------------------------//

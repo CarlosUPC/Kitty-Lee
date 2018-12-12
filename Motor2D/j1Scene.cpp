@@ -236,40 +236,22 @@ void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
 
 	switch (action) {
 	case MOUSE_ENTER:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		element->current_state = Mouse_Event::MOUSE_IDLE;
 		break;
 	case MOUSE_LEAVE:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->Standard();
-		}
+		element->current_state = Mouse_Event::NONE;
 		break;
 	case RIGHT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
+		element->current_state = Mouse_Event::NONE;
 		break;
 	case LEFT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
+		element->current_state = Mouse_Event::LEFT_CLICK_DOWN;
 		break;
 	case RIGHT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		element->current_state = Mouse_Event::NONE;
 		break;
 	case LEFT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
+		element->current_state = Mouse_Event::MOUSE_IDLE;
 		break;
 	case TAB:
 		break;

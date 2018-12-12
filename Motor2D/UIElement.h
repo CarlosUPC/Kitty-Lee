@@ -40,10 +40,7 @@ public:
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
 	UIElement(UI_type type, const int &pos_x, const int &pos_y, const UIElement* parent, bool interactable = true, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
-	
 		current_state = MOUSE_IDLE;
-		
-
 	}
 	~UIElement() {}
 	//------------------------------Constructor Functions--------------------------------//

@@ -21,9 +21,17 @@ public:
 	//--------------------Draw Function--------------------//
 	void InnerDraw()
 	{
-		if (button_rect.w == 0)
-			Standard();
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &button_rect, 0.0F, false, SDL_FLIP_NONE, true);
+		switch (current_state) {
+		case Mouse_Event::MOUSE_IDLE:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		case Mouse_Event::LEFT_CLICK_DOWN:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		default:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &button_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		}
 	}
 	//--------------------Draw Function--------------------//
 
@@ -38,16 +46,6 @@ public:
 			position.w = std_rect.w;
 			position.h = std_rect.h;
 		}
-	}
-
-	void Standard() {
-		button_rect = button_rect;
-	}
-	void OnHover() {
-		button_rect = hovered_rect;
-	}
-	void OnClick() {
-		button_rect = clicked_rect;
 	}
 
 	SDL_Rect GetClickedRect() const {

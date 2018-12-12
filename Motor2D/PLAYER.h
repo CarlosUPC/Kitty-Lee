@@ -10,6 +10,7 @@
 
 
 struct SDL_Texture;
+class Label;
 
 enum PlayerState {
 	IDLE = 0,
@@ -77,6 +78,10 @@ private:
 
 	bool ghost = false;
 	bool god_mode = false;
+
+	int coin_count = 0;
+
+	Label* coin_label = nullptr;
 
 	Animation anim_walking;
 	Animation anim_jump;

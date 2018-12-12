@@ -9,12 +9,11 @@
 #include "j1Fonts.h"
 #include "j1Gui.h"
 
-class Button : public Image {
+class Button : public UIElement {
 
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
-	Button(int x, int y, int w, int h, UIElement* parent) : Image(BUTTON, x, y, parent, true, w, h) {}
-	Button(UI_type type, int x, int y, int w, int h, UIElement* parent) : Image(type, x, y, parent, true, w, h) {}
+	Button(const int &x, const int &y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent) : UIElement(BUTTON, x, y, parent, true, idle.w, idle.h) {}
 	~Button() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 
@@ -22,9 +21,17 @@ public:
 	//--------------------Draw Function--------------------//
 	void InnerDraw()
 	{
-		if (image_rect.w == 0)
-			Standard();
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, 0.0F, false, SDL_FLIP_NONE, true);
+		switch (current_state) {
+		case Mouse_Event::HOVER:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		case Mouse_Event::CLICKED:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		default:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &button_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		}
 	}
 	//--------------------Draw Function--------------------//
 
@@ -39,16 +46,6 @@ public:
 			position.w = std_rect.w;
 			position.h = std_rect.h;
 		}
-	}
-
-	void Standard() {
-		image_rect = button_rect;
-	}
-	void OnHover() {
-		image_rect = hovered_rect;
-	}
-	void OnClick() {
-		image_rect = clicked_rect;
 	}
 
 	SDL_Rect GetClickedRect() const {

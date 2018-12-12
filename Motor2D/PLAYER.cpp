@@ -12,6 +12,8 @@
 #include "j1Input.h"
 #include "j1Audio.h"
 #include "j1FadeToBlack.h"
+#include "j1Gui.h"
+#include "Label.h"
 #include "j1EntityManager.h"
 
 #include "Brofiler/Brofiler.h"
@@ -41,6 +43,8 @@ bool Player::Start()
 	App->audio->LoadFx(walkingSound);
 	App->audio->LoadFx(jumpingSound);
 	App->audio->LoadFx(crashingSound);
+
+	coin_label = (Label*)App->gui->CreateLabel(0, 0, "hey buenas");
 
 	return true;
 }
@@ -151,7 +155,7 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 				position.y = c2->rect.y - collider.height - collider.offset.y;
 		}
 
-		 else if (c1 == colliderPlayer_up.collider) {
+		else if (c1 == colliderPlayer_up.collider) {
 			speed.y = 0.0f;
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
 				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
@@ -218,7 +222,12 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 			App->fade->FadeToBlack();
 		break;
 	case COLLIDER_WIN:
-
+		if (!App->fade->IsFading())
+			App->fade->FadeToBlack();
+		break;
+	case COLLIDER_COIN:
+		coin_count++;
+		c2->to_delete = true;
 		break;
 	default:
 		break;

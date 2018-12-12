@@ -64,7 +64,7 @@ bool j1Scene::Start()
 	
 
 
-	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 218, 57, nullptr);
+	button = (Button*)App->gui->CreateButton(0, 0, { 648,173,218,57 });
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->AddListener(this);
 
@@ -234,50 +234,7 @@ bool j1Scene::CleanUp()
 
 void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
 
-	switch (action) {
-	case MOUSE_ENTER:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
-		break;
-	case MOUSE_LEAVE:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->Standard();
-		}
-		break;
-	case RIGHT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
-		break;
-	case LEFT_CLICK_DOWN:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnClick();
-		}
-		break;
-	case RIGHT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
-		break;
-	case LEFT_CLICK_UP:
-		if (element->GetType() == BUTTON) {
-			Button* button = (Button*)element;
-			button->OnHover();
-		}
-		break;
-	case TAB:
-		break;
-	case NONE:
-		break;
-	default:
-		break;
-	}
+	
 }
 
 void j1Scene::CheckLevel()

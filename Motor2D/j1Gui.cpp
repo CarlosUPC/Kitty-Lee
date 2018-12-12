@@ -30,6 +30,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 
+	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr);
+
 	return ret;
 }
 
@@ -130,7 +132,7 @@ UIElement* j1Gui::GetElemOnMouse(int x, int y)
 	return ret;
 }
 
-Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent)
+Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, UIElement* parent, const SDL_Rect &hover, const SDL_Rect &push)
 {
 	Button* ret = nullptr;
 	ret = new Button(pos_x, pos_y, idle, hover, push, parent);
@@ -138,7 +140,7 @@ Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect 
 	return ret;
 }
 
-Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, const UIElement * parent)
+Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent)
 {
 	Image* ret = nullptr;
 	ret = new Image(pos_x, pos_y, rect, parent);
@@ -146,13 +148,14 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, const uint &size, const char* font, UIElement* parent)
+Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, UIElement* parent, const uint &size, const char* font)
 {
 	Label* ret = nullptr;
 	ret = new Label(pos_x, pos_y, text, font, size, parent);
 	ui_elements.PushBack(ret);
 	return ret;
 }
+
 //
 //bool j1Gui::DestroyUI(UI *ui)
 //{

@@ -1,5 +1,5 @@
-#ifndef _IMAGE_
-#define _IMAGE_
+#ifndef __IMAGE_H__
+#define __IMAGE_H__
 
 #include "UIElement.h"
 #include "j1Render.h"
@@ -11,7 +11,7 @@ public:
 
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Image() : UIElement(IMAGE, 0, 0, nullptr) {}
-	Image(int pos_x, int pos_y, const SDL_Rect &image, const UIElement* parent) : UIElement(IMAGE, pos_x, pos_y, parent, true, image.w, image.h) {}
+	Image(int pos_x, int pos_y, const SDL_Rect &image, UIElement* parent) : UIElement(IMAGE, pos_x, pos_y, parent, true, image.w, image.h) {}
 	~Image() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

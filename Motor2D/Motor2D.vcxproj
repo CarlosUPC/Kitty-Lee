@@ -126,7 +126,6 @@
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
-    <ClInclude Include="j1Scene2.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="j1MainMenu.h" />

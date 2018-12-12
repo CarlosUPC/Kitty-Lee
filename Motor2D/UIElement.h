@@ -34,8 +34,10 @@ public:
 
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, const int &pos_x, const int &pos_y, const UIElement* parent, bool interactable = true, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
+	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
 		current_state = NONE;
+		if (parent != nullptr)
+			parent->childs.add(this);
 	}
 	~UIElement() {}
 	//------------------------------Constructor Functions--------------------------------//
@@ -155,7 +157,8 @@ public:
 	bool to_delete = false;
 	iPoint draw_offset = { 0,0 };
 
-	
+	p2List<UIElement*> childs;
+
 	Mouse_Event current_state = NONE;
 	iPoint last_mouse;
 	

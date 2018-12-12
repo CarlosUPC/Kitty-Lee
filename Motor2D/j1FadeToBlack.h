@@ -18,7 +18,7 @@ public:
 	// Called before the first frame
 	bool Start();
 
-	bool Update(float dt);
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -39,8 +39,8 @@ private:
 	} current_step = fade_step::none;
 
 public:
-	bool level1;
-	bool level2;
+	/*bool level1;
+	bool level2;*/
 	int num_level = 1;
 
 private:

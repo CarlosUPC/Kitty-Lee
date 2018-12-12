@@ -142,7 +142,7 @@ private:
 	uint32				prev_last_sec_frame_count = 0;
 
 	public:
-		Levels current_lvl = Levels::MENU;
+		Levels current_lvl = Levels::FIRST_LEVEL;
 };
 
 extern j1App* App;

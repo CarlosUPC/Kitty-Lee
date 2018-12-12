@@ -45,8 +45,8 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//App->map->Load(lvl1.GetString());
-	App->map->Load(App->map->sceneName.GetString());
+	App->map->Load(lvl1.GetString());
+	//App->map->Load(App->map->sceneName.GetString());
 
 	App->map->AddCollidersMap();
 
@@ -285,13 +285,16 @@ void j1Scene::CheckLevel()
 	switch (stg)
 	{
 	case LEVEL_1:
-		App->fade->level1 = true;
-		App->fade->level2 = false;
+		App->current_lvl = Levels::FIRST_LEVEL;
+		/*App->fade->level1 = true;
+		App->fade->level2 = false;*/
+
 		isLevel1 = true;
 		break;
 	case LEVEL_2:
-		App->fade->level2 = true;
-		App->fade->level1 = false;
+		App->current_lvl = Levels::SECOND_LEVEL;
+		/*App->fade->level2 = true;
+		App->fade->level1 = false;*/
 		isLevel1 = false;
 		break;
 	default:

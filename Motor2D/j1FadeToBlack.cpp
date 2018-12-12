@@ -31,7 +31,7 @@ bool j1FadeToBlack::Start()
 	return true;
 }
 
-bool j1FadeToBlack::Update(float dt)
+bool j1FadeToBlack::PostUpdate()
 {
 	BROFILER_CATEGORY("UpdateFade", Profiler::Color::Red);
 	if (current_step == fade_step::none)
@@ -47,22 +47,46 @@ bool j1FadeToBlack::Update(float dt)
 		if (now >= total_time)
 		{
 
-			if (level1) {
-				//Switch to level 2
+			switch (App->current_lvl)
+			{
+
+			case Levels::MENU:
+				break;
+			case Levels::CREDITS:
+				break;
+			case Levels::TUTORIAL:
+				break;
+			case Levels::FIRST_LEVEL:
 				num_level = 2;
 				SwitchingLevel(App->scene->lvl2.GetString());
 				App->scene->stg = LEVEL_2;
 				App->render->camera = App->render->CameraInitPos();
-
-			}
-			else if (level2) {
-				//Switch to level 1
+				break;
+			case Levels::SECOND_LEVEL:
 				num_level = 1;
 				SwitchingLevel(App->scene->lvl1.GetString());
 				App->scene->stg = LEVEL_1;
 				App->render->camera = App->render->CameraInitPos();
+				break;
 
 			}
+
+			//if (level1) {
+			//	//Switch to level 2
+			//	num_level = 2;
+			//	SwitchingLevel(App->scene->lvl2.GetString());
+			//	App->scene->stg = LEVEL_2;
+			//	App->render->camera = App->render->CameraInitPos();
+
+			//}
+			//else if (level2) {
+			//	//Switch to level 1
+			//	num_level = 1;
+			//	SwitchingLevel(App->scene->lvl1.GetString());
+			//	App->scene->stg = LEVEL_1;
+			//	App->render->camera = App->render->CameraInitPos();
+
+			//}
 
 			total_time += total_time;
 			start_time = SDL_GetTicks();
@@ -103,7 +127,7 @@ bool j1FadeToBlack::FadeToBlack(float time)
 {
 	bool ret = false;
 	
-	level1 = true;
+	//level1 = true;
 
 	if (current_step == fade_step::none)
 	{

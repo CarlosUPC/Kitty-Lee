@@ -58,14 +58,11 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::PostUpdate()
 {
-	for (int i = ui_elements.Count() - 1; i >= 0; i--) {
-		if (ui_elements.At(i) != nullptr) {
-			if (ui_elements[i]->to_delete) {
-				RELEASE(ui_elements[i]);
-			}
-			else
-				ui_elements[i]->Draw();
-		}
+	p2List<UIElement*> visited;
+	BFS(visited, screen);
+
+	for (p2List_item<UIElement*>* item = visited.start; item; item = item->next) {
+		item->data->Draw();
 	}
 
 	return true;

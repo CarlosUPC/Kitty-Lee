@@ -197,7 +197,7 @@ bool j1Scene::Update(float dt)
 			App->render->Blit(debug_tex, pos.x, pos.y, &path_rect);
 		}
 	}
-	App->gui->DeleteUIElement(*App->gui->screen);
+	
 	return true;
 }
 

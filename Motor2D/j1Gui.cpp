@@ -11,6 +11,7 @@
 #include "Label.h"
 #include "Button.h"
 #include "j1Window.h"
+#include "p2Queue.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -89,14 +90,42 @@ bool j1Gui::CleanUp()
 
 bool j1Gui::DeleteUIElement(UIElement &element) {
 
+	UIElement* elem = nullptr;
 	for (int i = 0; i < ui_elements.Count(); i++) {
-		if (*ui_elements.At(i) == &element) {
-			ui_elements[i]->to_delete = true;
-			return true;
+		if (ui_elements[i] == &element) {
+			elem = ui_elements[i];
+			break;
+		}
+	}
+	if (elem != nullptr) {
+		p2List<UIElement*> visited;
+		BFS(visited, elem);
+
+		for (p2List_item<UIElement*>* item = visited.end; item; item = item->prev) {
+			LOG("%i", item->data->GetType());
 		}
 	}
 
 	return false;
+}
+
+void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * &elem)
+{
+	p2DynArray<UIElement*> frontier;
+	UIElement* item = nullptr;
+	visited.add(elem);
+	frontier.PushBack(elem);
+	while (frontier.Count() > 0) {
+		if (frontier.Pop(item)) {
+			for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) {
+				if (visited.find(it->data) == -1) {
+					frontier.PushBack(it->data);
+					visited.add(it->data);
+				}
+			}
+		}
+
+	}
 }
 
 bool j1Gui::DeleteAllUIElements() {

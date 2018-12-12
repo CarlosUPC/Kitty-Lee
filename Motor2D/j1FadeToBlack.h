@@ -39,8 +39,7 @@ private:
 	} current_step = fade_step::none;
 
 public:
-	/*bool level1;
-	bool level2;*/
+
 	int num_level = 1;
 
 private:

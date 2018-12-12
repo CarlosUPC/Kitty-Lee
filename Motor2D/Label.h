@@ -34,7 +34,6 @@ public:
 	//--------------------Draw Function--------------------//
 
 
-
 	//--------------------Scroll Function--------------------//
 	void Scroll(char dir, float percentage) {
 		if (dir == 'h') {
@@ -49,8 +48,8 @@ public:
 
 
 	//-------------Factory Functions--------------//
-	void SetText(char* txt) {
-		text = txt;
+	void SetText(const char* txt) {
+		//text.create("coins X ")+("%5",)
 	}
 	//-------------Factory Functions--------------//
 

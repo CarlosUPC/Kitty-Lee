@@ -52,7 +52,7 @@ public:
 	//------------------------------Draw Function--------------------------------//
 	void Draw()
 	{
-		SDL_Rect viewport;
+		SDL_Rect viewport;					//put on Start() or constructor
 		if (parent != nullptr)
 			viewport = { parent->GetPosition().x, parent->GetPosition().y, parent->position.w, parent->position.h };
 		else

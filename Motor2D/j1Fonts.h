@@ -37,6 +37,7 @@ public:
 
 	p2List<_TTF_Font*>	fonts;
 	_TTF_Font*			default;
+	const char*		title;
 };
 
 

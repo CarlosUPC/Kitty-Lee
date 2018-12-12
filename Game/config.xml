@@ -42,10 +42,15 @@
 	
   </scene>
 
+  
   <gui>
     <atlas file="gui/atlas.png"/>
   </gui>
   
+  <font>
+	<default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="24" />
+	<title_font file="fonts/open_sans/04B_30__.ttf" size="24" />
+	</font>
 
   <player>
     <file>player.tsx</file>

@@ -106,16 +106,16 @@ bool j1Gui::DeleteUIElement(UIElement &element) {
 	return false;
 }
 
-void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * &elem)
+void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * &elem) //It will fill a list from parent to children
 {
 	p2DynArray<UIElement*> frontier;
 	UIElement* item = nullptr;
-	visited.add(elem);
+	visited.add(elem);					//Add from we want to start to visited and frontier list
 	frontier.PushBack(elem);
 	while (frontier.Count() > 0) {
-		if (frontier.Pop(item)) {
-			for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) {
-				if (visited.find(it->data) == -1) {
+		if (frontier.Pop(item)) {			//Pop las item of array
+			for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) { //iterate for all childs of node
+				if (visited.find(it->data) == -1) {	//if child is not on visited list we added on it and on prontier to search its childs
 					frontier.PushBack(it->data);
 					visited.add(it->data);
 				}

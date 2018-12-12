@@ -54,7 +54,8 @@ bool j1Entity::CleanUp()
 	bool ret = false;
 
 	ret = App->tex->UnLoad(data.tileset.texture);
-	collider.collider->to_delete = true;
+	if (collider.collider != nullptr)
+		collider.collider->to_delete = true;
 	current_animation = nullptr;
 
 	return ret;
@@ -209,13 +210,24 @@ void j1Entity::LoadCollider(pugi::xml_node &node)
 	p2SString colliderType = node.attribute("type").as_string();
 	if (colliderType == "COLLIDER_ENEMY")
 		collider.type = COLLIDER_TYPE::COLLIDER_ENEMY;
-	else if(colliderType == "COLLIDER_PLAYER")
+	else if (colliderType == "COLLIDER_PLAYER")
 		collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
+	else if (colliderType == "COLLIDER_COIN")
+		collider.type = COLLIDER_TYPE::COLLIDER_COIN;
 }
 
 void j1Entity::IdAnimToEnum()
 {
 	data.animations[0].animType = EntityState::IDLE;
+}
+
+void j1Entity::AddColliders(j1Entity* callback)
+{
+		SDL_Rect r = { (int)position.x + collider.offset.x,
+			(int)position.y + collider.offset.y,
+			collider.width, collider.height };
+		collider.collider = App->collider->AddCollider(r, collider.type, callback);
+
 }
 
 //Functions to help loading data in xml-------------------------------------

@@ -101,6 +101,9 @@ void j1Scene::CreateEntities()
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
 			player = (Player*)ent;
 		}
+		else if (position->data->name == "Coin") {
+			ent = App->entities->CreateEntity(j1Entity::Types::COIN, position->data->coll_x, position->data->coll_y);
+		}
 		else ent = nullptr;
 
 		if (ent != nullptr) {

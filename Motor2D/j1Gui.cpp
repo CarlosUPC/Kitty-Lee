@@ -57,7 +57,6 @@ bool j1Gui::PreUpdate()
 		selected = Select();
 	else if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_UP && selected != nullptr)
 		selected = nullptr;
-	LOG("%i", selected);
 
 	return true;
 }

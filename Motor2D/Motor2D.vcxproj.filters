@@ -72,6 +72,9 @@
     <ClCompile Include="UIElement.cpp">
       <Filter>GUI_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="COIN.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -179,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="COIN.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Scene2.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1MainMenu.h">
       <Filter>Scenes</Filter>

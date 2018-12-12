@@ -64,7 +64,7 @@ bool j1Scene::Start()
 	
 
 
-	button = (Button*)App->gui->CreateUIElement(BUTTON, 50, 250, 218, 57, nullptr);
+	button = (Button*)App->gui->CreateButton(0, 0, { 648,173,218,57 });
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->AddListener(this);
 

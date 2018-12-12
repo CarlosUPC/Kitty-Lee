@@ -11,8 +11,7 @@ public:
 
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Image() : UIElement(IMAGE, 0, 0, nullptr) {}
-	Image(int pos_x, int pos_y, int w, int h, UIElement* parent) : UIElement(IMAGE, pos_x, pos_y, parent, true, w, h) {}
-	Image(UI_type type, int x, int y, UIElement* parent, bool interactable = true, int width = 0, int height = 0) : UIElement(type, x, y, parent, interactable, width, height) {}
+	Image(int pos_x, int pos_y, const SDL_Rect &image, const UIElement* parent) : UIElement(IMAGE, pos_x, pos_y, parent, true, image.w, image.h) {}
 	~Image() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

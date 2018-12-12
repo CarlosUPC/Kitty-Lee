@@ -4,82 +4,79 @@
 #include "j1Module.h"
 #include "j1Fonts.h"
 #include "p2DynArray.h"
-#include "UIElement.h"
+//#include "UIElement.h"
 
+class UIElement;
+class Button;
+class Label;
+class Image;
 
-#define CURSOR_WIDTH 2
-
-// TODO 1: Create your structure of classes
-struct _TTF_Font;
-enum Mouse_Event;
-enum UI_type;
-
-class UI {
-public:
-	UI(const fPoint &pos) :position(pos) {}
-	~UI() {}
-
-	enum class Type {
-		BUTTON,
-		IMAGE,
-		LABEL,
-
-		MAX
-	};
-
-	enum class Mouse {
-		IDLE,
-		ONHOVER,
-		PUSH
-	};
-
-	virtual bool Draw() { return false; };
-	fPoint position;
-	int width = 0;
-	int height = 0;
-	UI::Type type;
-	Mouse mouse = Mouse::IDLE;
-};
-
-class UIImage :public UI {
-public:
-	UIImage(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) { width = r.w; height = r.h; }
-
-	bool Draw();
-
-	SDL_Rect dimension;
-};
-
-class UIButton :public UI {
-public:
-	UIButton(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
-	~UIButton() {}
-
-	bool Draw();
-	
-	SDL_Rect idle;
-	SDL_Rect hover;
-	SDL_Rect push;
-};
-
-class UILabel :public UI {
-public:
-	UILabel(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
-		font = App->fonts->Load(path_font, size);
-		text.create(txt);
-		SDL_Color color = { 255, 255, 255, 255 };
-		texture = App->fonts->Print(text.GetString(), color, font);
-		App->fonts->CalcSize(txt, width, height, font);
-	}
-	~UILabel() {}
-
-	bool Draw();
-
-	_TTF_Font*		font;
-	uint			size;
-	SDL_Texture*	texture;
-	p2SString		text;
-};
+//class UI {
+//public:
+//	UI(const fPoint &pos) :position(pos) {}
+//	~UI() {}
+//
+//	enum class Type {
+//		BUTTON,
+//		IMAGE,
+//		LABEL,
+//
+//		MAX
+//	};
+//
+//	enum class Mouse {
+//		IDLE,
+//		ONHOVER,
+//		PUSH
+//	};
+//
+//	virtual bool Draw() { return false; };
+//	fPoint position;
+//	int width = 0;
+//	int height = 0;
+//	UI::Type type;
+//	Mouse mouse = Mouse::IDLE;
+//};
+//
+//class UIImage :public UI {
+//public:
+//	UIImage(const fPoint &pos, const SDL_Rect &r) :UI(pos), dimension(r) { width = r.w; height = r.h; }
+//
+//	bool Draw();
+//
+//	SDL_Rect dimension;
+//};
+//
+//class UIButton :public UI {
+//public:
+//	UIButton(const fPoint &position, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push) :UI(position), idle(idle), hover(hover), push(push) { width = idle.w; height = idle.h; }
+//	~UIButton() {}
+//
+//	bool Draw();
+//	
+//	SDL_Rect idle;
+//	SDL_Rect hover;
+//	SDL_Rect push;
+//};
+//
+//class UILabel :public UI {
+//public:
+//	UILabel(const fPoint &pos, const char* txt, const char* path_font, const uint &size) :UI(pos) {
+//		font = App->fonts->Load(path_font, size);
+//		text.create(txt);
+//		SDL_Color color = { 255, 255, 255, 255 };
+//		texture = App->fonts->Print(text.GetString(), color, font);
+//		App->fonts->CalcSize(txt, width, height, font);
+//	}
+//	~UILabel() {}
+//
+//	bool Draw();
+//
+//	_TTF_Font*		font;
+//	uint			size;
+//	SDL_Texture*	texture;
+//	p2SString		text;
+//};
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -106,14 +103,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool DestroyUI(UI*);
+	//bool DestroyUI(UI*);
 
-	void CheckMouse(UI*);
-	UI* Select()const;
+	//void CheckMouse(UI*);
+	//UI* Select()const;
 	const SDL_Texture* GetAtlas() const;
 
 	//----------------------------------------------------------------------------------------
-	UIElement* CreateUIElement(UI_type type, int pos_x, int pos_y, int w = 0, int h = 0, UIElement* parent = nullptr);
+
+	Button* CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 }, const UIElement* parent = nullptr);
+	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, const UIElement* parent = nullptr);
+	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT, UIElement* parent = nullptr);
+
 	bool DeleteUIElement(UIElement &element);
 	bool DeleteAllUIElements();
 	UIElement* GetElemOnMouse(int x, int y);
@@ -123,10 +124,6 @@ private:
 
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	p2List<UI*> objects;
-	UI* selected = nullptr;
-
-	//-------------------------------------------------------------------------
 	p2DynArray<UIElement*> ui_elements;
 
 	

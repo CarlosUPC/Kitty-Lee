@@ -47,17 +47,6 @@ bool j1Gui::PreUpdate()
 	for (int i = 0; i < ui_elements.Count(); i++)
 		if (ui_elements.At(i) != nullptr) ui_elements[i]->Update();
 	
-	//----------------------------------------------------------------
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
-
-		CheckMouse(item->data);
-	}
-	if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_DOWN && selected == nullptr)
-		selected = Select();
-	else if (App->input->GetMouseButtonDown(1) == j1KeyState::KEY_UP && selected != nullptr)
-		selected = nullptr;
-
 	return true;
 }
 
@@ -73,11 +62,6 @@ bool j1Gui::PostUpdate()
 		}
 	}
 
-	//----------------------------------------------------------------
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
-		item->data->Draw();
-	}
 	return true;
 }
 
@@ -139,108 +123,71 @@ UIElement* j1Gui::GetElemOnMouse(int x, int y)
 	return nullptr;
 }
 
-UIElement * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, int h, UIElement* parent)
+Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent)
 {
-	UIElement* element = nullptr;
-
-	switch (type)
-	{
-	case CHECKBOX:
-		break;
-	case INPUT_TEXT:
-		break;
-	case BUTTON:
-		element = new Button(pos_x, pos_y, w, h, parent);
-		break;
-	case LABEL:
-		element = new Label(pos_x, pos_y, w, h, parent);
-		break;
-	case IMAGE:
-		element = new Image(pos_x, pos_y, w, h, parent);
-		break;
-	case SCROLLBAR:
-		
-		break;
-	case UNKNOW:
-		break;
-	default:
-		break;
-	}
-
-	if (element != nullptr) {
-		//element->AddListener(this);
-		ui_elements.PushBack(element);
-	}
-
-	return element;
-}
-
-
-//UIButton * j1Gui::CreateButton(const fPoint & pos, const SDL_Rect & idle, const SDL_Rect & hover, const SDL_Rect & push)
-//{
-//	UIButton* ret = nullptr;
-//	ret = new UIButton(pos, idle, hover, push);
-//	objects.add(ret);
-//	return ret;
-//}
-//
-//UIImage* j1Gui::CreateImage(const fPoint & pos, const SDL_Rect & rect)
-//{
-//	UIImage* ret = nullptr;
-//	ret = new UIImage(pos, rect);
-//	objects.add(ret);
-//	return ret;
-//}
-//
-//UILabel* j1Gui::CreateLabel(const fPoint & pos, const char* text, const uint &size, const char* font)
-//{
-//	UILabel* ret = nullptr;
-//	ret = new UILabel(pos, text, font, size);
-//	objects.add(ret);
-//	return ret;
-//}
-
-bool j1Gui::DestroyUI(UI *ui)
-{
-	bool ret = false;
-	int index = objects.find(ui);
-	if (index != -1)
-		ret = objects.del(objects.At(index));
+	Button* ret = nullptr;
+	ret = new Button(pos_x, pos_y, idle, hover, push, parent);
+	ui_elements.PushBack(ret);
 	return ret;
 }
 
-void j1Gui::CheckMouse(UI *b)
+Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, const UIElement * parent)
 {
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	if (x > b->position.x&&x<b->position.x + b->width &&
-		y>b->position.y&&y < b->position.y + b->height) {
-		if (App->input->GetMouseButtonDown(1)) {
-			b->mouse = UI::Mouse::PUSH;
-
-		}
-		else {
-			b->mouse = UI::Mouse::ONHOVER;
-		}
-
-
-	}
-	else if (b->mouse != UI::Mouse::IDLE) {
-		b->mouse = UI::Mouse::IDLE;
-
-	}
-
-
+	Image* ret = nullptr;
+	ret = new Image(pos_x, pos_y, rect, parent);
+	ui_elements.PushBack(ret);
+	return ret;
 }
 
-UI* j1Gui::Select() const
+Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, const uint &size, const char* font, UIElement* parent)
 {
-	p2List_item<UI*>* item = objects.start;
-	for (; item; item = item->next) {
-		if (item->data->mouse == UI::Mouse::PUSH)
-			return  item->data;
-	}
+	Label* ret = nullptr;
+	ret = new Label(pos_x, pos_y, text, font, size, parent);
+	ui_elements.PushBack(ret);
+	return ret;
 }
+//
+//bool j1Gui::DestroyUI(UI *ui)
+//{
+//	bool ret = false;
+//	int index = objects.find(ui);
+//	if (index != -1)
+//		ret = objects.del(objects.At(index));
+//	return ret;
+//}
+//
+//void j1Gui::CheckMouse(UI *b)
+//{
+//	int x, y;
+//	App->input->GetMousePosition(x, y);
+//	if (x > b->position.x&&x<b->position.x + b->width &&
+//		y>b->position.y&&y < b->position.y + b->height) {
+//		if (App->input->GetMouseButtonDown(1)) {
+//			b->mouse = UI::Mouse::PUSH;
+//
+//		}
+//		else {
+//			b->mouse = UI::Mouse::ONHOVER;
+//		}
+//
+//
+//	}
+//	else if (b->mouse != UI::Mouse::IDLE) {
+//		b->mouse = UI::Mouse::IDLE;
+//
+//	}
+//
+//
+//}
+//
+//UI* j1Gui::Select() const
+//{
+//	p2List_item<UI*>* item = objects.start;
+//	for (; item; item = item->next) {
+//		if (item->data->mouse == UI::Mouse::PUSH)
+//			return  item->data;
+//	}
+//}
 
 
 void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
@@ -281,34 +228,34 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-bool UIImage::Draw()
-{
-	bool ret = false;
-
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, 0.0F);
-
-	return ret;
-}
-
-bool UIButton::Draw()
-{
-	bool ret = false;
-	switch (mouse) {
-	case Mouse::ONHOVER:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, 0.0f);
-		break;
-	case Mouse::IDLE:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, 0.0f);
-		break;
-	case Mouse::PUSH:
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, 0.0f);
-		break;
-	}
-	return ret;
-}
-
-bool UILabel::Draw()
-{
-	App->render->Blit(texture, position.x, position.y, NULL, 0.0F, false);
-	return false;
-}
+//bool UIImage::Draw()
+//{
+//	bool ret = false;
+//
+//	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &dimension, 0.0F);
+//
+//	return ret;
+//}
+//
+//bool UIButton::Draw()
+//{
+//	bool ret = false;
+//	switch (mouse) {
+//	case Mouse::ONHOVER:
+//		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &hover, 0.0f);
+//		break;
+//	case Mouse::IDLE:
+//		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &idle, 0.0f);
+//		break;
+//	case Mouse::PUSH:
+//		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), position.x, position.y, &push, 0.0f);
+//		break;
+//	}
+//	return ret;
+//}
+//
+//bool UILabel::Draw()
+//{
+//	App->render->Blit(texture, position.x, position.y, NULL, 0.0F, false);
+//	return false;
+//}

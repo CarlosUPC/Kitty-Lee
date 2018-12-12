@@ -66,10 +66,7 @@ bool j1Gui::PostUpdate()
 	for (int i = ui_elements.Count() - 1; i >= 0; i--) {
 		if (ui_elements.At(i) != nullptr) {
 			if (ui_elements[i]->to_delete) {
-
-				delete(ui_elements[i]);
-				ui_elements[i] = nullptr;
-
+				RELEASE(ui_elements[i]);
 			}
 			else
 				ui_elements[i]->Draw();
@@ -93,19 +90,10 @@ bool j1Gui::CleanUp()
 	{
 		if (ui_elements[i] != nullptr)
 		{
-			delete ui_elements[i];
-			ui_elements[i] = nullptr;
-			
+			RELEASE(ui_elements[i]);
 		}
 	}
-
 	ui_elements.Clear();
-
-	//----------------------------------------------------------------
-	p2List_item<UI*>* item;
-	for (item = objects.start; item; item = item->next) {
-		RELEASE(item->data);
-	}
 
 	return true;
 }

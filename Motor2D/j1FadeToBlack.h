@@ -24,7 +24,6 @@ public:
 	bool CleanUp();
 
 	bool FadeToBlack(float time = 1.0f);
-
 	bool SwitchingLevel(const char* tmx_map);
 	
 	bool IsFading();
@@ -49,6 +48,9 @@ private:
 	uint start_time = 0;
 	uint total_time = 0;
 	SDL_Rect screen;
+
+
+	bool have_to_load = false;
 };
 
 

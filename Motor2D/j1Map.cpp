@@ -30,6 +30,18 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 	
+	pugi::xml_document data;
+
+	pugi::xml_node sceneData = App->LoadConfig(data);
+
+	for (sceneData = sceneData.child("scene").child("data"); sceneData && ret; sceneData = sceneData.next_sibling("data"))
+	{
+		if (sceneData.attribute("start").as_bool()) {
+			sceneName = (p2SString)sceneData.attribute("name").as_string();	
+		}
+		
+	}
+
 	return ret;
 }
 

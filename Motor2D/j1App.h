@@ -23,6 +23,18 @@ class j1Fonts;
 class j1Gui;
 class j1MainMenu;
 
+
+enum Levels
+{
+	MENU = 0,
+	CREDITS,
+	TUTORIAL,
+	FIRST_LEVEL,
+	SECOND_LEVEL
+};
+
+
+
 class j1App
 {
 public:
@@ -58,11 +70,13 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
-private:
-
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
+
+private:
+
+	
 	// Call modules before each loop iteration
 	void PrepareUpdate();
 
@@ -126,6 +140,9 @@ private:
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
+
+	public:
+		Levels current_lvl = Levels::MENU;
 };
 
 extern j1App* App;

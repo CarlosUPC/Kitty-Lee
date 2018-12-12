@@ -140,6 +140,7 @@ private:
 public:
 
 	MapData data;
+	p2SString sceneName;
 	EntityPos queue[MAX_ENTITIES];
 	
 private:

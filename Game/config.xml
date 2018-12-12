@@ -38,6 +38,8 @@
   <scene>
     <level_1>SceneIndoor.tmx</level_1>
 	<level_2>Scene1.tmx</level_2>
+	<data name="SceneIndoor.tmx" start="true" type="LEVEL_1" />
+	<data name="Scene1.tmx" start="false" type="LEVEL_2" />
   </scene>
 
   <gui>

@@ -45,7 +45,8 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(lvl1.GetString());
+	//App->map->Load(lvl1.GetString());
+	App->map->Load(App->map->sceneName.GetString());
 
 	App->map->AddCollidersMap();
 

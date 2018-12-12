@@ -119,6 +119,7 @@ bool j1FadeToBlack::FadeToBlack(float time)
 	
 }
 
+
 bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 {
 	bool ret = true;

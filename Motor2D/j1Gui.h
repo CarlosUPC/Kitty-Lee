@@ -56,7 +56,8 @@ public:
 	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, Color color = WHITE,UIElement* parent = nullptr, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
 
 	bool DeleteUIElement(UIElement &element);
-	void BFS(p2List<UIElement *> &visited, UIElement * &elem);
+	UIElement* FindElement(UIElement*);
+	void BFS(p2List<UIElement *> &visited, UIElement * elem);
 	bool DeleteAllUIElements();
 	UIElement* GetElemOnMouse(int x, int y);
 	void UI_Events(UIElement* element, Mouse_Event action);

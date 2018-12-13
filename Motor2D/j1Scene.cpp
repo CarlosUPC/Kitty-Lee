@@ -57,28 +57,40 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	/*SDL_Rect r = { 0,0,100,100 };
-	banner = App->gui->CreateImage(fPoint(0, 0), r);
-	text = App->gui->CreateLabel(fPoint(0, 0), "hey buenas a todos aqui williyrex comentando", 32);
-	SDL_Rect c = { 1619,892,22,24 };
-	coin = App->gui->CreateImage(fPoint(0, 0), c);*/
-	
+	Image* a;
+	Image* b;
+	Image*c;
+	Image*d;
+	Image*e;
+	Image*f;
+	Image*g;
+	Image*h;
+	Image*i;
+	Image*j;
+	Image*k;
+	Image*l;
+	a = App->gui->CreateImage(1, 0, SDL_Rect{ NULL }, App->gui->screen);
+	b = App->gui->CreateImage(2, 0, SDL_Rect{ NULL }, a);
+	d = App->gui->CreateImage(4, 0, SDL_Rect{ NULL }, b);
+	g = App->gui->CreateImage(7, 0, SDL_Rect{ NULL }, d);
+	f = App->gui->CreateImage(6, 0, SDL_Rect{ NULL }, d);
+	j = App->gui->CreateImage(10, 0, SDL_Rect{ NULL }, g);
+	h = App->gui->CreateImage(8, 0, SDL_Rect{ NULL }, f);
+	i = App->gui->CreateImage(9, 0, SDL_Rect{ NULL }, g);
+	l = App->gui->CreateImage(12,0, SDL_Rect{ NULL }, App->gui->screen);
+	c = App->gui->CreateImage(3, 0, SDL_Rect{ NULL }, b);
+	e = App->gui->CreateImage(5, 0, SDL_Rect{ NULL }, c);
+	k = App->gui->CreateImage(11, 0, SDL_Rect{ NULL }, g);
+
+	p2List<UIElement*> element;
+	App->gui->BFS(element, App->gui->FindElement(a));
+	p2List_item<UIElement*>* item = element.start;
+	for (; item; item = item->next) {
+		LOG("%i", item->data->position.x);
+	}
 
 
-	button = App->gui->CreateButton(0, 0, { 648,173,218,57 },App->gui->screen);
-	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->AddListener(this);
 
-	App->gui->CreateLabel(0, 0, "u", WHITE, App->gui->screen);
-
-	text = App->gui->CreateLabel(10, 10, "jonnymelavo", RED, button);
-
-	Label* a = App->gui->CreateLabel(100, 100, "me creo azul pero me convierto en amarillo", BLUE, App->gui->screen);
-	a->SetColor(YELLOW);
-	a->SetText("Me cambio de texto para ser azul otra vez");
-	a->SetColor(SDL_Color{ 0,0,255,255 });
-	//a->SetAlpha(10);
-	a->ChangeFont("fonts/kenvector_future.ttf",20);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

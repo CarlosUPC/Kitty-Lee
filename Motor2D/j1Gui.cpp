@@ -99,14 +99,28 @@ bool j1Gui::DeleteUIElement(UIElement &element) {
 		BFS(visited, elem);
 
 		for (p2List_item<UIElement*>* item = visited.end; item; item = item->prev) {
-			LOG("%i", item->data->GetType());
+			if (item->data->childs.count() > 0) {
+				while (item->data->childs.count() > 0) {
+					item = item->data->childs.start;
+				}
+			}
 		}
 	}
 
 	return false;
 }
 
-void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * &elem) //It will fill a list from parent to children
+UIElement* j1Gui::FindElement(UIElement *elem)
+{
+	for (int i = 0; i < ui_elements.Count(); ++i) {
+		if (ui_elements[i] == elem)
+			return ui_elements[i];
+	}
+	
+	return nullptr;
+}
+
+void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * elem) //It will fill a list from parent to children
 {
 	p2DynArray<UIElement*> frontier;
 	UIElement* item = nullptr;

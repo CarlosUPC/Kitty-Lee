@@ -62,22 +62,32 @@ public:
 	
 	void UI_Events(UIElement* element, Mouse_Event action);
 
+private:
+	void CreateMenu();
+	void DestroyMenu();
+
 public:
 	p2SString lvl1;
 	p2SString lvl2;
 	Stages stg = LEVEL_1;
 	bool isLevel1;
+
 private:
 
 	iPoint cameraOffset;
-	uint win_width;
-	uint win_height;
-	SDL_Texture* debug_tex;
-	Player* player;	
+	uint win_width = 0;
+	uint win_height = 0;
+	SDL_Texture* debug_tex = nullptr;
+	Player* player = nullptr;	
+
+	bool menu = false;
 	
 	//ui scene objects
-	Button* button;
-	Label* text;
+	Button* button = nullptr;
+	Label* text = nullptr;
+
+	//ui esc menu objects
+	Image* panel = nullptr;
 
 };
 

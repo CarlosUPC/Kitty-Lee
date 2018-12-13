@@ -1,10 +1,12 @@
 #include "COIN.h"
+#include "j1App.h"
+#include "j1Textures.h"
 
 Coin::Coin(int x, int y):j1Entity(Types::COIN,x,y){
 
 	LoadEntityData("coin.tsx");
 
-	AddColliders();
+	AddColliders(this);
 }
 
 Coin::~Coin() {}
@@ -13,6 +15,16 @@ bool Coin::Update(float dt)
 {
 	current_animation->GetCurrentFrame(dt);
 	return true;
+}
+
+bool Coin::CleanUp()
+{
+	bool ret = false;
+
+	ret = App->tex->UnLoad(data.tileset.texture);
+	collider.collider->to_delete = true;
+
+	return ret;
 }
 
 void Coin::PushBack()

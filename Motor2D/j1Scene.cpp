@@ -174,6 +174,11 @@ bool j1Scene::Update(float dt)
 		//App->fade->FadeToBlack();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		menu = !menu;
+		(menu) ? CreateMenu() : DestroyMenu();
+	}
+
 	App->map->Draw();
 	
 	if (App->collider->debug) {
@@ -230,6 +235,15 @@ bool j1Scene::CleanUp()
 void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
 
 	
+}
+
+void j1Scene::CreateMenu()
+{
+	panel = App->gui->CreateImage(0, 0, { 30,541,427,455 }, App->gui->screen);
+}
+
+void j1Scene::DestroyMenu()
+{
 }
 
 void j1Scene::CheckLevel()

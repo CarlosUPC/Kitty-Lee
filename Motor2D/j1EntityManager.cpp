@@ -148,8 +148,10 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 {
 	if (entity != nullptr) {
 		entity->CleanUp();
-		entities.Pop(entity);
-		delete entity;
-		entity = nullptr;
+		for (int i = 0; i < entities.Count(); ++i) {
+			if (entities[i] == entity) {
+				entities[i] = nullptr;
+			}
+		}
 	}
 }

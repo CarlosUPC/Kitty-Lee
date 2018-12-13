@@ -11,7 +11,10 @@ public:
 
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Image() : UIElement(IMAGE, 0, 0, nullptr) {}
-	Image(int pos_x, int pos_y, const SDL_Rect &image, UIElement* parent) : UIElement(IMAGE, pos_x, pos_y, parent, true, image.w, image.h) {}
+	Image(int pos_x, int pos_y, const SDL_Rect &image, UIElement* parent, bool inter = true, bool drag = false, bool draw = true) : UIElement(IMAGE, pos_x, pos_y, parent, inter, drag, image.w, image.h, draw) {
+		position = { pos_x,pos_y,image.w,image.h };
+		image_rect = image;
+	}
 	~Image() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

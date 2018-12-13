@@ -34,7 +34,7 @@ public:
 
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), draggable(draggable), position({ pos_x, pos_y, width, height }) {
+	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0, bool drawable = true) : type(type), parent(parent), interactable(interactable), draggable(draggable), drawable(drawable), position({ pos_x, pos_y, width, height }) {
 		current_state = NONE;
 		if (parent != nullptr) {
 			parent->childs.add(this);

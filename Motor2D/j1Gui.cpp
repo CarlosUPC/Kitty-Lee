@@ -31,7 +31,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 
-	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false);
+	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false, false);
 
 	return ret;
 }
@@ -65,7 +65,8 @@ bool j1Gui::PostUpdate()
 	BFS(visited, screen);
 	
 	for (p2List_item<UIElement*>* item = visited.start; item; item = item->next) {
-		item->data->Draw();
+		if (item->data->drawable)
+			item->data->Draw();
 	}
 
 	return true;
@@ -191,10 +192,10 @@ Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect 
 	return ret;
 }
 
-Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent, bool interactable, bool draggable)
+Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent, bool interactable, bool draggable, bool drawable)
 {
 	Image* ret = nullptr;
-	ret = new Image(pos_x, pos_y, rect, parent);
+	ret = new Image(pos_x, pos_y, rect, parent, interactable, draggable, drawable);
 	ui_elements.add(ret);
 	return ret;
 }

@@ -9,6 +9,7 @@ public:
 	~Coin();
 
 	bool Update(float dt);
+	bool CleanUp();
 	
 	void PushBack();
 

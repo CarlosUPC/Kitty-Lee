@@ -10,24 +10,13 @@ class Label : public UIElement {
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Label() : UIElement(LABEL, 0, 0, nullptr) {	}
-	Label(int pos_x, int pos_y, const char* txt, Color color, const char* path_font, const uint &size = 12, UIElement* parent = nullptr) : UIElement(LABEL, pos_x, pos_y, parent, true) {
+	Label(int pos_x, int pos_y, const char* txt, const Color &c, const char* path_font, const uint &size = 12, UIElement* parent = nullptr) : UIElement(LABEL, pos_x, pos_y, parent, true) {
 		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		
-		SDL_Color col;
-		if (color == RED)
-			 col = { 220, 20, 60, 255 };
-		if (color == YELLOW)
-			 col = { 254, 203, 0, 255 };
-		else if (color == GREY)
-			 col = { 134, 136, 138, 255 };
-		else if (color == BLACK)
-			 col = { 0, 0, 0, 255 };
-		else if (color == WHITE)
-			col = { 255, 255, 255, 255 };
-
-
-		texture = App->fonts->Print(text.GetString(), col, font);
+		SetColor(c);
+		
+		texture = App->fonts->Print(text.GetString(), color, font);
 		App->fonts->CalcSize(txt, position.w, position.h, font);
 	}
 	~Label() {}
@@ -70,19 +59,69 @@ public:
 	//-------------Factory Functions--------------//
 	void SetText(const char* txt) {
 		text.create(txt);
+		texture = App->fonts->Print(text.GetString(), color, font);
 		App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
 	}
 
-	void ChangeFont() {
-
+	void SetColor(Color c) {
+		switch (c) {
+		case RED:
+			color = { 255,0,0,color.a };
+			break;
+		case GREEN:
+			color = { 0,255,0,color.a };
+			break;
+		case BLUE:
+			color = { 0,0,255,color.a };
+			break;
+		case YELLOW:
+			color = { 255,255,0,color.a };
+			break;
+		case GREY:
+			color = { 150,150,150,color.a };
+			break;
+		case BLACK:
+			color = { 0,0,0,color.a };
+			break;
+		case WHITE:
+			color = { 255,255,255,color.a };
+			break;
+		default:
+			color = { 255,255,255,color.a };
+			break;
+		}
+		texture = App->fonts->Print(text.GetString(), color, font);
 	}
+
+	void SetColor(const SDL_Color &c) {
+		color = c;
+		texture = App->fonts->Print(text.GetString(), color, font);
+	}
+
+	/*void SetAlpha(const Uint8 &alpha) {
+		color = { color.r,color.g,color.b,alpha };
+		texture = App->fonts->Print(text.GetString(), color, font);
+	}*/
+
+	void ChangeFont(const char* f, const int &size) {
+		font = App->fonts->Load(f, size);
+		texture = App->fonts->Print(text.GetString(), color, font);
+		App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
+	}
+
+	/*void ChangeFont(const int &index) {
+		font = App->fonts->Load(App->fonts->fonts.At(index), size);
+		texture = App->fonts->Print(text.GetString(), color, font);
+		App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
+	}*/
 	//-------------Factory Functions--------------//
 
 protected:
 
-	_TTF_Font*		font;
-	uint			size;
-	SDL_Texture*	texture;
+	_TTF_Font*		font = nullptr;
+	uint			size = 0;
+	SDL_Texture*	texture = nullptr;
+	SDL_Color		color = { 255,255,255,255 };
 	p2SString		text;
 
 };

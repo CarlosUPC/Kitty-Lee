@@ -71,7 +71,14 @@ bool j1Scene::Start()
 
 	App->gui->CreateLabel(0, 0, "u", WHITE, App->gui->screen);
 
-	text = App->gui->CreateLabel(10, 10, "jonnymelavo", WHITE, button);
+	text = App->gui->CreateLabel(10, 10, "jonnymelavo", RED, button);
+
+	Label* a = App->gui->CreateLabel(100, 100, "me creo azul pero me convierto en amarillo", BLUE, App->gui->screen);
+	a->SetColor(YELLOW);
+	a->SetText("Me cambio de texto para ser azul otra vez");
+	a->SetColor(SDL_Color{ 0,0,255,255 });
+	//a->SetAlpha(10);
+	a->ChangeFont("fonts/kenvector_future.ttf",20);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

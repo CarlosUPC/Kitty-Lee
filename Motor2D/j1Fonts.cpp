@@ -66,12 +66,15 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 	{
 		LOG("Could not load TTF font with path: %s. TTF_OpenFont: %s", path, TTF_GetError());
 	}
-	else
+	else if (fonts.find(font) == -1)
 	{
 		LOG("Successfully loaded font %s size %d", path, size);
 		fonts.add(font);
 	}
-
+	else if (fonts.find(font) != -1) {
+		LOG("Font %s size %d already loaded", path, size);
+	}
+	
 	return font;
 }
 

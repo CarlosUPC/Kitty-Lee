@@ -1,5 +1,5 @@
-#ifndef _BUTTON_
-#define _BUTTON_
+#ifndef __BUTTON_H__
+#define __BUTTON_H__
 
 #include "Image.h"
 #include "p2SString.h"
@@ -13,7 +13,7 @@ class Button : public UIElement {
 
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
-	Button(const int &x, const int &y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent) : UIElement(BUTTON, x, y, parent, true, idle.w, idle.h) {}
+	Button(const int &x, const int &y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, UIElement* parent) : UIElement(BUTTON, x, y, parent, true, idle.w, idle.h) {}
 	~Button() {}
 	//------------------------------Constructor & Destructor Function--------------------------------//
 

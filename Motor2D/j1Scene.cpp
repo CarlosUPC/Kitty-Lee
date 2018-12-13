@@ -65,9 +65,13 @@ bool j1Scene::Start()
 	
 
 
-	button = (Button*)App->gui->CreateButton(0, 0, { 648,173,218,57 });
+	button = App->gui->CreateButton(0, 0, { 648,173,218,57 },App->gui->screen);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->AddListener(this);
+
+	App->gui->CreateLabel(0, 0, "u", App->gui->screen);
+
+	text = App->gui->CreateLabel(10, 10, "jonnymelavo", button);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

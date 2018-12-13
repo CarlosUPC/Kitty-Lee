@@ -186,11 +186,11 @@
     <ClInclude Include="COIN.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Scene2.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="j1MainMenu.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Queue.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

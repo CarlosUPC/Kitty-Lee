@@ -73,14 +73,11 @@ private:
 	uint win_width;
 	uint win_height;
 	SDL_Texture* debug_tex;
-	Player* player;
-
-	UIImage* banner;
-	UILabel* text;
-	UIImage* coin;
+	Player* player;	
 	
-	
+	//ui scene objects
 	Button* button;
+	Label* text;
 
 };
 

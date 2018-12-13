@@ -11,6 +11,7 @@
 #include "Label.h"
 #include "Button.h"
 #include "j1Window.h"
+#include "p2Queue.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -29,6 +30,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+
+	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr);
 
 	return ret;
 }
@@ -55,14 +58,11 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::PostUpdate()
 {
-	for (int i = ui_elements.Count() - 1; i >= 0; i--) {
-		if (ui_elements.At(i) != nullptr) {
-			if (ui_elements[i]->to_delete) {
-				RELEASE(ui_elements[i]);
-			}
-			else
-				ui_elements[i]->Draw();
-		}
+	p2List<UIElement*> visited;
+	BFS(visited, screen);
+
+	for (p2List_item<UIElement*>* item = visited.start; item; item = item->next) {
+		item->data->Draw();
 	}
 
 	return true;
@@ -87,14 +87,42 @@ bool j1Gui::CleanUp()
 
 bool j1Gui::DeleteUIElement(UIElement &element) {
 
+	UIElement* elem = nullptr;
 	for (int i = 0; i < ui_elements.Count(); i++) {
-		if (*ui_elements.At(i) == &element) {
-			ui_elements[i]->to_delete = true;
-			return true;
+		if (ui_elements[i] == &element) {
+			elem = ui_elements[i];
+			break;
+		}
+	}
+	if (elem != nullptr) {
+		p2List<UIElement*> visited;
+		BFS(visited, elem);
+
+		for (p2List_item<UIElement*>* item = visited.end; item; item = item->prev) {
+			LOG("%i", item->data->GetType());
 		}
 	}
 
 	return false;
+}
+
+void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * &elem) //It will fill a list from parent to children
+{
+	p2DynArray<UIElement*> frontier;
+	UIElement* item = nullptr;
+	visited.add(elem);					//Add from we want to start to visited and frontier list
+	frontier.PushBack(elem);
+	while (frontier.Count() > 0) {
+		if (frontier.Pop(item)) {			//Pop las item of array
+			for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) { //iterate for all childs of node
+				if (visited.find(it->data) == -1) {	//if child is not on visited list we added on it and on prontier to search its childs
+					frontier.PushBack(it->data);
+					visited.add(it->data);
+				}
+			}
+		}
+
+	}
 }
 
 bool j1Gui::DeleteAllUIElements() {
@@ -130,7 +158,7 @@ UIElement* j1Gui::GetElemOnMouse(int x, int y)
 	return ret;
 }
 
-Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, const SDL_Rect &hover, const SDL_Rect &push, const UIElement* parent)
+Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, UIElement* parent, const SDL_Rect &hover, const SDL_Rect &push)
 {
 	Button* ret = nullptr;
 	ret = new Button(pos_x, pos_y, idle, hover, push, parent);
@@ -138,7 +166,7 @@ Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect 
 	return ret;
 }
 
-Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, const UIElement * parent)
+Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent)
 {
 	Image* ret = nullptr;
 	ret = new Image(pos_x, pos_y, rect, parent);
@@ -146,13 +174,14 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, const uint &size, const char* font, UIElement* parent)
+Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, UIElement* parent, const uint &size, const char* font)
 {
 	Label* ret = nullptr;
 	ret = new Label(pos_x, pos_y, text, font, size, parent);
 	ui_elements.PushBack(ret);
 	return ret;
 }
+
 //
 //bool j1Gui::DestroyUI(UI *ui)
 //{

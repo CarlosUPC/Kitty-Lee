@@ -86,27 +86,29 @@ bool j1Gui::CleanUp()
 bool j1Gui::DeleteUIElement(UIElement * element) {
 
 	int index = ui_elements.find(element);
-	if (index != -1){
+	if (index != -1){															//if element doesn't find in ui list it cannot be deleted
 		p2List_item<UIElement*>* elem = ui_elements.At(index);
 
-		p2List<UIElement*> visited;
-		BFS(visited, elem->data);
+		p2List<UIElement*> tree;
+		BFS(tree, elem->data);		//fills a list from element to delete to its childs using BFS algorithm
 
-		for (p2List_item<UIElement*>* item = visited.end; item; item = item->prev) {
-			if (item == visited.start) {
+		for (p2List_item<UIElement*>* item = tree.end; item; item = item->prev) {	//iterate list from bottom to top
+			if (item == tree.start && item->data->parent!=nullptr) {				/*In case the item we will delete is the first element of the tree
+																					  we have to delete him first from its parent child list
+																					  the reason why we don't made that for other nodes is becuase
+																					  other nodes and its parents will be deleted for complete*/
 				index = item->data->parent->childs.find(item->data);
 				if (index != -1) {
 					item->data->parent->childs.del(item->data->parent->childs.At(index));
-					delete item->data;
 				}
 			}
-			else {
-				index = ui_elements.find(item->data);
-				ui_elements.del(ui_elements.At(index));
-				delete item->data;
+			index = ui_elements.find(item->data);	//find item on ui objects list
+			if (index != -1) {						//if it is valid
+				ui_elements.del(ui_elements.At(index)); //delete from list
+				delete item->data;						//and deallocate memory
 			}
 		}
-		visited.clear();
+		tree.clear();
 	
 		return true;
 	}

@@ -81,9 +81,6 @@ bool j1Scene::Start()
 	c = App->gui->CreateImage(3, 0, SDL_Rect{ NULL }, b);
 	e = App->gui->CreateImage(5, 0, SDL_Rect{ NULL }, c);
 	k = App->gui->CreateImage(11, 0, SDL_Rect{ NULL }, g);
-
-	p2List<UIElement*> element;
-	App->gui->BFS(element, App->gui->FindElement(a));
 	
 	App->gui->DeleteUIElement(a);
 

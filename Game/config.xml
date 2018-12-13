@@ -35,11 +35,14 @@
     <folder>maps/</folder>
   </map>
 
+  <menu>
+   <level_0>IntroScene.tmx</level_0>
+  </menu>
+  
   <scene>
-    <level_0>IntroScene.tmx</level_0>
+   
     <level_1>SceneIndoor.tmx</level_1>
 	<level_2>Scene1.tmx</level_2>
-	
   </scene>
 
   

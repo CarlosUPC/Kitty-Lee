@@ -16,7 +16,8 @@ class Button;
 
 
 enum Stages {
-	LEVEL_1 = 0,
+	LEVEL_0 = 0,
+	LEVEL_1,
 	LEVEL_2
 };
 
@@ -64,7 +65,7 @@ public:
 public:
 	p2SString lvl1;
 	p2SString lvl2;
-	Stages stg;
+	Stages stg = LEVEL_1;
 	bool isLevel1;
 private:
 

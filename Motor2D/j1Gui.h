@@ -55,7 +55,7 @@ public:
 	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr);
 	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, Color color = WHITE,UIElement* parent = nullptr, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
 
-	bool DeleteUIElement(UIElement &element);
+	bool DeleteUIElement(UIElement * element);
 	UIElement* FindElement(UIElement*);
 	void BFS(p2List<UIElement *> &visited, UIElement * elem);
 	bool DeleteAllUIElements();
@@ -69,7 +69,7 @@ private:
 
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	p2DynArray<UIElement*> ui_elements;
+	p2List<UIElement*> ui_elements;
 
 	
 };

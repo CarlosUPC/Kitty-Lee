@@ -63,6 +63,7 @@ bool j1Gui::PostUpdate()
 
 	for (p2List_item<UIElement*>* item = visited.start; item; item = item->next) {
 		item->data->Draw();
+		LOG("%i", item->data->position.x);
 	}
 
 	return true;
@@ -73,48 +74,56 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	for (uint i = 0; i < ui_elements.Count(); ++i)
-	{
-		if (ui_elements[i] != nullptr)
-		{
-			RELEASE(ui_elements[i]);
-		}
+	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
+
+			RELEASE(item->data);
 	}
-	ui_elements.Clear();
+	ui_elements.clear();
 
 	return true;
 }
 
-bool j1Gui::DeleteUIElement(UIElement &element) {
+bool j1Gui::DeleteUIElement(UIElement * element) {
 
-	UIElement* elem = nullptr;
-	for (int i = 0; i < ui_elements.Count(); i++) {
-		if (ui_elements[i] == &element) {
-			elem = ui_elements[i];
-			break;
-		}
-	}
-	if (elem != nullptr) {
+	int index = ui_elements.find(element);
+	if (index != -1){
+		p2List_item<UIElement*>* elem = ui_elements.At(index);
+
 		p2List<UIElement*> visited;
-		BFS(visited, elem);
+		BFS(visited, elem->data);
 
 		for (p2List_item<UIElement*>* item = visited.end; item; item = item->prev) {
-			if (item->data->childs.count() > 0) {
-				while (item->data->childs.count() > 0) {
-					item = item->data->childs.start;
+			if (item == visited.start) {
+				index = item->data->parent->childs.find(item->data);
+				if (index != -1) {
+					item->data->parent->childs.del(item->data->parent->childs.At(index));
+					delete item->data;
 				}
 			}
+			else {
+				index = ui_elements.find(item->data);
+				ui_elements.del(ui_elements.At(index));
+				delete item->data;
+			}
 		}
+		visited.clear();
+	
+		return true;
 	}
+
+	LOG("Element not found to delete");
 
 	return false;
 }
 
 UIElement* j1Gui::FindElement(UIElement *elem)
 {
-	for (int i = 0; i < ui_elements.Count(); ++i) {
-		if (ui_elements[i] == elem)
-			return ui_elements[i];
+	int index = ui_elements.find(elem);
+	if (index == -1) {
+		LOG("Cannot find ui element");
+	}
+	else {
+		return ui_elements.At(index)->data;
 	}
 	
 	return nullptr;
@@ -142,10 +151,11 @@ void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * elem) //It will fill a
 bool j1Gui::DeleteAllUIElements() {
 	bool ret = false;
 
-	for (int i = 0; i < ui_elements.Count(); i++) {
-		if (ui_elements.At(i) != nullptr) ui_elements[i]->to_delete = true;
-		ret = true;
+	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
+
+		RELEASE(item->data);
 	}
+	ui_elements.clear();
 
 	return ret;
 }
@@ -153,18 +163,18 @@ bool j1Gui::DeleteAllUIElements() {
 UIElement* j1Gui::GetElemOnMouse(int x, int y)
 {
 	UIElement* ret = nullptr;
-	for (int i = 0; i < ui_elements.Count(); i++) {
-		if (ui_elements[i] != nullptr && ui_elements[i]->interactable)
+	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
+		if (item->data->interactable)
 		{
-			if ((x > ui_elements[i]->GetPosition().x && x < ui_elements[i]->GetPosition().x + ui_elements[i]->position.w) && 
-				(y > ui_elements[i]->GetPosition().y && y < ui_elements[i]->GetPosition().y + ui_elements[i]->position.h))
+			if ((x > item->data->GetPosition().x && x < item->data->GetPosition().x + item->data->position.w) &&
+				(y > item->data->GetPosition().y && y < item->data->GetPosition().y + item->data->position.h))
 			{
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? ui_elements[i]->current_state = CLICKED : ui_elements[i]->current_state = HOVER;
+				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? item->data->current_state = CLICKED : item->data->current_state = HOVER;
 
-				ret = ui_elements[i];
+				ret = item->data;
 			}
 			else {
-				ui_elements[i]->current_state = NONE;
+				item->data->current_state = NONE;
 			}
 		}
 	}
@@ -176,7 +186,7 @@ Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect 
 {
 	Button* ret = nullptr;
 	ret = new Button(pos_x, pos_y, idle, hover, push, parent);
-	ui_elements.PushBack(ret);
+	ui_elements.add(ret);
 	return ret;
 }
 
@@ -184,7 +194,7 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 {
 	Image* ret = nullptr;
 	ret = new Image(pos_x, pos_y, rect, parent);
-	ui_elements.PushBack(ret);
+	ui_elements.add(ret);
 	return ret;
 }
 
@@ -192,53 +202,9 @@ Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, 
 {
 	Label* ret = nullptr;
 	ret = new Label(pos_x, pos_y, text, color, font, size, parent);
-	ui_elements.PushBack(ret);
+	ui_elements.add(ret);
 	return ret;
 }
-
-//
-//bool j1Gui::DestroyUI(UI *ui)
-//{
-//	bool ret = false;
-//	int index = objects.find(ui);
-//	if (index != -1)
-//		ret = objects.del(objects.At(index));
-//	return ret;
-//}
-//
-//void j1Gui::CheckMouse(UI *b)
-//{
-//	int x, y;
-//	App->input->GetMousePosition(x, y);
-//	if (x > b->position.x&&x<b->position.x + b->width &&
-//		y>b->position.y&&y < b->position.y + b->height) {
-//		if (App->input->GetMouseButtonDown(1)) {
-//			b->mouse = UI::Mouse::PUSH;
-//
-//		}
-//		else {
-//			b->mouse = UI::Mouse::ONHOVER;
-//		}
-//
-//
-//	}
-//	else if (b->mouse != UI::Mouse::IDLE) {
-//		b->mouse = UI::Mouse::IDLE;
-//
-//	}
-//
-//
-//}
-//
-//UI* j1Gui::Select() const
-//{
-//	p2List_item<UI*>* item = objects.start;
-//	for (; item; item = item->next) {
-//		if (item->data->mouse == UI::Mouse::PUSH)
-//			return  item->data;
-//	}
-//}
-
 
 void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
 

@@ -84,10 +84,8 @@ bool j1Scene::Start()
 
 	p2List<UIElement*> element;
 	App->gui->BFS(element, App->gui->FindElement(a));
-	p2List_item<UIElement*>* item = element.start;
-	for (; item; item = item->next) {
-		LOG("%i", item->data->position.x);
-	}
+	
+	App->gui->DeleteUIElement(a);
 
 
 

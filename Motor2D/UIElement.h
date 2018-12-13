@@ -107,9 +107,6 @@ public:
 		return{ position.x,position.y };
 	}
 
-	const UIElement* GetParent()const {
-		return parent;
-	}
 	//-------------Factory Functions--------------//
 
 
@@ -157,6 +154,8 @@ public:
 	bool to_delete = false;
 	iPoint draw_offset = { 0,0 };
 
+	UIElement* parent = nullptr;
+
 	p2List<UIElement*> childs;
 
 	Mouse_Event current_state = NONE;
@@ -165,7 +164,6 @@ public:
 private:
 	UI_type type = UNKNOW;
 	
-	const UIElement* parent = nullptr;
 	int priority = 0;
 
 	p2List<j1Module*> listeners;

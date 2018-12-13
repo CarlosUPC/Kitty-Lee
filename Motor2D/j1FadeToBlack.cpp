@@ -56,6 +56,7 @@ bool j1FadeToBlack::PostUpdate()
 			{
 
 			case Levels::MENU:
+				App->scene->CleanUp();
 				App->scene->active = false;
 				App->menu->active = true;
 				App->menu->Start();

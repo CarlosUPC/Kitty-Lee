@@ -69,9 +69,9 @@ bool j1Scene::Start()
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button->AddListener(this);
 
-	App->gui->CreateLabel(0, 0, "u", App->gui->screen);
+	App->gui->CreateLabel(0, 0, "u", WHITE, App->gui->screen);
 
-	text = App->gui->CreateLabel(10, 10, "jonnymelavo", button);
+	text = App->gui->CreateLabel(10, 10, "jonnymelavo", WHITE, button);
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
@@ -239,7 +239,7 @@ bool j1Scene::CleanUp()
 	bool ret = false;
 	LOG("Freeing scene");
 	ret = App->tex->UnLoad(debug_tex);
-
+	App->gui->CleanUp();
 	return true;
 }
 

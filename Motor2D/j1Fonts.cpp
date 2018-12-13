@@ -37,7 +37,7 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 		//Load fonts
 		title = conf.child("title_font").attribute("file").as_string();
 	}
-
+	
 	return ret;
 }
 

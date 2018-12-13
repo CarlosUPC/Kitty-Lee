@@ -174,10 +174,10 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, UIElement* parent, const uint &size, const char* font)
+Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, Color color, UIElement* parent, const uint &size, const char* font)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos_x, pos_y, text, font, size, parent);
+	ret = new Label(pos_x, pos_y, text, color, font, size, parent);
 	ui_elements.PushBack(ret);
 	return ret;
 }

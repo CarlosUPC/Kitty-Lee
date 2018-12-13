@@ -50,10 +50,10 @@
     <atlas file="gui/atlas.png"/>
   </gui>
   
-  <font>
+  <fonts>
 	<default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="24" />
-	<title_font file="fonts/open_sans/04B_30__.ttf" size="24" />
-	</font>
+	<title_font file="fonts/ka1.ttf" size="24" />
+	</fonts>
 
   <player>
     <file>player.tsx</file>

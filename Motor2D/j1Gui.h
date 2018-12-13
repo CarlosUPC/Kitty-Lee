@@ -10,6 +10,18 @@ class Button;
 class Label;
 class Image;
 
+enum Color
+{
+	RED,
+	GREEN,
+	BLUE,
+	YELLOW,
+	GREY,
+	BLACK,
+	WHITE,
+
+	COLOR_NOT_DEF
+};
 // ---------------------------------------------------
 class j1Gui : public j1Module
 {
@@ -41,7 +53,7 @@ public:
 
 	Button* CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, UIElement* parent = nullptr, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 });
 	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr);
-	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, UIElement* parent = nullptr, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
+	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, Color color = WHITE,UIElement* parent = nullptr, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
 
 	bool DeleteUIElement(UIElement &element);
 	void BFS(p2List<UIElement *> &visited, UIElement * &elem);

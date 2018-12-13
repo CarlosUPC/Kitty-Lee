@@ -10,11 +10,24 @@ class Label : public UIElement {
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Label() : UIElement(LABEL, 0, 0, nullptr) {	}
-	Label(int pos_x, int pos_y, const char* txt, const char* path_font, const uint &size = 12, UIElement* parent = nullptr) : UIElement(LABEL, pos_x, pos_y, parent, true) {
+	Label(int pos_x, int pos_y, const char* txt, Color color, const char* path_font, const uint &size = 12, UIElement* parent = nullptr) : UIElement(LABEL, pos_x, pos_y, parent, true) {
 		font = App->fonts->Load(path_font, size);
 		text.create(txt);
-		SDL_Color color = { 255, 255, 255, 255 };
-		texture = App->fonts->Print(text.GetString(), color, font);
+		
+		SDL_Color col;
+		if (color == RED)
+			 col = { 220, 20, 60, 255 };
+		if (color == YELLOW)
+			 col = { 254, 203, 0, 255 };
+		else if (color == GREY)
+			 col = { 134, 136, 138, 255 };
+		else if (color == BLACK)
+			 col = { 0, 0, 0, 255 };
+		else if (color == WHITE)
+			col = { 255, 255, 255, 255 };
+
+
+		texture = App->fonts->Print(text.GetString(), col, font);
 		App->fonts->CalcSize(txt, position.w, position.h, font);
 	}
 	~Label() {}

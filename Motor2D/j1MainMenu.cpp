@@ -49,9 +49,14 @@ bool j1MainMenu::Start()
 	
 	App->map->Load(lvl0.GetString());
 
-	App->render->camera.y = -250;
-	App->render->camera.x = -250;
+	App->render->camera.y = -150;
+	App->render->camera.x = -330;
 
+	win_width = App->win->screen_surface->w;
+	win_height = App->win->screen_surface->h;
+
+	title1 = App->gui->CreateLabel(win_width/6, 30, "KITTY", RED, App->gui->screen, 160, "fonts/04B_30__.ttf");
+	title2 = App->gui->CreateLabel(win_width/6 + 100, 180, "LEE", WHITE, App->gui->screen,160, "fonts/04B_30__.ttf");
 
 	return ret;
 }

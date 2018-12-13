@@ -42,9 +42,12 @@ public:
 
 
 public:
-
+	uint win_width;
+	uint win_height;
 
 private:
 	p2SString lvl0;
+	Label* title1;
+	Label* title2;
 };
 #endif // __j1MAINMENU_H__

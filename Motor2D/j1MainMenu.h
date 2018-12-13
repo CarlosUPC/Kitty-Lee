@@ -49,5 +49,10 @@ private:
 	p2SString lvl0;
 	Label* title1;
 	Label* title2;
+	Label* press_space;
+
+	bool move_camera;
+	int camera_limit = 0;
+	int camera_step_move = 0;
 };
 #endif // __j1MAINMENU_H__

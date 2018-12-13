@@ -52,12 +52,16 @@ bool j1MainMenu::Start()
 	App->render->camera.y = -150;
 	App->render->camera.x = -330;
 
+	move_camera = false;
+	camera_limit = -2030;
+	camera_step_move = 20;
+
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
 	title1 = App->gui->CreateLabel(win_width/6, 30, "KITTY", RED, App->gui->screen, 160, "fonts/04B_30__.ttf");
 	title2 = App->gui->CreateLabel(win_width/6 + 100, 180, "LEE", WHITE, App->gui->screen,160, "fonts/04B_30__.ttf");
-
+	press_space = App->gui->CreateLabel(win_width / 3 + 30, win_height - 70, "PRESS SPACE TO START", WHITE, App->gui->screen, 32, "fonts/Munro.ttf");
 	return ret;
 }
 
@@ -70,10 +74,18 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
+	/*if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
 		App->current_lvl = Levels::FIRST_LEVEL;
 		App->fade->FadeToBlack();
+	}*/
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !move_camera)
+	{
+		press_space->drawable = false;
+		move_camera = true;
 	}
+
+	if (move_camera && App->render->camera.x > camera_limit)
+		App->render->camera.x -= camera_step_move;
 
 	App->map->Draw();
 	return true;

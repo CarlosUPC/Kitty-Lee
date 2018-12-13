@@ -27,7 +27,8 @@ public:
 	//--------------------Draw Function--------------------//
 	void InnerDraw() {
 
-		App->render->Blit(texture, draw_offset.x, draw_offset.y, NULL, 0.0F, false, SDL_FLIP_NONE, true);
+		if(drawable)
+			App->render->Blit(texture, draw_offset.x, draw_offset.y, NULL, 0.0F, false, SDL_FLIP_NONE, true);
 		/*if (label_tex != nullptr)
 			SDL_DestroyTexture(label_tex);
 		label_tex = App->fonts->Print(text.c_str());

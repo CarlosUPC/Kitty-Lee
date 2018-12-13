@@ -16,7 +16,7 @@ void UIElement::Update() {
 	for (p2List_item<j1Module*>* module = this->GetFirstListener(); module; module = module->next) {
 		module->data->UI_Events(this);
 	}
-
+	
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
 		if (draggable) {
 

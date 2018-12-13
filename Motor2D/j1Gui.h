@@ -52,18 +52,19 @@ public:
 	//----------------------------------------------------------------------------------------
 
 	Button* CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, UIElement* parent = nullptr, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 });
-	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr);
-	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, Color color = WHITE,UIElement* parent = nullptr, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
+	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr, bool interactable = false, bool draggable = false);
+	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable = false, bool draggable = false, UIElement* parent = nullptr, Color color = WHITE, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT);
 
 	bool DeleteUIElement(UIElement * element);
-	UIElement* FindElement(UIElement*);
 	void BFS(p2List<UIElement *> &visited, UIElement * elem);
 	bool DeleteAllUIElements();
-	UIElement* GetElemOnMouse(int x, int y);
+	bool GetElemOnMouse(int x, int y, UIElement* & element);
+	bool CheckCollision(int x, int y, p2List_item<UIElement *> * item);
 	void UI_Events(UIElement* element, Mouse_Event action);
 
 public:
 	UIElement* screen = nullptr;
+	bool ui_debug = false;
 
 private:
 

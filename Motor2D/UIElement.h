@@ -34,10 +34,12 @@ public:
 
 	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }) {
+	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0) : type(type), parent(parent), interactable(interactable), draggable(draggable), position({ pos_x, pos_y, width, height }) {
 		current_state = NONE;
-		if (parent != nullptr)
+		if (parent != nullptr) {
 			parent->childs.add(this);
+		}
+		//App->render->SetViewPort(viewport);
 	}
 	~UIElement() {}
 	//------------------------------Constructor Functions--------------------------------//
@@ -46,25 +48,29 @@ public:
 	//------------------------------Draw Function--------------------------------//
 	void Draw()
 	{
-		SDL_Rect viewport;					//put on Start() or constructor
-		if (parent != nullptr)
-			viewport = { parent->GetPosition().x, parent->GetPosition().y, parent->position.w, parent->position.h };
-		else
-			viewport = App->render->viewport;
-		App->render->SetViewPort(viewport);
 
+		draw_offset.x = position.x;
+		draw_offset.y = position.y;
+
+		if(parent!=nullptr){
+			for (UIElement* p = parent; p; p = p->parent) {
+				draw_offset.x += p->position.x;
+				draw_offset.y += p->position.y;
+			}
+		}
+		/*
 		//check element is inside parent boundaries
 		if (position.x < 0) position.x = 0;
 		if (position.y < 0)position.y = 0;
 		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
 		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
+		*/
+		if (App->gui->ui_debug)
+			DebugDraw();
 
-
-		DebugDraw();
-
-		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
+		//App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
-		App->render->ResetViewPort();
+		//App->render->ResetViewPort();
 	}
 	//------------------------------Draw Function--------------------------------//
 
@@ -96,11 +102,8 @@ public:
 		return priority;
 	}
 
-	iPoint GetPosition()const {
-		if (parent != nullptr) {
-			return{ position.x + parent->GetPosition().x,position.y + parent->GetPosition().y };
-		}
-		else return{ position.x,position.y };
+	iPoint GetGlobalPosition()const {
+		return draw_offset;
 	}
 
 	iPoint GetLocalPosition()const {
@@ -113,14 +116,7 @@ public:
 
 	//-------------Debug Functions--------------//
 	void DebugDraw() {
-
-		if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-			LOG("You can see the UI colliders");
-			ui_debug = !ui_debug;
-		}
-
-		if (ui_debug)
-			App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
+		App->render->DrawQuad({ draw_offset.x,draw_offset.y,position.w,position.h }, 255U, 0U, 0U, 255U, false, false);
 	}
 	//-------------Debug Functions--------------//
 
@@ -164,10 +160,11 @@ public:
 private:
 	UI_type type = UNKNOW;
 	
+	//SDL_Rect viewport = { 0,0,0,0 };
+	
 	int priority = 0;
 
 	p2List<j1Module*> listeners;
-	bool ui_debug = false;
 };
 
 #endif

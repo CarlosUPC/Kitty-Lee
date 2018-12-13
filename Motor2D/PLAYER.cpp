@@ -44,8 +44,8 @@ bool Player::Start()
 	App->audio->LoadFx(jumpingSound);
 	App->audio->LoadFx(crashingSound);
 
-	coin_label = (Label*)App->gui->CreateLabel(0, 0, "hey buenas");
-
+	coin_label = (Label*)App->gui->CreateLabel(100, 100, "hey buenas", false, false, App->gui->screen, WHITE);
+	App->gui->CreateLabel(100, 100, "aquí estamos", false, false, coin_label);
 	return true;
 }
 
@@ -228,6 +228,8 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_COIN:
 		coin_count++;
 		c2->to_delete = true;
+		
+		coin_label->SetText(p2SString("tu %i", coin_count).GetString());
 		break;
 	default:
 		break;

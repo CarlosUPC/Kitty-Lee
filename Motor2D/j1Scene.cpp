@@ -57,36 +57,6 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	Image* a;
-	Image* b;
-	Image*c;
-	Image*d;
-	Image*e;
-	Image*f;
-	Image*g;
-	Image*h;
-	Image*i;
-	Image*j;
-	Image*k;
-	Image*l;
-	a = App->gui->CreateImage(1, 0, SDL_Rect{ NULL }, App->gui->screen);
-	b = App->gui->CreateImage(2, 0, SDL_Rect{ NULL }, a);
-	d = App->gui->CreateImage(4, 0, SDL_Rect{ NULL }, b);
-	g = App->gui->CreateImage(7, 0, SDL_Rect{ NULL }, d);
-	f = App->gui->CreateImage(6, 0, SDL_Rect{ NULL }, d);
-	j = App->gui->CreateImage(10, 0, SDL_Rect{ NULL }, g);
-	h = App->gui->CreateImage(8, 0, SDL_Rect{ NULL }, f);
-	i = App->gui->CreateImage(9, 0, SDL_Rect{ NULL }, g);
-	l = App->gui->CreateImage(12,0, SDL_Rect{ NULL }, App->gui->screen);
-	c = App->gui->CreateImage(3, 0, SDL_Rect{ NULL }, b);
-	e = App->gui->CreateImage(5, 0, SDL_Rect{ NULL }, c);
-	k = App->gui->CreateImage(11, 0, SDL_Rect{ NULL }, g);
-	
-	App->gui->DeleteUIElement(a);
-
-
-
-
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
@@ -195,8 +165,8 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();
 
 	//F8 - Switch between levels
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-		App->fade->FadeToBlack();
+	/*if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->fade->FadeToBlack();*/
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		stg = LEVEL_0;

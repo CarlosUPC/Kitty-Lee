@@ -232,6 +232,7 @@ bool j1Scene::CleanUp()
 	bool ret = false;
 	LOG("Freeing scene");
 	ret = App->tex->UnLoad(debug_tex);
+	App->entities->CleanUp();
 	App->gui->CleanUp();
 	return true;
 }
@@ -243,11 +244,12 @@ void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
 
 void j1Scene::CreateMenu()
 {
-	panel = App->gui->CreateImage(0, 0, { 30,541,427,455 }, App->gui->screen);
+	panel = App->gui->CreateImage(App->win->GetWindowWidth()/App->win->GetScale(), App->win->GetWindowHeight() / App->win->GetScale(), { 381,9,293,229 }, App->gui->screen);
 }
 
 void j1Scene::DestroyMenu()
 {
+	App->gui->DeleteUIElement(panel);
 }
 
 void j1Scene::CheckLevel()

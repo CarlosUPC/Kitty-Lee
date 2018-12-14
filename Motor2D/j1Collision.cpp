@@ -232,11 +232,12 @@ bool j1Colliders::Update(float dt)
 			c2 = colliders[k];
 			if (c1->CheckCollision(c2->rect) == true)
 			{
-				if (c1->to_delete == false && c2->to_delete != true) {
-					if (matrix[c1->type][c2->type] && c1->callback)
+				if (c1->to_delete == false && c2->to_delete == false) {
+					if (matrix[c1->type][c2->type] && c1->callback) {
 						c1->callback->OnCollision(c1, c2, dt);
-					if (c1->to_delete == false) {
-						if (matrix[c2->type][c1->type] && c2->callback)
+					}
+					if (c1->to_delete == false && c2->to_delete == false) {
+						if (matrix[c2->type][c1->type] && c2 != nullptr && c2->callback != nullptr)
  							c2->callback->OnCollision(c2, c1, dt);
 					}
 				}

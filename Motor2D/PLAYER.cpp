@@ -228,7 +228,7 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		break;
 	case COLLIDER_COIN:
 		coin_count++;
-		c2->callback->CleanUp();
+		App->entities->DestroyEntity(c2->callback);
 		coin_label->SetText(p2SString("tu %i", coin_count).GetString());
 		break;
 	default:

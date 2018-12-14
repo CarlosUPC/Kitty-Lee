@@ -143,6 +143,7 @@ private:
 
 	public:
 		Levels current_lvl = Levels::FIRST_LEVEL;
+		bool				quit_game = false;
 };
 
 extern j1App* App;

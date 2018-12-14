@@ -51,7 +51,7 @@ bool j1Gui::PreUpdate()
 	App->input->GetMousePosition(mouse.x, mouse.y);
 	UIElement* element = nullptr;
 	if (GetElemOnMouse(mouse.x*App->win->GetScale(), mouse.y*App->win->GetScale(), element))
-		element->Update();
+ 		element->Update();
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		ui_debug = !ui_debug;

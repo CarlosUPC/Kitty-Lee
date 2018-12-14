@@ -19,6 +19,15 @@
 #include "Label.h"
 
 
+#ifdef _WIN32	
+#include <shellapi.h>
+void open_url(const p2SString& url)
+{
+	ShellExecute(GetActiveWindow(), "open", url.GetString(), NULL, NULL, SW_SHOWNORMAL);
+}
+#else
+void open_url(const p2SString& url) {}
+#endif
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -95,9 +104,12 @@ bool j1MainMenu::Start()
 
 	quit_game_btn = (Button*)App->gui->CreateButton(10, win_height + 160, { 6,308,49,50 }, App->gui->screen, { 64,309,49,49 }, { 123,312,49,45 });
 	buttons.PushBack(quit_game_btn);
+	quit_game_btn->AddListener(this);
 	github_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 100, { 5, 191, 49, 50 }, App->gui->screen, { 62, 191, 51, 49 }, { 122,194,49,45 });
+	github_btn->AddListener(this);
 	buttons.PushBack(github_btn);
 	website_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 160, { 6,429,50,49 }, App->gui->screen, { 65,429,49,49 }, { 124,432,49,45 });
+	website_btn->AddListener(this);
 	buttons.PushBack(website_btn);
 
 	for (int i = 0; i < buttons.Count(); i++)
@@ -186,6 +198,31 @@ bool j1MainMenu::CleanUp()
 	LOG("Freeing main_menu");
 	
 	return true;
+}
+
+void j1MainMenu::UI_Events(UIElement* element, Mouse_Event action) {
+
+	switch (action) {
+
+	case Mouse_Event::CLICKED:
+
+		if (element == (UIElement*)github_btn)
+		{
+			open_url("https://github.com/CarlosUPC/Kitty-Lee");
+		}
+
+		if (element == (UIElement*)website_btn)
+		{
+			open_url("https://marcianosmx.com/wp-content/uploads/2011/12/big_gorilla-e1322887919475.jpg");
+		}
+
+		if (element == (UIElement*)quit_game_btn)
+		{
+			App->quit_game = true;
+		}
+		break;
+	}
+
 }
 
 bool j1MainMenu::Load(pugi::xml_node& load)

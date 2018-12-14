@@ -78,7 +78,7 @@ public:
 
 	}
 
-	virtual void UI_Events(UIElement* element) {}
+	virtual void UI_Events(UIElement* element, Mouse_Event action) {}
 
 public:
 

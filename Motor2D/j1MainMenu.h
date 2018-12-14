@@ -36,6 +36,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void UI_Events(UIElement* element, Mouse_Event action);
+
 	bool Load(pugi::xml_node&);
 
 	bool Save(pugi::xml_node&) const;

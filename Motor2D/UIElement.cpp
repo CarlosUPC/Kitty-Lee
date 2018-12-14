@@ -14,7 +14,7 @@ void UIElement::Update() {
 	App->input->GetMousePosition(mouse.x, mouse.y);
 
 	for (p2List_item<j1Module*>* module = this->GetFirstListener(); module; module = module->next) {
-		module->data->UI_Events(this);
+		module->data->UI_Events(this,this->current_state);
 	}
 	
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {

@@ -158,7 +158,11 @@ bool j1Gui::GetElemOnMouse(int x, int y, UIElement* & element)
 		{
 			if (CheckCollision(x, y, item))
 			{
-				App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? item->data->current_state = CLICKED : item->data->current_state = HOVER;
+				if (item->data->current_state != CLICKED_DOWN && item->data->current_state != CLICKED_REPEAT)
+					App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? item->data->current_state = CLICKED_DOWN : item->data->current_state = HOVER;
+				else {
+					App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) ? item->data->current_state = CLICKED_REPEAT : item->data->current_state = CLICKED_UP;
+				}
 				element = item->data;
 				return true;
 			}

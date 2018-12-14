@@ -219,7 +219,7 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 	switch (element->current_state) {
 
-	case Mouse_Event::CLICKED:
+	case Mouse_Event::CLICKED_DOWN:
 
 		if (element == (UIElement*)github_btn)
 		{

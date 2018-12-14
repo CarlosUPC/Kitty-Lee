@@ -23,7 +23,9 @@ enum UI_type {
 
 enum Mouse_Event {
 	HOVER,
-	CLICKED,
+	CLICKED_DOWN,
+	CLICKED_REPEAT,
+	CLICKED_UP,
 
 	NONE
 };

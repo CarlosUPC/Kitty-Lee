@@ -33,7 +33,7 @@ public:
 			if(drawable)
 				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
 			break;
-		case Mouse_Event::CLICKED:
+		case Mouse_Event::CLICKED_DOWN:
 			if (drawable)
 				App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
 			break;

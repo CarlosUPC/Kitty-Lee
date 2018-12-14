@@ -215,9 +215,9 @@ bool j1MainMenu::CleanUp()
 	return true;
 }
 
-void j1MainMenu::UI_Events(UIElement* element, Mouse_Event action) {
+void j1MainMenu::UI_Events(UIElement* element) {
 
-	switch (action) {
+	switch (element->current_state) {
 
 	case Mouse_Event::CLICKED:
 

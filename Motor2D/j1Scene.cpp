@@ -237,7 +237,7 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::UI_Events(UIElement* element, Mouse_Event action) {
+void j1Scene::UI_Events(UIElement* element) {
 
 	
 }

@@ -60,7 +60,7 @@ public:
 	bool DeleteAllUIElements();
 	bool GetElemOnMouse(int x, int y, UIElement* & element);
 	bool CheckCollision(int x, int y, p2List_item<UIElement *> * item);
-	void UI_Events(UIElement* element, Mouse_Event action);
+	void UI_Events(UIElement* element);
 
 public:
 	UIElement* screen = nullptr;

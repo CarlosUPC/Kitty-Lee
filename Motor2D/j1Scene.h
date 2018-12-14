@@ -60,7 +60,7 @@ public:
 
 	bool Save(pugi::xml_node&) const;
 	
-	void UI_Events(UIElement* element, Mouse_Event action);
+	void UI_Events(UIElement* element);
 
 private:
 	void CreateMenu();

@@ -180,6 +180,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		rect.h *= scale;
 	}
 
+
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 

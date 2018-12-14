@@ -142,7 +142,7 @@ private:
 	uint32				prev_last_sec_frame_count = 0;
 
 	public:
-		Levels current_lvl = Levels::FIRST_LEVEL;
+		Levels current_lvl = Levels::MENU;
 		bool				quit_game = false;
 };
 

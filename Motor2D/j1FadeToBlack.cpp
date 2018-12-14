@@ -49,7 +49,7 @@ bool j1FadeToBlack::PostUpdate()
 		{
 
 			App->collider->EraseMapCollider();
-			App->entities->CleanUp();
+			//App->entities->CleanUp();
 			App->map->CleanUp();
 
 			switch (App->current_lvl)
@@ -58,8 +58,10 @@ bool j1FadeToBlack::PostUpdate()
 			case Levels::MENU:
 				App->scene->CleanUp();
 				App->scene->active = false;
+
 				App->menu->active = true;
 				App->menu->Start();
+
 				App->scene->stg = LEVEL_0;
 				break;
 			case Levels::CREDITS:
@@ -67,13 +69,15 @@ bool j1FadeToBlack::PostUpdate()
 			case Levels::TUTORIAL:
 				break;
 			case Levels::FIRST_LEVEL:
+				App->menu->CleanUp();
 				App->menu->active = false;
+			
 				App->scene->active = true;
 				App->scene->Start();
 
 				num_level = 1;
 				App->scene->stg = LEVEL_1;
-				App->render->camera = App->render->CameraInitPos(); 
+				//App->render->camera = App->render->CameraInitPos(); 
 
 				/*num_level = 2;
 				SwitchingLevel(App->scene->lvl2.GetString());

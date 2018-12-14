@@ -131,6 +131,18 @@ public:
 		}
 	}
 
+	void DeleteListener(j1Module* module) {
+
+		if (listeners.find(module) != -1) {
+			listeners.clear();
+		}
+		/*for (p2List_item<j1Module*>* item = listeners.start; item; item = item->next) {
+
+			RELEASE(item->data);
+		}
+		listeners.clear();*/
+	}
+
 	p2List_item<j1Module*>* GetFirstListener() {
 		return listeners.start;
 	}

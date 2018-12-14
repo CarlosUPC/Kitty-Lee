@@ -8,6 +8,43 @@
 
 
 
+UIElement::UIElement(UI_type type, const int & pos_x, const int & pos_y, UIElement * parent, bool interactable, bool draggable, const int & width, const int & height, bool drawable) 
+					: type(type), parent(parent), interactable(interactable), draggable(draggable), drawable(drawable), position({ pos_x, pos_y, width, height })
+{
+	current_state = NONE;
+	if (parent != nullptr) {
+		parent->childs.add(this);
+	}
+	//App->render->SetViewPort(viewport);
+}
+
+void UIElement::Draw()
+{
+
+	draw_offset.x = position.x;
+	draw_offset.y = position.y;
+
+	if (parent != nullptr) {
+		for (UIElement* p = parent; p; p = p->parent) {
+			draw_offset.x += p->position.x;
+			draw_offset.y += p->position.y;
+		}
+	}
+	/*
+	//check element is inside parent boundaries
+	if (position.x < 0) position.x = 0;
+	if (position.y < 0)position.y = 0;
+	if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
+	if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
+	*/
+	if (App->gui->ui_debug)
+		DebugDraw();
+
+	//App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
+	InnerDraw();
+	//App->render->ResetViewPort();
+}
+
 void UIElement::Update() {
 
 	iPoint mouse;
@@ -26,4 +63,47 @@ void UIElement::Update() {
 	}
 	last_mouse = mouse;
 
+}
+
+void UIElement::SetPos(const int & x, const int & y)
+{
+	position.x = x;
+	position.y = y;
+}
+
+int UIElement::GetPriority() const
+{
+	return priority;
+}
+
+iPoint UIElement::GetGlobalPosition() const
+{
+	return draw_offset;
+}
+
+iPoint UIElement::GetLocalPosition() const
+{
+	return{ position.x,position.y };
+}
+
+void UIElement::DebugDraw()
+{
+	App->render->DrawQuad({ draw_offset.x,draw_offset.y,position.w,position.h }, 255U, 0U, 0U, 255U, false, false);
+}
+
+void UIElement::AddListener(j1Module * module)
+{
+	if (listeners.find(module) == -1) {
+		listeners.add(module);
+	}
+}
+
+p2List_item<j1Module*>* UIElement::GetFirstListener()
+{
+	return listeners.start;
+}
+
+p2List_item<j1Module*>* UIElement::GetLastListener()
+{
+	return listeners.end;
 }

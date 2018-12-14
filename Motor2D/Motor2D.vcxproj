@@ -80,8 +80,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="COIN.cpp" />
     <ClCompile Include="FLYING_TONGUE.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="GLADIATOR.cpp" />
     <ClCompile Include="j1Collision.cpp" />
@@ -97,6 +99,7 @@
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Timer.cpp" />

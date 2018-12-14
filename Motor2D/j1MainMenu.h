@@ -68,8 +68,7 @@ private:
 	bool move_camera;
 	int camera_limit = 0;
 	int camera_step_move = 0;
-
-	int game_btn_original_pos = 0;
-	int game_btn_final_pos = 0;
+	int button_limit = 0;
+	
 };
 #endif // __j1MAINMENU_H__

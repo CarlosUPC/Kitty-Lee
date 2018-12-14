@@ -56,9 +56,8 @@ bool j1MainMenu::Start()
 	camera_limit = -2030;
 	camera_step_move = 20;
 
-	game_btn_original_pos = 403;
-	game_btn_final_pos = 93;
-
+	button_limit = 403;
+	
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
@@ -75,13 +74,17 @@ bool j1MainMenu::Start()
 	labels.PushBack(new_game_lbl);
 
 
-	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 100, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(credits_btn);
 	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
 	credits_btn->partner = credits_lbl;
 	labels.PushBack(credits_lbl);
 
-
+	continue_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 50 + 275, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	buttons.PushBack(continue_btn);
+	continue_lbl = (Label*)App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
+	continue_btn->partner = continue_lbl;
+	labels.PushBack(continue_lbl);
 
 	for (int i = 0; i < buttons.Count(); i++)
 	{
@@ -135,7 +138,7 @@ bool j1MainMenu::Update(float dt)
 		for (int i = 0; i < labels.Count(); i++)
 			labels[i]->drawable = true;
 
-		if (new_game_btn->GetLocalPosition().y > game_btn_original_pos && !new_game_btn->interactable)
+		if (new_game_btn->GetLocalPosition().y > button_limit && !new_game_btn->interactable)
 		{
 			for (int i = 0; i < buttons.Count(); i++)
 				buttons[i]->SetPos(buttons[i]->GetLocalPosition().x,  buttons[i]->GetLocalPosition().y - camera_step_move);
@@ -144,7 +147,7 @@ bool j1MainMenu::Update(float dt)
 	
 	}
 
-	if (new_game_btn->GetLocalPosition().y <= game_btn_original_pos)
+	if (new_game_btn->GetLocalPosition().y <= button_limit)
 	{
 		for (int i = 0; i < buttons.Count(); i++)
 			buttons[i]->interactable = true;

@@ -78,6 +78,15 @@
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">

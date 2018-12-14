@@ -248,7 +248,10 @@ void j1Scene::UI_Events(UIElement* element) {
 
 void j1Scene::CreateMenu()
 {
-	panel = App->gui->CreateImage(App->win->GetWindowWidth()/App->win->GetScale(), App->win->GetWindowHeight() / App->win->GetScale(), { 381,9,293,229 }, App->gui->screen);
+	panel = App->gui->CreateImage(0, 0, { 14,499,431,512 }, App->gui->screen);
+	panel->SetPos((App->win->GetWindowWidth() - panel->position.w )/2, (App->win->GetWindowHeight() - panel->position.h) / 2);
+	
+	button_main_menu = App->gui->CreateButton(10, 10, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
 }
 
 void j1Scene::DestroyMenu()

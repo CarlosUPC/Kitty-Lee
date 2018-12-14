@@ -88,6 +88,7 @@ private:
 
 	//ui esc menu objects
 	Image* panel = nullptr;
+	Button* button_main_menu = nullptr;
 
 	Button* new_game_btn;
 	Label* new_game_lbl;

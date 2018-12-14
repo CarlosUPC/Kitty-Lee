@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.1" name="coin" tilewidth="32" tileheight="32" spacing="10" margin="5" tilecount="9" columns="3">
- <image source="textures/spritesheet.png" width="126" height="126"/>
+ <image source="textures/coin.png" width="126" height="126"/>
  <tile id="0">
   <objectgroup draworder="index">
    <object id="1" name="Collider" type="COLLIDER_COIN" x="6" y="6" width="20" height="20"/>

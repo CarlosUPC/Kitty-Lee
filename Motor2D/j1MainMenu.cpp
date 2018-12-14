@@ -80,27 +80,23 @@ bool j1MainMenu::Start()
 	buttons.PushBack(new_game_btn);
 	new_game_btn->AddListener(this);
 	new_game_lbl = (Label*)App->gui->CreateLabel(0,0, "PLAY",false,false,new_game_btn, WHITE, 20, "fonts/Munro.ttf");
-	new_game_btn->partner = new_game_lbl;
 	labels.PushBack(new_game_lbl);
 
 
 	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(credits_btn);
 	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
-	credits_btn->partner = credits_lbl;
 	labels.PushBack(credits_lbl);
 
 	continue_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 50 + 275, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(continue_btn);
 	continue_lbl = (Label*)App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
-	continue_btn->partner = continue_lbl;
 	labels.PushBack(continue_lbl);
 	
 	settings_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(settings_btn);
 	settings_btn->AddListener(this);
 	settings_lbl = (Label*)App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
-	settings_btn->partner = settings_lbl;
 	labels.PushBack(settings_lbl);
 
 
@@ -117,16 +113,13 @@ bool j1MainMenu::Start()
 	for (int i = 0; i < buttons.Count(); i++)
 	{
 		buttons[i]->interactable = false;
-		buttons[i]->drawable = false;
-
-		if (buttons[i]->partner != nullptr)
-			buttons[i]->CenterTextInButton();
-		
+		buttons[i]->drawable = false;		
 	}
 
 	for (int i = 0; i < labels.Count(); i++)
 	{
 		labels[i]->drawable = false;
+		labels[i]->SetPosRespectParent(CENTERED);
 	}
 
 

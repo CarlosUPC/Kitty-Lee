@@ -1,5 +1,5 @@
-#ifndef _UIELEMENT_
-#define _UIELEMENT_
+#ifndef __UIELEMENT_H__
+#define __UIELEMENT_H__
 
 #include "j1App.h"
 #include "j1Render.h"
@@ -8,7 +8,6 @@
 #include "p2Log.h"
 
 class j1Module;
-
 
 enum UI_type {
 	CHECKBOX,
@@ -30,69 +29,42 @@ enum Mouse_Event {
 	NONE
 };
 
+enum Position_Type {
+	CENTERED,
+	CENTERED_UP,
+	CENTERED_DOWN,
+	LEFT_CENTERED,
+	LEFT_UP,
+	LEFT_DOWN,
+	RIGHT_CENTERED,
+	RIGHT_UP,
+	RIGHT_DOWN,
+};
+
 class UIElement {
 
 public:
 
-	//------------------------------Constructor Function--------------------------------//
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0, bool drawable = true) : type(type), parent(parent), interactable(interactable), draggable(draggable), drawable(drawable), position({ pos_x, pos_y, width, height }) {
-		current_state = NONE;
-		if (parent != nullptr) {
-			parent->childs.add(this);
-		}
-		//App->render->SetViewPort(viewport);
-	}
+	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0, bool drawable = true);
 	~UIElement() {}
-	//------------------------------Constructor Functions--------------------------------//
 
-
-	//------------------------------Draw Function--------------------------------//
-	void Draw()
-	{
-
-		draw_offset.x = position.x;
-		draw_offset.y = position.y;
-
-		if(parent!=nullptr){
-			for (UIElement* p = parent; p; p = p->parent) {
-				draw_offset.x += p->position.x;
-				draw_offset.y += p->position.y;
-			}
-		}
-		/*
-		//check element is inside parent boundaries
-		if (position.x < 0) position.x = 0;
-		if (position.y < 0)position.y = 0;
-		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
-		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
-		*/
-		if (App->gui->ui_debug)
-			DebugDraw();
-
-		//App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
-		InnerDraw();
-		//App->render->ResetViewPort();
-	}
-	//------------------------------Draw Function--------------------------------//
-
-
-
-	//-------------Virtual Functions--------------//
+	void Draw();
 
 	virtual void InnerDraw() {}
-
 	virtual void Update();
-		
 	virtual void CleanUp() {}
 
 	virtual void Scroll(char dir, float percentage) {}
-	//-------------Virtual Functions--------------//
 
+	void SetPos(const int &x, const int &y);
 
-
-	//-------------Factory Functions--------------//
 	UI_type GetType()const { return type; }
+	int GetPriority() const;
+	iPoint GetGlobalPosition() const;
+	iPoint GetLocalPosition() const;
+	void SetPosRespectParent(Position_Type, const int& margin = 0);
+
 
 	void SetPos(int x, int y) {
 		position.x = x;
@@ -153,6 +125,12 @@ public:
 	//-------------Application Functions--------------//
 
 
+	void DebugDraw();
+
+
+	void AddListener(j1Module* module);
+	p2List_item<j1Module*>* GetFirstListener();
+	p2List_item<j1Module*>* GetLastListener();
 
 public:
 	SDL_Rect position;
@@ -160,7 +138,7 @@ public:
 	bool interactable = true;
 	bool draggable = true;
 	bool drawable = true;
-	
+
 	bool to_delete = false;
 	iPoint draw_offset = { 0,0 };
 
@@ -170,12 +148,12 @@ public:
 
 	Mouse_Event current_state = NONE;
 	iPoint last_mouse;
-	
+
 private:
 	UI_type type = UNKNOW;
-	
+
 	//SDL_Rect viewport = { 0,0,0,0 };
-	
+
 	int priority = 0;
 
 	p2List<j1Module*> listeners;

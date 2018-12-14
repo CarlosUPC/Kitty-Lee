@@ -74,7 +74,7 @@ bool j1MainMenu::Start()
 	labels.PushBack(new_game_lbl);
 
 
-	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(credits_btn);
 	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
 	credits_btn->partner = credits_lbl;
@@ -85,6 +85,20 @@ bool j1MainMenu::Start()
 	continue_lbl = (Label*)App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
 	continue_btn->partner = continue_lbl;
 	labels.PushBack(continue_lbl);
+	
+	settings_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	buttons.PushBack(settings_btn);
+	settings_lbl = (Label*)App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
+	settings_btn->partner = settings_lbl;
+	labels.PushBack(settings_lbl);
+
+
+	quit_game_btn = (Button*)App->gui->CreateButton(10, win_height + 160, { 6,308,49,50 }, App->gui->screen, { 64,309,49,49 }, { 123,312,49,45 });
+	buttons.PushBack(quit_game_btn);
+	github_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 100, { 5, 191, 49, 50 }, App->gui->screen, { 62, 191, 51, 49 }, { 122,194,49,45 });
+	buttons.PushBack(github_btn);
+	website_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 160, { 6,429,50,49 }, App->gui->screen, { 65,429,49,49 }, { 124,432,49,45 });
+	buttons.PushBack(website_btn);
 
 	for (int i = 0; i < buttons.Count(); i++)
 	{

@@ -56,13 +56,16 @@ private:
 	Button* settings_btn = nullptr;
 	Button* quit_game_btn = nullptr;
 	Button* credits_btn = nullptr;
-	
+	Button* github_btn = nullptr;
+	Button* website_btn = nullptr;
+
 	p2DynArray<Button*> buttons;
 	
 	Label* new_game_lbl = nullptr;
 	Label* continue_lbl = nullptr;
 	Label* credits_lbl = nullptr;
-	
+	Label* settings_lbl = nullptr;
+
 	p2DynArray<Label*> labels;
 
 	bool move_camera;

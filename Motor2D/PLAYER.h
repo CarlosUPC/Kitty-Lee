@@ -12,6 +12,7 @@
 struct SDL_Texture;
 class Label;
 
+
 enum PlayerState {
 	IDLE = 0,
 	WALKING,
@@ -82,7 +83,7 @@ private:
 	int coin_count = 0;
 
 	Label* coin_label = nullptr;
-
+	
 	Animation anim_walking;
 	Animation anim_jump;
 	Animation anim_fall;

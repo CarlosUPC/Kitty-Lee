@@ -89,6 +89,8 @@ private:
 	//ui esc menu objects
 	Image* panel = nullptr;
 
+	Button* new_game_btn;
+	Label* new_game_lbl;
 };
 
 #endif // __j1SCENE_H__

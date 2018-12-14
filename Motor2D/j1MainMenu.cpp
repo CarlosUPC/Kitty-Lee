@@ -56,12 +56,51 @@ bool j1MainMenu::Start()
 	camera_limit = -2030;
 	camera_step_move = 20;
 
+	game_btn_original_pos = 403;
+	game_btn_final_pos = 93;
+
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
 	title1 = App->gui->CreateLabel(win_width/6, 30, "KITTY", false, false, App->gui->screen, RED, 160, "fonts/04B_30__.ttf");
 	title2 = App->gui->CreateLabel(win_width/6 + 100, 180, "LEE", false, false,App->gui->screen, WHITE, 160, "fonts/04B_30__.ttf");
 	press_space = App->gui->CreateLabel(win_width / 3 + 30, win_height - 70, "PRESS SPACE TO START", false, false, App->gui->screen, WHITE, 32, "fonts/Munro.ttf");
+
+
+	new_game_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250, { 182,148,189,49 }, App->gui->screen, {181,92,191,49 }, { 181,42,190,45 });
+	buttons.PushBack(new_game_btn);
+	
+	new_game_lbl = (Label*)App->gui->CreateLabel(0,0, "PLAY",false,false,new_game_btn, WHITE, 20, "fonts/Munro.ttf");
+	new_game_btn->partner = new_game_lbl;
+	labels.PushBack(new_game_lbl);
+
+
+	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 100, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	buttons.PushBack(credits_btn);
+	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
+	credits_btn->partner = credits_lbl;
+	labels.PushBack(credits_lbl);
+
+
+
+	for (int i = 0; i < buttons.Count(); i++)
+	{
+		buttons[i]->interactable = false;
+		buttons[i]->drawable = false;
+
+		if (buttons[i]->partner != nullptr)
+			buttons[i]->CenterTextInButton();
+		
+	}
+
+	for (int i = 0; i < labels.Count(); i++)
+	{
+		
+		labels[i]->drawable = false;
+	}
+
+
+
 	return ret;
 }
 
@@ -86,6 +125,31 @@ bool j1MainMenu::Update(float dt)
 
 	if (move_camera && App->render->camera.x > camera_limit)
 		App->render->camera.x -= camera_step_move;
+
+
+	else if (App->render->camera.x == camera_limit)
+	{
+		for (int i = 0; i < buttons.Count(); i++)
+			buttons[i]->drawable = true;
+
+		for (int i = 0; i < labels.Count(); i++)
+			labels[i]->drawable = true;
+
+		if (new_game_btn->GetLocalPosition().y > game_btn_original_pos && !new_game_btn->interactable)
+		{
+			for (int i = 0; i < buttons.Count(); i++)
+				buttons[i]->SetPos(buttons[i]->GetLocalPosition().x,  buttons[i]->GetLocalPosition().y - camera_step_move);
+		}
+
+	
+	}
+
+	if (new_game_btn->GetLocalPosition().y <= game_btn_original_pos)
+	{
+		for (int i = 0; i < buttons.Count(); i++)
+			buttons[i]->interactable = true;
+	}
+
 
 	App->map->Draw();
 	return true;

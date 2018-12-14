@@ -51,8 +51,25 @@ private:
 	Label* title2;
 	Label* press_space;
 
+	Button* new_game_btn = nullptr;
+	Button* continue_btn = nullptr;
+	Button* settings_btn = nullptr;
+	Button* quit_game_btn = nullptr;
+	Button* credits_btn = nullptr;
+	
+	p2DynArray<Button*> buttons;
+	
+	Label* new_game_lbl = nullptr;
+	Label* continue_lbl = nullptr;
+	Label* credits_lbl = nullptr;
+	
+	p2DynArray<Label*> labels;
+
 	bool move_camera;
 	int camera_limit = 0;
 	int camera_step_move = 0;
+
+	int game_btn_original_pos = 0;
+	int game_btn_final_pos = 0;
 };
 #endif // __j1MAINMENU_H__

@@ -45,6 +45,7 @@ bool Player::Start()
 	App->audio->LoadFx(crashingSound);
 
 	coin_label = (Label*)App->gui->CreateLabel(100, 100, "hey buenas", false, false, App->gui->screen, WHITE);
+
 	App->gui->CreateLabel(100, 100, "aquí estamos", false, false, coin_label);
 	return true;
 }

@@ -77,13 +77,7 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
-
-			RELEASE(item->data);
-	}
-	ui_elements.clear();
-
-	return true;
+	return DeleteAllUIElements();
 }
 
 bool j1Gui::DeleteUIElement(UIElement * element) {
@@ -208,7 +202,7 @@ Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, 
 	return ret;
 }
 
-void j1Gui::UI_Events(UIElement* element, Mouse_Event action){
+void j1Gui::UI_Events(UIElement* element){
 
 }
 

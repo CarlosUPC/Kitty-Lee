@@ -4119,7 +4119,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="trees" width="64" height="32" visible="0">
+ <layer name="trees" width="64" height="32">
   <data>
    <tile/>
    <tile/>
@@ -6171,7 +6171,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="house" width="64" height="32" visible="0">
+ <layer name="house" width="64" height="32">
   <data>
    <tile/>
    <tile/>
@@ -8223,7 +8223,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="trees 2" width="64" height="32" visible="0">
+ <layer name="trees 2" width="64" height="32">
   <data>
    <tile/>
    <tile/>

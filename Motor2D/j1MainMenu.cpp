@@ -97,6 +97,7 @@ bool j1MainMenu::Start()
 	
 	settings_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(settings_btn);
+	settings_btn->AddListener(this);
 	settings_lbl = (Label*)App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
 	settings_btn->partner = settings_lbl;
 	labels.PushBack(settings_lbl);
@@ -146,17 +147,17 @@ bool j1MainMenu::Update(float dt)
 		App->current_lvl = Levels::FIRST_LEVEL;
 		App->fade->FadeToBlack();
 	}*/
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !move_camera)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN /*&& !move_camera*/)
 	{
 		press_space->drawable = false;
-		move_camera = true;
+
 	}
 
 	if (move_camera && App->render->camera.x > camera_limit)
 		App->render->camera.x -= camera_step_move;
 
 
-	else if (App->render->camera.x == camera_limit)
+	else if (!press_space->drawable)
 	{
 		for (int i = 0; i < buttons.Count(); i++)
 			buttons[i]->drawable = true;
@@ -179,7 +180,20 @@ bool j1MainMenu::Update(float dt)
 			buttons[i]->interactable = true;
 	}
 
+	if (move_camera) {
+		
+		for (int i = 0; i < buttons.Count(); i++)
+		{
+			buttons[i]->interactable = false;
+			buttons[i]->drawable = false;
 
+		}
+
+		for (int i = 0; i < labels.Count(); i++)
+		{
+			labels[i]->drawable = false;
+		}
+	}
 	App->map->Draw();
 	return true;
 }
@@ -219,6 +233,11 @@ void j1MainMenu::UI_Events(UIElement* element, Mouse_Event action) {
 		if (element == (UIElement*)quit_game_btn)
 		{
 			App->quit_game = true;
+		}
+
+		if (element == (UIElement*)settings_btn)
+		{
+			move_camera = true;
 		}
 		break;
 	}

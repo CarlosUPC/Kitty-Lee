@@ -68,8 +68,6 @@ public:
 	void DebugDraw();
 
 	void AddListener(j1Module* module);
-	p2List_item<j1Module*>* GetFirstListener();
-	p2List_item<j1Module*>* GetLastListener();
 
 public:
 	SDL_Rect position;

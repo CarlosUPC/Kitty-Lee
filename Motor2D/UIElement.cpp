@@ -50,7 +50,7 @@ void UIElement::Update() {
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
 
-	for (p2List_item<j1Module*>* module = this->GetFirstListener(); module; module = module->next) {
+	for (p2List_item<j1Module*>* module = listeners.start; module; module = module->next) {
 		module->data->UI_Events(this);
 	}
 	
@@ -145,14 +145,4 @@ void UIElement::AddListener(j1Module * module)
 	if (listeners.find(module) == -1) {
 		listeners.add(module);
 	}
-}
-
-p2List_item<j1Module*>* UIElement::GetFirstListener()
-{
-	return listeners.start;
-}
-
-p2List_item<j1Module*>* UIElement::GetLastListener()
-{
-	return listeners.end;
 }

@@ -71,21 +71,6 @@ void UIElement::SetPos(const int & x, const int & y)
 	position.y = y;
 }
 
-int UIElement::GetPriority() const
-{
-	return priority;
-}
-
-iPoint UIElement::GetGlobalPosition() const
-{
-	return draw_offset;
-}
-
-iPoint UIElement::GetLocalPosition() const
-{
-	return{ position.x,position.y };
-}
-
 void UIElement::SetPosRespectParent(Position_Type pos, const int& margin)
 {
 	int x = 0, y = 0;
@@ -135,6 +120,21 @@ void UIElement::SetPosRespectParent(Position_Type pos, const int& margin)
 	SetPos(x, y);
 }
 
+int UIElement::GetPriority() const
+{
+	return priority;
+}
+
+iPoint UIElement::GetGlobalPosition() const
+{
+	return draw_offset;
+}
+
+iPoint UIElement::GetLocalPosition() const
+{
+	return{ position.x,position.y };
+}
+
 void UIElement::DebugDraw()
 {
 	App->render->DrawQuad({ draw_offset.x,draw_offset.y,position.w,position.h }, 255U, 0U, 0U, 255U, false, false);
@@ -145,4 +145,17 @@ void UIElement::AddListener(j1Module * module)
 	if (listeners.find(module) == -1) {
 		listeners.add(module);
 	}
+}
+
+void UIElement::DeleteListener(j1Module * module)
+{
+
+	if (listeners.find(module) != -1) {
+		listeners.clear();
+	}
+	/*for (p2List_item<j1Module*>* item = listeners.start; item; item = item->next) {
+
+		RELEASE(item->data);
+	}
+	listeners.clear();*/
 }

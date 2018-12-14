@@ -86,6 +86,55 @@ iPoint UIElement::GetLocalPosition() const
 	return{ position.x,position.y };
 }
 
+void UIElement::SetPosRespectParent(Position_Type pos, const int& margin)
+{
+	int x = 0, y = 0;
+	switch (pos)
+	{
+	case CENTERED:
+		x = (parent->position.w - position.w) / 2;
+		y = (parent->position.h - position.h) / 2;
+		break;
+	case CENTERED_UP:
+		x = (parent->position.w - position.w) / 2;
+		y = margin;
+		break;
+	case CENTERED_DOWN:
+		x = (parent->position.w - position.w) / 2;
+		y = parent->position.h - position.h - margin;
+		break;
+	case LEFT_CENTERED:
+		x = margin;
+		y = (parent->position.h - position.h) / 2;
+		break;
+	case LEFT_UP:
+		x = margin;
+		y = margin;
+		break;
+	case LEFT_DOWN:
+		x = margin;
+		y = parent->position.h - position.h - margin;
+		break;
+	case RIGHT_CENTERED:
+		x = parent->position.w - position.w - margin;
+		y = (parent->position.h - position.h) / 2;
+		break;
+	case RIGHT_UP:
+		x = parent->position.w - position.w - margin;
+		y = margin;
+		break;
+	case RIGHT_DOWN:
+		x = parent->position.w - position.w - margin;
+		y = parent->position.h - position.h - margin;
+		break;
+	default:
+		x = (parent->position.w - position.w) / 2;
+		y = (parent->position.h - position.h) / 2;
+		break;
+	}
+	SetPos(x, y);
+}
+
 void UIElement::DebugDraw()
 {
 	App->render->DrawQuad({ draw_offset.x,draw_offset.y,position.w,position.h }, 255U, 0U, 0U, 255U, false, false);

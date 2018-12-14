@@ -10,7 +10,7 @@ class Label : public UIElement {
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Label() : UIElement(LABEL, 0, 0, nullptr) {	}
-	Label(int pos_x, int pos_y, const char* txt, const Color &c, const char* path_font, const uint &size = 12, UIElement* parent = nullptr) : UIElement(LABEL, pos_x, pos_y, parent, true) {
+	Label(int pos_x, int pos_y, const char* txt, const Color &c, const char* path_font, const uint &size = 12, UIElement* parent = nullptr, bool interactable = false, bool draggable = false) : UIElement(LABEL, pos_x, pos_y, parent, interactable, draggable, true) {
 		font = App->fonts->Load(path_font, size);
 		text.create(txt);
 		

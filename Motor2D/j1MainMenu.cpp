@@ -126,7 +126,6 @@ bool j1MainMenu::Start()
 
 	for (int i = 0; i < labels.Count(); i++)
 	{
-		
 		labels[i]->drawable = false;
 	}
 
@@ -211,8 +210,9 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing main_menu");
-	
-	return true;
+
+	return App->gui->DeleteAllUIElements();
+
 }
 
 void j1MainMenu::UI_Events(UIElement* element) {

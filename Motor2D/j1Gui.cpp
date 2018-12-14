@@ -124,12 +124,13 @@ void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * elem) //It will fill a
 		frontier.PushBack(elem);
 		while (frontier.Count() > 0) {
 			if (frontier.Pop(item)) {			//Pop las item of array
-				for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) { //iterate for all childs of node
-					if (visited.find(it->data) == -1) {	//if child is not on visited list we added on it and on prontier to search its childs
-						frontier.PushBack(it->data);
-						visited.add(it->data);
+				if(item != nullptr)
+					for (p2List_item<UIElement*>*it = item->childs.start; it; it = it->next) { //iterate for all childs of node
+						if (visited.find(it->data) == -1) {	//if child is not on visited list we added on it and on prontier to search its childs
+							frontier.PushBack(it->data);
+							visited.add(it->data);
+						}
 					}
-				}
 			}
 
 		}
@@ -201,7 +202,7 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable, bool draggable, UIElement* parent, Color color, const uint &size, const char* font)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos_x, pos_y, text, color, font, size, parent);
+	ret = new Label(pos_x, pos_y, text, color, font, size, parent, interactable, draggable);
 	ui_elements.add(ret);
 	return ret;
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
  <tileset firstgid="1" name="atlas-props" tilewidth="16" tileheight="16" tilecount="120" columns="6">
   <image source="atlas-props.png" width="109" height="333"/>
  </tileset>
@@ -4119,7 +4119,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="trees" width="64" height="32" visible="0">
+ <layer name="trees" width="64" height="32">
   <data>
    <tile/>
    <tile/>
@@ -6171,7 +6171,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="house" width="64" height="32" visible="0">
+ <layer name="house" width="64" height="32">
   <data>
    <tile/>
    <tile/>
@@ -8223,7 +8223,7 @@
    <tile/>
   </data>
  </layer>
- <layer name="trees 2" width="64" height="32" visible="0">
+ <layer name="trees 2" width="64" height="32">
   <data>
    <tile/>
    <tile/>

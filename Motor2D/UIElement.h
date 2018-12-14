@@ -65,7 +65,68 @@ public:
 	iPoint GetLocalPosition() const;
 	void SetPosRespectParent(Position_Type, const int& margin = 0);
 
+
+	void SetPos(int x, int y) {
+		position.x = x;
+		position.y = y;
+
+	}
+
+	int GetPriority()const {
+		return priority;
+	}
+
+	iPoint GetGlobalPosition()const {
+		return draw_offset;
+	}
+
+	iPoint GetLocalPosition()const {
+		return{ position.x,position.y };
+	}
+
+	//-------------Factory Functions--------------//
+
+
+
+	//-------------Debug Functions--------------//
+	void DebugDraw() {
+		App->render->DrawQuad({ draw_offset.x,draw_offset.y,position.w,position.h }, 255U, 0U, 0U, 255U, false, false);
+	}
+	//-------------Debug Functions--------------//
+
+
+
+	//-------------Application Functions--------------//
+	void AddListener(j1Module* module) {
+		if (listeners.find(module) == -1) {
+			listeners.add(module);
+		}
+	}
+
+	void DeleteListener(j1Module* module) {
+
+		if (listeners.find(module) != -1) {
+			listeners.clear();
+		}
+		/*for (p2List_item<j1Module*>* item = listeners.start; item; item = item->next) {
+
+			RELEASE(item->data);
+		}
+		listeners.clear();*/
+	}
+
+	p2List_item<j1Module*>* GetFirstListener() {
+		return listeners.start;
+	}
+
+	p2List_item<j1Module*>* GetLastListener() {
+		return listeners.end;
+	}
+	//-------------Application Functions--------------//
+
+
 	void DebugDraw();
+
 
 	void AddListener(j1Module* module);
 
@@ -75,7 +136,7 @@ public:
 	bool interactable = true;
 	bool draggable = true;
 	bool drawable = true;
-	
+
 	bool to_delete = false;
 	iPoint draw_offset = { 0,0 };
 
@@ -85,12 +146,12 @@ public:
 
 	Mouse_Event current_state = NONE;
 	iPoint last_mouse;
-	
+
 private:
 	UI_type type = UNKNOW;
-	
+
 	//SDL_Rect viewport = { 0,0,0,0 };
-	
+
 	int priority = 0;
 
 	p2List<j1Module*> listeners;

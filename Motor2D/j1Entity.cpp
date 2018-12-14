@@ -57,6 +57,7 @@ bool j1Entity::CleanUp()
 	if (collider.collider != nullptr)
 		collider.collider->to_delete = true;
 	current_animation = nullptr;
+	
 
 	return ret;
 }

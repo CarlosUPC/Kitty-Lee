@@ -113,7 +113,7 @@ bool j1MainMenu::Start()
 	website_btn->AddListener(this);
 	buttons.PushBack(website_btn);
 
-	back_btn = (Button*)App->gui->CreateButton(10, win_height - 160, { 851,452,29,24 }, App->gui->screen, { 851,452,29,24 }, { 851,452,29,24 });
+	back_btn = (Button*)App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
 	back_btn->AddListener(this);
 	back_btn->drawable = false;
 	back_btn->interactable = false;

@@ -55,6 +55,7 @@ bool j1MainMenu::Start()
 {
 	bool ret = true;
 
+	App->gui->CreateScreen();
 	
 	App->map->Load(lvl0.GetString());
 

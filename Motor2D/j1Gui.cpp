@@ -38,7 +38,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 void j1Gui::CreateScreen()
 {
-	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false, false);
+	if (ui_elements.find(screen) == -1)
+		screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false, false);
 }
 
 // Called before the first frame
@@ -111,7 +112,6 @@ bool j1Gui::DeleteUIElement(UIElement * element) {
 				}
 				index = ui_elements.find(item->data);	//find item on ui objects list
 				if (index != -1) {						//if it is valid
-					LOG("Deleting %i", item->data->GetType());
 					ui_elements.del(ui_elements.At(index)); //delete from list
 					delete item->data;						//and deallocate memory
 					item->data = nullptr;
@@ -153,7 +153,6 @@ bool j1Gui::DeleteAllUIElements() {
 	bool ret = false;
 	
 	DeleteUIElement(screen);
-	CreateScreen();
 
 	return ret;
 }

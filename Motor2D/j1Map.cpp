@@ -317,7 +317,7 @@ bool j1Map::Load(const char* file_name)
 		}*/
 
 	}
-	//App->audio->PlayMusic(data.musicEnvironment);
+	App->audio->PlayMusic(data.musicEnvironment);
 	map_file.reset();
 	map_loaded = ret;
 

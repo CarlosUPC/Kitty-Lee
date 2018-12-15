@@ -4,7 +4,7 @@
   <property name="AnimationSpeed" type="float" value="15"/>
   <property name="attackSound" value="audio/fx/sword_effect.wav"/>
  </properties>
- <image source="textures/enemies/Gladiator.png" width="256" height="160"/>
+ <image source="textures/entities/enemies/Gladiator.png" width="256" height="160"/>
  <tile id="0">
   <objectgroup draworder="index">
    <object id="1" name="Collider" type="COLLIDER_ENEMY" x="9" y="10" width="13" height="22"/>

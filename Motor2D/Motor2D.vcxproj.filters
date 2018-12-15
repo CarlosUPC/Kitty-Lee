@@ -45,9 +45,6 @@
     <ClCompile Include="GLADIATOR.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1Entity.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -78,13 +75,16 @@
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Entities</Filter>
+      <Filter>GUI_Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>GUI_Elements</Filter>
     </ClCompile>
     <ClCompile Include="Label.cpp">
+      <Filter>GUI_Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,9 +156,6 @@
     <ClInclude Include="GLADIATOR.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Entity.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="j1EntityManager.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="j1Url.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

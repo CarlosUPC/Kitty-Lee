@@ -122,8 +122,11 @@ void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
 		if (ent != nullptr) {
 			ent->position.create(n.attribute("x").as_float(), n.attribute("y").as_float());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
-			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER)
+			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER) {
 				player = (Player*)ent;
+				player->SetCoins(n.attribute("coins").as_int());
+				player->UpdateUI();
+			}
 		}
 	}
 }
@@ -245,37 +248,63 @@ bool j1Scene::CleanUp()
 void j1Scene::UI_Events(UIElement* element) {
 
 	if (element == button_resume && element->current_state == CLICKED_DOWN) {
-		App->Pause();
 		DestroyMenu();
 	}
 
 	if (element == button_main_menu && element->current_state == CLICKED_DOWN) {
 		stg = LEVEL_0;
 	}
+
+	if (element == button_save && element->current_state == CLICKED_DOWN) {
+		App->SaveGame();
+	}
+
+	if (element == button_load && element->current_state == CLICKED_DOWN) {
+		App->LoadGame();
+		DestroyMenu();
+	}
 	
 }
 
 void j1Scene::CreateMenu()
 {
+	int margin = 30;
 	panel = App->gui->CreateImage(0, 0, { 14,499,431,512 }, App->gui->screen);
 	panel->SetPos((App->win->GetWindowWidth() - panel->position.w )/2, (App->win->GetWindowHeight() - panel->position.h) / 2);
 	
 	button_resume = App->gui->CreateButton(0, 0, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
-	button_resume->SetPosRespectParent(CENTERED_UP, 30);
+	button_resume->SetPosRespectParent(CENTERED_UP, margin);
 	button_resume->AddListener(this);
 	label_resume = App->gui->CreateLabel(0,0,"RESUME",false,false,button_resume, WHITE, 20, "fonts/Munro.ttf");
 	label_resume->SetPosRespectParent(CENTERED);
 
-	button_main_menu = App->gui->CreateButton(button_resume->position.x, button_resume->position.y + button_resume->position.h + 15, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
+	button_main_menu = App->gui->CreateButton(button_resume->position.x, button_resume->position.y + button_resume->position.h + margin/2, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
 	button_main_menu->AddListener(this);
 	label_main_menu = App->gui->CreateLabel(0, 0, "MAIN MENU", false, false, button_main_menu, WHITE, 20, "fonts/Munro.ttf");
 	label_main_menu->SetPosRespectParent(CENTERED);
 
+
+	panel_save_load = App->gui->CreateImage(0, 0, { 0,0,190 * 2 + margin / 2, 49 }, panel, false, false, false);
+	panel_save_load->SetPos(margin / 2, button_main_menu->position.y + button_main_menu->position.h + 15);
+
+	button_save = App->gui->CreateButton(0, 0, { 181,311,190,49 }, panel_save_load, { 181,255,190,49 }, { 181,204,190,49 });
+	button_save->SetPosRespectParent(LEFT_CENTERED);
+	button_save->AddListener(this);
+	label_save = App->gui->CreateLabel(0, 0, "SAVE", false, false, button_save, WHITE, 20, "fonts/Munro.ttf");
+	label_save->SetPosRespectParent(CENTERED);
+
+	button_load = App->gui->CreateButton(0, 0, { 181,311,190,49 }, panel_save_load, { 181,255,190,49 }, { 181,204,190,49 });
+	button_load->SetPosRespectParent(RIGHT_CENTERED);
+	button_load->AddListener(this);
+	label_load = App->gui->CreateLabel(0, 0, "LOAD", false, false, button_load, WHITE, 20, "fonts/Munro.ttf");
+	label_load->SetPosRespectParent(CENTERED);
 }
 
 void j1Scene::DestroyMenu()
 {
 	App->gui->DeleteUIElement(panel);
+	if (App->GetPause())
+		App->Pause();
 }
 
 void j1Scene::CheckLevel()

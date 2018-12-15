@@ -1,4 +1,3 @@
-
 #include "j1App.h"
 #include "j1Entity.h"
 #include "j1Collision.h"

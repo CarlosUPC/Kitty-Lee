@@ -79,8 +79,6 @@ private:
 	uint win_height = 0;
 	SDL_Texture* debug_tex = nullptr;
 	Player* player = nullptr;	
-
-	bool menu = false;
 	
 	//ui scene objects
 	Button* button = nullptr;

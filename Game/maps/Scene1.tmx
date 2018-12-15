@@ -6,13 +6,13 @@
   <property name="musicEnvironment" value="audio/music/Grasslands_Theme.ogg"/>
  </properties>
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" tilecount="575" columns="25">
-  <image source="tileset.png" width="400" height="368"/>
+  <image source="../textures/maps/tileset.png" width="400" height="368"/>
  </tileset>
  <tileset firstgid="576" name="back" tilewidth="16" tileheight="16" tilecount="360" columns="24">
-  <image source="back.png" width="384" height="240"/>
+  <image source="../textures/maps/back.png" width="384" height="240"/>
  </tileset>
  <tileset firstgid="936" name="path" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="path.png" width="32" height="16"/>
+  <image source="../textures/maps/path.png" width="32" height="16"/>
  </tileset>
  <layer id="1" name="Background" width="125" height="30">
   <properties>

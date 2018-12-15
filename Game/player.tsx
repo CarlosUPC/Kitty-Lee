@@ -9,7 +9,7 @@
   <property name="maxSpeedX" type="float" value="80"/>
   <property name="walkingSound" value="audio/fx/Walk_Sound02.wav"/>
  </properties>
- <image source="textures/Player.png" width="1024" height="1024"/>
+ <image source="textures/entities/Player.png" width="1024" height="1024"/>
  <tile id="0">
   <objectgroup draworder="index">
    <object id="4" name="Collider" type="COLLIDER_PLAYER" x="9" y="2" width="14" height="30"/>

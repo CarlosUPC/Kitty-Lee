@@ -342,6 +342,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	bool ret = false;
 	App->fade->num_level = data.child("levels").attribute("level").as_int();
+	start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
 	if (App->fade->num_level == 1 && !isLevel1) {
 		App->scene->stg = LEVEL_1;
@@ -358,9 +359,11 @@ bool j1Scene::Load(pugi::xml_node& data)
 
 bool j1Scene::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node player_node = data.append_child("levels");
+	pugi::xml_node node_stage = data.append_child("levels");
 
-	player_node.append_attribute("level") = App->fade->num_level;
+	node_stage.append_attribute("level") = App->fade->num_level;
+	node_stage.append_attribute("time") = (SDL_GetTicks() - start_time) / 1000;
+
 	
 	return true;
 }

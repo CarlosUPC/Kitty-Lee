@@ -115,7 +115,8 @@ bool j1MainMenu::Start()
 
 	back_btn = (Button*)App->gui->CreateButton(10, win_height - 160, { 851,452,29,24 }, App->gui->screen, { 851,452,29,24 }, { 851,452,29,24 });
 	back_btn->AddListener(this);
-
+	back_btn->drawable = false;
+	back_btn->interactable = false;
 
 	for (int i = 0; i < settings.Count(); i++)
 	{

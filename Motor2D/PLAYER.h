@@ -11,6 +11,7 @@
 
 struct SDL_Texture;
 class Label;
+class Image;
 
 
 enum PlayerState {
@@ -89,6 +90,10 @@ private:
 	int coin_count = 0;
 
 	Label* coin_label = nullptr;
+
+	Image* life1 = nullptr;
+	Image* life2 = nullptr;
+	Image* life3 = nullptr;
 	
 	Animation anim_walking;
 	Animation anim_jump;

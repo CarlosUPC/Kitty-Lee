@@ -1,4 +1,5 @@
 #include "Label.h"
+#include "j1Textures.h"
 
 Label::Label(int pos_x, int pos_y, const char * txt, const Color & c, const char * path_font, const uint & size, UIElement * parent, bool interactable, bool draggable)
 	: UIElement(LABEL, pos_x, pos_y, parent, interactable, draggable, true)
@@ -21,6 +22,7 @@ void Label::InnerDraw()
 void Label::SetText(const char * txt)
 {
 	text.create(txt);
+	App->tex->UnLoad(texture);
 	texture = App->fonts->Print(text.GetString(), color, font);
 	App->fonts->CalcSize(text.GetString(), position.w, position.h, font);
 }

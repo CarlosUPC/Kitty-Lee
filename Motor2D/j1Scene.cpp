@@ -61,6 +61,10 @@ bool j1Scene::Start()
 	win_height = App->win->screen_surface->h;
 
 	App->gui->CreateScreen();
+	start_time = SDL_GetTicks();
+	str_time.create("00:00");
+	label_timer = App->gui->CreateLabel(0, 0, str_time.GetString(), false, false, App->gui->screen);
+	label_timer->SetPosRespectParent(CENTERED_UP, 30);
 
 	if (App->GetPause())
 		App->Pause();
@@ -217,6 +221,9 @@ bool j1Scene::PostUpdate()
 {
 	BROFILER_CATEGORY("PostUpdateScene", Profiler::Color::Green);
 	bool ret = true;
+
+	str_time.create("%.2i:%.2i", (SDL_GetTicks() - start_time) / 60000, (SDL_GetTicks() - start_time)/1000%60);
+	label_timer->SetText(str_time.GetString());
 
 	int offsetPlayerPositionX = player->collider.width - player->data.tileset.tilewidth;
 	int offsetPlayerPositionY = player->collider.height - player->data.tileset.tileheight;

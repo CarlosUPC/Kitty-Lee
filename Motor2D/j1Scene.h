@@ -79,10 +79,6 @@ private:
 	uint win_height = 0;
 	SDL_Texture* debug_tex = nullptr;
 	Player* player = nullptr;	
-	
-	//ui scene objects
-	Button* button = nullptr;
-	Label* text = nullptr;
 
 	//ui esc menu objects
 	Image* panel = nullptr;
@@ -98,6 +94,10 @@ private:
 	Label* label_save = nullptr;
 	Button* button_load = nullptr;
 	Label* label_load = nullptr;
+
+	Label* label_timer = nullptr;
+	p2SString str_time;
+	int start_time = 0;
 };
 
 #endif // __j1SCENE_H__

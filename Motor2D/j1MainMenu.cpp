@@ -160,8 +160,6 @@ bool j1MainMenu::Update(float dt)
 
 			for (int i = 0; i < labels.Count(); i++)
 				labels[i]->drawable = true;
-			title1->SetPos(title1->position.x + camera_step_move, title1->position.y);
-			title2->SetPos(title2->position.x + camera_step_move, title2->position.y);
 
 			if (new_game_btn->GetLocalPosition().y > button_limit && !new_game_btn->interactable)
 			{

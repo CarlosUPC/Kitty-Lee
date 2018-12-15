@@ -198,8 +198,6 @@ void j1App::PrepareUpdate()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F11) == j1KeyState::KEY_DOWN)
 		cap_framerate = !cap_framerate;
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == j1KeyState::KEY_DOWN)
-		pause = !pause;
 
 	frame_count++;
 	last_sec_frame_count++;
@@ -389,6 +387,16 @@ void j1App::SaveGame() const
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
+}
+
+bool j1App::Pause()
+{
+	return pause = !pause;
+}
+
+bool j1App::GetPause()
+{
+	return pause;
 }
 
 bool j1App::LoadGameNow()

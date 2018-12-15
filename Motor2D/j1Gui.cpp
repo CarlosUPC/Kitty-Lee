@@ -113,7 +113,7 @@ bool j1Gui::DeleteUIElement(UIElement * element) {
 				index = ui_elements.find(item->data);	//find item on ui objects list
 				if (index != -1) {						//if it is valid
 					ui_elements.del(ui_elements.At(index)); //delete from list
-					delete item->data;						//and deallocate memory
+					//delete item->data;						//and deallocate memory
 					item->data = nullptr;
 				}
 		}

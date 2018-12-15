@@ -62,6 +62,9 @@ bool j1Scene::Start()
 
 	App->gui->CreateScreen();
 
+	if (App->GetPause())
+		App->Pause();
+
 	/*new_game_btn = (Button*)App->gui->CreateButton(10 , 10, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	
 	new_game_lbl = (Label*)App->gui->CreateLabel(20, 5, "PLAY", false, false, new_game_btn, WHITE, 20, "fonts/Munro.ttf");*/
@@ -183,8 +186,7 @@ bool j1Scene::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		menu = !menu;
-		(menu) ? CreateMenu() : DestroyMenu();
+		(App->Pause()) ? CreateMenu() : DestroyMenu();
 	}
 
 	App->map->Draw();
@@ -224,10 +226,6 @@ bool j1Scene::PostUpdate()
 		(cameraOffset.y + player->position.y - offsetPlayerPositionY) * App->win->GetScale() < App->map->data.height*App->map->data.tile_height*App->win->GetScale()) {
 		App->render->camera.y = (cameraOffset.y - (int)player->position.y + offsetPlayerPositionY) * App->win->GetScale();
 	}
-	
-
-	/*if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;*/
 
 	return ret;
 }
@@ -246,6 +244,14 @@ bool j1Scene::CleanUp()
 
 void j1Scene::UI_Events(UIElement* element) {
 
+	if (element == button_resume && element->current_state == CLICKED_DOWN) {
+		App->Pause();
+		DestroyMenu();
+	}
+
+	if (element == button_main_menu && element->current_state == CLICKED_DOWN) {
+		stg = LEVEL_0;
+	}
 	
 }
 
@@ -254,7 +260,17 @@ void j1Scene::CreateMenu()
 	panel = App->gui->CreateImage(0, 0, { 14,499,431,512 }, App->gui->screen);
 	panel->SetPos((App->win->GetWindowWidth() - panel->position.w )/2, (App->win->GetWindowHeight() - panel->position.h) / 2);
 	
-	button_main_menu = App->gui->CreateButton(10, 10, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
+	button_resume = App->gui->CreateButton(0, 0, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
+	button_resume->SetPosRespectParent(CENTERED_UP, 30);
+	button_resume->AddListener(this);
+	label_resume = App->gui->CreateLabel(0,0,"RESUME",false,false,button_resume, WHITE, 20, "fonts/Munro.ttf");
+	label_resume->SetPosRespectParent(CENTERED);
+
+	button_main_menu = App->gui->CreateButton(button_resume->position.x, button_resume->position.y + button_resume->position.h + 15, { 181,311,190,49 }, panel, { 181,255,190,49 }, { 181,204,190,49 });
+	button_main_menu->AddListener(this);
+	label_main_menu = App->gui->CreateLabel(0, 0, "MAIN MENU", false, false, button_main_menu, WHITE, 20, "fonts/Munro.ttf");
+	label_main_menu->SetPosRespectParent(CENTERED);
+
 }
 
 void j1Scene::DestroyMenu()

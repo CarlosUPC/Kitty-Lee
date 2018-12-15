@@ -88,10 +88,18 @@ private:
 
 	//ui esc menu objects
 	Image* panel = nullptr;
-	Button* button_main_menu = nullptr;
 
-	Button* new_game_btn;
-	Label* new_game_lbl;
+	Button* button_resume = nullptr;
+	Label* label_resume = nullptr;
+
+	Button* button_main_menu = nullptr;
+	Label* label_main_menu = nullptr;
+
+	Image* panel_save_load = nullptr;
+	Button* button_save = nullptr;
+	Label* label_save = nullptr;
+	Button* button_load = nullptr;
+	Label* label_load = nullptr;
 };
 
 #endif // __j1SCENE_H__

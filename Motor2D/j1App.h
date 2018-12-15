@@ -70,6 +70,9 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	bool Pause();
+	bool GetPause();
+
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
@@ -129,10 +132,10 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+	bool				pause = false;
 
 	uint32				framerate_cap = 0;
 	bool				cap_framerate = true;
-	bool				pause = false;
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;

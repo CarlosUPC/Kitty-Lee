@@ -5844,7 +5844,7 @@
  </objectgroup>
  <objectgroup id="6" name="Enemy Position">
   <properties>
-   <property name="type" value="ENEMY_COLLIDER"/>
+   <property name="type" value="COLLIDER_NONE"/>
   </properties>
   <object id="54" name="Gladiator" x="688" y="352" width="1" height="1"/>
  </objectgroup>

@@ -11384,6 +11384,9 @@
   <object id="75" name="Player" x="32" y="112" width="1" height="1"/>
  </objectgroup>
  <objectgroup id="11" name="Enemy Position">
+  <properties>
+   <property name="type" value="COLLIDER_NONE"/>
+  </properties>
   <object id="118" name="Flying Tongue" x="368" y="160" width="1" height="1"/>
   <object id="120" name="Gladiator" x="615" y="416" width="1" height="1"/>
   <object id="121" name="Flying Tongue" x="841" y="319.5" width="1" height="1"/>

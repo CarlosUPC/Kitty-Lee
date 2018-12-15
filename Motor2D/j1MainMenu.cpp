@@ -17,17 +17,7 @@
 #include "Image.h"
 #include "Button.h"
 #include "Label.h"
-
-
-#ifdef _WIN32	
-#include <shellapi.h>
-void open_url(const p2SString& url)
-{
-	ShellExecute(GetActiveWindow(), "open", url.GetString(), NULL, NULL, SW_SHOWNORMAL);
-}
-#else
-void open_url(const p2SString& url) {}
-#endif
+#include "j1Url.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -257,27 +247,9 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing main_menu");
-	//App->gui->CleanUp();
-	
-	/*title1->DeleteListener(this);
-	title2->DeleteListener(this);
-
-	new_game_btn->DeleteListener(this);
-	continue_btn->DeleteListener(this);
-	settings_btn->DeleteListener(this);
-	quit_game_btn->DeleteListener(this);
-	credits_btn->DeleteListener(this);
-	github_btn->DeleteListener(this);
-	website_btn->DeleteListener(this);
-
-	new_game_lbl->DeleteListener(this);
-	continue_lbl->DeleteListener(this);
-	credits_lbl->DeleteListener(this);
-	settings_lbl->DeleteListener(this);
-	press_space->DeleteListener(this);*/
 
 	App->gui->DeleteAllUIElements();
-
+	
 	title1 = nullptr;
 	title2 = nullptr;
 

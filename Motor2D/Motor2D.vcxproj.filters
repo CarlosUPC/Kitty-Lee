@@ -201,6 +201,9 @@
     <ClInclude Include="p2Queue.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="j1Url.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

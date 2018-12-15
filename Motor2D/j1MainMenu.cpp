@@ -33,7 +33,7 @@ j1MainMenu::~j1MainMenu()
 bool j1MainMenu::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Scene");
-	
+
 	lvl0.create(conf.child("level_0").child_value());
 	bool ret = true;
 
@@ -46,14 +46,14 @@ bool j1MainMenu::Start()
 	bool ret = true;
 
 	App->gui->CreateScreen();
-	
+
 	App->map->Load(lvl0.GetString());
 
 	App->render->CameraInitPos();
 
 	move_camera = false;
 	move_camera_back = false;
-	
+
 	camera_step_move = 20;
 
 	button_limit = 403;
@@ -63,7 +63,7 @@ bool j1MainMenu::Start()
 	win_height = App->win->screen_surface->h;
 
 	title1 = App->gui->CreateLabel(win_width/6, 30, "KITTY", false, false, App->gui->screen, RED, 160, "fonts/04B_30__.ttf");
-	
+
 	title2 = App->gui->CreateLabel(win_width/6 + 100, 180, "LEE", false, false,App->gui->screen, WHITE, 160, "fonts/04B_30__.ttf");
 	press_space = App->gui->CreateLabel(win_width / 3 + 30, win_height - 70, "PRESS SPACE TO START", false, false, App->gui->screen, WHITE, 32, "fonts/Munro.ttf");
 
@@ -84,7 +84,7 @@ bool j1MainMenu::Start()
 	buttons.PushBack(continue_btn);
 	continue_lbl = (Label*)App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(continue_lbl);
-	
+
 	settings_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(settings_btn);
 	settings_btn->AddListener(this);
@@ -107,6 +107,8 @@ bool j1MainMenu::Start()
 	back_btn->drawable = false;
 	back_btn->interactable = false;
 
+	panel_img = App->gui->CreateImage(win_width/2 - 200, 0, {14,497,430,514}, App->gui->screen, false, false, false);
+
 	for (int i = 0; i < settings.Count(); i++)
 	{
 		settings[i]->interactable = false;
@@ -116,7 +118,7 @@ bool j1MainMenu::Start()
 	for (int i = 0; i < buttons.Count(); i++)
 	{
 		buttons[i]->interactable = false;
-		buttons[i]->drawable = false;		
+		buttons[i]->drawable = false;
 	}
 
 	for (int i = 0; i < labels.Count(); i++)
@@ -139,20 +141,20 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		press_space->drawable = false;
 
 	}
 
-	
+
 	if (!press_space->drawable)
 	{
 
 		//-----------CAMERA ON MENU---------------//
 		if (App->render->camera.x >= camera_origin) {
-			
+
 			move_camera_back = false;
 
 			for (int i = 0; i < buttons.Count(); i++)
@@ -171,22 +173,25 @@ bool j1MainMenu::Update(float dt)
 		//-----------MENU TO SETTINGS---------------//
 		else {
 
-			
+
 			for (int i = 0; i < buttons.Count(); i++)
 			{
 				buttons[i]->interactable = false;
-		
+
 			}
+
+
 			title1->SetPos(title1->position.x-camera_step_move, title1->position.y);
 			title2->SetPos(title2->position.x - camera_step_move, title2->position.y);
-			
+
+
 			if (new_game_btn->GetLocalPosition().y < button_origin && !new_game_btn->interactable)
 			{
 				for (int i = 0; i < buttons.Count(); i++)
 					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y + camera_step_move);
 			}
 
-			
+
 		}
 
 		//-----------CAMERA ON SETTINGS---------------//
@@ -196,11 +201,18 @@ bool j1MainMenu::Update(float dt)
 			back_btn->interactable = true;
 			back_btn->drawable = true;
 
+			panel_img->drawable = true;
+
 			for (int i = 0; i < settings.Count(); i++)
 			{
 				settings[i]->interactable = true;
 				settings[i]->drawable = true;
 
+			}
+
+			if (panel_img->GetLocalPosition().y < button_limit/2)
+			{
+					panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y + camera_step_move);
 			}
 		}
 		//-----------SETTINGS TO MENU---------------//
@@ -209,7 +221,6 @@ bool j1MainMenu::Update(float dt)
 			back_btn->interactable = false;
 			back_btn->drawable = false;
 
-			
 
 			for (int i = 0; i < settings.Count(); i++)
 			{
@@ -217,11 +228,14 @@ bool j1MainMenu::Update(float dt)
 				settings[i]->drawable = false;
 
 			}
+			if (panel_img->GetLocalPosition().y > 0 - panel_img->position.h)
+			{
+				panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y - camera_step_move);
+			}
 		}
 
-	
 	}
-	
+
 	//--------CAMERA MOVEMENT-----------//
 	if (move_camera)
 		App->render->camera.x -= camera_step_move;
@@ -236,7 +250,7 @@ bool j1MainMenu::Update(float dt)
 			buttons[i]->interactable = true;
 	}
 
-	
+
 
 	App->map->Draw();
 	return true;
@@ -256,7 +270,7 @@ bool j1MainMenu::CleanUp()
 	LOG("Freeing main_menu");
 
 	App->gui->DeleteAllUIElements();
-	
+
 	title1 = nullptr;
 	title2 = nullptr;
 
@@ -267,7 +281,7 @@ bool j1MainMenu::CleanUp()
 	credits_btn = nullptr;
 	github_btn = nullptr;
 	website_btn = nullptr;
-	
+
 	new_game_lbl = nullptr;
 	continue_lbl = nullptr;
 	credits_lbl = nullptr;
@@ -322,7 +336,7 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)back_btn)
 		{
 			move_camera_back = true;
-			
+
 		}
 		break;
 	}
@@ -333,7 +347,7 @@ bool j1MainMenu::Load(pugi::xml_node& load)
 {
 	bool ret = true;
 
-	
+
 
 	return ret;
 }
@@ -345,4 +359,3 @@ bool j1MainMenu::Save(pugi::xml_node& save) const
 
 	return ret;
 }
-

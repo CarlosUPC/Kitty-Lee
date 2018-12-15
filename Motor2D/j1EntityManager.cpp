@@ -69,8 +69,8 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 	for (int i = 0; i < entities.Count(); ++i) {
 		if (entities[i] != nullptr) {
 			entities[i]->Move(dt);
-			entities[i]->Update(dt);
-
+			ret = entities[i]->Update(dt);
+			entities[i]->Draw();
 			if (do_logic) {
 				entities[i]->CreatePath();
 			}
@@ -83,10 +83,6 @@ bool j1EntityManager::UpdateAll(float dt, bool do_logic)
 bool j1EntityManager::PostUpdate()
 {
 	BROFILER_CATEGORY("PostUpdateEntityManager", Profiler::Color::Green);
-
-	for (int i = 0; i < entities.Count(); ++i)
-		if (entities[i] != nullptr)
-			entities[i]->Draw();
 
 	return true;
 }

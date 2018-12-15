@@ -55,8 +55,7 @@ bool j1MainMenu::Start()
 	move_camera_back = false;
 
 	camera_step_move = 20;
-	camera_step_diff = 0;
-
+	
 	button_limit = 403;
 	button_origin = 756;
 
@@ -108,7 +107,7 @@ bool j1MainMenu::Start()
 	back_btn->drawable = false;
 	back_btn->interactable = false;
 
-	panel_img = App->gui->CreateImage(win_width/2 - 200, 0, {14,497,430,514}, App->gui->screen, false, false, false);
+	panel_img = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
 
 	for (int i = 0; i < settings.Count(); i++)
 	{
@@ -166,7 +165,7 @@ bool j1MainMenu::Update(float dt)
 
 			if (new_game_btn->GetLocalPosition().x < 432 && !new_game_btn->interactable) {
 				for (int i = 0; i < buttons.Count(); i++)
-					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x + camera_step_move*2, buttons[i]->GetLocalPosition().y);
+					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x + camera_step_move, buttons[i]->GetLocalPosition().y);
 			}
 
 			if (new_game_btn->GetLocalPosition().y > button_limit && new_game_btn->GetLocalPosition().x >= 432  && !new_game_btn->interactable)
@@ -186,8 +185,10 @@ bool j1MainMenu::Update(float dt)
 
 			}
 
-			/*title1->SetPos(title1->position.x - camera_step_move, title1->position.y);
-			title2->SetPos(title2->position.x - camera_step_move, title2->position.y);*/
+			if (move_camera) {
+				title1->SetPos(title1->GetLocalPosition().x - camera_step_move, title1->GetLocalPosition().y);
+				title2->SetPos(title2->GetLocalPosition().x - camera_step_move, title2->GetLocalPosition().y);
+			}
 
 			if (new_game_btn->GetLocalPosition().y < button_origin && !new_game_btn->interactable)
 			{
@@ -214,12 +215,12 @@ bool j1MainMenu::Update(float dt)
 				settings[i]->drawable = true;
 
 			}
-			if (panel_img->GetLocalPosition().x > 312)
+			if (panel_img->GetLocalPosition().x > 162)
 			{
 				panel_img->SetPos(panel_img->GetLocalPosition().x - camera_step_move*2, panel_img->GetLocalPosition().y);
 			}
 
-			if (panel_img->GetLocalPosition().y < button_limit/2 && panel_img->GetLocalPosition().x <= 312)
+			if (panel_img->GetLocalPosition().y < button_limit/12 && panel_img->GetLocalPosition().x <= 162)
 			{
 					panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y + camera_step_move);
 			}
@@ -230,8 +231,10 @@ bool j1MainMenu::Update(float dt)
 			back_btn->interactable = false;
 			back_btn->drawable = false;
 
-			/*title1->SetPos(title1->position.x + camera_step_move, title1->position.y);
-			title2->SetPos(title2->position.x + camera_step_move, title2->position.y);*/
+			if (move_camera_back) {
+				title1->SetPos(title1->GetLocalPosition().x + camera_step_move, title1->GetLocalPosition().y);
+				title2->SetPos(title2->GetLocalPosition().x + camera_step_move, title2->GetLocalPosition().y);
+			}
 
 			for (int i = 0; i < settings.Count(); i++)
 			{
@@ -242,6 +245,8 @@ bool j1MainMenu::Update(float dt)
 			if (panel_img->GetLocalPosition().y > 0 - panel_img->position.h)
 			{
 				panel_img->SetPos(panel_img->GetLocalPosition().x + camera_step_move, panel_img->GetLocalPosition().y - camera_step_move);
+
+				
 			}
 		}
 

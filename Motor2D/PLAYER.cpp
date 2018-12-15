@@ -144,7 +144,8 @@ void Player::Move(float dt) {
 	else if (speed.y < -App->map->data.properties.maxAccelerationY)
 		speed.y = -App->map->data.properties.maxAccelerationY;
 
-	position += speed * dt;
+	position.x += ceil(speed.x * dt);
+	position.y += ceil(speed.y * dt);
 	SetCollidersPos();
 }
 

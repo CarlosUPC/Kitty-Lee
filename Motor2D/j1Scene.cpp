@@ -63,7 +63,7 @@ bool j1Scene::Start()
 	App->gui->CreateScreen();
 	start_time = SDL_GetTicks();
 	str_time.create("00:00");
-	label_timer = App->gui->CreateLabel(0, 0, str_time.GetString(), false, false, App->gui->screen);
+	label_timer = App->gui->CreateLabel(0, 0, str_time.GetString(), false, false, App->gui->screen,WHITE,58);
 	label_timer->SetPosRespectParent(CENTERED_UP, 30);
 
 	if (App->GetPause())

@@ -61,6 +61,7 @@ private:
 	Button* github_btn = nullptr;
 	Button* website_btn = nullptr;
 	Button* back_btn = nullptr;
+	Image* panel_img = nullptr;
 
 	p2DynArray<Button*> buttons;
 	p2DynArray<Button*> settings;

@@ -109,6 +109,8 @@ bool j1MainMenu::Start()
 	back_btn->drawable = false;
 	back_btn->interactable = false;
 
+	panel_img = App->gui->CreateImage(win_width/2 - 200, 0, {14,497,430,514}, App->gui->screen, false, false, false);
+
 	for (int i = 0; i < settings.Count(); i++)
 	{
 		settings[i]->interactable = false;
@@ -180,7 +182,6 @@ bool j1MainMenu::Update(float dt)
 		
 			}
 
-			
 			if (new_game_btn->GetLocalPosition().y < button_origin && !new_game_btn->interactable)
 			{
 				for (int i = 0; i < buttons.Count(); i++)
@@ -197,11 +198,18 @@ bool j1MainMenu::Update(float dt)
 			back_btn->interactable = true;
 			back_btn->drawable = true;
 
+			panel_img->drawable = true;
+
 			for (int i = 0; i < settings.Count(); i++)
 			{
 				settings[i]->interactable = true;
 				settings[i]->drawable = true;
 
+			}
+
+			if (panel_img->GetLocalPosition().y < button_limit/2)
+			{
+					panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y + camera_step_move);
 			}
 		}
 		//-----------SETTINGS TO MENU---------------//
@@ -209,15 +217,19 @@ bool j1MainMenu::Update(float dt)
 
 			back_btn->interactable = false;
 			back_btn->drawable = false;
-
+			
+	
 			for (int i = 0; i < settings.Count(); i++)
 			{
 				settings[i]->interactable = false;
 				settings[i]->drawable = false;
 
 			}
+			if (panel_img->GetLocalPosition().y > 0 - panel_img->position.h)
+			{
+				panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y - camera_step_move);
+			}
 		}
-
 	
 	}
 	

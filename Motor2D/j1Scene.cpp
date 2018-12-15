@@ -238,6 +238,7 @@ bool j1Scene::CleanUp()
 	ret = App->tex->UnLoad(debug_tex);
 	App->entities->CleanUp();
 	App->gui->DeleteAllUIElements();
+	
 	return true;
 }
 

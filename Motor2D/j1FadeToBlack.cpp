@@ -49,7 +49,7 @@ bool j1FadeToBlack::PostUpdate()
 		{
 
 			App->collider->EraseMapCollider();
-			//App->entities->CleanUp();
+			App->entities->CleanUp();
 			App->map->CleanUp();
 
 			switch (App->current_lvl)

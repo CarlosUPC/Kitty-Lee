@@ -204,6 +204,7 @@
     <ClInclude Include="j1Entity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -249,5 +250,16 @@
     <None Include="..\Game\maps\Scene1.tmx">
       <Filter>Scenes</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Motor 2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon3.ico" />
+    <Image Include="icon4.ico" />
+    <Image Include="icon5.ico" />
+    <Image Include="icon6.ico" />
+    <Image Include="icon1.ico" />
+    <Image Include="icon2.ico" />
   </ItemGroup>
 </Project>

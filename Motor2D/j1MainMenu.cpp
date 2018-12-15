@@ -53,8 +53,7 @@ bool j1MainMenu::Start()
 
 	move_camera = false;
 	move_camera_back = false;
-	camera_limit = -2030;
-	camera_origin = -330;
+	
 	camera_step_move = 20;
 
 	button_limit = 403;
@@ -148,7 +147,7 @@ bool j1MainMenu::Update(float dt)
 	}
 
 	
-	else if (!press_space->drawable)
+	if (!press_space->drawable)
 	{
 
 		//-----------CAMERA ON MENU---------------//
@@ -161,6 +160,8 @@ bool j1MainMenu::Update(float dt)
 
 			for (int i = 0; i < labels.Count(); i++)
 				labels[i]->drawable = true;
+			title1->SetPos(title1->position.x + camera_step_move, title1->position.y);
+			title2->SetPos(title2->position.x + camera_step_move, title2->position.y);
 
 			if (new_game_btn->GetLocalPosition().y > button_limit && !new_game_btn->interactable)
 			{
@@ -191,7 +192,7 @@ bool j1MainMenu::Update(float dt)
 		}
 
 		//-----------CAMERA ON SETTINGS---------------//
-		if (App->render->camera.x <= camera_limit) {
+		if (-App->render->camera.x + App->win->GetWindowWidth() >= (App->map->data.width-1)*App->map->data.tile_width*App->win->GetScale()) {
 
 			move_camera = false;
 			back_btn->interactable = true;
@@ -209,6 +210,8 @@ bool j1MainMenu::Update(float dt)
 
 			back_btn->interactable = false;
 			back_btn->drawable = false;
+
+			
 
 			for (int i = 0; i < settings.Count(); i++)
 			{

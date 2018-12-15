@@ -248,7 +248,6 @@ bool j1Scene::CleanUp()
 void j1Scene::UI_Events(UIElement* element) {
 
 	if (element == button_resume && element->current_state == CLICKED_DOWN) {
-		App->Pause();
 		DestroyMenu();
 	}
 
@@ -262,6 +261,7 @@ void j1Scene::UI_Events(UIElement* element) {
 
 	if (element == button_load && element->current_state == CLICKED_DOWN) {
 		App->LoadGame();
+		DestroyMenu();
 	}
 	
 }
@@ -303,6 +303,8 @@ void j1Scene::CreateMenu()
 void j1Scene::DestroyMenu()
 {
 	App->gui->DeleteUIElement(panel);
+	if (App->GetPause())
+		App->Pause();
 }
 
 void j1Scene::CheckLevel()

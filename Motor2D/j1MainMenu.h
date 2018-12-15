@@ -61,6 +61,7 @@ private:
 	Button* github_btn = nullptr;
 	Button* website_btn = nullptr;
 	Button* back_btn = nullptr;
+	Button* back_from_credits_btn = nullptr;
 	Image* panel_img = nullptr;
 
 	p2DynArray<Button*> buttons;
@@ -75,6 +76,10 @@ private:
 
 	bool move_camera;
 	bool move_camera_back;
+	bool move_camera_down;
+	bool move_camera_up;
+
+
 	int camera_limit = 0;
 	int camera_origin = 0;
 	int camera_step_move = 0;

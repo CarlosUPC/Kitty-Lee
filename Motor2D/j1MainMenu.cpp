@@ -77,6 +77,7 @@ bool j1MainMenu::Start()
 
 	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
 	buttons.PushBack(credits_btn);
+	credits_btn->AddListener(this);
 	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(credits_lbl);
 
@@ -106,6 +107,11 @@ bool j1MainMenu::Start()
 	back_btn->AddListener(this);
 	back_btn->drawable = false;
 	back_btn->interactable = false;
+
+	back_from_credits_btn = (Button*)App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
+	back_from_credits_btn->AddListener(this);
+	back_from_credits_btn->drawable = false;
+	back_from_credits_btn->interactable = false;
 
 	panel_img = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
 
@@ -156,6 +162,7 @@ bool j1MainMenu::Update(float dt)
 		if (App->render->camera.x >= camera_origin) {
 
 			move_camera_back = false;
+		
 
 			for (int i = 0; i < buttons.Count(); i++)
 				buttons[i]->drawable = true;
@@ -250,6 +257,42 @@ bool j1MainMenu::Update(float dt)
 			}
 		}
 
+		if (App->render->camera.y >= camera_origin) {
+			move_camera_up = false;
+		}
+
+		if (App->render->camera.y < camera_origin && -App->render->camera.y + App->win->GetWindowHeight() < (App->map->data.height - 1)*App->map->data.tile_height*App->win->GetScale()) {
+			
+			if (move_camera_down) {
+				for (int i = 0; i < buttons.Count(); i++)
+					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y - camera_step_move);
+
+				title1->SetPos(title1->GetLocalPosition().x, title1->GetLocalPosition().y - camera_step_move);
+				title2->SetPos(title2->GetLocalPosition().x, title2->GetLocalPosition().y - camera_step_move);
+			}
+
+			if (move_camera_up) {
+				back_from_credits_btn->interactable = false;
+				back_from_credits_btn->drawable = false;
+
+				for (int i = 0; i < buttons.Count(); i++)
+					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y + camera_step_move);
+
+				title1->SetPos(title1->GetLocalPosition().x, title1->GetLocalPosition().y + camera_step_move);
+				title2->SetPos(title2->GetLocalPosition().x, title2->GetLocalPosition().y + camera_step_move);
+			}
+
+		}
+
+
+		if (-App->render->camera.y + App->win->GetWindowHeight() >= (App->map->data.height - 1)*App->map->data.tile_height*App->win->GetScale()) {
+			move_camera_down = false;
+			back_from_credits_btn->interactable = true;
+			back_from_credits_btn->drawable = true;
+
+			
+		}
+
 	}
 
 	//--------CAMERA MOVEMENT-----------//
@@ -259,6 +302,11 @@ bool j1MainMenu::Update(float dt)
 	if (move_camera_back)
 		App->render->camera.x += camera_step_move;
 
+	if (move_camera_up)
+		App->render->camera.y += camera_step_move;
+
+	if (move_camera_down)
+		App->render->camera.y -= camera_step_move;
 
 	if (new_game_btn->GetLocalPosition().y <= button_limit)
 	{
@@ -352,6 +400,18 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)back_btn)
 		{
 			move_camera_back = true;
+
+		}
+
+		if (element == (UIElement*)back_from_credits_btn)
+		{
+			move_camera_up = true;
+
+		}
+
+		if (element == (UIElement*)credits_btn)
+		{
+			move_camera_down = true;
 
 		}
 		break;

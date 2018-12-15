@@ -45,6 +45,12 @@ public:
 
 	bool GetGodMode() { return god_mode; }
 
+	void SetCoins(const int&);
+	void UpdateUI();
+
+	bool Save(pugi::xml_node&) const;
+	//bool Load(pugi::xml_node&);
+
 	void OnCollision(Collider*, Collider*, float dt);
 
 private:

@@ -12,10 +12,8 @@
 	<pathfinding />
 	<colliders />
 	<entities>
-		<entity x="96" y="256" spawn_x="96" spawn_y="256" type="0" />
-		<entity x="667" y="352" spawn_x="688" spawn_y="352" type="1" />
-		<entity x="144" y="256" spawn_x="144" spawn_y="256" type="3" />
-		<entity x="188" y="283" spawn_x="188" spawn_y="283" type="3" />
+		<entity x="181" y="272" spawn_x="96" spawn_y="256" type="0" coins="2" />
+		<entity x="666" y="352" spawn_x="688" spawn_y="352" type="1" />
 		<entity x="245" y="250" spawn_x="245" spawn_y="250" type="3" />
 		<entity x="367" y="290" spawn_x="367" spawn_y="290" type="3" />
 	</entities>
@@ -23,6 +21,6 @@
 	<gui />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="-390" />
+		<camera x="-87" y="-426" />
 	</renderer>
 </game_state>

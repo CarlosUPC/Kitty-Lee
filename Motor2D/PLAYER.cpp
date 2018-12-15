@@ -148,6 +148,31 @@ void Player::Move(float dt) {
 	SetCollidersPos();
 }
 
+void Player::SetCoins(const int &coins)
+{
+	coin_count = coins;
+}
+
+void Player::UpdateUI()
+{
+	coin_label->SetText(p2SString("tu %i", coin_count).GetString());
+	//life_label;
+}
+
+bool Player::Save(pugi::xml_node &node) const
+{
+	pugi::xml_node e_node = node.append_child("entity");
+
+	e_node.append_attribute("x") = (int)position.x;
+	e_node.append_attribute("y") = (int)position.y;
+	e_node.append_attribute("spawn_x") = (int)spawn_position.x;
+	e_node.append_attribute("spawn_y") = (int)spawn_position.y;
+	e_node.append_attribute("type") = (int)type;
+	e_node.append_attribute("coins") = coin_count;
+
+	return true;
+}
+
 void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	switch (c2->type) {
 	case COLLIDER_FLOOR:

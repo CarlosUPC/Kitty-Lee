@@ -122,8 +122,11 @@ void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
 		if (ent != nullptr) {
 			ent->position.create(n.attribute("x").as_float(), n.attribute("y").as_float());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
-			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER)
+			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER) {
 				player = (Player*)ent;
+				player->SetCoins(n.attribute("coins").as_int());
+				player->UpdateUI();
+			}
 		}
 	}
 }

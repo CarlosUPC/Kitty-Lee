@@ -114,7 +114,8 @@ bool j1EntityManager::Save(pugi::xml_node & node) const
 	LOG("Saving all entities...");
 
 	for (int i = 0; i < entities.Count(); ++i) {
-		ret = entities[i]->Save(node);
+		if (entities[i] != nullptr)
+			ret = entities[i]->Save(node);
 	}
 	return ret;
 }

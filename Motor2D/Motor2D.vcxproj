@@ -150,6 +150,7 @@
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="UIElement.h" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,12 @@
     <None Include="..\Game\maps\Scene1.tmx" />
     <None Include="..\Game\maps\SceneIndoor.tmx" />
     <None Include="..\Game\player.tsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Motor 2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

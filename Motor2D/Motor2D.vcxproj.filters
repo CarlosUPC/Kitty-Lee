@@ -204,6 +204,7 @@
     <ClInclude Include="j1Entity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -221,14 +222,14 @@
     <Filter Include="Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="XML">
-      <UniqueIdentifier>{48d64bc6-a610-4b19-96f7-4a550350eb72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entities">
       <UniqueIdentifier>{9c31cc54-d857-4fbd-bcd3-0a455531cf81}</UniqueIdentifier>
     </Filter>
     <Filter Include="GUI_Elements">
       <UniqueIdentifier>{cdbd131a-96c0-4cfd-bd44-95b7f88cee1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XML">
+      <UniqueIdentifier>{48d64bc6-a610-4b19-96f7-4a550350eb72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -249,5 +250,11 @@
     <None Include="..\Game\maps\Scene1.tmx">
       <Filter>Scenes</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Motor 2D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
 </Project>

@@ -35,6 +35,8 @@ public:
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
+	void CreateScreen();
+
 	// Call before first frame
 	bool Start();
 

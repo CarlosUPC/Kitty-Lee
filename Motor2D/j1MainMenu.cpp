@@ -12,7 +12,7 @@
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
-#include "Player.h"
+#include "PLAYER.h"
 #include "j1Gui.h"
 #include "Image.h"
 #include "Button.h"
@@ -55,6 +55,7 @@ bool j1MainMenu::Start()
 {
 	bool ret = true;
 
+	App->gui->CreateScreen();
 	
 	App->map->Load(lvl0.GetString());
 
@@ -205,7 +206,7 @@ bool j1MainMenu::CleanUp()
 	LOG("Freeing main_menu");
 	//App->gui->CleanUp();
 	
-	title1->DeleteListener(this);
+	/*title1->DeleteListener(this);
 	title2->DeleteListener(this);
 
 	new_game_btn->DeleteListener(this);
@@ -220,7 +221,7 @@ bool j1MainMenu::CleanUp()
 	continue_lbl->DeleteListener(this);
 	credits_lbl->DeleteListener(this);
 	settings_lbl->DeleteListener(this);
-	press_space->DeleteListener(this);
+	press_space->DeleteListener(this);*/
 
 	App->gui->DeleteAllUIElements();
 

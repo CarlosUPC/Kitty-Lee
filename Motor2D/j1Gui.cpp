@@ -31,9 +31,15 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 
-	screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false, false);
+	CreateScreen();
 
 	return ret;
+}
+
+void j1Gui::CreateScreen()
+{
+	if (ui_elements.find(screen) == -1)
+		screen = CreateImage(0, 0, { 0,0,(int)App->win->GetWindowWidth(),(int)App->win->GetWindowHeight() }, nullptr, false, false, false);
 }
 
 // Called before the first frame
@@ -77,7 +83,12 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	return DeleteAllUIElements();
+	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
+		RELEASE(item->data);
+	}
+	ui_elements.clear();
+
+	return true;
 }
 
 bool j1Gui::DeleteUIElement(UIElement * element) {
@@ -90,21 +101,21 @@ bool j1Gui::DeleteUIElement(UIElement * element) {
 		BFS(tree, elem->data);		//fills a list from element to delete to its childs using BFS algorithm
 
 		for (p2List_item<UIElement*>* item = tree.end; item; item = item->prev) {	//iterate list from bottom to top
-			if (item == tree.start && item->data->parent!=nullptr) {				/*In case the item we will delete is the first element of the tree
-																					  we have to delete him first from its parent child list
-																					  the reason why we don't made that for other nodes is becuase
-																					  other nodes and its parents will be deleted for complete*/
-				index = item->data->parent->childs.find(item->data);
-				if (index != -1) {
-					item->data->parent->childs.del(item->data->parent->childs.At(index));
+				if (item == tree.start && item->data->parent != nullptr) {				/*In case the item we will delete is the first element of the tree
+																						  we have to delete him first from its parent child list
+																						  the reason why we don't made that for other nodes is becuase
+																						  other nodes and its parents will be deleted for complete*/
+					index = item->data->parent->childs.find(item->data);
+					if (index != -1) {
+						item->data->parent->childs.del(item->data->parent->childs.At(index));
+					}
 				}
-			}
-			index = ui_elements.find(item->data);	//find item on ui objects list
-			if (index != -1) {						//if it is valid
-				ui_elements.del(ui_elements.At(index)); //delete from list
-				delete item->data;						//and deallocate memory
-				item->data = nullptr;
-			}
+				index = ui_elements.find(item->data);	//find item on ui objects list
+				if (index != -1) {						//if it is valid
+					ui_elements.del(ui_elements.At(index)); //delete from list
+					delete item->data;						//and deallocate memory
+					item->data = nullptr;
+				}
 		}
 		tree.clear();
 	
@@ -140,12 +151,8 @@ void j1Gui::BFS(p2List<UIElement *> &visited, UIElement * elem) //It will fill a
 
 bool j1Gui::DeleteAllUIElements() {
 	bool ret = false;
-
-	for (p2List_item<UIElement*>* item = ui_elements.start; item; item = item->next) {
-
-		RELEASE(item->data);
-	}
-	ui_elements.clear();
+	
+	DeleteUIElement(screen);
 
 	return ret;
 }

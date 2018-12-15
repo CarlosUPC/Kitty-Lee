@@ -285,7 +285,7 @@ bool j1Map::Load(const char* file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		p2List_item<TileSet*>* item = data.tilesets.start;
+		/*p2List_item<TileSet*>* item = data.tilesets.start;
 		while(item != NULL)
 		{
 			TileSet* s = item->data;
@@ -314,7 +314,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("Collider Position: (%i , %i)", obj->coll_x, obj->coll_y);
 			LOG("width: %i  height: %i", obj->coll_width, obj->coll_height);
 			item_object = item_object->next;
-		}
+		}*/
 
 	}
 	//App->audio->PlayMusic(data.musicEnvironment);

@@ -44,8 +44,11 @@ bool Player::Start()
 	App->audio->LoadFx(jumpingSound);
 	App->audio->LoadFx(crashingSound);
 
-	coin_label = (Label*)App->gui->CreateLabel(100, 100, "hey buenas", false, false, App->gui->screen, WHITE);
 
+	//UI
+	App->gui->CreateScreen();
+
+	coin_label = (Label*)App->gui->CreateLabel(100, 100, "hey buenas", false, false, App->gui->screen, WHITE);
 	App->gui->CreateLabel(100, 100, "aquí estamos", false, false, coin_label);
 	return true;
 }
@@ -83,6 +86,8 @@ bool Player::CleanUp()
 	colliderPlayer_up.collider->to_delete = true;
 	colliderPlayer_right.collider->to_delete = true;
 	colliderPlayer_left.collider->to_delete = true;
+
+	App->gui->DeleteAllUIElements();
 
 	return ret;
 }

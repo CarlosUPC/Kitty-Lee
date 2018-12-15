@@ -78,6 +78,7 @@ private:
 	int camera_limit = 0;
 	int camera_origin = 0;
 	int camera_step_move = 0;
+	int camera_step_diff = 0;
 	int button_limit = 0;
 	int button_origin = 0;
 	

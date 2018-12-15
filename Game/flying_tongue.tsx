@@ -4,7 +4,7 @@
   <property name="AnimationSpeed" type="float" value="15"/>
   <property name="attackSound" value="audio/fx/bite_effect.wav"/>
  </properties>
- <image source="textures/enemies/Flying_Tongue.png" width="512" height="192"/>
+ <image source="textures/entities/enemies/Flying_Tongue.png" width="512" height="192"/>
  <tile id="0">
   <objectgroup draworder="index">
    <object id="1" name="Collider" type="COLLIDER_ENEMY" x="21" y="22" width="23" height="26"/>

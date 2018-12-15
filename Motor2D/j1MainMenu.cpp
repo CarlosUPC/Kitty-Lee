@@ -384,7 +384,7 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 		if (element == (UIElement*)website_btn)
 		{
-			open_url("https://marcianosmx.com/wp-content/uploads/2011/12/big_gorilla-e1322887919475.jpg");
+			open_url("https://carlosupc.github.io/Kitty-Lee/");
 		}
 
 		if (element == (UIElement*)quit_game_btn)

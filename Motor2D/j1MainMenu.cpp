@@ -49,8 +49,7 @@ bool j1MainMenu::Start()
 	
 	App->map->Load(lvl0.GetString());
 
-	App->render->camera.y = -150;
-	App->render->camera.x = -330;
+	App->render->CameraInitPos();
 
 	move_camera = false;
 	move_camera_back = false;
@@ -179,7 +178,8 @@ bool j1MainMenu::Update(float dt)
 				buttons[i]->interactable = false;
 		
 			}
-
+			title1->SetPos(title1->position.x-camera_step_move, title1->position.y);
+			title2->SetPos(title2->position.x - camera_step_move, title2->position.y);
 			
 			if (new_game_btn->GetLocalPosition().y < button_origin && !new_game_btn->interactable)
 			{

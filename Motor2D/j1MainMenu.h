@@ -60,9 +60,11 @@ private:
 	Button* credits_btn = nullptr;
 	Button* github_btn = nullptr;
 	Button* website_btn = nullptr;
+	Button* back_btn = nullptr;
 
 	p2DynArray<Button*> buttons;
-	
+	p2DynArray<Button*> settings;
+
 	Label* new_game_lbl = nullptr;
 	Label* continue_lbl = nullptr;
 	Label* credits_lbl = nullptr;
@@ -71,7 +73,9 @@ private:
 	p2DynArray<Label*> labels;
 
 	bool move_camera;
+	bool move_camera_back;
 	int camera_limit = 0;
+	int camera_origin = 0;
 	int camera_step_move = 0;
 	int button_limit = 0;
 	

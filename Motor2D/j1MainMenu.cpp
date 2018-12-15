@@ -63,7 +63,9 @@ bool j1MainMenu::Start()
 	App->render->camera.x = -330;
 
 	move_camera = false;
+	move_camera_back = false;
 	camera_limit = -2030;
+	camera_origin = -330;
 	camera_step_move = 20;
 
 	button_limit = 403;
@@ -111,6 +113,16 @@ bool j1MainMenu::Start()
 	website_btn->AddListener(this);
 	buttons.PushBack(website_btn);
 
+	back_btn = (Button*)App->gui->CreateButton(10, win_height - 160, { 851,452,29,24 }, App->gui->screen, { 851,452,29,24 }, { 851,452,29,24 });
+	back_btn->AddListener(this);
+
+
+	for (int i = 0; i < settings.Count(); i++)
+	{
+		settings[i]->interactable = false;
+		settings[i]->drawable = false;
+	}
+
 	for (int i = 0; i < buttons.Count(); i++)
 	{
 		buttons[i]->interactable = false;
@@ -137,36 +149,89 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	/*if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN) {
-		App->current_lvl = Levels::FIRST_LEVEL;
-		App->fade->FadeToBlack();
-	}*/
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN /*&& !move_camera*/)
+	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		press_space->drawable = false;
 
 	}
 
-	if (move_camera && App->render->camera.x > camera_limit)
-		App->render->camera.x -= camera_step_move;
-
-
+	
 	else if (!press_space->drawable)
 	{
-		for (int i = 0; i < buttons.Count(); i++)
-			buttons[i]->drawable = true;
 
-		for (int i = 0; i < labels.Count(); i++)
-			labels[i]->drawable = true;
+		//-----------CAMERA ON MENU---------------//
+		if (App->render->camera.x >= camera_origin) {
+			
+			move_camera_back = false;
 
-		if (new_game_btn->GetLocalPosition().y > button_limit && !new_game_btn->interactable)
-		{
 			for (int i = 0; i < buttons.Count(); i++)
-				buttons[i]->SetPos(buttons[i]->GetLocalPosition().x,  buttons[i]->GetLocalPosition().y - camera_step_move);
+				buttons[i]->drawable = true;
+
+			for (int i = 0; i < labels.Count(); i++)
+				labels[i]->drawable = true;
+
+			if (new_game_btn->GetLocalPosition().y > button_limit && !new_game_btn->interactable)
+			{
+				for (int i = 0; i < buttons.Count(); i++)
+					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y - camera_step_move);
+			}
+		}
+
+		//-----------MENU TO SETTINGS---------------//
+		else {
+
+			for (int i = 0; i < buttons.Count(); i++)
+			{
+				buttons[i]->interactable = false;
+				buttons[i]->drawable = false;
+
+			}
+
+			for (int i = 0; i < labels.Count(); i++)
+			{
+				labels[i]->drawable = false;
+			}
+		}
+
+		//-----------CAMERA ON SETTINGS---------------//
+		if (App->render->camera.x <= camera_limit) {
+
+			move_camera = false;
+			back_btn->interactable = true;
+			back_btn->drawable = true;
+
+			for (int i = 0; i < settings.Count(); i++)
+			{
+				settings[i]->interactable = true;
+				settings[i]->drawable = true;
+
+			}
+		}
+		//-----------SETTINGS TO MENU---------------//
+		else {
+
+			back_btn->interactable = false;
+			back_btn->drawable = false;
+
+			for (int i = 0; i < settings.Count(); i++)
+			{
+				settings[i]->interactable = false;
+				settings[i]->drawable = false;
+
+			}
 		}
 
 	
 	}
+	
+	//--------CAMERA MOVEMENT-----------//
+	if (move_camera)
+		App->render->camera.x -= camera_step_move;
+
+	if (move_camera_back)
+		App->render->camera.x += camera_step_move;
+
 
 	if (new_game_btn->GetLocalPosition().y <= button_limit)
 	{
@@ -174,20 +239,8 @@ bool j1MainMenu::Update(float dt)
 			buttons[i]->interactable = true;
 	}
 
-	if (move_camera) {
-		
-		for (int i = 0; i < buttons.Count(); i++)
-		{
-			buttons[i]->interactable = false;
-			buttons[i]->drawable = false;
+	
 
-		}
-
-		for (int i = 0; i < labels.Count(); i++)
-		{
-			labels[i]->drawable = false;
-		}
-	}
 	App->map->Draw();
 	return true;
 }
@@ -285,6 +338,12 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)settings_btn)
 		{
 			move_camera = true;
+		}
+
+		if (element == (UIElement*)back_btn)
+		{
+			move_camera_back = true;
+			
 		}
 		break;
 	}

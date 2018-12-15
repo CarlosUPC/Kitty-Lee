@@ -59,7 +59,8 @@ bool j1MainMenu::Start()
 	camera_step_move = 20;
 
 	button_limit = 403;
-	
+	button_origin = 756;
+
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
@@ -172,17 +173,21 @@ bool j1MainMenu::Update(float dt)
 		//-----------MENU TO SETTINGS---------------//
 		else {
 
+			
 			for (int i = 0; i < buttons.Count(); i++)
 			{
 				buttons[i]->interactable = false;
-				buttons[i]->drawable = false;
-
+		
 			}
 
-			for (int i = 0; i < labels.Count(); i++)
+			
+			if (new_game_btn->GetLocalPosition().y < button_origin && !new_game_btn->interactable)
 			{
-				labels[i]->drawable = false;
+				for (int i = 0; i < buttons.Count(); i++)
+					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y + camera_step_move);
 			}
+
+			
 		}
 
 		//-----------CAMERA ON SETTINGS---------------//

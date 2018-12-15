@@ -14,6 +14,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
 #include "Label.h"
+#include "Image.h"
 #include "j1EntityManager.h"
 
 #include "Brofiler/Brofiler.h"
@@ -48,8 +49,12 @@ bool Player::Start()
 	//UI
 	App->gui->CreateScreen();
 
-	coin_label = (Label*)App->gui->CreateLabel(100, 100, "hey buenas", false, false, App->gui->screen, WHITE);
-	App->gui->CreateLabel(100, 100, "aquí estamos", false, false, coin_label);
+	coin_label = App->gui->CreateLabel(100, 100, "coins   ", false, false, App->gui->screen, WHITE);
+
+	life1 = App->gui->CreateImage(0, 0, { 30,1040,42,47 }, App->gui->screen);
+	life2 = App->gui->CreateImage(life1->position.x+life1->position.w, 0, { 30,1040,42,47 }, App->gui->screen);
+	life3 = App->gui->CreateImage(life2->position.x + life2->position.w, 0, { 30,1040,42,47 }, App->gui->screen);
+
 	return true;
 }
 
@@ -156,7 +161,7 @@ void Player::SetCoins(const int &coins)
 
 void Player::UpdateUI()
 {
-	coin_label->SetText(p2SString("tu %i", coin_count).GetString());
+	coin_label->SetText(p2SString("coins %i", coin_count).GetString());
 	//life_label;
 }
 
@@ -260,7 +265,7 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_COIN:
 		coin_count++;
 		App->entities->DestroyEntity(c2->callback);
-		coin_label->SetText(p2SString("tu %i", coin_count).GetString());
+		UpdateUI();
 		break;
 	default:
 		break;

@@ -90,6 +90,9 @@
     <ClCompile Include="Slider.cpp">
       <Filter>GUI_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="CheckBox.cpp">
+      <Filter>GUI_Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">

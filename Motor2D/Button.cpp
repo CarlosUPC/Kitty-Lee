@@ -10,20 +10,28 @@ Button::Button(const int & x, const int & y, const SDL_Rect & idle, const SDL_Re
 
 void Button::InnerDraw()
 {
-	switch (current_state) {
-	case Mouse_Event::HOVER:
-		if (drawable)
+	if (drawable)
+		switch (current_state)
+		{
+		case HOVER:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
-		break;
-	case Mouse_Event::CLICKED_DOWN:
-		if (drawable)
+			break;
+		case CLICKED_DOWN:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
-		break;
-	default:
-		if (drawable)
+			break;
+		case CLICKED_REPEAT:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		case CLICKED_UP:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &hovered_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		case NONE:
 			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &idle_rect, 0.0F, false, SDL_FLIP_NONE, true);
-		break;
-	}
+			break;
+		default:
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &idle_rect, 0.0F, false, SDL_FLIP_NONE, true);
+			break;
+		}
 }
 
 void Button::SetRects(const SDL_Rect &std_rect, const SDL_Rect &hl_rect, const SDL_Rect &click_rect)

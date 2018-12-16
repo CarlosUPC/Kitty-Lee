@@ -18,6 +18,9 @@ There is two different levels: while the first one is based on the player explor
 * Role: Main Menu UI programmer, IA/pathfinding programmer, Level designer on Tiled
 
 ### Martinez de la Rosa, Christian:
+
+![](https://github.com/CarlosUPC/Kitty-Lee/blob/master/docs/foto_chris.jpg)
+
 * GitHub Account:[christt105](https://github.com/christt105).
 
 * Role: In-Game UI, Framerate normalization, entity managment, Level designer on Tiled, HUD programmer

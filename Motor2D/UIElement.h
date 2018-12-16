@@ -91,8 +91,6 @@ public:
 private:
 	UI_type type = UNKNOW;
 	
-	//SDL_Rect viewport = { 0,0,0,0 };
-	
 	int priority = 0;
 
 	p2List<j1Module*> listeners;

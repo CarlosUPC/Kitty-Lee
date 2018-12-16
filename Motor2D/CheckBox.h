@@ -1,5 +1,5 @@
-#ifndef _CHECKBOX_
-#define _CHECKBOX_
+#ifndef __CHECKBOX_H__
+#define __CHECKBOX_H__
 
 #include "UIElement.h"
 

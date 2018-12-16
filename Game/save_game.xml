@@ -3,7 +3,9 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio>
+		<volume lvl="33" />
+	</audio>
 	<map />
 	<scene>
 		<levels level="1" time="1" />

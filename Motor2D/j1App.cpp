@@ -399,6 +399,12 @@ bool j1App::GetPause()
 	return pause;
 }
 
+void j1App::GetFrameRate()
+{
+	cap_framerate = !cap_framerate;
+}
+
+
 bool j1App::LoadGameNow()
 {
 	bool ret = false;

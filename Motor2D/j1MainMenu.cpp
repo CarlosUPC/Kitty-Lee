@@ -131,6 +131,7 @@ bool j1MainMenu::Start()
 	option_fps->drawable = false;
 	option_fps->interactable = false;
 	option_fps->AddListener(this);
+	option_fps->Clicked();
 
 	option_full_screen = App->gui->CreateCheckBox(450, 580, { 586,747,57,55 }, panel_settings, { 586,747,57,55 }, { 587,818,55,56 });
 	option_full_screen->is_option = true;
@@ -138,6 +139,7 @@ bool j1MainMenu::Start()
 	option_full_screen->drawable = false;
 	option_full_screen->interactable = false;
 	option_full_screen->AddListener(this);
+
 	//-----------------------------------------------------CREDITS UI----------------------------------------------------------------//
 	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
@@ -433,6 +435,9 @@ bool j1MainMenu::CleanUp()
 	fps_lbl = nullptr;
 	full_screen_lbl = nullptr;
 
+	option_fps = nullptr;
+	option_full_screen = nullptr;
+
 	clip_credits = nullptr;
 	license_lbl = nullptr;
 	tasks_lbl = nullptr;
@@ -513,11 +518,15 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)option_fps)
 		{
 			option_fps->Clicked();
+			App->GetFrameRate();
 		}
 
 		if (element == (UIElement*)option_full_screen)
 		{
 			option_full_screen->Clicked();
+			if (option_full_screen->GetIsClicked()) {
+
+			}
 		}
 		break;
 	}

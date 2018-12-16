@@ -72,7 +72,7 @@ public:
 
 	bool Pause();
 	bool GetPause();
-
+	void GetFrameRate();
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 

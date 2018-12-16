@@ -339,7 +339,7 @@ void j1Scene::CreateMenu()
 	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, clip_volume_level, true, true, true, true);
 	slider_volume = App->gui->CreateSlider(0, 0, { 1571,1798,372,56 }, Slider_TYPE::X, panel_volume);
 	slider_volume->SetPosRespectParent(CENTERED_DOWN);
-	slider_volume->AddThumb(App->gui->CreateButton(0, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
+	slider_volume->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * slider_volume->position.w, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
 	slider_volume->GetSliderButton()->AddListener(this);
 }
 

@@ -49,7 +49,7 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 	if(c1->type == COLLIDER_TYPE::COLLIDER_ENEMY && c2->type == COLLIDER_TYPE::COLLIDER_PLAYER){
 		EnemyHit(dt);
 		App->audio->PlayFx(attack_fx);
-		stop = true;
+		//stop = true;
 	}
 	
 	if (c1->type == COLLIDER_TYPE::COLLIDER_ENTITY_DOWN && c2->type == COLLIDER_TYPE::COLLIDER_FLOOR) {

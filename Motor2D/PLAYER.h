@@ -89,6 +89,7 @@ private:
 	int jumping_fx = 0;
 	int crashing_fx = 0;
 	int coin_fx = 0;
+	int game_over_fx = 0;
 
 	bool ghost = false;
 	bool god_mode = false;
@@ -102,6 +103,7 @@ private:
 	Image* life2 = nullptr;
 	Image* life3 = nullptr;
 	SDL_Rect dead = { 102,1529,42,47 };
+	SDL_Rect alive = { 49,1529,42,47 };
 	
 	Animation anim_walking;
 	Animation anim_jump;

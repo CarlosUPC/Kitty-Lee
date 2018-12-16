@@ -73,7 +73,8 @@ private:
 	Label* continue_lbl = nullptr;
 	Label* credits_lbl = nullptr;
 	Label* settings_lbl = nullptr;
-	
+
+
 	Label* volume_lbl = nullptr;
 	Label* fx_lbl = nullptr;
 	Label* fps_lbl = nullptr;
@@ -82,8 +83,10 @@ private:
 	Label* sound_lbl = nullptr;
 	Label* graphics_lbl = nullptr;
 	
+
+	Image* clip_credits = nullptr;
+
 	Label* license_lbl = nullptr;
-	Label* team_lbl = nullptr;
 	Label* tasks_lbl = nullptr;
 
 	p2DynArray<Label*> labels;
@@ -99,9 +102,9 @@ private:
 	int camera_limit = 0;
 	int camera_origin = 0;
 	int camera_step_move = 0;
-	
+
 	int button_limit = 0;
 	int button_origin = 0;
-	
+
 };
 #endif // __j1MAINMENU_H__

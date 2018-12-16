@@ -8,6 +8,7 @@ public:
 	Coin(int x, int y);
 	~Coin();
 
+	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
 	

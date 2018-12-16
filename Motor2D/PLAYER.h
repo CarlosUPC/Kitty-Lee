@@ -88,6 +88,7 @@ private:
 	int walking_fx = 0;
 	int jumping_fx = 0;
 	int crashing_fx = 0;
+	int coin_fx = 0;
 
 	bool ghost = false;
 	bool god_mode = false;

@@ -1,15 +1,20 @@
 #include "COIN.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Audio.h"
 
 Coin::Coin(int x, int y):j1Entity(Types::COIN,x,y){
 
 	LoadEntityData("coin.tsx");
-
-	AddColliders(this);
 }
 
 Coin::~Coin() {}
+
+bool Coin::Start()
+{
+	AddColliders(this);
+	return true;
+}
 
 bool Coin::Update(float dt)
 {

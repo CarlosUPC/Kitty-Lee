@@ -44,6 +44,7 @@ bool Player::Start()
 	walking_fx = App->audio->LoadFx(walkingSound);
 	jumping_fx = App->audio->LoadFx(jumpingSound);
 	crashing_fx = App->audio->LoadFx(crashingSound);
+	coin_fx = App->audio->LoadFx("audio/fx/coin.wav");
 
 
 	//UI
@@ -276,6 +277,7 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		break;
 	case COLLIDER_COIN:
 		coin_count++;
+		App->audio->PlayFx(coin_fx);
 		App->entities->DestroyEntity(c2->callback);
 		UpdateUI();
 		break;

@@ -11,6 +11,7 @@ class UILabel;
 class Image;
 class Label;
 class Button;
+class Slider;
 
 
 
@@ -94,6 +95,8 @@ private:
 	Label* label_save = nullptr;
 	Button* button_load = nullptr;
 	Label* label_load = nullptr;
+
+	Slider* slider_volume = nullptr;
 
 	Label* label_timer = nullptr;
 	p2SString str_time;

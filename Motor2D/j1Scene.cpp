@@ -15,6 +15,7 @@
 #include "j1Gui.h"
 #include "Image.h"
 #include "Label.h"
+#include "Slider.h"
 #include "Button.h"
 #include "j1Scene.h"
 
@@ -158,7 +159,8 @@ bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateScene", Profiler::Color::Red);
 	//----------------------DEBUG KEYS-------------------------//
-	
+	if (slider_volume != nullptr)
+		LOG("%i", slider_volume->GetSliderValue());
 
 	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -315,6 +317,9 @@ void j1Scene::CreateMenu()
 	button_load->AddListener(this);
 	label_load = App->gui->CreateLabel(0, 0, "LOAD", false, false, button_load, WHITE, 20, "fonts/Munro.ttf");
 	label_load->SetPosRespectParent(CENTERED);
+
+	slider_volume = App->gui->CreateSlider(0, 0, { 1080,456,383,56 }, panel);
+	slider_volume->AddThumb(App->gui->CreateButton(0, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
 }
 
 void j1Scene::DestroyMenu()

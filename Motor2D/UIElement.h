@@ -52,7 +52,8 @@ public:
 	void Draw();
 
 	virtual void InnerDraw() {}
-	virtual void Update();
+	void Update();
+	virtual void PostUpdate() {}
 	virtual void CleanUp() {}
 
 	virtual void Scroll(char dir, float percentage) {}

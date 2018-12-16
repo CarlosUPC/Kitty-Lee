@@ -8,8 +8,8 @@
 
 
 
-UIElement::UIElement(UI_type type, const int & pos_x, const int & pos_y, UIElement * parent, bool interactable, bool draggable, const int & width, const int & height, bool drawable) 
-					: type(type), parent(parent), interactable(interactable), draggable(draggable), drawable(drawable), position({ pos_x, pos_y, width, height })
+UIElement::UIElement(UI_type type, const int & pos_x, const int & pos_y, UIElement * parent, bool interactable, bool draggable, const int & width, const int & height, bool drawable, bool clipable) 
+					: type(type), parent(parent), interactable(interactable), draggable(draggable), drawable(drawable), clipable(clipable), position({ pos_x, pos_y, width, height })
 {
 	current_state = NONE;
 	if (parent != nullptr) {

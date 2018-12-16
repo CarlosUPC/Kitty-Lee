@@ -62,9 +62,9 @@ void Slider::PostUpdate()
 		thumb->position.y = position.h - thumb->position.h;
 
 	if (type == Slider_TYPE::X)
-		value = (float)thumb->position.x / (float)position.w;
+		value = (float)(thumb->position.x + thumb->position.w / 2) / (float)position.w;
 	else
-		value = (float)thumb->position.y / (float)position.h;
+		value = (float)(thumb->position.y + thumb->position.h / 2) / (float)position.h;
 }
 
 float Slider::GetSliderValue() const

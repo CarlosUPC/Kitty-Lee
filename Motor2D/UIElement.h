@@ -46,7 +46,7 @@ class UIElement {
 public:
 
 	UIElement() : type(UNKNOW) {}
-	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0, bool drawable = true);
+	UIElement(UI_type type, const int &pos_x, const int &pos_y, UIElement* parent, bool interactable = true, bool draggable = false, const int &width = 0, const int &height = 0, bool drawable = true, bool clipable = false);
 	~UIElement() {}
 
 	void Draw();
@@ -81,6 +81,8 @@ public:
 	bool to_delete = false;
 	iPoint draw_offset = { 0,0 };
 
+	bool clipable = false;
+
 	UIElement* parent = nullptr;
 
 	p2List<UIElement*> childs;
@@ -90,8 +92,6 @@ public:
 	
 private:
 	UI_type type = UNKNOW;
-	
-	//SDL_Rect viewport = { 0,0,0,0 };
 	
 	int priority = 0;
 

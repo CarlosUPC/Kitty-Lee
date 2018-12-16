@@ -41,6 +41,8 @@ public:
 	bool Load(pugi::xml_node&);
 
 	//Raise and Decrease the volume
+	int SetVolume(float);
+	int GetVolume();
 	int RaiseVolume();
 	int DecreaseVolume();
 

@@ -160,8 +160,6 @@ bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateScene", Profiler::Color::Red);
 	//----------------------DEBUG KEYS-------------------------//
-	if (slider_volume != nullptr)
-		LOG("%f", slider_volume->GetSliderValue());
 
 	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -283,6 +281,17 @@ void j1Scene::UI_Events(UIElement* element) {
 		App->LoadGame();
 		DestroyMenu();
 	}
+
+	if (element == slider_volume->GetSliderButton() && element->current_state == CLICKED_REPEAT) {
+		if (App->audio->SetVolume(slider_volume->GetSliderValue()) < 10) {
+			speaker_cross->drawable = true;
+			speaker_sound->drawable = false;
+		}
+		else {
+			speaker_cross->drawable = false;
+			speaker_sound->drawable = true;
+		}
+	}
 	
 }
 
@@ -319,8 +328,20 @@ void j1Scene::CreateMenu()
 	label_load = App->gui->CreateLabel(0, 0, "LOAD", false, false, button_load, WHITE, 20, "fonts/Munro.ttf");
 	label_load->SetPosRespectParent(CENTERED);
 
-	slider_volume = App->gui->CreateSlider(0, 0, { 1080,456,383,56 }, Slider_TYPE::X, panel);
-	slider_volume->AddThumb(App->gui->CreateButton(0, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
+	panel_volume = App->gui->CreateImage(margin, panel_save_load->position.y + panel_save_load->position.h + margin, { 0,0,388,197 }, panel, false, false, false);
+	speaker = App->gui->CreateImage(0, 0, { 612,914,44,80 }, panel_volume);
+	speaker->SetPosRespectParent(LEFT_UP);
+	speaker_sound = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin / 2, speaker->position.y, { 676,885,44,80 }, panel_volume);
+	speaker_cross = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin, (speaker->position.h-32)/2, { 679,972,32,32 }, panel_volume);
+	speaker_cross->SetPos(speaker_sound->position.x + 10, speaker_cross->position.y);
+	speaker_cross->drawable = false;
+	clip_volume_level = App->gui->CreateImage(0, 0, { 0,0,149,100 }, panel_volume, false, false, true);
+	clip_volume_level->SetPosRespectParent(RIGHT_UP, margin / 2);
+	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, clip_volume_level, true, true, true, true);
+	slider_volume = App->gui->CreateSlider(0, 0, { 1571,1798,372,56 }, Slider_TYPE::X, panel_volume);
+	slider_volume->SetPosRespectParent(CENTERED_DOWN);
+	slider_volume->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * slider_volume->position.w, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
+	slider_volume->GetSliderButton()->AddListener(this);
 }
 
 void j1Scene::DestroyMenu()

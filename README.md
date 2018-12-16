@@ -58,6 +58,10 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 
 [Repository](https://github.com/CarlosUPC/Kitty-Lee)
 
+## Website Link
+
+[Web](https://carlosupc.github.io/Kitty-Lee/)
+
 ## Authors
 
 * **Carlos Peña** - [CarlosUPC](https://github.com/CarlosUPC)
@@ -76,6 +80,9 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 ### Second Assignment
 * Imported and remaked player load data to entity. Entity load common data and special data depending type of entity.
 * System to load all enemies you put on Tiled in each scene.
+### Third Assignment
+* Implemented system to iterate ui objects orderly using BFS algorithm. To draw objects we iterate from parent, and to get input iterate from childs.
+* Implemented a function to delete a ui object and automatically delete all its childs and delete itself of child list parent.
 
 ## Members Task
 ### Carlos Peña
@@ -89,6 +96,7 @@ See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlat
 
 ### Christian Martínez
 * Development of Entity Manager system
+* Adapt enemies to inherit from enemy father class.
 * Apply dt system
 * Cap on/off fps
 * Adapt player movement to dt system

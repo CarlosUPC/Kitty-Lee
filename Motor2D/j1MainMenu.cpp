@@ -604,17 +604,19 @@ bool j1MainMenu::Load(pugi::xml_node& data)
 	App->fade->num_level = data.child("levels").attribute("level").as_int();
 	//App->scene->start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
-	if (App->fade->num_level == 1/* && !App->scene->playerOnLvl1*/) {
-		App->scene->stg = LEVEL_2;
+	if (App->fade->num_level == 1  && !App->scene->playerOnLvl1) {
 		
 		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
-		
+		App->scene->stg = LEVEL_2;
 	}
-	else if (App->fade->num_level == 2 /*&& App->scene->playerOnLvl1*/) {
+	
+	else if (App->fade->num_level == 2 && App->scene->playerOnLvl1) {
 		
-		App->scene->stg = LEVEL_1;
+		
 		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
+		App->scene->stg = LEVEL_1;
 	}
+	
 	else ret = true;
 
 	return ret;

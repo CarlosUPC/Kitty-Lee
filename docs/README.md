@@ -10,6 +10,9 @@ There is two different levels: while the first one is based on the player explor
 ## Team members
 
 ### Peña Hernando Carlos:
+
+![](https://github.com/CarlosUPC/Kitty-Lee/blob/master/docs/foto_carlos.jpg)
+
 * GitHub Account: [CarlosUPC](https://github.com/CarlosUPC).
 
 * Role: Main Menu UI programmer, IA/pathfinding programmer, Level designer on Tiled

@@ -11,6 +11,7 @@
 #include "Label.h"
 #include "Button.h"
 #include "Slider.h"
+#include "CheckBox.h"
 #include "j1Window.h"
 
 
@@ -197,6 +198,14 @@ bool j1Gui::CheckCollision(int x, int y, p2List_item<UIElement *> * item)
 	iPoint pos = item->data->GetGlobalPosition();
 	return (x > pos.x && x < pos.x + item->data->position.w) &&
 		(y > pos.y && y < pos.y + item->data->position.h);
+}
+
+CheckBox * j1Gui::CreateCheckBox(const int &pos_x, const int &pos_y, const SDL_Rect &idle, UIElement* parent, const SDL_Rect &hover, const SDL_Rect &push)
+{
+	CheckBox* ret = nullptr;
+	ret = new CheckBox(pos_x, pos_y, idle, hover, push, parent);
+	ui_elements.add(ret);
+	return ret;
 }
 
 Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle, UIElement* parent, const SDL_Rect &hover, const SDL_Rect &push)

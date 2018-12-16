@@ -16,6 +16,7 @@
 #include "j1Gui.h"
 #include "Image.h"
 #include "Button.h"
+#include "CheckBox.h"
 #include "Label.h"
 #include "j1Url.h"
 
@@ -51,29 +52,28 @@ bool j1MainMenu::Start()
 
 	App->render->CameraInitPos();
 
-	move_camera = false;
-	move_camera_back = false;
+	move_camera_forward = false;
+	move_camera_backward = false;
 
 	camera_step_move = 20;
-	
+
 	button_limit = 403;
 	button_origin = 756;
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;
 
+	//--------------------------------------------MAIN MENU UI----------------------------------------------------//
 	title1 = App->gui->CreateLabel(win_width/6, 30, "KITTY", false, false, App->gui->screen, RED, 160, "fonts/04B_30__.ttf");
 
 	title2 = App->gui->CreateLabel(win_width/6 + 100, 180, "LEE", false, false,App->gui->screen, WHITE, 160, "fonts/04B_30__.ttf");
 	press_space = App->gui->CreateLabel(win_width / 3 + 30, win_height - 70, "PRESS SPACE TO START", false, false, App->gui->screen, WHITE, 32, "fonts/Munro.ttf");
-
 
 	new_game_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250, { 182,148,190,49 }, App->gui->screen, {181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(new_game_btn);
 	new_game_btn->AddListener(this);
 	new_game_lbl = App->gui->CreateLabel(0,0, "PLAY",false,false,new_game_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(new_game_lbl);
-
 
 	credits_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,190,49 }, App->gui->screen, { 181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(credits_btn);
@@ -92,28 +92,60 @@ bool j1MainMenu::Start()
 	settings_lbl = App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(settings_lbl);
 
-
 	quit_game_btn = App->gui->CreateButton(10, win_height + 160, { 6,309,49,49 }, App->gui->screen, { 64,309,49,49 }, { 123,309,49,49 });
 	buttons.PushBack(quit_game_btn);
 	quit_game_btn->AddListener(this);
+
 	github_btn = App->gui->CreateButton(win_width - 60, win_height + 100, { 5, 191, 49, 49 }, App->gui->screen, { 63, 191, 49, 49 }, { 122,191,49,49 });
 	github_btn->AddListener(this);
 	buttons.PushBack(github_btn);
+
 	website_btn = App->gui->CreateButton(win_width - 60, win_height + 160, { 6,429,50,49 }, App->gui->screen, { 65,429,49,49 }, { 124,432,49,45 });
 	website_btn->AddListener(this);
 	buttons.PushBack(website_btn);
 
-	back_btn = App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
-	back_btn->AddListener(this);
-	back_btn->drawable = false;
-	back_btn->interactable = false;
+	//------------------------------------------------------SETTINGS UI------------------------------------------------------------//
+	panel_settings = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
+
+	back_from_settings_btn = App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
+	back_from_settings_btn->AddListener(this);
+	back_from_settings_btn->drawable = false;
+	back_from_settings_btn->interactable = false;
+
+	sound_lbl = App->gui->CreateLabel(110, 95, "SOUND", false, false, panel_settings,YELLOW, 60, "fonts/Munro.ttf");
+	settings_labels.PushBack(sound_lbl);
+	graphics_lbl = App->gui->CreateLabel(110, 395, "GRAPHICS", false, false, panel_settings, YELLOW, 60, "fonts/Munro.ttf");
+	settings_labels.PushBack(graphics_lbl);
+	volume_lbl = App->gui->CreateLabel(185, 200, "Volume", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	settings_labels.PushBack(volume_lbl);
+	fx_lbl = App->gui->CreateLabel(185, 290, "Fx", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	settings_labels.PushBack(fx_lbl);
+    fps_lbl = App->gui->CreateLabel(185, 500, "Cap to 30 FPS", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	settings_labels.PushBack(fps_lbl);
+	full_screen_lbl = App->gui->CreateLabel(185, 590, "Full Screen", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	settings_labels.PushBack(full_screen_lbl);
+
+	option_fps = App->gui->CreateCheckBox(450, 490, { 586,747,57,55 }, panel_settings, { 586,747,57,55 }, { 587,818,55,56 });
+	option_fps->is_option = true;
+	option_fps->draggable = false;
+	option_fps->drawable = false;
+	option_fps->interactable = false;
+	option_fps->AddListener(this);
+
+	option_full_screen = App->gui->CreateCheckBox(450, 580, { 586,747,57,55 }, panel_settings, { 586,747,57,55 }, { 587,818,55,56 });
+	option_full_screen->is_option = true;
+	option_full_screen->draggable = false;
+	option_full_screen->drawable = false;
+	option_full_screen->interactable = false;
+	option_full_screen->AddListener(this);
+	//-----------------------------------------------------CREDITS UI----------------------------------------------------------------//
+	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
 	back_from_credits_btn = App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
 	back_from_credits_btn->AddListener(this);
 	back_from_credits_btn->drawable = false;
 	back_from_credits_btn->interactable = false;
 
-	panel_img = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
 	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
 	clip_credits = App->gui->CreateImage(10, 10, { 0,0,panel_credits->position.w - 10,panel_credits->position.y - 10 }, panel_credits,false,false,false);
@@ -123,10 +155,17 @@ bool j1MainMenu::Start()
 	license_lbl = App->gui->CreateLabel(10,10, license.GetString(), false, false, clip_credits, BLACK, 20, "fonts/Munro.ttf",550U);
 	license_lbl->drawable = false;
 
+
+	//-----------------SET-UP UI-------------------//
 	for (int i = 0; i < settings.Count(); i++)
 	{
 		settings[i]->interactable = false;
 		settings[i]->drawable = false;
+	}
+
+	for (int i = 0; i < settings_labels.Count(); i++)
+	{
+		settings_labels[i]->drawable = false;
 	}
 
 	for (int i = 0; i < buttons.Count(); i++)
@@ -169,8 +208,8 @@ bool j1MainMenu::Update(float dt)
 		//-----------CAMERA ON MENU---------------//
 		if (App->render->camera.x >= camera_origin) {
 
-			move_camera_back = false;
-		
+			move_camera_backward = false;
+
 
 			for (int i = 0; i < buttons.Count(); i++)
 				buttons[i]->drawable = true;
@@ -200,7 +239,7 @@ bool j1MainMenu::Update(float dt)
 
 			}
 
-			if (move_camera) {
+			if (move_camera_forward) {
 				title1->SetPos(title1->GetLocalPosition().x - camera_step_move, title1->GetLocalPosition().y);
 				title2->SetPos(title2->GetLocalPosition().x - camera_step_move, title2->GetLocalPosition().y);
 			}
@@ -217,12 +256,17 @@ bool j1MainMenu::Update(float dt)
 		//-----------CAMERA ON SETTINGS---------------//
 		if (-App->render->camera.x + App->win->GetWindowWidth() >= (App->map->data.width-1)*App->map->data.tile_width*App->win->GetScale()) {
 
-			move_camera = false;
-			back_btn->interactable = true;
-			back_btn->drawable = true;
+			move_camera_forward = false;
+			back_from_settings_btn->interactable = true;
+			back_from_settings_btn->drawable = true;
 
-			panel_img->drawable = true;
+			panel_settings->drawable = true;
 
+			option_fps->drawable = true;
+			option_fps->interactable = true;
+
+			option_full_screen->drawable = true;
+			option_full_screen->interactable = true;
 
 			for (int i = 0; i < settings.Count(); i++)
 			{
@@ -230,23 +274,28 @@ bool j1MainMenu::Update(float dt)
 				settings[i]->drawable = true;
 
 			}
-			if (panel_img->GetLocalPosition().x > 162)
+			for (int i = 0; i < settings_labels.Count(); i++)
 			{
-				panel_img->SetPos(panel_img->GetLocalPosition().x - camera_step_move*2, panel_img->GetLocalPosition().y);
+				settings_labels[i]->drawable = true;
 			}
 
-			if (panel_img->GetLocalPosition().y < button_limit/12 && panel_img->GetLocalPosition().x <= 162)
+			if (panel_settings->GetLocalPosition().x > 162)
 			{
-					panel_img->SetPos(panel_img->GetLocalPosition().x, panel_img->GetLocalPosition().y + camera_step_move);
+				panel_settings->SetPos(panel_settings->GetLocalPosition().x - camera_step_move*2, panel_settings->GetLocalPosition().y);
+			}
+
+			if (panel_settings->GetLocalPosition().y < button_limit/12 && panel_settings->GetLocalPosition().x <= 162)
+			{
+					panel_settings->SetPos(panel_settings->GetLocalPosition().x, panel_settings->GetLocalPosition().y + camera_step_move);
 			}
 		}
 		//-----------SETTINGS TO MENU---------------//
 		else {
 
-			back_btn->interactable = false;
-			back_btn->drawable = false;
+			back_from_settings_btn->interactable = false;
+			back_from_settings_btn->drawable = false;
 
-			if (move_camera_back) {
+			if (move_camera_backward) {
 				title1->SetPos(title1->GetLocalPosition().x + camera_step_move, title1->GetLocalPosition().y);
 				title2->SetPos(title2->GetLocalPosition().x + camera_step_move, title2->GetLocalPosition().y);
 			}
@@ -257,11 +306,11 @@ bool j1MainMenu::Update(float dt)
 				settings[i]->drawable = false;
 
 			}
-			if (panel_img->GetLocalPosition().y > 0 - panel_img->position.h)
+			if (panel_settings->GetLocalPosition().y > 0 - panel_settings->position.h)
 			{
-				panel_img->SetPos(panel_img->GetLocalPosition().x + camera_step_move, panel_img->GetLocalPosition().y - camera_step_move);
+				panel_settings->SetPos(panel_settings->GetLocalPosition().x + camera_step_move, panel_settings->GetLocalPosition().y - camera_step_move);
 
-				
+
 			}
 		}
 
@@ -270,7 +319,7 @@ bool j1MainMenu::Update(float dt)
 		}
 
 		if (App->render->camera.y < camera_origin && -App->render->camera.y + App->win->GetWindowHeight() < (App->map->data.height - 1)*App->map->data.tile_height*App->win->GetScale()) {
-			
+
 			if (move_camera_down) {
 				for (int i = 0; i < buttons.Count(); i++)
 					buttons[i]->SetPos(buttons[i]->GetLocalPosition().x, buttons[i]->GetLocalPosition().y - camera_step_move);
@@ -315,10 +364,10 @@ bool j1MainMenu::Update(float dt)
 	}
 
 	//--------CAMERA MOVEMENT-----------//
-	if (move_camera)
+	if (move_camera_forward)
 		App->render->camera.x -= camera_step_move;
 
-	if (move_camera_back)
+	if (move_camera_backward)
 		App->render->camera.x += camera_step_move;
 
 	if (move_camera_up)
@@ -356,6 +405,7 @@ bool j1MainMenu::CleanUp()
 
 	title1 = nullptr;
 	title2 = nullptr;
+	press_space = nullptr;
 
 	new_game_btn = nullptr;
 	continue_btn = nullptr;
@@ -369,7 +419,23 @@ bool j1MainMenu::CleanUp()
 	continue_lbl = nullptr;
 	credits_lbl = nullptr;
 	settings_lbl = nullptr;
-	press_space = nullptr;
+	
+
+	back_from_settings_btn = nullptr;
+	back_from_credits_btn = nullptr;
+	panel_settings = nullptr;
+	panel_credits = nullptr;
+
+	sound_lbl = nullptr;
+	graphics_lbl = nullptr;
+	volume_lbl = nullptr;
+	fx_lbl = nullptr;
+	fps_lbl = nullptr;
+	full_screen_lbl = nullptr;
+
+	clip_credits = nullptr;
+	license_lbl = nullptr;
+	tasks_lbl = nullptr;
 
 	for (int i = 0; i < buttons.Count(); i++)
 		buttons[i] = nullptr;
@@ -380,6 +446,16 @@ bool j1MainMenu::CleanUp()
 		labels[i] = nullptr;
 
 	labels.Clear();
+
+	for (int i = 0; i < settings_labels.Count(); i++)
+		settings_labels[i] = nullptr;
+
+	settings_labels.Clear();
+
+	for (int i = 0; i < settings.Count(); i++)
+		settings[i] = nullptr;
+
+	settings.Clear();
 
 	return true;
 }
@@ -413,12 +489,12 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 		if (element == (UIElement*)settings_btn)
 		{
-			move_camera = true;
+			move_camera_forward = true;
 		}
 
-		if (element == (UIElement*)back_btn)
+		if (element == (UIElement*)back_from_settings_btn)
 		{
-			move_camera_back = true;
+			move_camera_backward = true;
 
 		}
 
@@ -432,6 +508,16 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		{
 			move_camera_down = true;
 
+		}
+
+		if (element == (UIElement*)option_fps)
+		{
+			option_fps->Clicked();
+		}
+
+		if (element == (UIElement*)option_full_screen)
+		{
+			option_full_screen->Clicked();
 		}
 		break;
 	}

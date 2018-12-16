@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="COIN.cpp" />
     <ClCompile Include="FLYING_TONGUE.cpp" />
     <ClCompile Include="Image.cpp" />

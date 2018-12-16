@@ -5,7 +5,7 @@ A 2D platformer of a fighter cat.
 ## Getting Started
 
 This is a small project made by two students of CITM - Terrassa of Design and Development of Video Games grade.
-
+asdasdsdsdsdsd
 ### Installing
 
 * Download last release zip from our [Repository](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/releases).

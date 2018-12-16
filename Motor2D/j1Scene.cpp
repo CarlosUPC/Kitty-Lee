@@ -129,10 +129,20 @@ void j1Scene::CreateEntitiesFromXML(pugi::xml_node& node)
 			if ((j1Entity::Types)n.attribute("type").as_int() == j1Entity::Types::PLAYER) {
 				player = (Player*)ent;
 				player->SetCoins(n.attribute("coins").as_int());
+				player->SetLife(n.attribute("lifes").as_int());
 				player->UpdateUI();
 			}
 		}
 	}
+}
+
+void j1Scene::ReturnToSpawnPositionEntities()
+{
+	for (int i = 0; i < App->entities->entities.Count(); ++i) {
+		if (App->entities->entities[i] != nullptr)
+			App->entities->entities[i]->position = App->entities->entities[i]->spawn_position;
+	}
+	App->render->CameraInitPos();
 }
 
 // Called each loop iteration

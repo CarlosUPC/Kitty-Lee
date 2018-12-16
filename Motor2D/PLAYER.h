@@ -47,6 +47,7 @@ public:
 	bool GetGodMode() { return god_mode; }
 
 	void SetCoins(const int&);
+	void SetLife(const int&);
 	void UpdateUI();
 
 	bool Save(pugi::xml_node&) const;
@@ -60,6 +61,7 @@ private:
 	void AddColliders();
 	void Move(float dt);
 	void CheckState();
+	void SubstractLife();
 	void ChangeState();
 	void SetCollidersPos();
 	void IdAnimToEnum();
@@ -88,12 +90,14 @@ private:
 	bool god_mode = false;
 
 	int coin_count = 0;
+	int life = 3;
 
 	Label* coin_label = nullptr;
 
 	Image* life1 = nullptr;
 	Image* life2 = nullptr;
 	Image* life3 = nullptr;
+	SDL_Rect dead = { 79,1040,42,47 };
 	
 	Animation anim_walking;
 	Animation anim_jump;

@@ -50,10 +50,13 @@ bool Player::Start()
 	App->gui->CreateScreen();
 
 	coin_label = App->gui->CreateLabel(100, 100, "coins   ", false, false, App->gui->screen, WHITE);
+	coin_count = 0;
 
-	life1 = App->gui->CreateImage(0, 0, { 30,1040,42,47 }, App->gui->screen);
-	life2 = App->gui->CreateImage(life1->position.x+life1->position.w, 0, { 30,1040,42,47 }, App->gui->screen);
-	life3 = App->gui->CreateImage(life2->position.x + life2->position.w, 0, { 30,1040,42,47 }, App->gui->screen);
+	life = 3;
+	int margin = 30;
+	life1 = App->gui->CreateImage(margin, margin, { 30,1040,42,47 }, App->gui->screen);
+	life2 = App->gui->CreateImage(life1->position.x + life1->position.w + margin, margin, { 30,1040,42,47 }, App->gui->screen);
+	life3 = App->gui->CreateImage(life2->position.x + life2->position.w + margin, margin, { 30,1040,42,47 }, App->gui->screen);
 
 	return true;
 }
@@ -159,6 +162,11 @@ void Player::SetCoins(const int &coins)
 	coin_count = coins;
 }
 
+void Player::SetLife(const int &l)
+{
+	life = l;
+}
+
 void Player::UpdateUI()
 {
 	coin_label->SetText(p2SString("coins %i", coin_count).GetString());
@@ -175,6 +183,7 @@ bool Player::Save(pugi::xml_node &node) const
 	e_node.append_attribute("spawn_y") = (int)spawn_position.y;
 	e_node.append_attribute("type") = (int)type;
 	e_node.append_attribute("coins") = coin_count;
+	e_node.append_attribute("lifes") = life;
 
 	return true;
 }
@@ -246,12 +255,14 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		break;
 	case COLLIDER_DEATH:
 		App->LoadGame();
+		SubstractLife();
 		break;
 	case COLLIDER_ENEMY:
 		if (!death) {
 			death = true;
 			state = DEAD;
 			ChangeState();
+			SubstractLife();
 		}
 		break;
 	case COLLIDER_SCENE:
@@ -545,7 +556,8 @@ void Player::CheckState() {
 	case DEAD:
 		if (current_animation->Finished() && current_animation == &anim_death) {
 			state = IDLE;
-			App->LoadGame();
+			App->scene->ReturnToSpawnPositionEntities();
+			//App->LoadGame();
 			/*App->entities->CleanUp();
 			App->scene->CreateEntities();
 			App->render->CameraInitPos();*/
@@ -563,6 +575,25 @@ void Player::CheckState() {
 		flip = SDL_FLIP_NONE;
 	if (speed.x < 0 && flip != SDL_FLIP_HORIZONTAL)
 		flip = SDL_FLIP_HORIZONTAL;
+}
+
+void Player::SubstractLife()
+{
+	switch (life--)
+	{
+	case 3:
+		life3->SetRect(dead);
+		break;
+	case 2:
+		life2->SetRect(dead);
+		break;
+	case 1:
+		life1->SetRect(dead);
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Player::ChangeState() {

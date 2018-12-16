@@ -39,8 +39,8 @@ public:
 	void SetWalkabilityMap();
 
 	void CreateEntities();
-
 	void CreateEntitiesFromXML(pugi::xml_node & node);
+	void ReturnToSpawnPositionEntities();
 
 	// Called before all Updates
 	bool PreUpdate();

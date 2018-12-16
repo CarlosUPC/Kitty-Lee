@@ -206,18 +206,19 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 			if (c2->rect.y + c2->rect.h >= c1->rect.y)
 				position.y = c2->rect.y + c2->rect.h - collider.offset.y + c1->rect.h;
 		}
-		if (c1 == colliderPlayer_left.collider) {
+		else if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x + 1;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
-			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x + 1;
+			if (c2->rect.x <= c1->rect.x) {
+				position.x = c2->rect.x - collider.width - collider.offset.x;
+				speed.x = 0.0f;
+			}
 
 		}
 		break;
@@ -226,14 +227,14 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
-				position.x = c2->rect.x + c2->rect.w - collider.offset.x + 1;
+				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
 			speed.x = 0.0f;
 			App->audio->StopFx(1);
 			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x + 1;
+				position.x = c2->rect.x - collider.width - collider.offset.x+1;
 
 		}
 		break;

@@ -60,9 +60,9 @@ private:
 	Button* credits_btn = nullptr;
 	Button* github_btn = nullptr;
 	Button* website_btn = nullptr;
-	Button* back_btn = nullptr;
+	Button* back_from_settings_btn = nullptr;
 	Button* back_from_credits_btn = nullptr;
-	Image* panel_img = nullptr;
+	Image* panel_settings = nullptr;
 	Image* panel_credits = nullptr;
 
 
@@ -74,11 +74,21 @@ private:
 	Label* credits_lbl = nullptr;
 	Label* settings_lbl = nullptr;
 	
+	Label* volume_lbl = nullptr;
+	Label* fx_lbl = nullptr;
+	Label* fps_lbl = nullptr;
+	Label* full_screen_lbl = nullptr;
+
+	Label* sound_lbl = nullptr;
+	Label* graphics_lbl = nullptr;
+	
 	Label* license_lbl = nullptr;
 	Label* team_lbl = nullptr;
 	Label* tasks_lbl = nullptr;
 
 	p2DynArray<Label*> labels;
+	p2DynArray<Label*> settings_labels;
+
 
 	bool move_camera;
 	bool move_camera_back;

@@ -1,15 +1,17 @@
 #include "Label.h"
 #include "j1Textures.h"
 
-Label::Label(int pos_x, int pos_y, const char * txt, const Color & c, const char * path_font, const uint & size, UIElement * parent, bool interactable, bool draggable)
+Label::Label(int pos_x, int pos_y, const char * txt, const Color & c, const char * path_font, const uint & size, UIElement * parent, bool interactable, bool draggable, uint32 wrap_length)
 	: UIElement(LABEL, pos_x, pos_y, parent, interactable, draggable, true)
 {
 	font = App->fonts->Load(path_font, size);
 	text.create(txt);
 
 	SetColor(c);
+	if(wrap_length = 0)
+		texture = App->fonts->Print(text.GetString(), color, font);
+	else texture = App->fonts->PrintWrapped(text.GetString(), color, font, wrap_length);
 
-	texture = App->fonts->Print(text.GetString(), color, font);
 	App->fonts->CalcSize(txt, position.w, position.h, font);
 }
 

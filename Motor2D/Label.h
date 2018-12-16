@@ -7,7 +7,7 @@ class Label : public UIElement {
 public:
 
 	Label() : UIElement(LABEL, 0, 0, nullptr) {	}
-	Label(int pos_x, int pos_y, const char* txt, const Color &c, const char* path_font, const uint &size = 12, UIElement* parent = nullptr, bool interactable = false, bool draggable = false);
+	Label(int pos_x, int pos_y, const char* txt, const Color &c, const char* path_font, const uint &size = 12, UIElement* parent = nullptr, bool interactable = false, bool draggable = false,uint32 wrap_length = 0);
 	~Label() {}
 
 	void InnerDraw();

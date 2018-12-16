@@ -132,7 +132,6 @@ bool j1MainMenu::Start()
 	back_from_credits_btn->drawable = false;
 	back_from_credits_btn->interactable = false;
 
-	panel_settings = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
 	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
 	clip_credits = App->gui->CreateImage(10, 10, { 0,0,panel_credits->position.w - 10,panel_credits->position.y - 10 }, panel_credits,false,false,false);

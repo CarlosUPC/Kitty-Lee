@@ -74,14 +74,12 @@ private:
 	Label* credits_lbl = nullptr;
 	Label* settings_lbl = nullptr;
 
-
+	Label* sound_lbl = nullptr;
+	Label* graphics_lbl = nullptr;
 	Label* volume_lbl = nullptr;
 	Label* fx_lbl = nullptr;
 	Label* fps_lbl = nullptr;
 	Label* full_screen_lbl = nullptr;
-
-	Label* sound_lbl = nullptr;
-	Label* graphics_lbl = nullptr;
 	
 
 	Image* clip_credits = nullptr;

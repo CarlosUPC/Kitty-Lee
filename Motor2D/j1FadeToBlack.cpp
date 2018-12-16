@@ -99,7 +99,6 @@ bool j1FadeToBlack::PostUpdate()
 				App->scene->stg = LEVEL_1;
 				App->render->camera = App->render->CameraInitPos();*/
 				break;
-
 			}
 
 		
@@ -167,8 +166,15 @@ bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 	App->map->CleanUp();
 	App->map->Load(tmx_map);
 	App->map->AddCollidersMap();
-	App->scene->SetWalkabilityMap();
-	App->scene->CreateEntities();
+
+
+	App->menu->CleanUp();
+	App->menu->active = false;
+	App->scene->active = true;
+	App->scene->Start();
+
+	/*App->scene->SetWalkabilityMap();
+	App->scene->CreateEntities();*/
 
 	return ret;
 }

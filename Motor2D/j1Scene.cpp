@@ -48,7 +48,8 @@ bool j1Scene::Start()
 {
 	if(App->current_lvl == Levels::FIRST_LEVEL)
 		App->map->Load(lvl1.GetString());
-	else App->map->Load(lvl2.GetString());
+	else if (App->current_lvl == Levels::SECOND_LEVEL)
+		App->map->Load(lvl2.GetString());
 
 	App->map->AddCollidersMap();
 
@@ -348,6 +349,7 @@ void j1Scene::CheckLevel()
 		
 		isLevel1 = false;
 		break;
+	
 	default:
 		break;
 	}
@@ -355,11 +357,11 @@ void j1Scene::CheckLevel()
 
 bool j1Scene::Load(pugi::xml_node& data)
 {
-	bool ret = false;
+	bool ret = true;
 	App->fade->num_level = data.child("levels").attribute("level").as_int();
 	start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
-	if (App->fade->num_level == 1 && !isLevel1) {
+	/*if (App->fade->num_level == 1 && !isLevel1) {
 		App->scene->stg = LEVEL_1;
 		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
 	}
@@ -367,7 +369,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 		App->scene->stg = LEVEL_2;
 		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
 	}
-	else ret = true;
+	else ret = true;*/
 
 	return ret;
 }

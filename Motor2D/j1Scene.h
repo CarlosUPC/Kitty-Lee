@@ -100,7 +100,7 @@ private:
 	Image* speaker_cross = nullptr;
 	Image* speaker_sound = nullptr;
 	Image* volume_level = nullptr;
-	Image* clip_volume_level = nullptr;
+	//Image* clip_volume_level = nullptr;
 	
 
 	Label* label_timer = nullptr;

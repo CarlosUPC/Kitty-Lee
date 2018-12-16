@@ -232,10 +232,10 @@ Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, 
 	return ret;
 }
 
-Slider * j1Gui::CreateSlider(const int & pos_x, const int & pos_y, const SDL_Rect & slider_rect, UIElement * parent)
+Slider * j1Gui::CreateSlider(const int & pos_x, const int & pos_y, const SDL_Rect & slider_rect, Slider_TYPE type, UIElement * parent)
 {
 	Slider* ret = nullptr;
-	ret = new Slider(pos_x, pos_y, slider_rect, parent);
+	ret = new Slider(pos_x, pos_y, slider_rect, parent, type);
 	ui_elements.add(ret);
 	return ret;
 }

@@ -5,11 +5,13 @@
 #include "UIElement.h"
 #include "Button.h"
 
+enum class Slider_TYPE;
+
 class Slider : public UIElement
 {
-
 public:
-	Slider(const int &x, const int &y, const SDL_Rect &slider_rect, UIElement* parent = nullptr);
+
+	Slider(const int &x, const int &y, const SDL_Rect &slider_rect, UIElement* parent = nullptr, Slider_TYPE type = Slider_TYPE::Y);
 
 	void AddTargets(UIElement*);
 	void AddThumb(Button*);
@@ -24,6 +26,7 @@ public:
 private:
 
 	float value = 0.0F;
+	Slider_TYPE type = Slider_TYPE::Y;
 	Button* thumb = nullptr;
 	SDL_Rect image = { 0,0,0,0 };
 	p2List<UIElement*> control;

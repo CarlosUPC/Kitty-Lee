@@ -13,6 +13,7 @@
 #include "Slider.h"
 #include "CheckBox.h"
 #include "j1Window.h"
+#include "j1Audio.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -31,6 +32,9 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+
+	button_fx = App->audio->LoadFx(conf.child("audio").attribute("button").as_string());
+	checkbox_fx = App->audio->LoadFx(conf.child("audio").attribute("checkbox").as_string());
 
 	CreateScreen();
 
@@ -57,8 +61,17 @@ bool j1Gui::PreUpdate()
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
 	UIElement* element = nullptr;
-	if (GetElemOnMouse(mouse.x*App->win->GetScale(), mouse.y*App->win->GetScale(), element))
- 		element->Update();
+	if (GetElemOnMouse(mouse.x*App->win->GetScale(), mouse.y*App->win->GetScale(), element)) {
+		element->Update();
+		if (element->current_state == CLICKED_DOWN) {
+			if (element->GetType() == BUTTON) {
+				App->audio->PlayFx(button_fx);
+			}
+			else if (element->GetType() == CHECKBOX) {
+				App->audio->PlayFx(checkbox_fx);
+			}
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		ui_debug = !ui_debug;

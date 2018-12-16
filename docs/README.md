@@ -27,8 +27,8 @@ Our game code is structured in modules. The main module (called j1App.cpp) manag
 Two of its modules(GUI and Entity Manager) manage a subsystem of modules that follows the same structure that the explained above with the objective to have an independent enitity and UI system that connects with the logic of the core game system.
 
 ## Repository Link and last release
-[Repository](https://github.com/CarlosUPC/Kitty-Lee)
-[Release](https://github.com/CarlosUPC/Kitty-Lee/releases/tag/0.3.2)
+* [Repository](https://github.com/CarlosUPC/Kitty-Lee)
+* [Release](https://github.com/CarlosUPC/Kitty-Lee/releases/tag/0.3.2)
 
 
 ## Instructions to play

@@ -1,6 +1,6 @@
-﻿# Kitty Lee
+﻿# KITTY LEE
 
-A 2D platformer of a fighter cat.
+Welcome to our website github page!
 
 ## About the game and its context
 

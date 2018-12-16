@@ -50,7 +50,8 @@ bool Player::Start()
 	//UI
 	App->gui->CreateScreen();
 
-	coin_label = App->gui->CreateLabel(100, 100, "coins   ", false, false, App->gui->screen, WHITE);
+	coin_label = App->gui->CreateLabel(0, 0, "coins 0", false, false, App->gui->screen, WHITE);
+	coin_label->SetPosRespectParent(RIGHT_UP, 45);
 	coin_count = 0;
 
 	life = 3;

@@ -71,10 +71,6 @@ bool j1Scene::Start()
 	if (App->GetPause())
 		App->Pause();
 
-	/*new_game_btn = (Button*)App->gui->CreateButton(10 , 10, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
-	
-	new_game_lbl = (Label*)App->gui->CreateLabel(20, 5, "PLAY", false, false, new_game_btn, WHITE, 20, "fonts/Munro.ttf");*/
-
 	App->render->camera = App->render->CameraInitPos();
 
 	cameraOffset.x = (int)(win_width * 0.5f / App->win->GetScale() - App->render->camera.x);

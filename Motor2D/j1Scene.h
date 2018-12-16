@@ -13,9 +13,6 @@ class Label;
 class Button;
 class Slider;
 
-
-
-
 enum Stages {
 	LEVEL_0 = 0,
 	LEVEL_1,
@@ -96,7 +93,14 @@ private:
 	Button* button_load = nullptr;
 	Label* label_load = nullptr;
 
+	Image* panel_volume = nullptr;
 	Slider* slider_volume = nullptr;
+	Image* speaker = nullptr;
+	Image* speaker_cross = nullptr;
+	Image* speaker_sound = nullptr;
+	Image* volume_level = nullptr;
+	Image* clip_volume_level = nullptr;
+	
 
 	Label* label_timer = nullptr;
 	p2SString str_time;

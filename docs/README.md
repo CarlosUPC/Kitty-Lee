@@ -34,7 +34,7 @@ Two of its modules(GUI and Entity Manager) manage a subsystem of modules that fo
 
 ## Repository Link and last release
 * [Repository](https://github.com/CarlosUPC/Kitty-Lee)
-* [Release](https://github.com/CarlosUPC/Kitty-Lee/releases/tag/0.3.2)
+* [Release](https://github.com/CarlosUPC/Kitty-Lee/releases/tag/0.3.5)
 
 
 ## Instructions to play

@@ -54,9 +54,10 @@ bool Player::Start()
 
 	life = 3;
 	int margin = 30;
-	life1 = App->gui->CreateImage(margin, margin, { 30,1040,42,47 }, App->gui->screen);
-	life2 = App->gui->CreateImage(life1->position.x + life1->position.w + margin, margin, { 30,1040,42,47 }, App->gui->screen);
-	life3 = App->gui->CreateImage(life2->position.x + life2->position.w + margin, margin, { 30,1040,42,47 }, App->gui->screen);
+	life1 = App->gui->CreateImage(margin, margin, { 49,1529,42,47 }, App->gui->screen);
+	life2 = App->gui->CreateImage(life1->position.x + life1->position.w + margin, margin, { 49,1529,42,47 }, App->gui->screen);
+	life3 = App->gui->CreateImage(life2->position.x + life2->position.w + margin, margin, { 49,1529,42,47 }, App->gui->screen);
+	dead = { 102,1529,42,47 };
 
 	return true;
 }
@@ -231,10 +232,10 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
-			speed.x = 0.0f;
 			App->audio->StopFx(1);
-			if (c2->rect.x <= c1->rect.x)
-				position.x = c2->rect.x - collider.width - collider.offset.x+1;
+			if (c2->rect.x <= c1->rect.x) {
+				position.x = c2->rect.x - collider.width - collider.offset.x;
+			}
 
 		}
 		break;

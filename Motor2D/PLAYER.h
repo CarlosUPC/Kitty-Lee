@@ -97,7 +97,7 @@ private:
 	Image* life1 = nullptr;
 	Image* life2 = nullptr;
 	Image* life3 = nullptr;
-	SDL_Rect dead = { 79,1040,42,47 };
+	SDL_Rect dead = { 102,1529,42,47 };
 	
 	Animation anim_walking;
 	Animation anim_jump;

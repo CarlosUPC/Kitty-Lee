@@ -68,47 +68,47 @@ bool j1MainMenu::Start()
 	press_space = App->gui->CreateLabel(win_width / 3 + 30, win_height - 70, "PRESS SPACE TO START", false, false, App->gui->screen, WHITE, 32, "fonts/Munro.ttf");
 
 
-	new_game_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250, { 182,148,189,49 }, App->gui->screen, {181,92,191,49 }, { 181,42,190,45 });
+	new_game_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250, { 182,148,190,49 }, App->gui->screen, {181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(new_game_btn);
 	new_game_btn->AddListener(this);
-	new_game_lbl = (Label*)App->gui->CreateLabel(0,0, "PLAY",false,false,new_game_btn, WHITE, 20, "fonts/Munro.ttf");
+	new_game_lbl = App->gui->CreateLabel(0,0, "PLAY",false,false,new_game_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(new_game_lbl);
 
 
-	credits_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	credits_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 225, { 182,148,190,49 }, App->gui->screen, { 181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(credits_btn);
 	credits_btn->AddListener(this);
-	credits_lbl = (Label*)App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
+	credits_lbl = App->gui->CreateLabel(0, 0, "CREDITS", false, false, credits_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(credits_lbl);
 
-	continue_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 50 + 275, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	continue_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 50 + 275, { 182,148,190,49 }, App->gui->screen, { 181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(continue_btn);
-	continue_lbl = (Label*)App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
+	continue_lbl = App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(continue_lbl);
 
-	settings_btn = (Button*)App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
+	settings_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 250 + 150, { 182,148,190,49 }, App->gui->screen, { 181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(settings_btn);
 	settings_btn->AddListener(this);
-	settings_lbl = (Label*)App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
+	settings_lbl = App->gui->CreateLabel(0, 0, "SETTINGS", false, false, settings_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(settings_lbl);
 
 
-	quit_game_btn = (Button*)App->gui->CreateButton(10, win_height + 160, { 6,308,49,50 }, App->gui->screen, { 64,309,49,49 }, { 123,312,49,45 });
+	quit_game_btn = App->gui->CreateButton(10, win_height + 160, { 6,309,49,49 }, App->gui->screen, { 64,309,49,49 }, { 123,309,49,49 });
 	buttons.PushBack(quit_game_btn);
 	quit_game_btn->AddListener(this);
-	github_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 100, { 5, 191, 49, 50 }, App->gui->screen, { 62, 191, 51, 49 }, { 122,194,49,45 });
+	github_btn = App->gui->CreateButton(win_width - 60, win_height + 100, { 5, 191, 49, 49 }, App->gui->screen, { 63, 191, 49, 49 }, { 122,191,49,49 });
 	github_btn->AddListener(this);
 	buttons.PushBack(github_btn);
-	website_btn = (Button*)App->gui->CreateButton(win_width - 60, win_height + 160, { 6,429,50,49 }, App->gui->screen, { 65,429,49,49 }, { 124,432,49,45 });
+	website_btn = App->gui->CreateButton(win_width - 60, win_height + 160, { 6,429,50,49 }, App->gui->screen, { 65,429,49,49 }, { 124,432,49,45 });
 	website_btn->AddListener(this);
 	buttons.PushBack(website_btn);
 
-	back_btn = (Button*)App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
+	back_btn = App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
 	back_btn->AddListener(this);
 	back_btn->drawable = false;
 	back_btn->interactable = false;
 
-	back_from_credits_btn = (Button*)App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
+	back_from_credits_btn = App->gui->CreateButton(10, win_height - 100, { 746,502,57,48 }, App->gui->screen, { 746,502,57,48 }, { 746,502,57,48 });
 	back_from_credits_btn->AddListener(this);
 	back_from_credits_btn->drawable = false;
 	back_from_credits_btn->interactable = false;
@@ -148,7 +148,7 @@ bool j1MainMenu::PreUpdate()
 bool j1MainMenu::Update(float dt)
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN)
 	{
 		press_space->drawable = false;
 

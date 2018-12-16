@@ -8,6 +8,7 @@ class Button;
 class Label;
 class Image;
 class CheckBox;
+class Slider;
 
 class j1MainMenu : public j1Module
 {
@@ -84,6 +85,9 @@ private:
 
 	CheckBox* option_fps = nullptr;
 	CheckBox* option_full_screen = nullptr;
+
+	Slider* volume_sld = nullptr;
+	Slider* fx_sld = nullptr;
 
 	p2DynArray<Button*> buttons;
 	p2DynArray<Label*> labels;

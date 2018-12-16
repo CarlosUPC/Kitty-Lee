@@ -49,6 +49,8 @@ public:
 	bool FadeOutFx(unsigned int fx, int fade = 0);
 	bool StopFx(unsigned int fx);
 
+	int SetFx(float);
+
 private:
 
 	_Mix_Music*			music;

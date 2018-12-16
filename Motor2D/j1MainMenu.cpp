@@ -114,9 +114,18 @@ bool j1MainMenu::Start()
 	back_from_credits_btn->interactable = false;
 
 	panel_img = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
+	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
-	panel_credits = App->gui->CreateImage(win_width / 2 - 215, win_height, { 14,498,431,512 }, App->gui->screen, false, false, false);
+	p2SString license;
+	license.create("MIT License                                                                                           Copyright(c) 2017 \n                                                                                        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ''Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions : \n                                                                                          The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n                                                                                                      THE SOFTWARE IS PROVIDED ''AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.");
 
+	license_lbl = App->gui->CreateLabel(5,5, license.GetString(), false, false, panel_credits, BLACK, 20, "fonts/Munro.ttf",550U);
+	license_lbl->drawable = false;
+
+	p2SString team;
+	team.create("KITTY LEE'S DEVELOPERS: \n                                                                                                           Carlos Penya Hernando: https://github.com/CarlosUPC \n                                                                                                     Christian Martinez de la Rosa:https://github.com/christt105");
+	team_lbl = App->gui->CreateLabel(5, 470, team.GetString(), false, false, panel_credits, BLACK, 20, "fonts/Munro.ttf", 550U);
+	team_lbl->drawable = false;
 
 	for (int i = 0; i < settings.Count(); i++)
 	{
@@ -299,6 +308,8 @@ bool j1MainMenu::Update(float dt)
 			back_from_credits_btn->drawable = true;
 
 			panel_credits->drawable = true;
+			license_lbl->drawable = true;
+			team_lbl->drawable = true;
 
 			if (panel_credits->GetLocalPosition().y > button_limit/3)
 			{

@@ -30,6 +30,9 @@ void UIElement::Draw()
 			draw_offset.y += p->position.y;
 		}
 	}
+
+	
+
 	/*
 	//check element is inside parent boundaries
 	if (position.x < 0) position.x = 0;
@@ -42,7 +45,7 @@ void UIElement::Draw()
 
 	//App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 	InnerDraw();
-	//App->render->ResetViewPort();
+	
 }
 
 void UIElement::Update() {

@@ -207,10 +207,10 @@ Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect 
 	return ret;
 }
 
-Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable, bool draggable, UIElement* parent, Color color, const uint &size, const char* font)
+Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable, bool draggable, UIElement* parent, Color color, const uint &size, const char* font, uint32 wrap_length)
 {
 	Label* ret = nullptr;
-	ret = new Label(pos_x, pos_y, text, color, font, size, parent, interactable, draggable);
+	ret = new Label(pos_x, pos_y, text, color, font, size, parent, interactable, draggable,wrap_length);
 	ui_elements.add(ret);
 	return ret;
 }

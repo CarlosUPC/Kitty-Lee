@@ -8,7 +8,7 @@ Label::Label(int pos_x, int pos_y, const char * txt, const Color & c, const char
 	text.create(txt);
 
 	SetColor(c);
-	if(wrap_length = 0)
+	if(wrap_length == 0U)
 		texture = App->fonts->Print(text.GetString(), color, font);
 	else texture = App->fonts->PrintWrapped(text.GetString(), color, font, wrap_length);
 
@@ -19,6 +19,7 @@ void Label::InnerDraw()
 {
 	if (drawable)
 		App->render->Blit(texture, draw_offset.x, draw_offset.y, NULL, 0.0F, false, SDL_FLIP_NONE, true);
+
 }
 
 void Label::SetText(const char * txt)

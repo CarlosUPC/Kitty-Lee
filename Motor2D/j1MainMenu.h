@@ -73,6 +73,10 @@ private:
 	Label* continue_lbl = nullptr;
 	Label* credits_lbl = nullptr;
 	Label* settings_lbl = nullptr;
+	
+	Label* license_lbl = nullptr;
+	Label* team_lbl = nullptr;
+	Label* tasks_lbl = nullptr;
 
 	p2DynArray<Label*> labels;
 

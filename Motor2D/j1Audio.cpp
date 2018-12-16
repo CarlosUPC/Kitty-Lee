@@ -208,9 +208,10 @@ bool j1Audio::StopFx(unsigned int id)
 }
 
 
-bool j1Audio::Save(pugi::xml_node& save) {
+bool j1Audio::Save(pugi::xml_node& save) const{
 	
-	return save.append_child("volume").attribute("lvl").set_value(volumeMusic);
+	save.append_child("volume").append_attribute("lvl") = GetVolume();
+	return true;
 }
 
 bool j1Audio::Load(pugi::xml_node& load) {
@@ -224,7 +225,7 @@ int j1Audio::SetVolume(float volume)
 	return Mix_VolumeMusic(MIX_MAX_VOLUME*volume);
 }
 
-int j1Audio::GetVolume()
+int j1Audio::GetVolume() const
 {
 	return Mix_VolumeMusic(-1);
 }

@@ -35,14 +35,14 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 	//Save states
-	bool Save(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	//Load states
 	bool Load(pugi::xml_node&);
 
 	//Raise and Decrease the volume
 	int SetVolume(float);
-	int GetVolume();
+	int GetVolume() const;
 	int RaiseVolume();
 	int DecreaseVolume();
 

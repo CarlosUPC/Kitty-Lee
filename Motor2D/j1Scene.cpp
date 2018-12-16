@@ -166,6 +166,7 @@ bool j1Scene::Update(float dt)
 		if (!playerOnLvl1) App->fade->FadeToBlack();
 		else {
 			player->position = player->spawn_position;
+			player->speed.SetToZero();
 			App->render->CameraInitPos();
 		}
 	}
@@ -178,11 +179,11 @@ bool j1Scene::Update(float dt)
 	}
 	
 	//F3 - Increase music volume
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_REPEAT)
 		App->audio->RaiseVolume();
 
 	//F4 - Decrease music volume
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_REPEAT)
 		App->audio->DecreaseVolume();
 
 	//F5 - Save the currant state
@@ -199,8 +200,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		stg = LEVEL_0;
-		//App->current_lvl = Levels::MENU;
-		//App->fade->FadeToBlack();
+		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {

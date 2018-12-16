@@ -8,9 +8,14 @@
 class UIElement;
 class Button;
 class Label;
-class Image;
 class Slider;
+class Image;
 class CheckBox;
+
+enum class Slider_TYPE {
+	X,
+	Y
+};
 
 enum Color
 {
@@ -58,7 +63,7 @@ public:
 	Button* CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, UIElement* parent = nullptr, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 });
 	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr, bool interactable = false, bool draggable = false, bool drawable = true);
 	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable = false, bool draggable = false, UIElement* parent = nullptr, Color color = WHITE, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT, uint32 wrap_length = 0U);
-	Slider * CreateSlider(const int &x, const int &y, const SDL_Rect &slider_rect, UIElement* parent = nullptr);
+	Slider * CreateSlider(const int &x, const int &y, const SDL_Rect &slider_rect, Slider_TYPE type, UIElement* parent = nullptr);
 
 	bool DeleteUIElement(UIElement * element);
 	void BFS(p2List<UIElement *> &visited, UIElement * elem);

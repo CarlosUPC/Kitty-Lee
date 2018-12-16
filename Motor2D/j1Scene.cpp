@@ -345,6 +345,7 @@ void j1Scene::CreateMenu()
 	slider_volume->SetPosRespectParent(CENTERED_DOWN);
 	slider_volume->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * slider_volume->position.w, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));
 	slider_volume->GetSliderButton()->AddListener(this);
+	
 }
 
 void j1Scene::DestroyMenu()

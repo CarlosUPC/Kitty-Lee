@@ -225,6 +225,11 @@ int j1Audio::SetVolume(float volume)
 	return Mix_VolumeMusic(MIX_MAX_VOLUME*volume);
 }
 
+int j1Audio::SetFx(float volume)
+{
+	return Mix_Volume(-1,MIX_MAX_VOLUME*volume);
+}
+
 int j1Audio::GetVolume() const
 {
 	return Mix_VolumeMusic(-1);

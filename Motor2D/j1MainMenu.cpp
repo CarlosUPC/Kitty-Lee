@@ -18,6 +18,7 @@
 #include "Button.h"
 #include "CheckBox.h"
 #include "Label.h"
+#include "Slider.h"
 #include "j1Url.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -117,13 +118,13 @@ bool j1MainMenu::Start()
 	settings_labels.PushBack(sound_lbl);
 	graphics_lbl = App->gui->CreateLabel(110, 395, "GRAPHICS", false, false, panel_settings, YELLOW, 60, "fonts/Munro.ttf");
 	settings_labels.PushBack(graphics_lbl);
-	volume_lbl = App->gui->CreateLabel(185, 200, "Volume", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	volume_lbl = App->gui->CreateLabel(160, 200, "Volume", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
 	settings_labels.PushBack(volume_lbl);
-	fx_lbl = App->gui->CreateLabel(185, 290, "Fx", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	fx_lbl = App->gui->CreateLabel(160, 290, "Fx", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
 	settings_labels.PushBack(fx_lbl);
-    fps_lbl = App->gui->CreateLabel(185, 500, "Cap to 30 FPS", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+    fps_lbl = App->gui->CreateLabel(160, 500, "Cap to 30 FPS", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
 	settings_labels.PushBack(fps_lbl);
-	full_screen_lbl = App->gui->CreateLabel(185, 590, "Full Screen", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
+	full_screen_lbl = App->gui->CreateLabel(160, 590, "Full Screen", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
 	settings_labels.PushBack(full_screen_lbl);
 
 	option_fps = App->gui->CreateCheckBox(450, 490, { 586,747,57,55 }, panel_settings, { 586,747,57,55 }, { 587,818,55,56 });
@@ -141,6 +142,21 @@ bool j1MainMenu::Start()
 	option_full_screen->interactable = false;
 	option_full_screen->AddListener(this);
 
+	volume_sld = App->gui->CreateSlider(295, 200, { 1571,1798,372,56 }, Slider_TYPE::X, panel_settings);
+	volume_sld->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * volume_sld->position.w, 0, { 663,594,40,56 }, volume_sld, { 663,594,40,56 }, { 663,594,40,56 }));
+	volume_sld->GetSliderButton()->AddListener(this);
+	volume_sld->drawable = false;
+	volume_sld->interactable = false;
+	volume_sld->GetSliderButton()->drawable = false;
+	volume_sld->GetSliderButton()->interactable = false;
+
+	fx_sld = App->gui->CreateSlider(295, 290, { 1571,1798,372,56 }, Slider_TYPE::X, panel_settings);
+	fx_sld->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * fx_sld->position.w, 0, { 663,594,40,56 }, fx_sld, { 663,594,40,56 }, { 663,594,40,56 }));
+	fx_sld->GetSliderButton()->AddListener(this);
+	fx_sld->drawable = false;
+	fx_sld->interactable = false;
+	fx_sld->GetSliderButton()->drawable = false;
+	fx_sld->GetSliderButton()->interactable = false;
 	//-----------------------------------------------------CREDITS UI----------------------------------------------------------------//
 	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
@@ -153,7 +169,7 @@ bool j1MainMenu::Start()
 
 	clip_credits = App->gui->CreateImage(10, 10, { 0,0,panel_credits->position.w - 10,panel_credits->position.y - 10 }, panel_credits,false,false,false);
 	p2SString license;
-	license.create("MIT License\nCopyright(c) 2017\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ''Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions : \n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n\nTHE SOFTWARE IS PROVIDED ''AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\nKITTY LEE'S DEVELOPERS:\n\nCarlos Penya Hernando: https://github.com/CarlosUPC \n\nChristian Martinez de la Rosa:https://github.com/christt105");
+	license.create("MIT License\nCopyright(c) 2017\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ''Software''), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions : \n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n\nTHE SOFTWARE IS PROVIDED ''AS IS'', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\nKITTY LEE'S DEVELOPERS:\nCarlos Penya Hernando: https://github.com/CarlosUPC \nChristian Martinez de la Rosa: https://github.com/christt105");
 
 	license_lbl = App->gui->CreateLabel(10,10, license.GetString(), false, false, clip_credits, BLACK, 20, "fonts/Munro.ttf",550U);
 	license_lbl->drawable = false;
@@ -270,6 +286,18 @@ bool j1MainMenu::Update(float dt)
 
 			option_full_screen->drawable = true;
 			option_full_screen->interactable = true;
+
+			volume_sld->drawable = true;
+			volume_sld->interactable = true;
+
+			volume_sld->GetSliderButton()->drawable = true;
+			volume_sld->GetSliderButton()->interactable = true;
+
+			fx_sld->drawable = true;
+			fx_sld->interactable = true;
+
+			fx_sld->GetSliderButton()->drawable = true;
+			fx_sld->GetSliderButton()->interactable = true;
 
 			for (int i = 0; i < settings.Count(); i++)
 			{
@@ -482,9 +510,9 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		{
 			//App->current_lvl = Levels::LOADING;
 			App->LoadGame();
-			
+
 		}
-		
+
 
 		if (element == (UIElement*)github_btn)
 		{
@@ -533,21 +561,35 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)option_full_screen)
 		{
 			option_full_screen->Clicked();
-			
-				if (App->win->fullscreen) {
-					App->win->fullscreen = false;
-					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_SHOWN);
-					break;
-				}
-				else {
-					App->win->fullscreen = true;
-					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
-					break;
-				}
-			
+
+			if (App->win->fullscreen) {
+				App->win->fullscreen = false;
+				SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_SHOWN);
+				break;
+			}
+			else {
+				App->win->fullscreen = true;
+				SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+				break;
+			}
+
+		}
+		break;
+
+	case Mouse_Event::CLICKED_REPEAT:
+
+		if (element == (UIElement*)volume_sld->GetSliderButton()) {
+
+			App->audio->SetVolume(volume_sld->GetSliderValue());
+		}
+
+		if (element == (UIElement*)fx_sld->GetSliderButton()) {
+
+			App->audio->SetFx(fx_sld->GetSliderValue());
 		}
 		break;
 	}
+				
 
 }
 

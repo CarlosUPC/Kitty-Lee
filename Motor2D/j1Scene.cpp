@@ -322,8 +322,9 @@ void j1Scene::CreateMenu()
 	speaker_sound = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin / 2, speaker->position.y, { 676,885,44,80 }, panel_volume);
 	speaker_cross = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin, (speaker->position.h-32)/2, { 679,972,32,32 }, panel_volume);
 	speaker_cross->SetPos(speaker_sound->position.x + 10, speaker_cross->position.y);
-	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, panel_volume);
-	volume_level->SetPosRespectParent(RIGHT_UP,margin/2);
+	clip_volume_level = App->gui->CreateImage(0, 0, { 0,0,149,100 }, panel_volume, false, false, true);
+	clip_volume_level->SetPosRespectParent(RIGHT_UP, margin / 2);
+	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, clip_volume_level, true, true, true, true);
 	slider_volume = App->gui->CreateSlider(0, 0, { 1571,1798,372,56 }, Slider_TYPE::X, panel_volume);
 	slider_volume->SetPosRespectParent(CENTERED_DOWN);
 	slider_volume->AddThumb(App->gui->CreateButton(0, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));

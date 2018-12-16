@@ -7,7 +7,7 @@ class Image : public UIElement {
 public:
 
 	Image() : UIElement(IMAGE, 0, 0, nullptr) {}
-	Image(int pos_x, int pos_y, const SDL_Rect &image, UIElement* parent, bool inter = true, bool drag = false, bool draw = true);
+	Image(int pos_x, int pos_y, const SDL_Rect &image, UIElement* parent, bool inter = true, bool drag = false, bool draw = true, bool clipable = false);
 	~Image() {}
 
 	void InnerDraw();

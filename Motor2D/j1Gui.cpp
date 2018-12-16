@@ -216,10 +216,10 @@ Button * j1Gui::CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect 
 	return ret;
 }
 
-Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent, bool interactable, bool draggable, bool drawable)
+Image * j1Gui::CreateImage(const int & pos_x, const int & pos_y, const SDL_Rect & rect, UIElement * parent, bool interactable, bool draggable, bool drawable, bool clipable)
 {
 	Image* ret = nullptr;
-	ret = new Image(pos_x, pos_y, rect, parent, interactable, draggable, drawable);
+	ret = new Image(pos_x, pos_y, rect, parent, interactable, draggable, drawable, clipable);
 	ui_elements.add(ret);
 	return ret;
 }

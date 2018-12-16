@@ -45,20 +45,23 @@ bool Player::Start()
 	jumping_fx = App->audio->LoadFx(jumpingSound);
 	crashing_fx = App->audio->LoadFx(crashingSound);
 	coin_fx = App->audio->LoadFx("audio/fx/coin.wav");
+	game_over_fx = App->audio->LoadFx("audio/fx/GameOver.wav");
 
 
 	//UI
 	App->gui->CreateScreen();
 
-	coin_label = App->gui->CreateLabel(100, 100, "coins   ", false, false, App->gui->screen, WHITE);
+	coin_label = App->gui->CreateLabel(0, 0, "coins 0", false, false, App->gui->screen, WHITE);
+	coin_label->SetPosRespectParent(RIGHT_UP, 45);
 	coin_count = 0;
 
 	life = 3;
 	int margin = 30;
-	life1 = App->gui->CreateImage(margin, margin, { 49,1529,42,47 }, App->gui->screen);
-	life2 = App->gui->CreateImage(life1->position.x + life1->position.w + margin, margin, { 49,1529,42,47 }, App->gui->screen);
-	life3 = App->gui->CreateImage(life2->position.x + life2->position.w + margin, margin, { 49,1529,42,47 }, App->gui->screen);
+	alive = { 49,1529,42,47 };
 	dead = { 102,1529,42,47 };
+	life1 = App->gui->CreateImage(margin, margin, alive, App->gui->screen);
+	life2 = App->gui->CreateImage(life1->position.x + life1->position.w + margin, margin, alive, App->gui->screen);
+	life3 = App->gui->CreateImage(life2->position.x + life2->position.w + margin, margin, alive, App->gui->screen);
 
 	return true;
 }
@@ -559,6 +562,7 @@ void Player::CheckState() {
 	case DEAD:
 		if (current_animation->Finished() && current_animation == &anim_death) {
 			state = IDLE;
+			death = false;
 			App->scene->ReturnToSpawnPositionEntities();
 			//App->LoadGame();
 			/*App->entities->CleanUp();
@@ -595,6 +599,15 @@ void Player::SubstractLife()
 		break;
 	default:
 		break;
+	}
+	if (life <= 0) {
+		App->scene->ReturnToSpawnPositionEntities();
+		life = 3;
+		coin_count = 0;
+		life1->SetRect(alive);
+		life2->SetRect(alive);
+		life3->SetRect(alive);
+		App->audio->PlayFx(game_over_fx);
 	}
 
 }

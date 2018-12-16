@@ -71,10 +71,6 @@ bool j1Scene::Start()
 	if (App->GetPause())
 		App->Pause();
 
-	/*new_game_btn = (Button*)App->gui->CreateButton(10 , 10, { 182,148,189,49 }, App->gui->screen, { 181,92,191,49 }, { 181,42,190,45 });
-	
-	new_game_lbl = (Label*)App->gui->CreateLabel(20, 5, "PLAY", false, false, new_game_btn, WHITE, 20, "fonts/Munro.ttf");*/
-
 	App->render->camera = App->render->CameraInitPos();
 
 	cameraOffset.x = (int)(win_width * 0.5f / App->win->GetScale() - App->render->camera.x);
@@ -331,7 +327,7 @@ void j1Scene::CreateMenu()
 
 	panel_volume = App->gui->CreateImage(margin, panel_save_load->position.y + panel_save_load->position.h + margin, { 0,0,388,197 }, panel, false, false, false);
 	speaker = App->gui->CreateImage(0, 0, { 612,914,44,80 }, panel_volume);
-	speaker->SetPosRespectParent(LEFT_UP);
+	speaker->SetPosRespectParent(CENTERED_UP,margin/2);
 	speaker_sound = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin / 2, speaker->position.y, { 676,885,44,80 }, panel_volume);
 	speaker_cross = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin, (speaker->position.h-32)/2, { 679,972,32,32 }, panel_volume);
 	speaker_cross->SetPos(speaker_sound->position.x + 10, speaker_cross->position.y);
@@ -339,9 +335,9 @@ void j1Scene::CreateMenu()
 		speaker_cross->drawable = false;
 	else
 		speaker_sound->drawable = false;
-	clip_volume_level = App->gui->CreateImage(0, 0, { 0,0,149,100 }, panel_volume, false, false, true);
-	clip_volume_level->SetPosRespectParent(RIGHT_UP, margin / 2);
-	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, clip_volume_level, true, true, true, true);
+	/*clip_volume_level = App->gui->CreateImage(0, 0, { 0,0,149,100 }, panel_volume, false, false, true);
+	clip_volume_level->SetPosRespectParent(RIGHT_UP, margin / 2);*/
+	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, panel_volume, true, true, true, true);
 	slider_volume = App->gui->CreateSlider(0, 0, { 1571,1798,372,56 }, Slider_TYPE::X, panel_volume);
 	slider_volume->SetPosRespectParent(CENTERED_DOWN);
 	slider_volume->AddThumb(App->gui->CreateButton(App->audio->GetVolume() / SDL_MIX_MAXVOLUME * slider_volume->position.w, 0, { 663,594,40,56 }, slider_volume, { 663,594,40,56 }, { 663,594,40,56 }));

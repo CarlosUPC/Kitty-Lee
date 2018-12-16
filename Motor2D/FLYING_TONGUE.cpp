@@ -50,7 +50,7 @@ void FlyingTongue::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_PLAYER:
 		EnemyHit(dt);
 		App->audio->PlayFx(attack_fx);
-		stop = true;
+		//stop = true;
 		break;
 	}
 }

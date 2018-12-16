@@ -45,15 +45,16 @@ public:
 
 
 public:
-	uint win_width;
-	uint win_height;
+	uint win_width = 0;
+	uint win_height = 0;
 	bool can_load = false;
+
 private:
 	p2SString lvl0;
 
-	Label* title1;
-	Label* title2;
-	Label* press_space;
+	Label* title1 = nullptr;
+	Label* title2 = nullptr;
+	Label* press_space = nullptr;
 
 	Button* new_game_btn = nullptr;
 	Button* continue_btn = nullptr;
@@ -95,10 +96,10 @@ private:
 	p2DynArray<Label*> settings_labels;
 
 
-	bool move_camera_forward;
-	bool move_camera_backward;
-	bool move_camera_down;
-	bool move_camera_up;
+	bool move_camera_forward = false;
+	bool move_camera_backward = false;
+	bool move_camera_down = false;
+	bool move_camera_up = false;
 
 
 	int camera_limit = 0;

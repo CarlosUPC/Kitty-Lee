@@ -21,6 +21,9 @@
 #include "Slider.h"
 #include "j1Url.h"
 
+#include "Brofiler/Brofiler.h"
+
+
 j1MainMenu::j1MainMenu() : j1Module()
 {
 	name.create("menu");
@@ -213,6 +216,7 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateMainMenu", Profiler::Color::Red);
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN)
 	{
@@ -508,8 +512,8 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 		if (element == (UIElement*)continue_btn)
 		{
-			//App->current_lvl = Levels::LOADING;
-			App->LoadGame();
+			if(can_load)
+				App->LoadGame();
 
 		}
 
@@ -600,13 +604,13 @@ bool j1MainMenu::Load(pugi::xml_node& data)
 	App->fade->num_level = data.child("levels").attribute("level").as_int();
 	//App->scene->start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
-	if (App->fade->num_level == 1 && !App->scene->playerOnLvl1) {
+	if (App->fade->num_level == 1/* && !App->scene->playerOnLvl1*/) {
 		App->scene->stg = LEVEL_2;
 		
 		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
 		
 	}
-	else if (App->fade->num_level == 2 && App->scene->playerOnLvl1) {
+	else if (App->fade->num_level == 2 /*&& App->scene->playerOnLvl1*/) {
 		
 		App->scene->stg = LEVEL_1;
 		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());

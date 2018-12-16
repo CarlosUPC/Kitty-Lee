@@ -47,7 +47,7 @@ public:
 public:
 	uint win_width;
 	uint win_height;
-
+	bool can_load = false;
 private:
 	p2SString lvl0;
 

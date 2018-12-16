@@ -15,6 +15,7 @@
 #include "j1Window.h"
 #include "j1Audio.h"
 
+#include "Brofiler\Brofiler.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -58,6 +59,8 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
+	BROFILER_CATEGORY("GUI Update", Profiler::Color::Gray)
+
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
 	UIElement* element = nullptr;
@@ -81,6 +84,8 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::PostUpdate()
 {
+	BROFILER_CATEGORY("GUI Draw", Profiler::Color::BlanchedAlmond)
+
 	for (int i = 0; i < ui_elements.count(); ++i) {
 		if (ui_elements[i]->to_delete)
 			DeleteUIElement(ui_elements[i]);

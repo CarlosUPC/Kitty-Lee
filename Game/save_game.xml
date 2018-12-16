@@ -8,7 +8,7 @@
 	</audio>
 	<map />
 	<scene>
-		<levels level="1" time="6" />
+		<levels level="1" time="1" />
 	</scene>
 	<menu>
 		<levels level="1" />
@@ -16,24 +16,25 @@
 	<pathfinding />
 	<colliders />
 	<entities>
-		<entity x="240" y="240" spawn_x="96" spawn_y="256" type="0" coins="3" lifes="3" />
-		<entity x="661" y="352" spawn_x="688" spawn_y="352" type="1" />
-		<entity x="367" y="290" spawn_x="367" spawn_y="290" type="3" />
-		<entity x="254" y="297" spawn_x="254" spawn_y="297" type="3" />
-		<entity x="317" y="262" spawn_x="317" spawn_y="262" type="3" />
-		<entity x="421" y="293" spawn_x="421" spawn_y="293" type="3" />
-		<entity x="382" y="260" spawn_x="382" spawn_y="260" type="3" />
-		<entity x="403" y="302" spawn_x="403" spawn_y="302" type="3" />
-		<entity x="471" y="318" spawn_x="471" spawn_y="318" type="3" />
-		<entity x="497" y="292" spawn_x="497" spawn_y="292" type="3" />
-		<entity x="509" y="329" spawn_x="509" spawn_y="329" type="3" />
-		<entity x="517" y="356" spawn_x="517" spawn_y="356" type="3" />
-		<entity x="521" y="296" spawn_x="521" spawn_y="296" type="3" />
+		<entity x="96" y="240" spawn_x="96" spawn_y="208" type="0" coins="0" lifes="3" />
+		<entity x="749" y="304" spawn_x="784" spawn_y="304" type="1" />
+		<entity x="160" y="240" spawn_x="160" spawn_y="240" type="3" />
+		<entity x="256" y="192" spawn_x="256" spawn_y="192" type="3" />
+		<entity x="352" y="144" spawn_x="352" spawn_y="144" type="3" />
+		<entity x="416" y="160" spawn_x="416" spawn_y="160" type="3" />
+		<entity x="528" y="176" spawn_x="528" spawn_y="176" type="3" />
+		<entity x="560" y="176" spawn_x="560" spawn_y="176" type="3" />
+		<entity x="608" y="128" spawn_x="608" spawn_y="128" type="3" />
+		<entity x="656" y="176" spawn_x="656" spawn_y="176" type="3" />
+		<entity x="688" y="176" spawn_x="688" spawn_y="176" type="3" />
+		<entity x="720" y="176" spawn_x="720" spawn_y="176" type="3" />
+		<entity x="704" y="144" spawn_x="704" spawn_y="144" type="3" />
+		<entity x="672" y="144" spawn_x="672" spawn_y="144" type="3" />
 	</entities>
 	<fonts />
 	<gui />
 	<:anonymous />
 	<renderer>
-		<camera x="-264" y="-342" />
+		<camera x="0" y="-342" />
 	</renderer>
 </game_state>

@@ -21,6 +21,9 @@
 #include "Slider.h"
 #include "j1Url.h"
 
+#include "Brofiler/Brofiler.h"
+
+
 j1MainMenu::j1MainMenu() : j1Module()
 {
 	name.create("menu");
@@ -213,6 +216,7 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
+	BROFILER_CATEGORY("UpdateMainMenu", Profiler::Color::Red);
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN)
 	{

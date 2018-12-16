@@ -31,7 +31,7 @@ enum Levels
 	TUTORIAL,
 	FIRST_LEVEL,
 	SECOND_LEVEL,
-	LOADING
+	
 };
 
 

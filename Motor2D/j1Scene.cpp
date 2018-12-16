@@ -18,7 +18,7 @@
 #include "Slider.h"
 #include "Button.h"
 #include "j1Scene.h"
-
+#include "j1MainMenu.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -274,6 +274,7 @@ void j1Scene::UI_Events(UIElement* element) {
 	}
 
 	if (element == button_save && element->current_state == CLICKED_DOWN) {
+		App->menu->can_load = true;
 		App->SaveGame();
 	}
 

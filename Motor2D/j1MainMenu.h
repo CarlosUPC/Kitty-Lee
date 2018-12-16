@@ -49,6 +49,7 @@ public:
 
 private:
 	p2SString lvl0;
+
 	Label* title1;
 	Label* title2;
 	Label* press_space;
@@ -65,10 +66,6 @@ private:
 	Image* panel_settings = nullptr;
 	Image* panel_credits = nullptr;
 
-
-	p2DynArray<Button*> buttons;
-	p2DynArray<Button*> settings;
-
 	Label* new_game_lbl = nullptr;
 	Label* continue_lbl = nullptr;
 	Label* credits_lbl = nullptr;
@@ -81,18 +78,18 @@ private:
 	Label* fps_lbl = nullptr;
 	Label* full_screen_lbl = nullptr;
 	
-
 	Image* clip_credits = nullptr;
-
 	Label* license_lbl = nullptr;
 	Label* tasks_lbl = nullptr;
 
+	p2DynArray<Button*> buttons;
 	p2DynArray<Label*> labels;
+	p2DynArray<Button*> settings;
 	p2DynArray<Label*> settings_labels;
 
 
-	bool move_camera;
-	bool move_camera_back;
+	bool move_camera_forward;
+	bool move_camera_backward;
 	bool move_camera_down;
 	bool move_camera_up;
 

@@ -51,8 +51,8 @@ bool j1MainMenu::Start()
 
 	App->render->CameraInitPos();
 
-	move_camera = false;
-	move_camera_back = false;
+	move_camera_forward = false;
+	move_camera_backward = false;
 
 	camera_step_move = 20;
 
@@ -194,7 +194,7 @@ bool j1MainMenu::Update(float dt)
 		//-----------CAMERA ON MENU---------------//
 		if (App->render->camera.x >= camera_origin) {
 
-			move_camera_back = false;
+			move_camera_backward = false;
 
 
 			for (int i = 0; i < buttons.Count(); i++)
@@ -225,7 +225,7 @@ bool j1MainMenu::Update(float dt)
 
 			}
 
-			if (move_camera) {
+			if (move_camera_forward) {
 				title1->SetPos(title1->GetLocalPosition().x - camera_step_move, title1->GetLocalPosition().y);
 				title2->SetPos(title2->GetLocalPosition().x - camera_step_move, title2->GetLocalPosition().y);
 			}
@@ -242,7 +242,7 @@ bool j1MainMenu::Update(float dt)
 		//-----------CAMERA ON SETTINGS---------------//
 		if (-App->render->camera.x + App->win->GetWindowWidth() >= (App->map->data.width-1)*App->map->data.tile_width*App->win->GetScale()) {
 
-			move_camera = false;
+			move_camera_forward = false;
 			back_from_settings_btn->interactable = true;
 			back_from_settings_btn->drawable = true;
 
@@ -276,7 +276,7 @@ bool j1MainMenu::Update(float dt)
 			back_from_settings_btn->interactable = false;
 			back_from_settings_btn->drawable = false;
 
-			if (move_camera_back) {
+			if (move_camera_backward) {
 				title1->SetPos(title1->GetLocalPosition().x + camera_step_move, title1->GetLocalPosition().y);
 				title2->SetPos(title2->GetLocalPosition().x + camera_step_move, title2->GetLocalPosition().y);
 			}
@@ -345,10 +345,10 @@ bool j1MainMenu::Update(float dt)
 	}
 
 	//--------CAMERA MOVEMENT-----------//
-	if (move_camera)
+	if (move_camera_forward)
 		App->render->camera.x -= camera_step_move;
 
-	if (move_camera_back)
+	if (move_camera_backward)
 		App->render->camera.x += camera_step_move;
 
 	if (move_camera_up)
@@ -386,6 +386,7 @@ bool j1MainMenu::CleanUp()
 
 	title1 = nullptr;
 	title2 = nullptr;
+	press_space = nullptr;
 
 	new_game_btn = nullptr;
 	continue_btn = nullptr;
@@ -399,7 +400,23 @@ bool j1MainMenu::CleanUp()
 	continue_lbl = nullptr;
 	credits_lbl = nullptr;
 	settings_lbl = nullptr;
-	press_space = nullptr;
+	
+
+	back_from_settings_btn = nullptr;
+	back_from_credits_btn = nullptr;
+	panel_settings = nullptr;
+	panel_credits = nullptr;
+
+	sound_lbl = nullptr;
+	graphics_lbl = nullptr;
+	volume_lbl = nullptr;
+	fx_lbl = nullptr;
+	fps_lbl = nullptr;
+	full_screen_lbl = nullptr;
+
+	clip_credits = nullptr;
+	license_lbl = nullptr;
+	tasks_lbl = nullptr;
 
 	for (int i = 0; i < buttons.Count(); i++)
 		buttons[i] = nullptr;
@@ -410,6 +427,16 @@ bool j1MainMenu::CleanUp()
 		labels[i] = nullptr;
 
 	labels.Clear();
+
+	for (int i = 0; i < settings_labels.Count(); i++)
+		settings_labels[i] = nullptr;
+
+	settings_labels.Clear();
+
+	for (int i = 0; i < settings.Count(); i++)
+		settings[i] = nullptr;
+
+	settings.Clear();
 
 	return true;
 }
@@ -443,12 +470,12 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 		if (element == (UIElement*)settings_btn)
 		{
-			move_camera = true;
+			move_camera_forward = true;
 		}
 
 		if (element == (UIElement*)back_from_settings_btn)
 		{
-			move_camera_back = true;
+			move_camera_backward = true;
 
 		}
 

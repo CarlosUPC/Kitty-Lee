@@ -282,7 +282,14 @@ void j1Scene::UI_Events(UIElement* element) {
 	}
 
 	if (element == slider_volume->GetSliderButton() && element->current_state == CLICKED_REPEAT) {
-		App->audio->SetVolume(slider_volume->GetSliderValue());
+		if (App->audio->SetVolume(slider_volume->GetSliderValue()) < 10) {
+			speaker_cross->drawable = true;
+			speaker_sound->drawable = false;
+		}
+		else {
+			speaker_cross->drawable = false;
+			speaker_sound->drawable = true;
+		}
 	}
 	
 }
@@ -326,6 +333,7 @@ void j1Scene::CreateMenu()
 	speaker_sound = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin / 2, speaker->position.y, { 676,885,44,80 }, panel_volume);
 	speaker_cross = App->gui->CreateImage(speaker->position.x + speaker->position.w + margin, (speaker->position.h-32)/2, { 679,972,32,32 }, panel_volume);
 	speaker_cross->SetPos(speaker_sound->position.x + 10, speaker_cross->position.y);
+	speaker_cross->drawable = false;
 	clip_volume_level = App->gui->CreateImage(0, 0, { 0,0,149,100 }, panel_volume, false, false, true);
 	clip_volume_level->SetPosRespectParent(RIGHT_UP, margin / 2);
 	volume_level = App->gui->CreateImage(0, 0, { 739,897,149,100 }, clip_volume_level, true, true, true, true);

@@ -63,6 +63,8 @@ private:
 	Button* back_btn = nullptr;
 	Button* back_from_credits_btn = nullptr;
 	Image* panel_img = nullptr;
+	Image* panel_credits = nullptr;
+
 
 	p2DynArray<Button*> buttons;
 	p2DynArray<Button*> settings;

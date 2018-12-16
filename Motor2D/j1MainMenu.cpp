@@ -115,6 +115,9 @@ bool j1MainMenu::Start()
 
 	panel_img = App->gui->CreateImage(win_width/2 - 350, 0, {1306,1035,703,707}, App->gui->screen, false, false, false);
 
+	panel_credits = App->gui->CreateImage(win_width / 2 - 215, win_height, { 14,498,431,512 }, App->gui->screen, false, false, false);
+
+
 	for (int i = 0; i < settings.Count(); i++)
 	{
 		settings[i]->interactable = false;
@@ -280,6 +283,11 @@ bool j1MainMenu::Update(float dt)
 
 				title1->SetPos(title1->GetLocalPosition().x, title1->GetLocalPosition().y + camera_step_move);
 				title2->SetPos(title2->GetLocalPosition().x, title2->GetLocalPosition().y + camera_step_move);
+
+				if (panel_credits->GetLocalPosition().y < win_height)
+				{
+					panel_credits->SetPos(panel_credits->GetLocalPosition().x, panel_credits->GetLocalPosition().y + camera_step_move);
+				}
 			}
 
 		}
@@ -290,7 +298,12 @@ bool j1MainMenu::Update(float dt)
 			back_from_credits_btn->interactable = true;
 			back_from_credits_btn->drawable = true;
 
-			
+			panel_credits->drawable = true;
+
+			if (panel_credits->GetLocalPosition().y > button_limit/3)
+			{
+				panel_credits->SetPos(panel_credits->GetLocalPosition().x, panel_credits->GetLocalPosition().y - camera_step_move);
+			}
 		}
 
 	}

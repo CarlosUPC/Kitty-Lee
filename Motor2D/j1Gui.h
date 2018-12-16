@@ -9,6 +9,7 @@ class UIElement;
 class Button;
 class Label;
 class Image;
+class CheckBox;
 
 enum Color
 {
@@ -52,7 +53,7 @@ public:
 	const SDL_Texture* GetAtlas() const;
 
 	//----------------------------------------------------------------------------------------
-
+	CheckBox* CreateCheckBox(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, UIElement* parent = nullptr, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 });
 	Button* CreateButton(const int &pos_x, const int &pos_y, const SDL_Rect &idle = { 0,0,0,0 }, UIElement* parent = nullptr, const SDL_Rect &hover = { 0,0,0,0 }, const SDL_Rect &push = { 0,0,0,0 });
 	Image * CreateImage(const int &pos_x, const int &pos_y, const SDL_Rect & rect = { 0,0,0,0 }, UIElement* parent = nullptr, bool interactable = false, bool draggable = false, bool drawable = true);
 	Label * CreateLabel(const int &pos_x, const int &pos_y, const char* text, bool interactable = false, bool draggable = false, UIElement* parent = nullptr, Color color = WHITE, const uint &size = DEFAULT_FONT_SIZE, const char* font = DEFAULT_FONT, uint32 wrap_length = 0U);

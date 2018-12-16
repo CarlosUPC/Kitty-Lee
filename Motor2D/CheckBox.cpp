@@ -13,11 +13,12 @@ CheckBox::CheckBox(const int &x, const int &y, const SDL_Rect &idle, const SDL_R
 
 void CheckBox::InnerDraw()
 {
+	if (drawable) {
+		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &idle_rect,0.0F, false, SDL_FLIP_NONE, true);
 
-	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &idle_rect, false);
-
-	if (box_clicked) {
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x + (position.w - clicked_rect.w) / 2, draw_offset.y + (position.h - clicked_rect.h) / 2, &clicked_rect);
+		if (box_clicked) {
+			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x + (position.w - clicked_rect.w) / 2, draw_offset.y + (position.h - clicked_rect.h) / 2, &clicked_rect, 0.0F, false, SDL_FLIP_NONE, true);
+		}
 	}
 }
 

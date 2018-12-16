@@ -16,6 +16,7 @@
 #include "j1Gui.h"
 #include "Image.h"
 #include "Button.h"
+#include "CheckBox.h"
 #include "Label.h"
 #include "j1Url.h"
 
@@ -124,6 +125,12 @@ bool j1MainMenu::Start()
 	full_screen_lbl = App->gui->CreateLabel(185, 590, "Full Screen", false, false, panel_settings, WHITE, 40, "fonts/Munro.ttf");
 	settings_labels.PushBack(full_screen_lbl);
 
+	option_fps = App->gui->CreateCheckBox(450, 490, { 586,747,57,55 }, panel_settings, { 586,747,57,55 }, { 587,818,55,56 });
+	option_fps->is_option = true;
+	option_fps->draggable = false;
+	option_fps->drawable = false;
+	option_fps->interactable = false;
+	option_fps->AddListener(this);
 	//-----------------------------------------------------CREDITS UI----------------------------------------------------------------//
 	panel_credits = App->gui->CreateImage(win_width / 2 - 280, win_height, { 1075,451,561,556 }, App->gui->screen, false, false, false);
 
@@ -248,6 +255,8 @@ bool j1MainMenu::Update(float dt)
 
 			panel_settings->drawable = true;
 
+			option_fps->drawable = true;
+			option_fps->interactable = true;
 
 			for (int i = 0; i < settings.Count(); i++)
 			{
@@ -489,6 +498,11 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		{
 			move_camera_down = true;
 
+		}
+
+		if (element == (UIElement*)option_fps)
+		{
+			option_fps->Clicked();
 		}
 		break;
 	}

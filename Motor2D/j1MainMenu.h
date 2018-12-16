@@ -7,7 +7,7 @@
 class Button;
 class Label;
 class Image;
-
+class CheckBox;
 
 class j1MainMenu : public j1Module
 {
@@ -81,6 +81,9 @@ private:
 	Image* clip_credits = nullptr;
 	Label* license_lbl = nullptr;
 	Label* tasks_lbl = nullptr;
+
+	CheckBox* option_fps = nullptr;
+	CheckBox* option_full_screen = nullptr;
 
 	p2DynArray<Button*> buttons;
 	p2DynArray<Label*> labels;

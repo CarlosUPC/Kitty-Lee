@@ -62,15 +62,7 @@ bool j1FadeToBlack::PostUpdate()
 				App->menu->active = true;
 				App->menu->Start();
 
-				//App->scene->stg = LEVEL_0;
-				if (num_level == 1)
-					App->scene->stg = LEVEL_1;
-
-				else if (num_level == 2)
-					App->scene->stg = LEVEL_2;
-				
-				
-			
+				App->scene->stg = LEVEL_0;
 				break;
 			case Levels::CREDITS:
 				break;
@@ -83,10 +75,8 @@ bool j1FadeToBlack::PostUpdate()
 				App->scene->active = true;
 				App->scene->Start();
 
-			
-				num_level == 1;
+				num_level = 1;
 				App->scene->stg = LEVEL_2;
-
 				//App->render->camera = App->render->CameraInitPos(); 
 
 				/*num_level = 2;

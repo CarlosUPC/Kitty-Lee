@@ -35,7 +35,7 @@ Gladiator::Gladiator(int PositionX, int PositionY) : Enemy(Types::GLADIATOR, Pos
 	entityPath.Clear();
 	path_state = PathState::DEFAULT_PATH;
 	stop = false;
-	App->audio->LoadFx(AttackSound);
+	attack_fx = App->audio->LoadFx(AttackSound);
 	
 }
 
@@ -48,7 +48,7 @@ void Gladiator::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	if(c1->type == COLLIDER_TYPE::COLLIDER_ENEMY && c2->type == COLLIDER_TYPE::COLLIDER_PLAYER){
 		EnemyHit(dt);
-		App->audio->PlayFx(4);
+		App->audio->PlayFx(attack_fx);
 		stop = true;
 	}
 	

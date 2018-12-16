@@ -85,6 +85,9 @@ private:
 	const char* walkingSound = nullptr;
 	const char* jumpingSound = nullptr;
 	const char* crashingSound = nullptr;
+	int walking_fx = 0;
+	int jumping_fx = 0;
+	int crashing_fx = 0;
 
 	bool ghost = false;
 	bool god_mode = false;

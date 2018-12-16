@@ -41,9 +41,9 @@ bool Player::Start()
 
 	AddColliders();
 
-	App->audio->LoadFx(walkingSound);
-	App->audio->LoadFx(jumpingSound);
-	App->audio->LoadFx(crashingSound);
+	walking_fx = App->audio->LoadFx(walkingSound);
+	jumping_fx = App->audio->LoadFx(jumpingSound);
+	crashing_fx = App->audio->LoadFx(crashingSound);
 
 
 	//UI
@@ -105,20 +105,20 @@ void Player::Move(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeedX) {
 			speed.x += incrementSpeedX;
 			if (!air)
-				App->audio->PlayFx(1); //Walk fx
+				App->audio->PlayFx(walking_fx);
 			
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeedX) {
 			speed.x -= incrementSpeedX;
 			if (!air)
-				App->audio->PlayFx(1); //Walk fx
+				App->audio->PlayFx(walking_fx);
 		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
 		speed.x = 0.0f; 
-		App->audio->StopFx(1); //Walk fx
+		App->audio->StopFx(walking_fx);
 	}
 
 	if (god_mode) {
@@ -136,13 +136,13 @@ void Player::Move(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT && App->collider->Check(colliderPlayer_down.collider,COLLIDER_PLATFORM)) {
 		if (!platformOverstep)
 			platformOverstep = true;
-		App->audio->StopFx(1); //Walk fx
+		App->audio->StopFx(walking_fx);
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == j1KeyState::KEY_DOWN && air == false) {
 		speed.y = jumpSpeed;
 		air = true;
-		App->audio->PlayFx(2); //Jump fx
+		App->audio->PlayFx(jumping_fx);
 	}
 
 	if (!god_mode) {
@@ -171,7 +171,6 @@ void Player::SetLife(const int &l)
 void Player::UpdateUI()
 {
 	coin_label->SetText(p2SString("coins %i", coin_count).GetString());
-	//life_label;
 }
 
 bool Player::Save(pugi::xml_node &node) const
@@ -209,13 +208,13 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		}
 		else if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
-			App->audio->StopFx(1);
+			App->audio->StopFx(walking_fx);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
-			App->audio->StopFx(1);
+			App->audio->StopFx(walking_fx);
 			if (c2->rect.x <= c1->rect.x) {
 				position.x = c2->rect.x - collider.width - collider.offset.x;
 				speed.x = 0.0f;
@@ -226,13 +225,13 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 	case COLLIDER_GHOST:
 		if (c1 == colliderPlayer_left.collider) {
 			speed.x = 0.0f;
-			App->audio->StopFx(1);
+			App->audio->StopFx(walking_fx);
 			if (c2->rect.x + c2->rect.w >= c1->rect.x)
 				position.x = c2->rect.x + c2->rect.w - collider.offset.x;
 		}
 
 		else if (c1 == colliderPlayer_right.collider) {
-			App->audio->StopFx(1);
+			App->audio->StopFx(walking_fx);
 			if (c2->rect.x <= c1->rect.x) {
 				position.x = c2->rect.x - collider.width - collider.offset.x;
 			}

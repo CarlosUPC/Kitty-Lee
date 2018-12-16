@@ -76,7 +76,7 @@ bool j1FadeToBlack::PostUpdate()
 				App->scene->Start();
 
 				num_level = 1;
-				App->scene->stg = LEVEL_1;
+				App->scene->stg = LEVEL_2;
 				//App->render->camera = App->render->CameraInitPos(); 
 
 				/*num_level = 2;
@@ -86,13 +86,15 @@ bool j1FadeToBlack::PostUpdate()
 
 				break;
 			case Levels::SECOND_LEVEL:
+				App->menu->CleanUp();
 				App->menu->active = false;
+
 				App->scene->active = true;
 				App->scene->Start();
 
 				num_level = 2;
-				App->scene->stg = LEVEL_2;
-				App->render->camera = App->render->CameraInitPos(); 
+				App->scene->stg = LEVEL_1;
+				//App->render->camera = App->render->CameraInitPos(); 
 
 				/*num_level = 1;
 				SwitchingLevel(App->scene->lvl1.GetString());

@@ -69,7 +69,7 @@ public:
 	p2SString lvl1;
 	p2SString lvl2;
 	Stages stg = LEVEL_1;
-	bool isLevel1;
+	bool playerOnLvl1;
 	int start_time = 0;
 private:
 

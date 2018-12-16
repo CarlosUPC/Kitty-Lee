@@ -163,9 +163,9 @@ bool j1Scene::Update(float dt)
 
 	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		if (!isLevel1) App->fade->FadeToBlack();
+		if (!playerOnLvl1) App->fade->FadeToBlack();
 		else {
-			player->speed.SetToZero();
+			player->position = player->spawn_position;
 			App->render->CameraInitPos();
 		}
 	}
@@ -363,12 +363,12 @@ void j1Scene::CheckLevel()
 	case LEVEL_1:
 		App->current_lvl = Levels::FIRST_LEVEL;
 		
-		isLevel1 = true;
+		playerOnLvl1 = false;
 		break;
 	case LEVEL_2:
 		App->current_lvl = Levels::SECOND_LEVEL;
 		
-		isLevel1 = false;
+		playerOnLvl1 = true;
 		break;
 	
 	default:

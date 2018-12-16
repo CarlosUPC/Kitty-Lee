@@ -39,7 +39,8 @@ public:
 	SDL_Surface* screen_surface;
 
 	SDL_Surface* iconExe = nullptr;
-	
+	bool fullscreen;
+
 private:
 	p2SString	title;
 	uint		width;

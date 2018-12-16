@@ -524,9 +524,18 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)option_full_screen)
 		{
 			option_full_screen->Clicked();
-			if (option_full_screen->GetIsClicked()) {
-
-			}
+			
+				if (App->win->fullscreen) {
+					App->win->fullscreen = false;
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_SHOWN);
+					break;
+				}
+				else {
+					App->win->fullscreen = true;
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+					break;
+				}
+			
 		}
 		break;
 	}

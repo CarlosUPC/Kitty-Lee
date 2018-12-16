@@ -1,30 +1,63 @@
 #include "j1App.h"
 #include "Button.h"
-#include "p2Log.h"
 #include "j1Gui.h"
 #include "Slider.h"
 
 
-Slider::Slider(int x, int y, UI_type type, SDL_Rect slider_rect, Button* slider_button, uint slider_button_pos, j1Module* callback, UIElement* parent) : UIElement(SLIDER, x, y, parent, true, slider_rect.w, slider_rect.h)
+Slider::Slider(const int &x, const int &y, const SDL_Rect &slider_rect, UIElement* parent) : UIElement(SLIDER, x, y, parent, true, slider_rect.w, slider_rect.h)
 {
+	position = { x,y,slider_rect.w,slider_rect.h };
+	image = slider_rect;
+	value = 0.0F;
+	draggable = false;
+	interactable = false;
+}
+
+
+void Slider::AddTargets(UIElement * target)
+{
+	control.add(target);
+}
+
+void Slider::AddThumb(Button *thmb)
+{
+	if (thumb == nullptr) {
+		thumb = thmb;
+	}
+	else {
+		thumb->to_delete = true;
+	}
+}
+
+void Slider::SetSliderValueStart(float slider_value) {
 	
-	position = slider_rect;
-	slider_btn= slider_button;
-	slider_value = slider_button_pos * 100 / (position.w - slider_button->position.w);
+	if (slider_value >= 0.0f && slider_value <= 1.0f) {
+		value = slider_value;
+	}
+	else {
+		value = 0;
+	}
+
+	thumb->SetPos(position.x * value, position.y * value);
 }
 
-
-void Slider::SetSliderValueStart(int slider_value) {
-	slider_value = slider_value * 100 / (position.w - slider_btn->position.w);
-	this->slider_btn->SetPos((this->position.w + 2) * slider_value / 100, 0);
-}
-
-uint Slider::GetSliderValue() const
+void Slider::InnerDraw()
 {
-	return slider_value;
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image, 0.0f, false, SDL_FLIP_NONE, true);
+}
+
+void Slider::PostUpdate()
+{
+	LOG("thumb%i position%i\n value %f", thumb->position.x, position.w, value);
+	value = (float)thumb->position.x / (float)position.w;
+}
+
+float Slider::GetSliderValue() const
+{
+	return value;
 }
 
 Button * Slider::GetSliderButton() const
 {
-	return slider_btn;
+	return thumb;
 }

@@ -10,9 +10,9 @@
 #include "Image.h"
 #include "Label.h"
 #include "Button.h"
+#include "Slider.h"
 #include "CheckBox.h"
 #include "j1Window.h"
-#include "p2Queue.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -68,6 +68,14 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::PostUpdate()
 {
+	for (int i = 0; i < ui_elements.count(); ++i) {
+		if (ui_elements[i]->to_delete)
+			DeleteUIElement(ui_elements[i]);
+		else {
+			ui_elements[i]->PostUpdate();
+		}
+	}
+
 	p2List<UIElement*> visited;
 	BFS(visited, screen);
 	
@@ -223,6 +231,15 @@ Label* j1Gui::CreateLabel(const int &pos_x, const int &pos_y, const char* text, 
 	ui_elements.add(ret);
 	return ret;
 }
+
+Slider * j1Gui::CreateSlider(const int & pos_x, const int & pos_y, const SDL_Rect & slider_rect, UIElement * parent)
+{
+	Slider* ret = nullptr;
+	ret = new Slider(pos_x, pos_y, slider_rect, parent);
+	ui_elements.add(ret);
+	return ret;
+}
+
 
 void j1Gui::UI_Events(UIElement* element){
 

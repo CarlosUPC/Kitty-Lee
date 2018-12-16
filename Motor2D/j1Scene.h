@@ -16,7 +16,8 @@ class Slider;
 enum Stages {
 	LEVEL_0 = 0,
 	LEVEL_1,
-	LEVEL_2
+	LEVEL_2,
+	LEVEL_LOADING
 };
 
 class j1Scene : public j1Module
@@ -68,8 +69,8 @@ public:
 	p2SString lvl1;
 	p2SString lvl2;
 	Stages stg = LEVEL_1;
-	bool isLevel1;
-
+	bool playerOnLvl1;
+	int start_time = 0;
 private:
 
 	iPoint cameraOffset;
@@ -104,7 +105,7 @@ private:
 
 	Label* label_timer = nullptr;
 	p2SString str_time;
-	int start_time = 0;
+	//int start_time = 0;
 };
 
 #endif // __j1SCENE_H__

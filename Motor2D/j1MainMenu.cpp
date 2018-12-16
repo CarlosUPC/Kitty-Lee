@@ -83,6 +83,7 @@ bool j1MainMenu::Start()
 
 	continue_btn = App->gui->CreateButton(win_width / 2 - 80, win_height / 2 - 25 + 50 + 275, { 182,148,190,49 }, App->gui->screen, { 181,92,190,49 }, { 181,38,190,49 });
 	buttons.PushBack(continue_btn);
+	continue_btn->AddListener(this);
 	continue_lbl = App->gui->CreateLabel(0, 0, "CONTINUE", false, false, continue_btn, WHITE, 20, "fonts/Munro.ttf");
 	labels.PushBack(continue_lbl);
 
@@ -477,6 +478,14 @@ void j1MainMenu::UI_Events(UIElement* element) {
 			App->fade->FadeToBlack();
 		}
 
+		if (element == (UIElement*)continue_btn)
+		{
+			//App->current_lvl = Levels::LOADING;
+			App->LoadGame();
+			
+		}
+		
+
 		if (element == (UIElement*)github_btn)
 		{
 			open_url("https://github.com/CarlosUPC/Kitty-Lee");
@@ -542,19 +551,37 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 }
 
-bool j1MainMenu::Load(pugi::xml_node& load)
+bool j1MainMenu::Load(pugi::xml_node& data)
 {
+	
 	bool ret = true;
+	App->fade->num_level = data.child("levels").attribute("level").as_int();
+	//App->scene->start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
-
+	if (App->fade->num_level == 1) {
+		App->scene->stg = LEVEL_1;
+		//App->fade->FadeToBlack();
+		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
+		
+	}
+	else if (App->fade->num_level == 2) {
+		//App->current_lvl = Levels::SECOND_LEVEL;
+		//App->fade->FadeToBlack();
+		App->scene->stg = LEVEL_2;
+		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
+	}
+	else ret = true;
 
 	return ret;
 }
 
-bool j1MainMenu::Save(pugi::xml_node& save) const
+bool j1MainMenu::Save(pugi::xml_node& data) const
 {
 	bool ret = true;
 
+	pugi::xml_node node_stage = data.append_child("levels");
 
+	node_stage.append_attribute("level") = App->fade->num_level;
+	//node_stage.append_attribute("time") = (SDL_GetTicks() - App->scene->start_time) / 1000;
 	return ret;
 }

@@ -87,6 +87,9 @@
     <ClCompile Include="j1Entity.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>GUI_Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -205,6 +208,12 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="CheckBox.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>GUI_Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

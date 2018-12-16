@@ -24,7 +24,7 @@ enum Position_Type {
 enum UI_type {
 	CHECKBOX,
 	INPUT_TEXT,
-	SCROLLBAR,
+	SLIDER,
 	BUTTON,
 	LABEL,
 	IMAGE,

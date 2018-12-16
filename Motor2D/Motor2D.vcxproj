@@ -109,11 +109,13 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CheckBox.h" />
     <ClInclude Include="COIN.h" />
     <ClInclude Include="ENEMY.h" />
     <ClInclude Include="FLYING_TONGUE.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Slider.h" />
     <ClInclude Include="UIElement.h" />
   </ItemGroup>
   <ItemGroup>

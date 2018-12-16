@@ -48,6 +48,7 @@
   
   <gui>
     <atlas file="gui/atlas.png"/>
+    <audio button="audio/fx/button.wav" checkbox="audio/fx/checkbox.wav"/>
   </gui>
   
   <fonts>

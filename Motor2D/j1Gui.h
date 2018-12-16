@@ -82,6 +82,9 @@ private:
 	p2SString atlas_file_name;
 	p2List<UIElement*> ui_elements;
 
+	int checkbox_fx = 0;
+	int button_fx = 0;
+
 	
 };
 

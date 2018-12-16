@@ -29,7 +29,7 @@ FlyingTongue::FlyingTongue(int PositionX, int PositionY) : Enemy(Types::FLYING_T
 	playerPathfinding = App->collider->AddCollider({ (int)player->position.x, (int)player->position.y , 100, 100 }, COLLIDER_TYPE::COLLIDER_NONE);
 
 	//Load Sound Effects
-	App->audio->LoadFx(AttackSound);
+	attack_fx = App->audio->LoadFx(AttackSound);
 
 	//Enemy Path
 	entityPath.Clear();
@@ -49,7 +49,7 @@ void FlyingTongue::OnCollision(Collider* c1, Collider* c2, float dt) {
 
 	case COLLIDER_PLAYER:
 		EnemyHit(dt);
-		App->audio->PlayFx(8);
+		App->audio->PlayFx(attack_fx);
 		stop = true;
 		break;
 	}

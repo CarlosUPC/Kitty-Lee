@@ -62,6 +62,8 @@ public:
 
 	bool back = false;
 
+	int attack_fx = 0;
+
 	bool create_back_path = true;
 	bool do_back_path = false;
 

@@ -57,7 +57,7 @@ bool j1Scene::Start()
 
 	CreateEntities();
 
-	debug_tex = App->tex->Load("maps/path.png");
+	debug_tex = App->tex->Load("textures/maps/path.png");
 
 	win_width = App->win->screen_surface->w;
 	win_height = App->win->screen_surface->h;

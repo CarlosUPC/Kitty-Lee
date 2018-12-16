@@ -219,6 +219,11 @@ bool j1Audio::Load(pugi::xml_node& load) {
 	return Mix_VolumeMusic(volumeMusic);
 }
 
+int j1Audio::SetVolume(float volume)
+{
+	return Mix_VolumeMusic(MIX_MAX_VOLUME*volume);
+}
+
 //Set Volume
 int j1Audio::RaiseVolume() {
 	if (volumeMusic <= MIX_MAX_VOLUME)

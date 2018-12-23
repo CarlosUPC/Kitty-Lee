@@ -46,9 +46,9 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(stg == STAGE1)
+	if(App->current_lvl == Levels::FIRST_LEVEL)
 		App->map->Load(lvl1.GetString());
-	else if (stg == STAGE2)
+	else if (App->current_lvl == Levels::SECOND_LEVEL)
 		App->map->Load(lvl2.GetString());
 
 	App->map->AddCollidersMap();
@@ -159,11 +159,11 @@ bool j1Scene::Update(float dt)
 
 	//F1 - Start from the very first level
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		App->entities->CleanUp();
-		if (stg == STAGE1)
-			CreateEntities();
+		if (!playerOnLvl1) App->fade->FadeToBlack();
 		else {
-			App->fade->ChangeStage();
+			player->position = player->spawn_position;
+			player->speed.SetToZero();
+			App->render->CameraInitPos();
 		}
 	}
 
@@ -193,6 +193,11 @@ bool j1Scene::Update(float dt)
 	//F8 - Switch between levels
 	/*if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		App->fade->FadeToBlack();*/
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		stg = LEVEL_0;
+		
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		(App->Pause()) ? CreateMenu() : DestroyMenu();
@@ -249,7 +254,6 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	ret = App->tex->UnLoad(debug_tex);
 	App->entities->CleanUp();
-	App->map->CleanUp();
 	App->gui->DeleteAllUIElements();
 	
 	return true;
@@ -262,7 +266,7 @@ void j1Scene::UI_Events(UIElement* element) {
 	}
 
 	if (element == button_main_menu && element->current_state == CLICKED_DOWN) {
-		App->fade->FadeToBlack(this, App->menu);
+		stg = LEVEL_0;
 	}
 
 	if (element == button_save && element->current_state == CLICKED_DOWN) {
@@ -350,7 +354,7 @@ void j1Scene::DestroyMenu()
 
 void j1Scene::CheckLevel()
 {
-	/*switch (stg)
+	switch (stg)
 	{
 	case LEVEL_0:
 		App->current_lvl = Levels::MENU;
@@ -370,28 +374,24 @@ void j1Scene::CheckLevel()
 	
 	default:
 		break;
-	}*/
+	}
 }
-
-
 
 bool j1Scene::Load(pugi::xml_node& data)
 {
 	bool ret = true;
-	Stages aux = (Stages)data.child("levels").attribute("level").as_int();
+	App->fade->num_level = data.child("levels").attribute("level").as_int();
 	start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
-	
-	App->entities->CleanUp();
-	if (App->menu->active && !App->fade->IsFading()) {
-		stg = aux;
-		App->fade->FadeToBlack(App->menu, this);
+
+	/*if (App->fade->num_level == 1 && !isLevel1) {
+		App->scene->stg = LEVEL_1;
+		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
 	}
-	else {
-		if (aux != stg)
-			App->fade->ChangeStage();
+	else if (App->fade->num_level == 2 && isLevel1) {
+		App->scene->stg = LEVEL_2;
+		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
 	}
-	
-	//else ret = true;*/
+	else ret = true;*/
 
 	return ret;
 }

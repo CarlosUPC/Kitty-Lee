@@ -48,39 +48,67 @@ bool j1FadeToBlack::PostUpdate()
 		if (now >= total_time)
 		{
 
-			if (to_fade == MODULE) {
-				fade_out->CleanUp();
-				fade_out->active = false;
-				fade_in->Start();
-				fade_in->active = true;
+			App->collider->EraseMapCollider();
+			App->entities->CleanUp();
+			App->map->CleanUp();
+
+			switch (App->current_lvl)
+			{
+
+			case Levels::MENU:
+				App->scene->CleanUp();
+				App->scene->active = false;
+
+				App->menu->active = true;
+				App->menu->Start();
+
+				App->scene->stg = LEVEL_0;
+				break;
+			case Levels::CREDITS:
+				break;
+			case Levels::TUTORIAL:
+				break;
+			case Levels::FIRST_LEVEL:
+				App->menu->CleanUp();
+				App->menu->active = false;
+			
+				App->scene->active = true;
+				App->scene->Start();
+
+				num_level = 1;
+				App->scene->stg = LEVEL_2;
+				//App->render->camera = App->render->CameraInitPos(); 
+
+				/*num_level = 2;
+				SwitchingLevel(App->scene->lvl2.GetString());
+				App->scene->stg = LEVEL_2;
+				App->render->camera = App->render->CameraInitPos();*/
+
+				break;
+			case Levels::SECOND_LEVEL:
+				App->menu->CleanUp();
+				App->menu->active = false;
+
+				App->scene->active = true;
+				App->scene->Start();
+
+				num_level = 2;
+				App->scene->stg = LEVEL_1;
+				//App->render->camera = App->render->CameraInitPos(); 
+
+				/*num_level = 1;
+				SwitchingLevel(App->scene->lvl1.GetString());
+				App->scene->stg = LEVEL_1;
+				App->render->camera = App->render->CameraInitPos();*/
+				break;
 			}
 
-			else if (to_fade == STAGE) {
-				//App->map->CleanUp();
-				App->entities->CleanUp();
-				/*App->collider->CleanUp();
-				App->entities->CleanUp();*/
-				if (STAGE1) {
-					App->map->Load(App->scene->lvl2.GetString());
-					App->scene->stg = STAGE2;
-				}
-				else {
-					App->map->Load(App->scene->lvl1.GetString());
-					App->scene->stg = STAGE1;
-				}
-				App->map->AddCollidersMap();
-				App->scene->SetWalkabilityMap();
-				App->scene->CreateEntities();
-			}
-
-			fade_out = nullptr;
-			fade_in = nullptr;
-
+		
 			total_time += total_time;
 			start_time = SDL_GetTicks();
-			current_step = fade_step::fade_from_black;
 
 			fading = false;
+			current_step = fade_step::fade_from_black;
 		}
 	} break;
 
@@ -111,22 +139,18 @@ bool j1FadeToBlack::CleanUp()
 	return true;
 }
 
-bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float time)
+bool j1FadeToBlack::FadeToBlack(float time)
 {
 	bool ret = false;
+	
+	//level1 = true;
 
 	if (current_step == fade_step::none)
 	{
-
+	
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
-
-		fade_out = module_off;
-		fade_in = module_on;
-
-		to_fade = MODULE;
-	
+		total_time = (uint)(time * 0.5F * 1000.0F);
 		fading = true;
 		ret = true;
 	}
@@ -135,50 +159,29 @@ bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float
 	
 }
 
-void j1FadeToBlack::ChangeStage()
+
+bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
 {
-	if (current_step == fade_step::none)
-	{
-		App->map->CleanUp();
-		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(1 * 0.5f * 1000.0f);
+	bool ret = true;
+	App->collider->EraseMapCollider();
+	App->entities->CleanUp();
+	App->map->CleanUp();
+	App->map->Load(tmx_map);
+	App->map->AddCollidersMap();
 
-		fade_out = nullptr;
-		fade_in = nullptr;
-		to_fade = STAGE;
 
-		fading = true;
-	}
+	App->menu->CleanUp();
+	App->menu->active = false;
+	App->scene->active = true;
+	App->scene->Start();
+
+	/*App->scene->SetWalkabilityMap();
+	App->scene->CreateEntities();*/
+
+	return ret;
 }
-
-
-//bool j1FadeToBlack::SwitchingLevel(const char* tmx_map)
-//{
-//	bool ret = true;
-//
-//	if (App->menu->active) {
-//		App->menu->CleanUp();
-//		App->menu->active = false;
-//		App->scene->active = true;
-//	}
-//
-//	App->collider->EraseMapCollider();
-//	App->entities->CleanUp();
-//	App->map->CleanUp();
-//
-//	//App->map->Load(tmx_map);
-//	//App->map->AddCollidersMap();
-//
-//	App->scene->Start();
-//
-//	/*App->scene->SetWalkabilityMap();
-//	App->scene->CreateEntities();*/
-//
-//	return ret;
-//}
 
 bool j1FadeToBlack::IsFading()
 {
-	return fading;
+	return current_step != fade_step::none;
 }

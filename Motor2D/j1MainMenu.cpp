@@ -56,8 +56,6 @@ bool j1MainMenu::Start()
 
 	App->render->CameraInitPos();
 
-	App->scene->active = false;
-
 	move_camera_forward = false;
 	move_camera_backward = false;
 
@@ -497,8 +495,6 @@ bool j1MainMenu::CleanUp()
 
 	settings.Clear();
 
-	App->map->CleanUp();
-
 	return true;
 }
 
@@ -511,18 +507,16 @@ void j1MainMenu::UI_Events(UIElement* element) {
 		if (element == (UIElement*)new_game_btn)
 		{
 			App->current_lvl = Levels::FIRST_LEVEL;
-			App->fade->FadeToBlack(this, App->scene);
+			App->fade->FadeToBlack();
 		}
 
 		if (element == (UIElement*)continue_btn)
 		{
-			if (can_load) {
-				App->fade->FadeToBlack(this, App->scene,0.0f);
+			if(can_load)
 				App->LoadGame();
 
-			}
-
 		}
+
 
 		if (element == (UIElement*)github_btn)
 		{
@@ -605,17 +599,34 @@ void j1MainMenu::UI_Events(UIElement* element) {
 
 bool j1MainMenu::Load(pugi::xml_node& data)
 {
+	
+	bool ret = true;
+	App->fade->num_level = data.child("levels").attribute("level").as_int();
+	//App->scene->start_time = (data.child("levels").attribute("time").as_int() + SDL_GetTicks()) * 1000;
 
-	return true;
+	if (App->fade->num_level == 1/* && !App->scene->playerOnLvl1*/) {
+		App->scene->stg = LEVEL_2;
+		
+		ret = App->fade->SwitchingLevel(App->scene->lvl1.GetString());
+		
+	}
+	else if (App->fade->num_level == 2 /*&& App->scene->playerOnLvl1*/) {
+		
+		App->scene->stg = LEVEL_1;
+		ret = App->fade->SwitchingLevel(App->scene->lvl2.GetString());
+	}
+	else ret = true;
+
+	return ret;
 }
 
 bool j1MainMenu::Save(pugi::xml_node& data) const
 {
 	bool ret = true;
 
-	//pugi::xml_node node_stage = data.append_child("levels");
+	pugi::xml_node node_stage = data.append_child("levels");
 
-	//node_stage.append_attribute("level") = App->fade->num_level;
+	node_stage.append_attribute("level") = App->fade->num_level;
 	//node_stage.append_attribute("time") = (SDL_GetTicks() - App->scene->start_time) / 1000;
 	return ret;
 }

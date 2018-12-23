@@ -14,9 +14,10 @@ class Button;
 class Slider;
 
 enum Stages {
-	MAIN_MENU,
-	STAGE1,
-	STAGE2
+	LEVEL_0 = 0,
+	LEVEL_1,
+	LEVEL_2,
+	LEVEL_LOADING
 };
 
 class j1Scene : public j1Module
@@ -67,8 +68,8 @@ private:
 public:
 	p2SString lvl1;
 	p2SString lvl2;
-	Stages stg = STAGE1;
-	//bool playerOnLvl1;
+	Stages stg = LEVEL_1;
+	bool playerOnLvl1;
 	int start_time = 0;
 private:
 

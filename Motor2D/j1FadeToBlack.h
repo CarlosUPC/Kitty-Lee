@@ -6,10 +6,6 @@
 #include "j1Window.h"
 #include "SDL\include\SDL_rect.h"
 
-enum Fade {
-	STAGE,
-	MODULE
-};
 class j1FadeToBlack : public j1Module
 {
 public:
@@ -27,8 +23,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool FadeToBlack(j1Module* module_off, j1Module* module_on, float time = 1.0f);
-	void ChangeStage();
+	bool FadeToBlack(float time = 1.0f);
+	bool SwitchingLevel(const char* tmx_map);
 	
 	bool IsFading();
 	bool fading = false;
@@ -52,10 +48,6 @@ private:
 	uint total_time = 0;
 	SDL_Rect screen;
 
-	j1Module* fade_out = nullptr;
-	j1Module* fade_in = nullptr;
-
-	Fade to_fade = MODULE;
 
 	bool have_to_load = false;
 };

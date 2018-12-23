@@ -272,11 +272,11 @@ void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
 		break;
 	case COLLIDER_SCENE:
 		if (!App->fade->IsFading())
-			App->fade->FadeToBlack();
+			App->fade->ChangeStage();
 		break;
 	case COLLIDER_WIN:
 		if (!App->fade->IsFading())
-			App->fade->FadeToBlack();
+			App->fade->ChangeStage();
 		break;
 	case COLLIDER_COIN:
 		coin_count++;

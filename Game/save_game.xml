@@ -8,19 +8,14 @@
 	</audio>
 	<map />
 	<scene>
-		<levels level="1" time="1" />
+		<levels level="1" time="4284876" />
 	</scene>
-	<menu>
-		<levels level="1" />
-	</menu>
+	<menu />
 	<pathfinding />
 	<colliders />
 	<entities>
-		<entity x="96" y="240" spawn_x="96" spawn_y="208" type="0" coins="0" lifes="3" />
-		<entity x="749" y="304" spawn_x="784" spawn_y="304" type="1" />
-		<entity x="160" y="240" spawn_x="160" spawn_y="240" type="3" />
-		<entity x="256" y="192" spawn_x="256" spawn_y="192" type="3" />
-		<entity x="352" y="144" spawn_x="352" spawn_y="144" type="3" />
+		<entity x="358" y="288" spawn_x="96" spawn_y="208" type="0" coins="3" lifes="3" />
+		<entity x="700" y="304" spawn_x="784" spawn_y="304" type="1" />
 		<entity x="416" y="160" spawn_x="416" spawn_y="160" type="3" />
 		<entity x="528" y="176" spawn_x="528" spawn_y="176" type="3" />
 		<entity x="560" y="176" spawn_x="560" spawn_y="176" type="3" />
@@ -35,6 +30,6 @@
 	<gui />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="-342" />
+		<camera x="-618" y="-417" />
 	</renderer>
 </game_state>

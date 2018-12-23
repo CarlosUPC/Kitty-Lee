@@ -1,18 +1,43 @@
-﻿# Kitty Lee
+﻿# KITTY LEE
 
-A 2D platformer of a fighter cat.
+Welcome to our website github page!
 
-## Getting Started
+## About the game and its context
 
-This is a small project made by two students of CITM - Terrassa of Design and Development of Video Games grade.
+This is a small project made by two videogame students of UPC CITM from Terrassa called Kitty Lee. Kitty Lee a side-scrolling platformer game about exploring a mysterious underground place. Our Hero is a skilled warrior cat with a red band and his name is Lee.
+There is two different levels: while the first one is based on the player exploration on the cave, the second one represents the exit of this dangerous place where the player has to escape from. Lee will have to reach the end of the levels avoiding enemies which will start chasing him. Besides, Lee can collect coins that he finds into the levels.
 
-### Installing
+## Team members
 
-* Download last release zip from our [Repository](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/releases).
-* Extract zip.
-* Run KittyLee.exe.
+### Peña Hernando Carlos:
 
-## Controls
+![](https://github.com/CarlosUPC/Kitty-Lee/blob/master/docs/foto_carlos.jpg)
+
+* GitHub Account: [CarlosUPC](https://github.com/CarlosUPC).
+
+* Role: Main Menu UI programmer, IA/pathfinding programmer, Level designer on Tiled
+
+### Martinez de la Rosa, Christian:
+
+![](https://github.com/CarlosUPC/Kitty-Lee/blob/master/docs/foto_chris.jpg)
+
+* GitHub Account:[christt105](https://github.com/christt105).
+
+* Role: In-Game UI, Framerate normalization, entity managment, Level designer on Tiled, HUD programmer
+
+See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/graphs/contributors) who participated in this project.
+
+## Main core subsystems of the game
+Our game code is structured in modules. The main module (called j1App.cpp) manages all the other modules calling in a loop its respective awake, preupdate, update, postupdate, cleanup that they connect throught a base class j1Module.
+
+Two of its modules(GUI and Entity Manager) manage a subsystem of modules that follows the same structure that the explained above with the objective to have an independent enitity and UI system that connects with the logic of the core game system.
+
+## Repository Link and last release
+* [Repository](https://github.com/CarlosUPC/Kitty-Lee)
+* [Release](https://github.com/CarlosUPC/Kitty-Lee/releases/tag/0.3.5)
+
+
+## Instructions to play
 
 * A to move left.
 * D to move right.
@@ -21,82 +46,18 @@ This is a small project made by two students of CITM - Terrassa of Design and De
 * S + Spacebar on a platform to go down.
 
   ### Development controls
-  
   * F1 Start from the very first level.
   * F2 Start from the beginning of the current level.
   * F3 Increase music volume of game.
   * F4 Decrease music volume of game.
   * F5 Save the current state.
   * F6 Load the previous state (even across levels).
-  * F8 Switch between levels.
+  * F8 Display UI debug colliders.
   * F9 To view colliders.
   * F10 God Mode.
   * F11 Cap on/off fps to 30.
   * W in God Mode to move up.
   * S in God Mode to move down.
-
-## Built With
-
-* [Microsoft Visual Studio 2017](https://visualstudio.microsoft.com/es/vs/)
-* [Tiled](https://www.mapeditor.org/)
-* [SDL](https://www.libsdl.org/license.php)
-* [Pugi](https://pugixml.org/license.html)
-* Compatible with [Brofiler](http://www.brofiler.com/)
-
-## Art/Music used
-
-* [Main Character](https://opengameart.org/content/cat-fighter-sprite-sheet)
-* [Gladiator Enemy](https://opengameart.org/content/pixel-art-gladiator-sprites)
-* [Flying Enemy](https://opengameart.org/content/flying-tongue-monster-sprite-sheet)
-* [Map Tileset](https://ansimuz.itch.io/sunny-land-pixel-game-art)
-* [Map objects](https://opengameart.org/content/a-platformer-in-the-forest)
-* [Music Scene](https://opengameart.org/content/platformer-game-music-pack)
-* [jump fx](https://opengameart.org/content/platformer-jumping-sounds)
-* [walk_fx](https://freesound.org/people/FxKid2/sounds/362609/)
-
-## Repository Link
-
-[Repository](https://github.com/CarlosUPC/Kitty-Lee)
-
-## Authors
-
-* **Carlos Peña** - [CarlosUPC](https://github.com/CarlosUPC)
-* **Christian Martínez de la Rosa** - [christt105](https://github.com/christt105)
-
-See also the list of [contributors](https://github.com/CarlosUPC/Game_Dev_2DPlatformGame/graphs/contributors) who participated in this project.
-
-## Innovation
-### First Assignment
-* Created a system to load data animation provided directly from Tiled. All player information is in a xml edited with Tiled.
-* Created system to load parallax info from Tiled.
-* Load collision boxes from Tiled with its own type collision.
-* Created a mechanic that player can change to a ghost and be able to enter in rooms across specific walls. In ghost form, player oversteps platforms.
-* While pressing 'S' and spacebar on top of a platform, player will trespass that platform.
-* Save and Load functionallity in run time.
-### Second Assignment
-* Imported and remaked player load data to entity. Entity load common data and special data depending type of entity.
-* System to load all enemies you put on Tiled in each scene.
-
-## Members Task
-### Carlos Peña
-* Implementation of all enemy data as tsx files from Tiled
-* Enemy data loading from tsx files into entity modules
-* Creation of Entity Manager System
-* Enemy gladiator (logic, pathfinding system, states & animations)
-* Enemy flying tongue (logic, pathfinding system, states & animations)
-* Sound Effects on enemy attacks
-* Brofiler addition
-
-### Christian Martínez
-* Development of Entity Manager system
-* Apply dt system
-* Cap on/off fps
-* Adapt player movement to dt system
-* Make Entity father class
-* Adapt old player to new entity system
-* Adapted old player load data to all entities
-* Little changes adapting change scene/save & load/dead player with new entity manager
-* God mode functionality (player can fly around)
 
 ## License
 
